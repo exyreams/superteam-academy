@@ -1,0 +1,72 @@
+{
+  "Hero": {
+    "badge": "Acceso a la Terminal Concedido",
+    "title": "FORJA TU{br}FUTURO EN{br}SOLANA",
+    "description": "El principal terreno de formación técnica para la próxima generación de arquitectos de Solana. Pasa de cero a listo para producción con nuestro plan de estudios acelerado por hardware.",
+    "explore": "Explorar Cursos",
+    "discord": "Unirse a Discord"
+  },
+  "Navbar": {
+    "brand": "SUPERTEAM ACADEMY",
+    "links": {
+      "catalog": "Catálogo",
+      "leaderboard": "Tabla de Clasificación",
+      "rewards": "Recompensas"
+    },
+    "cta": {
+      "dashboard": "Panel",
+      "start": "Empezar a Aprender"
+    }
+  },
+  "Footer": {
+    "brand": "SUPERTEAM ACADEMY",
+    "description": "La universidad descentralizada para el ecosistema Solana. Propiedad de los estudiantes.",
+    "language": "Idioma:",
+    "copyright": "© 2026 Superteam Academy // Todos los derechos reservados",
+    "headers": {
+      "platform": "Plataforma",
+      "socials": "Redes Sociales"
+    },
+    "links": {
+      "catalog": "Catálogo",
+      "leaderboard": "Tabla de Clasificación",
+      "dashboard": "Panel",
+      "profile": "Perfil"
+    }
+  },
+  "Features": {
+    "proofs": {
+      "title": "PRUEBAS ON-CHAIN",
+      "description": "Cada módulo que completas emite una credencial intransferible a tu billetera. Construye un currículum verificable criptográficamente mientras aprendes."
+    },
+    "compiler": {
+      "title": "COMPILADOR EN VIVO",
+      "description": "No se requiere configuración de entorno. Escribe, prueba y despliega programas de Solana directamente en nuestro IDE basado en navegador con retroalimentación en tiempo real."
+    }
+  },
+  "LearningPaths": {
+    "subtitle": "Operaciones Disponibles",
+    "title": "RUTAS DE APRENDIZAJE",
+    "viewAll": "Ver todas las rutas —>",
+    "tracks": {
+      "beginner": {
+        "path": "Ruta 01 // Principiante",
+        "title": "FUNDAMENTOS DE SOLANA",
+        "description": "Domina la capa base. Cuentas, transacciones y el tiempo de ejecución Sealevel.",
+        "meta": "12 MÓDULOS // 40 XP"
+      },
+      "intermediate": {
+        "path": "Ruta 02 // Intermedio",
+        "title": "FRAMEWORK ANCHOR",
+        "description": "Desarrollo rápido de programas utilizando el DSL estándar de la industria en Rust.",
+        "meta": "8 MÓDULOS // 120 XP"
+      },
+      "advanced": {
+        "path": "Ruta 03 // Avanzado",
+        "title": "SEGURIDAD DE PROTOCOLO",
+        "description": "Técnicas de auditoría, vectores de ataque comunes y pruebas de invariantes.",
+        "meta": "15 MÓDULOS // 300 XP"
+      }
+    }
+  }
+}

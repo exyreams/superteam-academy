@@ -1,45 +1,41 @@
-import Link from "next/link";
-import { cn } from "@/lib/utils";
+'use client';
 
-const tracks = [
-  {
-    path: "Path 01 // Beginner",
-    title: "SOLANA FUNDAMENTALS",
-    desc: "Master the base layer. Accounts, transactions, and the Sealevel runtime.",
-    progress: 1, // 1 active out of 4
-    meta: "12 MODULES // 40 XP",
-  },
-  {
-    path: "Path 02 // Intermediate",
-    title: "ANCHOR FRAMEWORK",
-    desc: "Rapid program development using the industry-standard Rust DSL.",
-    progress: 2, // 2 active out of 4
-    meta: "8 MODULES // 120 XP",
-  },
-  {
-    path: "Path 03 // Advanced",
-    title: "PROTOCOL SECURITY",
-    desc: "Audit techniques, common attack vectors, and invariant testing.",
-    progress: 3, // 3 active out of 4
-    meta: "15 MODULES // 300 XP",
-  },
-];
+import { cn } from "@/lib/utils";
+import { useTranslations } from "next-intl";
+import { Link } from "@/i18n/routing";
 
 export function LearningPaths() {
+  const t = useTranslations("LearningPaths");
+
+  const tracks = [
+    {
+      key: "beginner",
+      progress: 1, // 1 active out of 4
+    },
+    {
+      key: "intermediate",
+      progress: 2, // 2 active out of 4
+    },
+    {
+      key: "advanced",
+      progress: 3, // 3 active out of 4
+    },
+  ];
+
   return (
     <section className="px-12 py-20 border-b border-ink-primary">
       <div className="flex justify-between items-end mb-12">
         <div>
           <span className="text-[11px] uppercase tracking-widest text-ink-secondary block mb-2">
-            Available Operations
+            {t("subtitle")}
           </span>
-          <h2 className="font-display font-bold leading-[0.9] -tracking-[0.02em] text-[48px]">LEARNING PATHS</h2>
+          <h2 className="font-display font-bold leading-[0.9] -tracking-[0.02em] text-[48px]">{t("title")}</h2>
         </div>
         <Link
-          href="#"
+          href="/courses"
           className="text-ink-primary text-[11px] font-bold uppercase tracking-widest hover:opacity-60 transition-opacity"
         >
-          View all tracks —&gt;
+          {t("viewAll")}
         </Link>
       </div>
 
@@ -52,9 +48,9 @@ export function LearningPaths() {
             {/* Corner Accent */}
             <div className="absolute -top-px -left-px w-3 h-3 border-t-2 border-l-2 border-ink-primary" />
 
-            <div className="text-[11px] text-ink-secondary uppercase tracking-widest mb-2">{track.path}</div>
-            <h3 className="font-display font-bold leading-[0.9] -tracking-[0.02em] text-[32px] mb-3">{track.title}</h3>
-            <p className="text-ink-secondary text-sm mb-6 min-h-[40px]">{track.desc}</p>
+            <div className="text-[11px] text-ink-secondary uppercase tracking-widest mb-2">{t(`tracks.${track.key}.path`)}</div>
+            <h3 className="font-display font-bold leading-[0.9] -tracking-[0.02em] text-[32px] mb-3">{t(`tracks.${track.key}.title`)}</h3>
+            <p className="text-ink-secondary text-sm mb-6 min-h-[40px]">{t(`tracks.${track.key}.description`)}</p>
 
             <div className="h-[2px] bg-line-grid my-6 flex gap-1">
               {[0, 1, 2, 3].map((step) => (
@@ -70,7 +66,7 @@ export function LearningPaths() {
               ))}
             </div>
 
-            <span className="text-[11px] font-bold">{track.meta}</span>
+            <span className="text-[11px] font-bold">{t(`tracks.${track.key}.meta`)}</span>
           </div>
         ))}
       </div>

@@ -1,0 +1,72 @@
+{
+  "Hero": {
+    "badge": "Acesso ao Terminal Concedido",
+    "title": "FORJE SEU{br}FUTURO NA{br}SOLANA",
+    "description": "O principal campo de treinamento técnico para a próxima geração de arquitetos Solana. Vá do zero à produção com nosso currículo acelerado por hardware.",
+    "explore": "Explorar Cursos",
+    "discord": "Entrar no Discord"
+  },
+  "Navbar": {
+    "brand": "SUPERTEAM ACADEMY",
+    "links": {
+      "catalog": "Catálogo",
+      "leaderboard": "Classificação",
+      "rewards": "Recompensas"
+    },
+    "cta": {
+      "dashboard": "Painel",
+      "start": "Começar a Aprender"
+    }
+  },
+  "Footer": {
+    "brand": "SUPERTEAM ACADEMY",
+    "description": "A universidade descentralizada para o ecossistema Solana. Pertencente aos estudantes.",
+    "language": "Idioma:",
+    "copyright": "© 2026 Superteam Academy // Todos os direitos reservados",
+    "headers": {
+      "platform": "Plataforma",
+      "socials": "Redes Sociais"
+    },
+    "links": {
+      "catalog": "Catálogo",
+      "leaderboard": "Classificação",
+      "dashboard": "Painel",
+      "profile": "Perfil"
+    }
+  },
+  "Features": {
+    "proofs": {
+      "title": "PROVAS ON-CHAIN",
+      "description": "Cada módulo que você completa emite uma credencial intransferível para sua carteira. Construa um currículo criptograficamente verificável enquanto aprende."
+    },
+    "compiler": {
+      "title": "COMPILADOR AO VIVO",
+      "description": "Nenhuma configuração de ambiente necessária. Escreva, teste e implante programas Solana diretamente em nosso IDE baseado em navegador com feedback em tempo real."
+    }
+  },
+  "LearningPaths": {
+    "subtitle": "Operações Disponíveis",
+    "title": "TRILHAS DE APRENDIZAGEM",
+    "viewAll": "Ver todas as trilhas —>",
+    "tracks": {
+      "beginner": {
+        "path": "Trilha 01 // Iniciante",
+        "title": "FUNDAMENTOS SOLANA",
+        "description": "Domine a camada base. Contas, transações e o tempo de execução Sealevel.",
+        "meta": "12 MÓDULOS // 40 XP"
+      },
+      "intermediate": {
+        "path": "Trilha 02 // Intermediário",
+        "title": "FRAMEWORK ANCHOR",
+        "description": "Desenvolvimento rápido de programas usando a DSL padrão da indústria em Rust.",
+        "meta": "8 MÓDULOS // 120 XP"
+      },
+      "advanced": {
+        "path": "Trilha 03 // Avançado",
+        "title": "SEGURANÇA DE PROTOCOLO",
+        "description": "Técnicas de auditoria, vetores de ataque comuns e testes de invariantes.",
+        "meta": "15 MÓDULOS // 300 XP"
+      }
+    }
+  }
+}

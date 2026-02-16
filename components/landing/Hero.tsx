@@ -1,25 +1,26 @@
-import Link from "next/link";
+'use client';
+
 import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useTranslations } from "next-intl";
+import { Link } from "@/i18n/routing";
 
 export function Hero() {
+  const t = useTranslations("Hero");
+
   return (
     <header className="px-12 py-[120px] border-b border-ink-primary grid grid-cols-1 lg:grid-cols-2 gap-16 relative">
       <div className="flex flex-col justify-center">
         <span className="bg-ink-primary text-bg-base inline-block px-3 py-1 mb-4 self-start text-[11px] uppercase tracking-widest">
-          Terminal Access Granted
+          {t("badge")}
         </span>
         <h1 className="font-display font-bold leading-[0.9] -tracking-[0.02em] text-[120px] mb-6">
-          FORGE YOUR
-          <br />
-          FUTURE ON
-          <br />
-          SOLANA
+          {t.rich("title", {
+            br: () => <br />,
+          })}
         </h1>
         <p className="text-[18px] text-ink-secondary max-w-[500px] mb-10">
-          The premier technical training ground for the next generation of
-          Solana architects. Move from zero to production-ready with our
-          hardware-accelerated curriculum.
+          {t("description")}
         </p>
         <div className="flex gap-4">
           <Button
@@ -27,8 +28,8 @@ export function Hero() {
             variant="landingPrimary"
             className="rounded-none uppercase text-xs font-bold px-8 py-4 h-auto font-mono gap-3"
           >
-            <Link href="#">
-              Explore Courses <ArrowRight size={16} />
+            <Link href="/courses">
+              {t("explore")} <ArrowRight size={16} />
             </Link>
           </Button>
           <Button
@@ -36,7 +37,7 @@ export function Hero() {
             variant="landingSecondary"
             className="rounded-none uppercase text-xs font-bold px-8 py-4 h-auto font-mono gap-3"
           >
-            <Link href="#">Join Discord</Link>
+            <Link href="https://discord.gg/superteam" target="_blank" rel="noopener noreferrer">{t("discord")}</Link>
           </Button>
         </div>
       </div>
