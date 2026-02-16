@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { Logo } from "@/components/ui/logo";
 
 import {
   Select,
@@ -14,7 +15,12 @@ export function Footer() {
       <div className="grid grid-cols-1 md:grid-cols-4 gap-12 px-12 py-20">
         <div className="md:col-span-2 flex flex-col justify-between">
           <div>
-            <div className="u-bold u-caps mb-6">SUPERTEAM_ACADEMY</div>
+            <div className="flex items-center gap-4 mb-6">
+              <Logo className="h-6 w-auto text-ink-primary" />
+              <span className="u-bold u-caps text-[13px] tracking-widest">
+                SUPERTEAM ACADEMY
+              </span>
+            </div>
             <p className="u-dim text-[11px] max-w-[200px]">
               The decentralized university for the Solana ecosystem. Owned by
               the students.

@@ -5,12 +5,12 @@
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
-  --color-bg-base: #E3ECEB;
-  --color-ink-primary: #0D1412;
-  --color-ink-secondary: #5C6E6A;
-  --color-ink-tertiary: #8FA39F;
-  --color-line-strong: #0D1412;
-  --color-line-grid: rgba(92, 110, 106, 0.15);
+  --color-bg-base: var(--bg-base);
+  --color-ink-primary: var(--ink-primary);
+  --color-ink-secondary: var(--ink-secondary);
+  --color-ink-tertiary: var(--ink-tertiary);
+  --color-line-strong: var(--line-strong);
+  --color-line-grid: var(--line-grid);
 
   --font-mono: var(--font-jetbrains-mono), monospace;
   --font-display: var(--font-barlow-condensed), sans-serif;
@@ -51,13 +51,20 @@
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
-  --radius-xl: calc(var(--radius) + 4px);
+  --radius-xl: calc(var(--radius) - 4px);
   --radius-2xl: calc(var(--radius) + 8px);
   --radius-3xl: calc(var(--radius) + 12px);
   --radius-4xl: calc(var(--radius) + 16px);
 }
 
 :root {
+  --bg-base: #E3ECEB;
+  --ink-primary: #0D1412;
+  --ink-secondary: #5C6E6A;
+  --ink-tertiary: #8FA39F;
+  --line-strong: #0D1412;
+  --line-grid: rgba(92, 110, 106, 0.15);
+
   --radius: 0.625rem;
   --background: oklch(1 0 0);
   --foreground: oklch(0.145 0 0);
@@ -93,37 +100,46 @@
 }
 
 .dark {
-  --background: oklch(0.145 0 0);
-  --foreground: oklch(0.985 0 0);
-  --card: oklch(0.205 0 0);
-  --card-foreground: oklch(0.985 0 0);
-  --popover: oklch(0.205 0 0);
-  --popover-foreground: oklch(0.985 0 0);
-  --primary: oklch(0.922 0 0);
-  --primary-foreground: oklch(0.205 0 0);
-  --secondary: oklch(0.269 0 0);
-  --secondary-foreground: oklch(0.985 0 0);
-  --muted: oklch(0.269 0 0);
-  --muted-foreground: oklch(0.708 0 0);
-  --accent: oklch(0.269 0 0);
-  --accent-foreground: oklch(0.985 0 0);
+  --bg-base: #0E1412;
+  --ink-primary: #F2F7F6;
+  --ink-secondary: #A0B3AF;
+  --ink-tertiary: #5C6E6A;
+  --line-strong: #F2F7F6;
+  --line-grid: rgba(227, 236, 235, 0.08);
+
+  --background: oklch(0.12 0.02 150);
+  --foreground: oklch(0.97 0.01 150);
+  --card: oklch(0.12 0.01 150);
+  --card-foreground: oklch(0.97 0.01 150);
+  --popover: oklch(0.02 0.01 150);
+  --popover-foreground: oklch(0.97 0.01 150);
+  --primary: oklch(0.97 0.01 150);
+  --primary-foreground: oklch(0.02 0.01 150);
+  --secondary: oklch(0.15 0.02 150);
+  --secondary-foreground: oklch(0.97 0.01 150);
+  --muted: oklch(0.15 0.02 150);
+  --muted-foreground: oklch(0.65 0.02 150);
+  --accent: oklch(0.15 0.02 150);
+  --accent-foreground: oklch(0.97 0.01 150);
   --destructive: oklch(0.704 0.191 22.216);
-  --border: oklch(1 0 0 / 10%);
-  --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.556 0 0);
+  --border: oklch(0.97 0.01 150 / 0.1);
+  --input: oklch(0.97 0.01 150 / 0.1);
+  --ring: oklch(0.85 0.02 150);
+  
   --chart-1: oklch(0.488 0.243 264.376);
   --chart-2: oklch(0.696 0.17 162.48);
   --chart-3: oklch(0.769 0.188 70.08);
   --chart-4: oklch(0.627 0.265 303.9);
   --chart-5: oklch(0.645 0.246 16.439);
-  --sidebar: oklch(0.205 0 0);
-  --sidebar-foreground: oklch(0.985 0 0);
+  
+  --sidebar: oklch(0.02 0.01 150);
+  --sidebar-foreground: oklch(0.97 0.01 150);
   --sidebar-primary: oklch(0.488 0.243 264.376);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.269 0 0);
-  --sidebar-accent-foreground: oklch(0.985 0 0);
-  --sidebar-border: oklch(1 0 0 / 10%);
-  --sidebar-ring: oklch(0.556 0 0);
+  --sidebar-primary-foreground: oklch(0.97 0.01 150);
+  --sidebar-accent: oklch(0.15 0.02 150);
+  --sidebar-accent-foreground: oklch(0.97 0.01 150);
+  --sidebar-border: oklch(0.97 0.01 150 / 0.1);
+  --sidebar-ring: oklch(0.85 0.02 150);
 }
 
 @layer base {
@@ -134,6 +150,23 @@
     @apply bg-bg-base text-ink-primary font-mono antialiased;
     background-image: radial-gradient(var(--color-ink-secondary) 1px, transparent 1px);
     background-size: 40px 40px;
+  }
+
+  /* Custom Scrollbar */
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+  ::-webkit-scrollbar-track {
+    background: var(--color-bg-base);
+  }
+  ::-webkit-scrollbar-thumb {
+    background: var(--color-ink-secondary);
+    border: 2px solid var(--color-bg-base);
+    border-radius: 0px; /* Square vibe */
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--color-ink-primary);
   }
 }
 

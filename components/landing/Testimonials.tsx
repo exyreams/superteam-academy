@@ -1,6 +1,6 @@
 export function Testimonials() {
   return (
-    <section className="bg-ink-primary text-bg-base px-12 py-20">
+    <section className="bg-ink-primary dark:bg-transparent dark:border-y dark:border-ink-secondary/20 text-bg-base dark:text-ink-primary px-12 py-20">
       <div className="u-tiny u-caps mb-8 opacity-60">
         Student Intelligence Report
       </div>

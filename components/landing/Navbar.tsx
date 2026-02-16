@@ -1,12 +1,15 @@
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
+import { ModeToggle } from "@/components/theme-toggle";
+import { Logo } from "@/components/ui/logo";
 
 export function Navbar() {
   return (
-    <nav className="h-16 border-b border-ink-primary flex items-center justify-between px-12 bg-bg-base sticky top-0 z-100">
+    <nav className="h-16 border-b border-ink-primary flex items-center justify-between px-12 bg-bg-base sticky top-0 z-50">
       <div className="flex items-center gap-4">
-        <span className="u-bold u-caps text-[13px]">
-          SUPERTEAM_ACADEMY // V.2.11
+        <Logo className="h-6 w-auto text-ink-primary" />
+        <span className="u-bold u-caps text-[13px] tracking-widest">
+          SUPERTEAM ACADEMY
         </span>
       </div>
       <div className="flex gap-8">
@@ -35,6 +38,7 @@ export function Navbar() {
         >
           <Link href="#">Initialize</Link>
         </Button>
+        <ModeToggle />
       </div>
     </nav>
   );
