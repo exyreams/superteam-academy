@@ -68,5 +68,50 @@
         "meta": "15 MÓDULOS // 300 XP"
       }
     }
+  },
+  "Courses": {
+    "search": {
+      "placeholder": "BUSCAR PALABRAS CLAVE: SOLANA, RUST, ANCHOR..."
+    },
+    "filters": {
+      "all": "TODOS",
+      "dev": "DEV",
+      "defi": "DEFI",
+      "active": "FILTROS ACTIVOS"
+    },
+    "curatedPaths": {
+      "title": "RUTAS CURADAS",
+      "subtitle": "SECUENCIAS RECOMENDADAS",
+      "tracks": {
+        "beginner": "RUTA PRINCIPIANTE",
+        "intermediate": "RUTA INTERMEDIA",
+        "advanced": "ESPECIALIZACIÓN AVANZADA"
+      },
+      "modules": "MÓDULOS",
+      "complete": "COMPLETO",
+      "startPath": "INICIAR RUTA"
+    },
+    "individualModules": {
+      "title": "MÓDULOS INDIVIDUALES",
+      "sort": "ORDENAR: POPULARIDAD"
+    },
+    "difficulty": {
+      "beginner": "PRINCIPIANTE",
+      "intermediate": "INTERMEDIO",
+      "advanced": "AVANZADO",
+      "expert": "EXPERTO"
+    },
+    "locked": "BLOQUEADO",
+    "stats": {
+      "title": "ESTADÍSTICAS DE SESIÓN",
+      "totalXP": "XP TOTAL",
+      "coursesActive": "CURSOS ACTIVOS",
+      "completionRate": "TASA DE FINALIZACIÓN",
+      "certificates": "CERTIFICADOS"
+    },
+    "lastAccessed": {
+      "title": "ÚLTIMO ACCESO",
+      "resume": "REANUDAR MÓDULO"
+    }
   }
 }
