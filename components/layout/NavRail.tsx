@@ -1,7 +1,7 @@
 'use client';
 
 import { Link, usePathname } from '@/i18n/routing';
-import { SquaresFour, Book, Trophy, Users, Gear } from '@phosphor-icons/react';
+import { SquaresFour, Book, Trophy, Users, Gear, User } from '@phosphor-icons/react';
 import { cn } from '@/lib/utils';
 
 export function NavRail() {
@@ -43,11 +43,30 @@ export function NavRail() {
         })}
       </div>
 
+      {/* Profile Icon - above settings */}
+      <Link
+        href="/profile"
+        className={cn(
+          'w-8 h-8 border border-transparent flex items-center justify-center relative transition-all hover:border-ink-primary hover:bg-[rgba(13,20,18,0.05)] mt-auto',
+          pathname?.includes('/profile') && 'border-ink-primary bg-[rgba(13,20,18,0.05)]'
+        )}
+        title="Profile"
+      >
+        <User
+          size={18}
+          className="text-ink-primary"
+          weight={pathname?.includes('/profile') ? 'fill' : 'regular'}
+        />
+        {pathname?.includes('/profile') && (
+          <div className="absolute -right-px -top-px w-1 h-1 bg-ink-primary" />
+        )}
+      </Link>
+
       {/* Settings at bottom */}
       <Link
         href="/settings"
         className={cn(
-          'w-8 h-8 border border-transparent flex items-center justify-center relative transition-all hover:border-ink-primary hover:bg-[rgba(13,20,18,0.05)] mt-auto mb-6',
+          'w-8 h-8 border border-transparent flex items-center justify-center relative transition-all hover:border-ink-primary hover:bg-[rgba(13,20,18,0.05)] mb-6',
           pathname === '/settings' && 'border-ink-primary bg-[rgba(13,20,18,0.05)]'
         )}
         title="Settings"
