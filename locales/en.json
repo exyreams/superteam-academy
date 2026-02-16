@@ -113,5 +113,28 @@
       "title": "LAST ACCESSED",
       "resume": "RESUME MODULE"
     }
+  },
+  "CourseDetail": {
+    "header": {
+      "label": "Course Detail"
+    },
+    "metadata": {
+      "instructor": "Instructor",
+      "duration": "Duration",
+      "difficulty": "Difficulty"
+    },
+    "xpBounty": "XP Bounty",
+    "buttons": {
+      "enroll": "ENROLL NOW",
+      "continue": "CONTINUE COURSE"
+    },
+    "curriculum": {
+      "title": "Curriculum",
+      "completion": "COMPLETION"
+    },
+    "reviews": {
+      "title": "Student Feedback",
+      "viewAll": "VIEW ALL REVIEWS"
+    }
   }
 }

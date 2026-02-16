@@ -38,7 +38,7 @@ export function CuratedPaths({ paths }: CuratedPathsProps) {
           return (
             <Link
               key={path.id}
-              href={`/courses/paths/${path.slug}`}
+              href={`/courses/${path.slug}`}
               className="border border-ink-secondary bg-bg-base hover:border-ink-primary hover:shadow-[4px_4px_0_rgba(13,20,18,0.1)] hover:translate-x-[-2px] hover:translate-y-[-2px] transition-all relative group"
             >
               {/* Corner accents */}

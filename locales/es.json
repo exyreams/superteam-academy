@@ -113,5 +113,28 @@
       "title": "ÚLTIMO ACCESO",
       "resume": "REANUDAR MÓDULO"
     }
+  },
+  "CourseDetail": {
+    "header": {
+      "label": "Detalle del Curso"
+    },
+    "metadata": {
+      "instructor": "Instructor",
+      "duration": "Duración",
+      "difficulty": "Dificultad"
+    },
+    "xpBounty": "Recompensa XP",
+    "buttons": {
+      "enroll": "INSCRIBIRSE AHORA",
+      "continue": "CONTINUAR CURSO"
+    },
+    "curriculum": {
+      "title": "Currículo",
+      "completion": "COMPLETADO"
+    },
+    "reviews": {
+      "title": "Comentarios de Estudiantes",
+      "viewAll": "VER TODOS LOS COMENTARIOS"
+    }
   }
 }
