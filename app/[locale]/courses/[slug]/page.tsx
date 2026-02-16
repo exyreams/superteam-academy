@@ -36,9 +36,8 @@ export default function CourseDetailPage() {
 
           <ModuleList
             modules={course.modules}
-            totalLessons={course.totalLessons}
-            completedLessons={course.completedLessons}
             progress={course.progress}
+            courseSlug={course.slug}
           />
 
           {/* Bottom spacing */}

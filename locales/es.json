@@ -136,5 +136,17 @@
       "title": "Comentarios de Estudiantes",
       "viewAll": "VER TODOS LOS COMENTARIOS"
     }
+  },
+  "Lesson": {
+    "reference": "REFERENCIA",
+    "needHint": "¿NECESITAS PISTA?",
+    "ago": "atrás",
+    "autosaved": "AUTOGUARDADO",
+    "solution": "SOLUCIÓN",
+    "output": "SALIDA",
+    "runTests": "EJECUTAR PRUEBAS",
+    "module": "MÓDULO",
+    "previous": "ANTERIOR",
+    "nextLesson": "SIGUIENTE LECCIÓN"
   }
 }

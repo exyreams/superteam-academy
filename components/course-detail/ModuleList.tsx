@@ -2,18 +2,18 @@
 
 import { useTranslations } from 'next-intl';
 import { useState } from 'react';
-import { CaretDown, CheckSquare, Square, Lock } from '@phosphor-icons/react';
+import { CaretDownIcon, CheckSquareIcon, SquareIcon, LockIcon } from '@phosphor-icons/react';
 import { cn } from '@/lib/utils';
+import { Link } from '@/i18n/routing';
 import type { Module } from '@/lib/data/course-detail';
 
 interface ModuleListProps {
   modules: Module[];
-  totalLessons: number;
-  completedLessons: number;
   progress: number;
+  courseSlug: string;
 }
 
-export function ModuleList({ modules, progress }: ModuleListProps) {
+export function ModuleList({ modules, progress, courseSlug }: ModuleListProps) {
   const t = useTranslations('CourseDetail');
   const [expandedModules, setExpandedModules] = useState<string[]>(['mod-1', 'mod-2']);
 
@@ -66,9 +66,9 @@ export function ModuleList({ modules, progress }: ModuleListProps) {
                   MODULE {module.number.toString().padStart(2, '0')}: {module.title}
                 </span>
                 {isLocked ? (
-                  <Lock size={16} className="text-ink-primary" />
+                  <LockIcon size={16} className="text-ink-primary" />
                 ) : (
-                  <CaretDown
+                  <CaretDownIcon
                     size={16}
                     className={cn(
                       'text-ink-primary transition-transform',
@@ -82,18 +82,19 @@ export function ModuleList({ modules, progress }: ModuleListProps) {
               {isExpanded && !isLocked && (
                 <div className="mt-3">
                   {module.lessons.map((lesson, index) => (
-                    <div
+                    <Link
                       key={lesson.id}
+                      href={`/courses/${courseSlug}/lessons/${lesson.id}`}
                       className={cn(
-                        'flex items-center justify-between py-2',
+                        'flex items-center justify-between py-2 hover:bg-[rgba(13,20,18,0.05)] transition-colors cursor-pointer',
                         index < module.lessons.length - 1 && 'border-b border-dashed border-ink-secondary/30'
                       )}
                     >
                       <div className="flex items-center gap-3">
                         {lesson.completed ? (
-                          <CheckSquare size={14} weight="fill" className="text-ink-primary" />
+                          <CheckSquareIcon size={14} weight="fill" className="text-ink-primary" />
                         ) : (
-                          <Square size={14} className="text-ink-primary" />
+                          <SquareIcon size={14} className="text-ink-primary" />
                         )}
                         <span className="text-[13px]">
                           {module.number}.{index + 1} {lesson.title}
@@ -102,7 +103,7 @@ export function ModuleList({ modules, progress }: ModuleListProps) {
                       <span className="text-[10px] uppercase tracking-widest text-ink-secondary">
                         {lesson.duration}
                       </span>
-                    </div>
+                    </Link>
                   ))}
                 </div>
               )}

@@ -136,5 +136,17 @@
       "title": "Feedback dos Alunos",
       "viewAll": "VER TODOS OS COMENTÁRIOS"
     }
+  },
+  "Lesson": {
+    "reference": "REFERÊNCIA",
+    "needHint": "PRECISA DE DICA?",
+    "ago": "atrás",
+    "autosaved": "SALVO AUTOMATICAMENTE",
+    "solution": "SOLUÇÃO",
+    "output": "SAÍDA",
+    "runTests": "EXECUTAR TESTES",
+    "module": "MÓDULO",
+    "previous": "ANTERIOR",
+    "nextLesson": "PRÓXIMA LIÇÃO"
   }
 }

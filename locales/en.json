@@ -136,5 +136,17 @@
       "title": "Student Feedback",
       "viewAll": "VIEW ALL REVIEWS"
     }
+  },
+  "Lesson": {
+    "reference": "REFERENCE",
+    "needHint": "NEED A HINT?",
+    "ago": "ago",
+    "autosaved": "AUTOSAVED",
+    "solution": "SOLUTION",
+    "output": "OUTPUT",
+    "runTests": "RUN TESTS",
+    "module": "MODULE",
+    "previous": "PREVIOUS",
+    "nextLesson": "NEXT LESSON"
   }
 }
