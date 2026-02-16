@@ -144,7 +144,7 @@ export const mockLearningPaths: LearningPath[] = [
     track: 'beginner',
     title: 'SOLANA FUNDAMENTALS',
     description: 'Complete introduction to the Solana ecosystem. From wallet basics to your first on-chain program.',
-    icon: 'Layers',
+    icon: 'Stack',
     modules: 12,
     duration: '~24 HOURS',
     xp: 1200,

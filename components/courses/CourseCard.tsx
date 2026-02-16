@@ -2,7 +2,7 @@
 
 import { Course } from '@/lib/data/courses';
 import { Link } from '@/i18n/routing';
-import { FileCode, Box, Coins, ShieldCheck, Laptop, Lock } from 'lucide-react';
+import { FileCode, Package, Coins, ShieldCheck, Desktop, Lock } from '@phosphor-icons/react';
 import { useTranslations } from 'next-intl';
 
 interface CourseCardProps {
@@ -33,13 +33,13 @@ export function CourseCard({ course }: CourseCardProps) {
       case 'rust':
         return <FileCode size={size} className={className} />;
       case 'core':
-        return <Box size={size} className={className} />;
+        return <Package size={size} className={className} />;
       case 'spl':
         return <Coins size={size} className={className} />;
       case 'security':
         return <ShieldCheck size={size} className={className} />;
       case 'web3':
-        return <Laptop size={size} className={className} />;
+        return <Desktop size={size} className={className} />;
       default:
         return <Lock size={size} className={className} />;
     }

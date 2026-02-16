@@ -1,7 +1,7 @@
 'use client';
 
 import { LastAccessedCourse } from '@/lib/data/courses';
-import { CheckSquare, Square } from 'lucide-react';
+import { CheckSquare, Square } from '@phosphor-icons/react';
 import { useTranslations } from 'next-intl';
 import { Button } from '@/components/ui/button';
 import { Link } from '@/i18n/routing';

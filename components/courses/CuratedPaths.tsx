@@ -2,7 +2,7 @@
 
 import { useTranslations } from 'next-intl';
 import { LearningPath } from '@/lib/data/courses';
-import { Layers, Cpu } from 'lucide-react';
+import { Stack, Cpu } from '@phosphor-icons/react';
 import { Link } from '@/i18n/routing';
 import { Button } from '@/components/ui/button';
 
@@ -14,11 +14,11 @@ export function CuratedPaths({ paths }: CuratedPathsProps) {
   const t = useTranslations('Courses');
 
   const getIcon = (iconName: string) => {
-    const icons: Record<string, typeof Layers> = {
-      Layers,
+    const icons: Record<string, typeof Stack> = {
+      Stack,
       Cpu,
     };
-    return icons[iconName] || Layers;
+    return icons[iconName] || Stack;
   };
 
   return (
@@ -45,18 +45,18 @@ export function CuratedPaths({ paths }: CuratedPathsProps) {
               <div className="absolute -top-px -left-px w-2 h-2 border-t-2 border-l-2 border-ink-primary" />
               <div className="absolute -bottom-px -right-px w-2 h-2 border-b-2 border-r-2 border-ink-primary" />
 
-              <div className="grid grid-cols-[1.2fr_1fr] min-h-[200px]">
+              <div className="grid grid-cols-[1.2fr_1fr] h-full">
                 {/* Visual */}
                 <div className="bg-[rgba(92,110,106,0.05)] border-r border-ink-secondary relative flex items-center justify-center bg-[linear-gradient(45deg,var(--ink-secondary)_1px,transparent_1px)] bg-size-[10px_10px]">
-                  <Icon size={48} className="text-ink-primary" />
+                  <Icon size={48} className="text-ink-primary" weight="fill" />
                   <div className="absolute bottom-3 left-3 text-[10px] uppercase tracking-widest text-ink-secondary">
                     REF: {path.ref}
                   </div>
                 </div>
 
                 {/* Content */}
-                <div className="p-6 flex flex-col justify-between">
-                  <div>
+                <div className="p-6 flex flex-col min-h-full">
+                  <div className="grow">
                     <div className="text-[10px] uppercase tracking-widest text-ink-secondary mb-1">
                       {t(`curatedPaths.tracks.${path.track}`)}
                     </div>
@@ -68,7 +68,7 @@ export function CuratedPaths({ paths }: CuratedPathsProps) {
                     </p>
                   </div>
 
-                  <div className="mt-4">
+                  <div className="mt-6">
                     <div className="flex gap-2 mb-3">
                       <span className="text-[10px] uppercase tracking-widest px-2 py-1 border border-ink-secondary">
                         {path.modules} {t('curatedPaths.modules')}

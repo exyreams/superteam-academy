@@ -1,6 +1,6 @@
 'use client';
 
-import { Grid3x3, Book, Trophy, Users, Settings } from 'lucide-react';
+import { SquaresFourIcon, BookIcon, TrophyIcon, UsersIcon, GearIcon } from '@phosphor-icons/react';
 import { Link } from '@/i18n/routing';
 import { usePathname } from '@/i18n/routing';
 import { cn } from '@/lib/utils';
@@ -9,10 +9,10 @@ export function NavRail() {
   const pathname = usePathname();
 
   const navItems = [
-    { href: '/dashboard', icon: Grid3x3, label: 'Dashboard' },
-    { href: '/courses', icon: Book, label: 'Courses' },
-    { href: '/leaderboard', icon: Trophy, label: 'Achievements' },
-    { href: '/community', icon: Users, label: 'Community' },
+    { href: '/dashboard', icon: SquaresFourIcon, label: 'Dashboard' },
+    { href: '/courses', icon: BookIcon, label: 'Courses' },
+    { href: '/leaderboard', icon: TrophyIcon, label: 'Achievements' },
+    { href: '/community', icon: UsersIcon, label: 'Community' },
   ];
 
   return (
@@ -33,7 +33,7 @@ export function NavRail() {
                 : 'text-ink-secondary hover:border-ink-primary hover:text-ink-primary hover:bg-[rgba(13,20,18,0.05)]'
             )}
           >
-            <Icon size={18} />
+            <Icon size={18} weight={isActive ? 'fill' : 'regular'} />
             {isActive && (
               <div className="absolute -right-px -top-px w-1 h-1 bg-ink-primary" />
             )}
@@ -52,7 +52,7 @@ export function NavRail() {
             : 'text-ink-secondary hover:border-ink-primary hover:text-ink-primary hover:bg-[rgba(13,20,18,0.05)]'
         )}
       >
-        <Settings size={18} />
+        <GearIcon size={18} />
       </Link>
     </aside>
   );

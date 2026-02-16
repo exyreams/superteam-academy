@@ -1,5 +1,4 @@
 import { mockCourses, mockLearningPaths, mockUserStats, mockLastAccessed } from '@/lib/data/courses';
-import { CourseSearch } from '@/components/courses/CourseSearch';
 import { CourseFilters } from '@/components/courses/CourseFilters';
 import { CuratedPaths } from '@/components/courses/CuratedPaths';
 import { CourseGrid } from '@/components/courses/CourseGrid';
@@ -38,7 +37,6 @@ export default function CoursesPage() {
               </div>
 
               {/* Search and Filters */}
-              <CourseSearch />
               <CourseFilters />
             </div>
 
