@@ -10,7 +10,7 @@ export function Partners() {
   return (
     <div className="px-12 py-10 border-b border-ink-primary flex justify-between items-center opacity-60 grayscale">
       {partners.map((partner) => (
-        <span key={partner} className="u-caps u-bold text-lg">
+        <span key={partner} className="uppercase tracking-widest font-bold text-lg">
           {partner}
         </span>
       ))}

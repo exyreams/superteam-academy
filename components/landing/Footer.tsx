@@ -17,11 +17,11 @@ export function Footer() {
           <div>
             <div className="flex items-center gap-4 mb-6">
               <Logo className="h-6 w-auto text-ink-primary" />
-              <span className="u-bold u-caps text-[13px] tracking-widest">
+              <span className="font-bold uppercase tracking-widest text-[13px]">
                 SUPERTEAM ACADEMY
               </span>
             </div>
-            <p className="u-dim text-[11px] max-w-[200px]">
+            <p className="text-ink-secondary text-[11px] max-w-[200px]">
               The decentralized university for the Solana ecosystem. Owned by
               the students.
             </p>
@@ -29,10 +29,10 @@ export function Footer() {
             <div className="mt-8">
               <Select defaultValue="en">
                 <SelectTrigger className="w-auto border-none p-0 h-auto bg-transparent text-ink-secondary hover:text-ink-primary font-mono text-[11px] uppercase ring-offset-0 focus:ring-0 flex justify-start gap-2 shadow-none data-placeholder:text-ink-secondary">
-                  <span className="u-bold text-ink-primary">Language:</span>{" "}
+                  <span className="font-bold text-ink-primary">Language:</span>{" "}
                   <SelectValue />
                 </SelectTrigger>
-                <SelectContent className="rounded-none border-ink-primary bg-bg-base font-mono">
+                <SelectContent>
                   <SelectItem value="en">English (EN)</SelectItem>
                   <SelectItem value="es">Español (ES)</SelectItem>
                   <SelectItem value="pt-br">Português (PT-BR)</SelectItem>
@@ -40,13 +40,13 @@ export function Footer() {
               </Select>
             </div>
           </div>
-          <div className="mt-8 u-tiny u-dim u-caps">
-            © 2026 SUPERTEAM_ACADEMY // ALL RIGHTS RESERVED
+          <div className="mt-8 text-[11px] text-ink-secondary uppercase tracking-widest">
+            © 2026 Superteam Academy // All rights reserved
           </div>
         </div>
 
         <div>
-          <h4 className="u-caps u-dim text-[11px] mb-6">Network</h4>
+          <h4 className="uppercase tracking-widest text-ink-secondary text-[11px] mb-6">Network</h4>
           <ul className="flex flex-col gap-3">
             {[
               "Course Catalog",
@@ -67,7 +67,7 @@ export function Footer() {
         </div>
 
         <div>
-          <h4 className="u-caps u-dim text-[11px] mb-6">Socials</h4>
+          <h4 className="uppercase tracking-widest text-ink-secondary text-[11px] mb-6">Socials</h4>
           <ul className="flex flex-col gap-3">
             {["Twitter / X", "Discord", "GitHub", "LinkedIn"].map((item) => (
               <li key={item}>

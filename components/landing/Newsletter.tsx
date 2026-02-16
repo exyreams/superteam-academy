@@ -5,8 +5,8 @@ export function Newsletter() {
     <section className="py-20 px-12 border-t border-ink-primary bg-bg-base">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
         <div>
-          <h4 className="u-caps u-bold text-2xl mb-4">Newsletter</h4>
-          <p className="u-dim text-sm max-w-md">
+          <h4 className="uppercase tracking-widest font-bold text-2xl mb-4">Newsletter</h4>
+          <p className="text-ink-secondary text-sm max-w-md">
             Get weekly technical updates and ecosystem opportunities delivered
             straight to your inbox.
           </p>

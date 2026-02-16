@@ -8,7 +8,7 @@ export function Navbar() {
     <nav className="h-16 border-b border-ink-primary flex items-center justify-between px-12 bg-bg-base sticky top-0 z-50">
       <div className="flex items-center gap-4">
         <Logo className="h-6 w-auto text-ink-primary" />
-        <span className="u-bold u-caps text-[13px] tracking-widest">
+        <span className="font-bold uppercase tracking-widest text-[13px]">
           SUPERTEAM ACADEMY
         </span>
       </div>

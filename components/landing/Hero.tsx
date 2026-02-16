@@ -6,10 +6,10 @@ export function Hero() {
   return (
     <header className="px-12 py-[120px] border-b border-ink-primary grid grid-cols-1 lg:grid-cols-2 gap-16 relative">
       <div className="flex flex-col justify-center">
-        <span className="bg-ink-primary text-bg-base inline-block px-3 py-1 mb-4 self-start u-tiny u-caps">
+        <span className="bg-ink-primary text-bg-base inline-block px-3 py-1 mb-4 self-start text-[11px] uppercase tracking-widest">
           Terminal Access Granted
         </span>
-        <h1 className="u-display text-[120px] mb-6 leading-[0.9]">
+        <h1 className="font-display font-bold leading-[0.9] -tracking-[0.02em] text-[120px] mb-6">
           FORGE YOUR
           <br />
           FUTURE ON

@@ -15,10 +15,10 @@ export function StatsStrip() {
             index !== stats.length - 1 ? "md:border-r" : ""
           } ${index % 2 === 0 ? "border-r md:border-r-0" : ""}`}
         >
-          <span className="block u-tiny text-ink-secondary u-caps mb-2">
+          <span className="block text-[11px] text-ink-secondary uppercase tracking-widest mb-2">
             {stat.label}
           </span>
-          <span className="block u-display text-[48px]">{stat.value}</span>
+          <span className="block font-display font-bold leading-[0.9] -tracking-[0.02em] text-[48px]">{stat.value}</span>
         </div>
       ))}
     </div>

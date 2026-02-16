@@ -30,14 +30,14 @@ export function LearningPaths() {
     <section className="px-12 py-20 border-b border-ink-primary">
       <div className="flex justify-between items-end mb-12">
         <div>
-          <span className="u-tiny u-caps u-dim block mb-2">
+          <span className="text-[11px] uppercase tracking-widest text-ink-secondary block mb-2">
             Available Operations
           </span>
-          <h2 className="u-display text-[48px]">LEARNING PATHS</h2>
+          <h2 className="font-display font-bold leading-[0.9] -tracking-[0.02em] text-[48px]">LEARNING PATHS</h2>
         </div>
         <Link
           href="#"
-          className="text-ink-primary text-[11px] font-bold u-caps hover:opacity-60 transition-opacity"
+          className="text-ink-primary text-[11px] font-bold uppercase tracking-widest hover:opacity-60 transition-opacity"
         >
           View all tracks —&gt;
         </Link>
@@ -52,9 +52,9 @@ export function LearningPaths() {
             {/* Corner Accent */}
             <div className="absolute -top-px -left-px w-3 h-3 border-t-2 border-l-2 border-ink-primary" />
 
-            <div className="u-tiny u-dim u-caps mb-2">{track.path}</div>
-            <h3 className="u-display text-[32px] mb-3">{track.title}</h3>
-            <p className="u-dim text-sm mb-6 min-h-[40px]">{track.desc}</p>
+            <div className="text-[11px] text-ink-secondary uppercase tracking-widest mb-2">{track.path}</div>
+            <h3 className="font-display font-bold leading-[0.9] -tracking-[0.02em] text-[32px] mb-3">{track.title}</h3>
+            <p className="text-ink-secondary text-sm mb-6 min-h-[40px]">{track.desc}</p>
 
             <div className="h-[2px] bg-line-grid my-6 flex gap-1">
               {[0, 1, 2, 3].map((step) => (
@@ -70,7 +70,7 @@ export function LearningPaths() {
               ))}
             </div>
 
-            <span className="u-tiny u-bold">{track.meta}</span>
+            <span className="text-[11px] font-bold">{track.meta}</span>
           </div>
         ))}
       </div>

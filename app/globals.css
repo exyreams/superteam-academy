@@ -170,27 +170,3 @@
   }
 }
 
-/* Custom utilities based on design */
-@utility u-caps {
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-}
-
-@utility u-bold {
-  font-weight: 700;
-}
-
-@utility u-dim {
-  color: var(--color-ink-secondary);
-}
-
-@utility u-display {
-  font-family: var(--font-display);
-  font-weight: 700;
-  line-height: 0.9;
-  letter-spacing: -0.02em;
-}
-
-@utility u-tiny {
-  font-size: 11px;
-}
