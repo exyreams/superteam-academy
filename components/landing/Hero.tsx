@@ -29,7 +29,7 @@ export function Hero() {
           className="font-display font-bold leading-[0.9] -tracking-[0.02em] text-[120px] mb-6"
         >
           {t.rich("title", {
-            br: () => <br />,
+            br: <br />,
           })}
         </motion.h1>
         

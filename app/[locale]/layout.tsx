@@ -20,7 +20,7 @@ export const metadata: Metadata = {
 
 import { ThemeProvider } from "@/components/theme-provider";
 import { WalletContextProvider } from "@/components/providers/WalletContextProvider";
-import { Toaster } from "sonner";
+import { Toaster } from "@/components/ui/sonner";
 
 import { NextIntlClientProvider } from 'next-intl';
 import { getMessages } from 'next-intl/server';
