@@ -9,7 +9,7 @@ const inputVariants = cva(
     variants: {
       variant: {
         default: "",
-        landing: "bg-transparent border-ink-primary rounded-none h-auto p-4 font-mono focus-visible:ring-0 focus-visible:border-ink-primary focus:bg-[rgba(13,20,18,0.02)] placeholder:text-ink-secondary/50",
+        landing: "bg-transparent border-border rounded-none h-auto p-4 font-mono focus-visible:ring-0 focus-visible:border-ink-primary focus:bg-[rgba(13,20,18,0.02)] placeholder:text-ink-secondary/50",
       },
     },
     defaultVariants: {

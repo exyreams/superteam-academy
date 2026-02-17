@@ -11,7 +11,7 @@ export function Hero() {
   const t = useTranslations("Hero");
 
   return (
-    <header className="px-12 py-[120px] border-b border-border grid grid-cols-1 lg:grid-cols-2 gap-16 relative">
+    <header className="px-12 py-[120px] border-b border-ink-secondary/20 dark:border-border grid grid-cols-1 lg:grid-cols-2 gap-16 relative">
       <div className="flex flex-col justify-center">
         <motion.span
           initial={{ opacity: 0, x: -20 }}
@@ -76,7 +76,7 @@ export function Hero() {
         initial={{ opacity: 0, scale: 0.95 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.8, delay: 0.3 }}
-        className="relative border border-border bg-[rgba(13,20,18,0.02)] flex items-center justify-center p-8 min-h-[400px]"
+        className="relative border border-ink-secondary/20 dark:border-border bg-[rgba(13,20,18,0.02)] flex items-center justify-center p-8 min-h-[400px]"
       >
         {/* Corner Accents with floating animation */}
         {[

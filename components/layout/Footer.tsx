@@ -1,7 +1,7 @@
 'use client';
 
 import { Logo } from "@/components/shared/logo";
-import { useTranslations } from "next-intl";
+import { useTranslations, useLocale } from "next-intl";
 import { Link, usePathname, useRouter } from "@/i18n/routing";
 
 import {
@@ -14,6 +14,7 @@ import {
 
 export function Footer() {
   const t = useTranslations("Footer");
+  const locale = useLocale();
   const router = useRouter();
   const pathname = usePathname();
 
@@ -22,7 +23,7 @@ export function Footer() {
   };
 
   return (
-    <footer className="bg-bg-base border-t border-border">
+    <footer className="bg-bg-surface border-t border-ink-secondary/20 dark:border-border">
       <div className="grid grid-cols-1 md:grid-cols-4 gap-12 px-12 py-20">
         <div className="md:col-span-2 flex flex-col justify-between">
           <div>
@@ -37,8 +38,8 @@ export function Footer() {
             </p>
 
             <div className="mt-8">
-              <Select defaultValue="en" onValueChange={handleLanguageChange}>
-                <SelectTrigger className="w-auto border-none p-0 h-auto bg-transparent text-ink-secondary hover:text-ink-primary font-mono text-[11px] uppercase ring-offset-0 focus:ring-0 flex justify-start gap-2 shadow-none data-placeholder:text-ink-secondary">
+              <Select value={locale} onValueChange={handleLanguageChange}>
+                <SelectTrigger className="w-auto border border-ink-secondary/20 dark:border-border px-3 py-1 h-auto bg-bg-base text-ink-secondary hover:text-ink-primary font-mono text-[11px] uppercase ring-offset-0 focus:ring-0 flex justify-start gap-2 shadow-sm rounded-none data-placeholder:text-ink-secondary">
                   <span className="font-bold text-ink-primary">{t("language")}</span>{" "}
                   <SelectValue />
                 </SelectTrigger>

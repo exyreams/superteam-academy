@@ -20,13 +20,13 @@ export function Navbar() {
   }, []);
 
   return (
-    <nav className="h-16 border-b border-border flex items-center justify-between px-12 bg-bg-base sticky top-0 z-50">
-      <div className="flex items-center gap-4">
+    <nav className="h-16 border-b border-ink-secondary/20 dark:border-border flex items-center justify-center lg:justify-between px-12 bg-bg-surface sticky top-0 z-50">
+      <Link href="/" className="flex items-center gap-4 hover:opacity-80 transition-opacity">
         <Logo className="h-6 w-auto text-ink-primary" />
         <span className="font-bold uppercase tracking-widest text-[13px]">
           {t("brand")}
         </span>
-      </div>
+      </Link>
       <div className="flex gap-8">
         {[
           { label: t("links.catalog"), href: "/courses" },

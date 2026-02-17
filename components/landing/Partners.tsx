@@ -29,7 +29,7 @@ export function Partners() {
 
   return (
     <div 
-      className="border-b border-border overflow-hidden py-10 flex relative z-0 bg-bg-base"
+      className="border-b border-ink-secondary/20 dark:border-border overflow-hidden py-10 flex relative z-0 bg-bg-base"
       style={{ maskImage: 'linear-gradient(to right, transparent, black 20%, black 80%, transparent)' }}
     >
       <motion.div

@@ -53,7 +53,7 @@ export function StatsStrip() {
   ];
 
   return (
-    <div className="grid grid-cols-2 md:grid-cols-4 border-b border-border bg-bg-base">
+    <div className="grid grid-cols-2 md:grid-cols-4 border-b border-ink-secondary/20 dark:border-border bg-bg-base">
       {stats.map((stat, index) => (
         <motion.div
           key={stat.label}
@@ -61,7 +61,7 @@ export function StatsStrip() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5, delay: index * 0.1 }}
-          className={`p-8 text-center border-b md:border-b-0 border-border ${
+          className={`p-8 text-center border-b md:border-b-0 border-ink-secondary/20 dark:border-border ${
             index !== stats.length - 1 ? "md:border-r" : ""
           } ${index % 2 === 0 ? "border-r md:border-r-0" : ""}`}
         >

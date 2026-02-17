@@ -1,4 +1,8 @@
 {
+  "Wallet": {
+    "title": "Conectar Carteira",
+    "detected": "DETECTADO"
+  },
   "Hero": {
     "badge": "Acesso ao Terminal Concedido",
     "title": "FORJE SEU{br}FUTURO NA{br}SOLANA",

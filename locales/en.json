@@ -248,5 +248,9 @@
     "activityFeed": {
       "title": "Activity Feed"
     }
+  },
+  "Wallet": {
+    "title": "Connect Wallet",
+    "detected": "DETECTED"
   }
 }

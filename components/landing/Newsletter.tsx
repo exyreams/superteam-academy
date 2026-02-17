@@ -4,7 +4,7 @@ import { Input } from "@/components/ui/input";
 
 export function Newsletter() {
   return (
-    <section className="py-20 px-12 border-t border-border bg-bg-base">
+    <section className="py-20 px-12 border-t border-ink-secondary/20 dark:border-border bg-bg-base">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
         <div>
           <h4 className="uppercase tracking-widest font-bold text-2xl mb-4">Newsletter</h4>

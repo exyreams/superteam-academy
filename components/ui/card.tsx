@@ -9,7 +9,7 @@ const cardVariants = cva(
     variants: {
       variant: {
         default: "flex flex-col gap-6 py-6",
-        landing: "bg-[rgba(255,255,255,0.2)] border-ink-secondary rounded-none flex flex-col relative transition-all hover:border-ink-primary hover:shadow-[4px_4px_0_rgba(13,20,18,0.1)] hover:translate-x-[-2px] hover:translate-y-[-2px]",
+        landing: "bg-[rgba(255,255,255,0.2)] border-border rounded-none flex flex-col relative transition-all hover:border-ink-primary hover:shadow-[4px_4px_0_rgba(13,20,18,0.1)] hover:translate-x-[-2px] hover:translate-y-[-2px]",
       },
     },
     defaultVariants: {
