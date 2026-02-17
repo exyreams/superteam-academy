@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { RotateCcw } from 'lucide-react';
+import { ArrowCounterClockwise as ArrowCounterClockwiseIcon } from '@phosphor-icons/react';
 
 interface TypingAnimationProps {
   text: string;
@@ -45,7 +45,7 @@ export function TypingAnimation({ text, className = '', syntaxHighlight = false 
         className="absolute top-2 right-2 p-1.5 rounded-full bg-ink-primary/10 hover:bg-ink-primary/20 text-ink-primary opacity-0 group-hover:opacity-100 transition-opacity z-20"
         title="Reset Code"
       >
-        <RotateCcw size={14} />
+        <ArrowCounterClockwiseIcon size={14} />
       </button>
 
       {/* Interactive Textarea (Transparent Text, Visible Cursor) */}

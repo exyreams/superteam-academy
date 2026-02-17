@@ -1,6 +1,6 @@
 'use client';
 
-import { CheckIcon, XIcon, CheckCircleIcon } from 'lucide-react';
+import { Check as CheckIcon, X as XIcon, CheckCircle as CheckCircleIcon } from '@phosphor-icons/react';
 import { Lesson } from '@/lib/data/lesson';
 import ReactMarkdown from 'react-markdown';
 // import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';

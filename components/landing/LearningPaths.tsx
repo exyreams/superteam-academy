@@ -4,6 +4,7 @@ import { motion } from 'framer-motion';
 import { cn } from "@/lib/utils";
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/routing";
+import { CaretRightIcon } from "@phosphor-icons/react";
 import { Card } from "@/components/ui/card";
 
 export function LearningPaths() {
@@ -41,9 +42,9 @@ export function LearningPaths() {
         </div>
         <Link
           href="/courses"
-          className="text-ink-primary text-[11px] font-bold uppercase tracking-widest hover:opacity-60 transition-opacity"
+          className="text-ink-primary text-[11px] font-bold uppercase tracking-widest hover:opacity-60 transition-opacity flex items-center gap-1"
         >
-          {t("viewAll")}
+          {t("viewAll")} <CaretRightIcon size={14} />
         </Link>
       </motion.div>
 

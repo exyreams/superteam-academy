@@ -5,7 +5,7 @@ import { Lesson } from '@/lib/data/lesson';
 import { ChallengeHeader } from './ChallengeHeader';
 import { ChallengeEditor } from './ChallengeEditor';
 import { ChallengeSidebar } from './ChallengeSidebar';
-import { PlayIcon, RefreshCwIcon, TrophyIcon } from 'lucide-react';
+import { Play as PlayIcon, ArrowsClockwise as RefreshCwIcon, Trophy as TrophyIcon } from '@phosphor-icons/react';
 import { Button } from '@/components/ui/button';
 import { NavRail } from '@/components/layout/NavRail';
 

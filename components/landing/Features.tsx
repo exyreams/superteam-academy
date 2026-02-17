@@ -1,15 +1,15 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { Cpu, Terminal } from "lucide-react";
+import { ShieldCheck as ShieldCheckIcon, TerminalWindow as TerminalWindowIcon } from "@phosphor-icons/react";
 import { useTranslations } from "next-intl";
 
 export function Features() {
   const t = useTranslations("Features");
 
   const features = [
-    { icon: Cpu, key: 'proofs' },
-    { icon: Terminal, key: 'compiler' },
+    { icon: ShieldCheckIcon, key: 'proofs' },
+    { icon: TerminalWindowIcon, key: 'compiler' },
   ];
 
   return (

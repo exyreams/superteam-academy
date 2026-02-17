@@ -47,7 +47,7 @@
   "LearningPaths": {
     "subtitle": "Available Operations",
     "title": "LEARNING PATHS",
-    "viewAll": "View all tracks —>",
+    "viewAll": "View all tracks",
     "tracks": {
       "beginner": {
         "path": "Path 01 // Beginner",

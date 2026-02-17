@@ -3,6 +3,7 @@
 import { Button } from "@/components/ui/button";
 import { ModeToggle } from "@/components/theme-toggle";
 import { Logo } from "@/components/shared/logo";
+import { WalletButton } from "@/components/shared/WalletButton";
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/routing";
 
@@ -47,6 +48,7 @@ export function Navbar() {
         >
           <Link href="/courses">{t("cta.start")}</Link>
         </Button>
+        <WalletButton />
         <ModeToggle />
       </div>
     </nav>

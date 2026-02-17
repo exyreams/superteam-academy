@@ -1,7 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { ArrowRight } from "lucide-react";
+import { ArrowRight as ArrowRightIcon } from "@phosphor-icons/react";
 import { Button } from "@/components/ui/button";
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/routing";
@@ -55,7 +55,7 @@ export function Hero() {
               className="rounded-none uppercase text-xs font-bold px-8 py-4 h-auto font-mono gap-3"
             >
               <Link href="/courses">
-                {t("explore")} <ArrowRight size={16} />
+                {t("explore")} <ArrowRightIcon size={16} />
               </Link>
             </Button>
           </motion.div>

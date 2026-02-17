@@ -19,6 +19,8 @@ export const metadata: Metadata = {
 };
 
 import { ThemeProvider } from "@/components/theme-provider";
+import { WalletContextProvider } from "@/components/providers/WalletContextProvider";
+import { Toaster } from "sonner";
 
 import { NextIntlClientProvider } from 'next-intl';
 import { getMessages } from 'next-intl/server';
@@ -55,7 +57,10 @@ export default async function RootLayout({
             enableSystem
             disableTransitionOnChange
           >
-            {children}
+            <WalletContextProvider>
+              {children}
+            </WalletContextProvider>
+            <Toaster />
           </ThemeProvider>
         </NextIntlClientProvider>
       </body>
