@@ -1,4 +1,6 @@
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+
 
 export function Newsletter() {
   return (
@@ -12,10 +14,11 @@ export function Newsletter() {
           </p>
         </div>
         <div className="flex flex-col gap-4">
-          <input
+          <Input
+            variant="landing"
             type="email"
             placeholder="OPERATOR@EMAIL.COM"
-            className="bg-transparent border border-ink-primary p-4 w-full font-mono text-sm focus:outline-none focus:bg-[rgba(13,20,18,0.02)]"
+            className="w-full"
           />
           <Button
             variant="landingPrimary"

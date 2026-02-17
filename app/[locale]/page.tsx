@@ -1,4 +1,4 @@
-import { Navbar } from "@/components/landing/Navbar";
+import { Navbar } from "@/components/layout/Navbar";
 import { Hero } from "@/components/landing/Hero";
 import { StatsStrip } from "@/components/landing/StatsStrip";
 import { LearningPaths } from "@/components/landing/LearningPaths";
@@ -6,7 +6,7 @@ import { Partners } from "@/components/landing/Partners";
 import { Features } from "@/components/landing/Features";
 import { Testimonials } from "@/components/landing/Testimonials";
 import { Newsletter } from "@/components/landing/Newsletter";
-import { Footer } from "@/components/landing/Footer";
+import { Footer } from "@/components/layout/Footer";
 
 export default function Home() {
   return (
