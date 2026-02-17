@@ -35,8 +35,7 @@ export function Hero() {
           className="font-display font-bold leading-[0.9] -tracking-[0.02em] text-[60px] lg:text-[120px] mb-6"
         >
           {t.rich("title", {
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
-            br: <br key="hero-br" /> as any,
+            br: () => <br />,
           })}
         </motion.h1>
         

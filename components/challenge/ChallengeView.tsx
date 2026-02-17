@@ -62,12 +62,12 @@ export function ChallengeView({ lesson: initialLesson, courseSlug }: ChallengeVi
   };
 
   return (
-    <div className="flex h-screen bg-bg-base font-mono text-ink-primary overflow-hidden">
+    <div className="flex h-auto min-h-screen lg:h-screen bg-bg-base font-mono text-ink-primary overflow-visible lg:overflow-hidden">
       {/* Grid Layout: NavRail (60px) | Main Stage (1fr) | Sidebar (400px) */}
-      <div className="grid grid-cols-[60px_1fr_400px] grid-rows-[48px_1fr] h-full w-full">
+      <div className="grid grid-cols-1 lg:grid-cols-[60px_1fr_400px] lg:grid-rows-[48px_1fr] h-auto min-h-screen lg:h-full w-full">
         
         {/* Top Bar (Header) - Spans all columns */}
-        <div className="col-span-3 pb-px bg-border"> {/* border-bottom hack */}
+        <div className="col-span-1 lg:col-span-3 pb-px bg-border"> {/* border-bottom hack */}
            <ChallengeHeader 
              moduleTitle={lesson.moduleTitle || 'Unknown Module'} 
              lessonTitle={lesson.title} 
@@ -76,16 +76,16 @@ export function ChallengeView({ lesson: initialLesson, courseSlug }: ChallengeVi
         </div>
 
         {/* Nav Rail */}
-        <div className="row-start-2 border-r border-border bg-bg-base">
+        <div className="hidden lg:block row-start-2 border-r border-border bg-bg-base">
           <NavRail />
         </div>
 
         {/* Main Stage (Middle Column) */}
-        <div className="row-start-2 flex flex-col min-w-0 border-r border-border bg-bg-base relative">
+        <div className="row-start-auto lg:row-start-2 flex flex-col min-w-0 border-r border-border bg-bg-base relative h-[600px] lg:h-full">
             {/* Challenge Meta */}
             <div className="p-6 bg-ink-primary/5 border-b border-border">
               <span className="text-[10px] uppercase font-bold tracking-widest text-ink-secondary block mb-1">Challenge // Hard</span>
-              <h1 className="font-display font-bold text-[24px] uppercase leading-none tracking-tight truncate">
+              <h1 className="font-display font-bold text-2xl lg:text-[24px] uppercase leading-none tracking-tight truncate">
                 {lesson.title}
               </h1>
             </div>
@@ -130,7 +130,7 @@ export function ChallengeView({ lesson: initialLesson, courseSlug }: ChallengeVi
         </div>
 
         {/* Sidebar (Right Column) */}
-        <div className="row-start-2 border-l border-border bg-bg-base overflow-hidden flex flex-col h-full">
+        <div className="row-start-auto lg:row-start-2 border-t lg:border-t-0 lg:border-l border-border bg-bg-base overflow-visible lg:overflow-hidden flex flex-col h-auto lg:h-full">
           <ChallengeSidebar 
             lesson={lesson} 
             onComplete={handleComplete}

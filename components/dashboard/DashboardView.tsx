@@ -31,9 +31,9 @@ export function DashboardView({
   return (
     <div className="min-h-screen bg-bg-base">
       {/* App Shell Grid */}
-      <div className="grid grid-cols-[60px_1fr_350px] grid-rows-[48px_1fr] h-screen max-w-full">
+      <div className="grid grid-cols-1 lg:grid-cols-[60px_1fr_350px] lg:grid-rows-[48px_1fr] min-h-screen lg:h-screen lg:overflow-hidden max-w-full">
         {/* Top Bar - spans all columns */}
-        <div className="col-span-3">
+        <div className="col-span-1 lg:col-span-3">
           <TopBar />
         </div>
 
@@ -41,7 +41,7 @@ export function DashboardView({
         <NavRail />
 
         {/* Main Stage */}
-        <section className="p-8 overflow-y-auto flex flex-col gap-10">
+        <section className="p-4 lg:p-8 overflow-visible lg:overflow-y-auto flex flex-col gap-10">
           {/* Active Courses */}
           <div>
             <div className="flex justify-between items-end mb-6 border-b border-ink-secondary/20 dark:border-border pb-2">
@@ -49,12 +49,12 @@ export function DashboardView({
                 <span className="bg-ink-primary text-bg-base px-2 py-1 text-[10px] uppercase tracking-widest inline-block mb-2">
                   Current Operations
                 </span>
-                <h2 className="font-display text-[32px] leading-none -tracking-wider">
+                <h2 className="font-display text-2xl lg:text-[32px] leading-none -tracking-wider">
                   ACTIVE COURSES
                 </h2>
               </div>
             </div>
-            <div className="grid grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {activeCourses.map((course) => (
                 <CourseCard key={course.courseId} course={course} />
               ))}
@@ -68,12 +68,12 @@ export function DashboardView({
                 <span className="bg-ink-primary text-bg-base px-2 py-1 text-[10px] uppercase tracking-widest inline-block mb-2">
                   Next Targets
                 </span>
-                <h2 className="font-display text-[32px] leading-none -tracking-wider">
+                <h2 className="font-display text-2xl lg:text-[32px] leading-none -tracking-wider">
                   RECOMMENDED TRACKS
                 </h2>
               </div>
             </div>
-            <div className="grid grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               {recommendedCourses.map((course) => (
                 <RecommendedCourseCard key={course.id} course={course} />
               ))}
@@ -87,7 +87,7 @@ export function DashboardView({
                 <span className="bg-ink-primary text-bg-base px-2 py-1 text-[10px] uppercase tracking-widest inline-block mb-2">
                   Log History
                 </span>
-                <h2 className="font-display text-[32px] leading-none -tracking-wider">
+                <h2 className="font-display text-2xl lg:text-[32px] leading-none -tracking-wider">
                   RECENT ACTIVITY
                 </h2>
               </div>
@@ -97,7 +97,7 @@ export function DashboardView({
         </section>
 
         {/* Context Panel (Right Sidebar) */}
-        <aside className="border-l border-ink-secondary/20 dark:border-border bg-bg-base p-6 flex flex-col gap-8 overflow-y-auto">
+        <aside className="border-t lg:border-t-0 lg:border-l border-ink-secondary/20 dark:border-border bg-bg-base p-6 flex flex-col gap-8 overflow-visible lg:overflow-y-auto">
           <UserHUD stats={userStats} />
           
           <StreakCalendar streak={userStats.streak} />

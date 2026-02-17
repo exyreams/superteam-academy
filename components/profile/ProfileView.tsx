@@ -32,9 +32,9 @@ export function ProfileView({
   return (
     <div className="min-h-screen bg-bg-base">
       {/* App Shell Grid */}
-      <div className="grid grid-cols-[60px_1fr_400px] grid-rows-[48px_1fr] h-screen max-w-full">
+      <div className="grid grid-cols-1 lg:grid-cols-[60px_1fr_400px] lg:grid-rows-[48px_1fr] min-h-screen lg:h-screen lg:overflow-hidden max-w-full">
         {/* Top Bar - spans all columns */}
-        <div className="col-span-3">
+        <div className="col-span-1 lg:col-span-3">
           <TopBar />
         </div>
 
@@ -42,12 +42,12 @@ export function ProfileView({
         <NavRail />
 
         {/* Main Stage */}
-        <section className="p-8 overflow-y-auto flex flex-col gap-10">
+        <section className="p-4 lg:p-8 overflow-visible lg:overflow-y-auto flex flex-col gap-10">
           {/* Profile Hero */}
           <ProfileHero profile={profile} />
 
           {/* Skill Matrix */}
-          <div className="grid grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <SkillRadar skills={skillRadar} />
             <BadgeShowcase achievements={achievements} />
           </div>
@@ -59,12 +59,12 @@ export function ProfileView({
                 <span className="bg-ink-primary text-bg-base px-2 py-1 text-[10px] uppercase tracking-widest inline-block mb-2">
                   ON-CHAIN_PROOFS
                 </span>
-                <h2 className="font-display text-[32px] leading-none -tracking-wider">
+                <h2 className="font-display text-2xl lg:text-[32px] leading-none -tracking-wider">
                   EVOLVING cNFTs
                 </h2>
               </div>
             </div>
-            <div className="grid grid-cols-3 gap-5">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
               {credentials.map((credential) => (
                 <CredentialCard key={credential.id} credential={credential} />
               ))}
@@ -73,7 +73,7 @@ export function ProfileView({
         </section>
 
         {/* Context Panel (Right Sidebar) */}
-        <aside className="border-l border-border bg-bg-base p-6 flex flex-col gap-8 overflow-y-auto">
+        <aside className="border-t lg:border-t-0 lg:border-l border-border bg-bg-base p-6 flex flex-col gap-8 overflow-visible lg:overflow-y-auto">
           {/* Quick Stats */}
           <div className="border border-border p-4 relative">
             <span className="absolute -top-2.5 left-3 bg-bg-base px-2 text-[10px] uppercase tracking-widest font-bold">

@@ -24,9 +24,9 @@ export default async function LessonViewPage({ params }: { params: Promise<{ slu
   return (
     <div className="min-h-screen bg-bg-base">
       {/* App Shell Grid */}
-      <div className="grid grid-cols-[60px_280px_1fr] grid-rows-[48px_1fr] h-screen max-w-full">
+      <div className="grid grid-cols-1 lg:grid-cols-[60px_280px_1fr] lg:grid-rows-[48px_1fr] min-h-screen lg:h-screen lg:overflow-hidden max-w-full">
         {/* Top Bar - spans all columns */}
-        <div className="col-span-3">
+        <div className="col-span-1 lg:col-span-3">
           <TopBar />
         </div>
 
@@ -34,28 +34,30 @@ export default async function LessonViewPage({ params }: { params: Promise<{ slu
         <NavRail />
 
         {/* Module Sidebar */}
-        <ModuleOverview
-          moduleNumber={lesson.moduleNumber}
-          moduleTitle={lesson.moduleTitle}
-          lessons={moduleLessons}
-          courseSlug={slug || 'solana-fundamentals'}
-        />
+        <div className="hidden lg:block h-full overflow-hidden border-r border-ink-secondary/20 dark:border-border bg-bg-base">
+            <ModuleOverview
+            moduleNumber={lesson.moduleNumber}
+            moduleTitle={lesson.moduleTitle}
+            lessons={moduleLessons}
+            courseSlug={slug || 'solana-fundamentals'}
+            />
+        </div>
 
         {/* Main Content Area - Split View */}
-        <main className="grid grid-cols-2 h-full overflow-hidden relative">
+        <main className="flex flex-col lg:grid lg:grid-cols-2 h-auto lg:h-full overflow-visible lg:overflow-hidden relative">
           {/* Resizer Divider */}
-          <div className="absolute left-1/2 top-0 bottom-0 w-px bg-ink-secondary z-10 cursor-col-resize" />
+          <div className="hidden lg:block absolute left-1/2 top-0 bottom-0 w-px bg-ink-secondary z-10 cursor-col-resize" />
 
           {/* Left: Lesson Content */}
-          <div className="overflow-hidden flex flex-col">
-            <div className="flex-1 overflow-y-auto">
+          <div className="overflow-visible lg:overflow-hidden flex flex-col h-auto lg:h-full">
+            <div className="flex-1 overflow-visible lg:overflow-y-auto">
               <LessonContent
                 reference={lesson.ref}
                 title={lesson.title}
                 content={lesson.content}
                 hints={lesson.hints}
               />
-              <div className="px-12 pb-12">
+              <div className="px-6 lg:px-12 pb-12">
                 <LessonNavigation
                   courseSlug={slug || 'solana-fundamentals'}
                   prevLessonId={lesson.prevLessonId}
@@ -67,7 +69,7 @@ export default async function LessonViewPage({ params }: { params: Promise<{ slu
           </div>
 
           {/* Right: Code Editor */}
-          <div className="overflow-hidden">
+          <div className="overflow-hidden h-[500px] lg:h-auto border-t lg:border-t-0 border-ink-secondary/20 dark:border-border">
             <CodeEditor
               initialCode={lesson.codeTemplate}
               solution={lesson.solution}
