@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { ArrowCounterClockwise as ArrowCounterClockwiseIcon } from '@phosphor-icons/react';
+import { ArrowCounterClockwiseIcon } from '@phosphor-icons/react';
 
 interface TypingAnimationProps {
   text: string;
