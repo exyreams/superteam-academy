@@ -44,7 +44,7 @@ export function SettingsView({
         {/* Main Stage */}
         <section className="p-8 overflow-y-auto flex flex-col gap-12">
           {/* Section Header */}
-          <div className="border-b border-ink-primary pb-2">
+          <div className="border-b border-border pb-2">
             <span className="bg-ink-primary text-bg-base px-2 py-1 text-[10px] uppercase tracking-widest inline-block mb-2">
               User Configuration
             </span>
@@ -68,7 +68,7 @@ export function SettingsView({
         </section>
 
         {/* Context Panel (Right Sidebar) */}
-        <aside className="border-l border-ink-secondary bg-bg-base p-6 flex flex-col gap-8 overflow-y-auto">
+        <aside className="border-l border-border bg-bg-base p-6 flex flex-col gap-8 overflow-y-auto">
           <SyncStatus status={syncStatus} />
           <SystemNotices notices={systemNotices} />
           <SystemLog entries={systemLog} />

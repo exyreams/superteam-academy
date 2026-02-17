@@ -28,7 +28,10 @@ export function Partners() {
   const infinitePartners = [...partners, ...partners, ...partners, ...partners];
 
   return (
-    <div className="border-b border-ink-primary overflow-hidden py-10 flex relative z-0 bg-bg-base">
+    <div 
+      className="border-b border-border overflow-hidden py-10 flex relative z-0 bg-bg-base"
+      style={{ maskImage: 'linear-gradient(to right, transparent, black 20%, black 80%, transparent)' }}
+    >
       <motion.div
         className="flex gap-24 items-center whitespace-nowrap"
         animate={{

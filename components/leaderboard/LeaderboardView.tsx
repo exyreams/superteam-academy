@@ -37,7 +37,7 @@ export function LeaderboardView({ initialEntries, userStanding }: LeaderboardVie
         {/* Main Stage */}
         <section className="p-8 overflow-y-auto flex flex-col">
           {/* Section Header */}
-          <div className="flex justify-between items-end mb-6 border-b border-ink-primary pb-2">
+          <div className="flex justify-between items-end mb-6 border-b border-border pb-2">
             <div>
               <span className="bg-ink-primary text-bg-base px-2 py-1 text-[10px] uppercase tracking-widest inline-block mb-2">
                 Global Ranking
@@ -68,7 +68,7 @@ export function LeaderboardView({ initialEntries, userStanding }: LeaderboardVie
         </section>
 
         {/* Context Panel (Right Sidebar) */}
-        <aside className="border-l border-ink-secondary bg-bg-base p-6 flex flex-col gap-8 overflow-y-auto">
+        <aside className="border-l border-border bg-bg-base p-6 flex flex-col gap-8 overflow-y-auto">
           <UserStanding standing={userStanding} />
           
           <SeasonalPrizes />

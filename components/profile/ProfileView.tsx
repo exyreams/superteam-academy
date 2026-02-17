@@ -54,7 +54,7 @@ export function ProfileView({
 
           {/* Credentials */}
           <div>
-            <div className="flex justify-between items-end mb-6 border-b border-ink-primary pb-2">
+            <div className="flex justify-between items-end mb-6 border-b border-border pb-2">
               <div>
                 <span className="bg-ink-primary text-bg-base px-2 py-1 text-[10px] uppercase tracking-widest inline-block mb-2">
                   ON-CHAIN_PROOFS
@@ -73,9 +73,9 @@ export function ProfileView({
         </section>
 
         {/* Context Panel (Right Sidebar) */}
-        <aside className="border-l border-ink-secondary bg-bg-base p-6 flex flex-col gap-8 overflow-y-auto">
+        <aside className="border-l border-border bg-bg-base p-6 flex flex-col gap-8 overflow-y-auto">
           {/* Quick Stats */}
-          <div className="border border-ink-primary p-4 relative">
+          <div className="border border-border p-4 relative">
             <span className="absolute -top-2.5 left-3 bg-bg-base px-2 text-[10px] uppercase tracking-widest font-bold">
               QUICK_STATS
             </span>

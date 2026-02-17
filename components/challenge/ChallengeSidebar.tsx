@@ -14,11 +14,11 @@ interface ChallengeSidebarProps {
 
 export function ChallengeSidebar({ lesson, onComplete, isRunningTests }: ChallengeSidebarProps) {
   return (
-    <aside className="w-[400px] flex flex-col border-l border-ink-secondary bg-bg-base overflow-hidden">
+    <aside className="w-[400px] flex flex-col border-l border-border bg-bg-base overflow-hidden">
       {/* Objective Section */}
-      <div className="p-6 border-b border-ink-secondary bg-bg-base overflow-y-auto max-h-[40%] custom-scrollbar">
+      <div className="p-6 border-b border-border bg-bg-base overflow-y-auto max-h-[40%] custom-scrollbar">
         <span className="block text-[10px] uppercase font-bold tracking-widest mb-3">Objective</span>
-        <div className="bg-bg-base border border-ink-primary p-4 relative">
+        <div className="bg-bg-base border border-border p-4 relative">
           {/* Card Accent */}
           <div className="absolute -top-1.5 -left-1.5 w-2.5 h-2.5 bg-bg-base border-t border-l border-ink-primary" />
           
@@ -40,7 +40,7 @@ export function ChallengeSidebar({ lesson, onComplete, isRunningTests }: Challen
       </div>
 
       {/* Test Cases Section */}
-      <div className="flex-1 p-6 border-b border-ink-secondary bg-ink-primary/5 overflow-y-auto custom-scrollbar">
+      <div className="flex-1 p-6 border-b border-border bg-ink-primary/5 overflow-y-auto custom-scrollbar">
          <span className="block text-[10px] uppercase font-bold tracking-widest mb-3">Test Cases</span>
          <div className="space-y-3">
             {lesson.testCases?.map((test, i) => (
@@ -74,7 +74,7 @@ export function ChallengeSidebar({ lesson, onComplete, isRunningTests }: Challen
       </div>
 
       {/* Output Panel & Actions */}
-      <div className="flex flex-col border-t border-ink-secondary bg-ink-primary text-ink-secondary h-[40%]">
+      <div className="flex flex-col border-t border-border bg-ink-primary text-ink-secondary h-[40%]">
         <div className="flex-1 p-6 font-mono text-[11px] overflow-y-auto custom-scrollbar">
           <span className="block text-[10px] uppercase font-bold tracking-widest mb-2 text-ink-tertiary">Console Output</span>
           <pre className="whitespace-pre-wrap leading-relaxed text-[#A8B5B2]">

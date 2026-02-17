@@ -34,7 +34,7 @@ export function CourseHeader({
   return (
     <div className="mb-8">
       {/* Section Header */}
-      <div className="mb-6 border-b border-ink-primary pb-4 relative">
+      <div className="mb-6 border-b border-border pb-4 relative">
         <span className="bg-ink-primary text-bg-base px-3 py-1 text-[10px] uppercase tracking-widest inline-block mb-3">
           {t('header.label')} {'//'} {category}
         </span>

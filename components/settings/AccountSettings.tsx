@@ -9,7 +9,7 @@ interface AccountSettingsProps {
 export function AccountSettings({ settings }: AccountSettingsProps) {
   return (
     <div className="flex flex-col gap-5">
-      <div className="border-b border-ink-secondary pb-2 mb-2 flex items-center gap-2 font-bold uppercase tracking-widest text-[11px]">
+      <div className="border-b border-border pb-2 mb-2 flex items-center gap-2 font-bold uppercase tracking-widest text-[11px]">
         <i className="bi bi-shield-lock"></i> Account &amp; Auth
       </div>
 
@@ -33,7 +33,7 @@ export function AccountSettings({ settings }: AccountSettingsProps) {
         {settings.wallets.map((wallet) => (
           <div
             key={wallet.provider}
-            className="flex items-center justify-between border border-ink-secondary px-3 py-3"
+            className="flex items-center justify-between border border-border px-3 py-3"
           >
             <span className="text-[10px] tracking-widest">
               {wallet.provider} {wallet.address && `(${wallet.address})`}
@@ -59,7 +59,7 @@ export function AccountSettings({ settings }: AccountSettingsProps) {
         {settings.oauthProviders.map((provider) => (
           <div
             key={provider.name}
-            className="flex items-center justify-between border border-ink-secondary px-3 py-3"
+            className="flex items-center justify-between border border-border px-3 py-3"
           >
             <span className="flex items-center gap-2">
               <i className={provider.icon}></i> {provider.name}

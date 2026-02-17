@@ -15,7 +15,7 @@ export function NavRail() {
   ];
 
   return (
-    <aside className="border-r border-ink-secondary flex flex-col items-center pt-6 bg-bg-base gap-8">
+    <aside className="border-r border-border flex flex-col items-center pt-6 bg-bg-base gap-8">
       {/* Navigation Items */}
       <div className="flex flex-col gap-8">
         {navItems.map((item) => {

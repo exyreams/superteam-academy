@@ -26,7 +26,7 @@ export function LearningPaths() {
   ];
 
   return (
-    <section className="px-12 py-20 border-b border-ink-primary bg-bg-base relative z-10">
+    <section className="px-12 py-20 border-b border-border bg-bg-base relative z-10">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}

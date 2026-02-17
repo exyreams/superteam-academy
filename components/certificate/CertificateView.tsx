@@ -29,7 +29,7 @@ export function CertificateView({ certificate }: CertificateViewProps) {
         {/* Main Stage */}
         <section className="p-10 overflow-y-auto flex flex-col gap-8">
           {/* Section Header */}
-          <div className="border-b border-ink-primary pb-3">
+          <div className="border-b border-border pb-3">
             <span className="bg-ink-primary text-white px-2 py-1 text-[10px] uppercase tracking-widest inline-block">
               Credential Issued
             </span>
@@ -46,7 +46,7 @@ export function CertificateView({ certificate }: CertificateViewProps) {
         </section>
 
         {/* Context Panel (Right Sidebar) */}
-        <aside className="border-l border-ink-secondary bg-bg-base p-6 flex flex-col gap-8 overflow-y-auto">
+        <aside className="border-l border-border bg-bg-base p-6 flex flex-col gap-8 overflow-y-auto">
           <OnChainMetadata onChain={certificate.onChain} />
           <CourseMastery mastery={certificate.mastery} />
           <BlockchainProof signature={certificate.onChain.signature} />

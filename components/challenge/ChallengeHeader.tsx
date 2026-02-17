@@ -1,4 +1,4 @@
-import { useTranslations } from 'next-intl';
+
 import { Link } from '@/i18n/routing';
 
 interface ChallengeHeaderProps {
@@ -8,10 +8,10 @@ interface ChallengeHeaderProps {
 }
 
 export function ChallengeHeader({ moduleTitle, lessonTitle, courseSlug }: ChallengeHeaderProps) {
-  const t = useTranslations('Lesson');
+
 
   return (
-    <header className="grid grid-cols-[1fr_auto] items-center px-6 h-12 border-b border-ink-secondary bg-bg-base z-10 text-[11px] font-mono tracking-widest uppercase">
+    <header className="grid grid-cols-[1fr_auto] items-center px-6 h-12 border-b border-border bg-bg-base z-10 text-[11px] font-mono tracking-widest uppercase">
       {/* Left: System Status */}
       <div className="flex items-center gap-6">
         <div className="font-bold">SUPERTEAM_ACADEMY // V.2.11</div>

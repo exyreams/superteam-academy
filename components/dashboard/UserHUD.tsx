@@ -10,7 +10,7 @@ interface UserHUDProps {
 
 export function UserHUD({ stats }: UserHUDProps) {
   return (
-    <div className="border border-ink-primary p-4 relative">
+    <div className="border border-border p-4 relative">
       <span className="absolute -top-2.5 left-3 bg-bg-base px-2 text-[10px] uppercase tracking-widest font-bold">
         OPERATOR PROFILE
       </span>

@@ -10,7 +10,7 @@ interface TopBarProps {
 
 export function TopBar({ walletAddress = '0xKD...92A' }: TopBarProps) {
   return (
-    <header className="border-b border-ink-secondary flex items-center justify-between px-6 bg-bg-base h-12">
+    <header className="border-b border-border flex items-center justify-between px-6 bg-bg-base h-12">
       {/* Left: Logo and Brand */}
       <div className="flex gap-6 items-center">
         <div className="flex items-center gap-3">

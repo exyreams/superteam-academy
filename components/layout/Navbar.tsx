@@ -6,12 +6,21 @@ import { Logo } from "@/components/shared/logo";
 import { WalletButton } from "@/components/shared/WalletButton";
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/routing";
+import { useWallet } from "@solana/wallet-adapter-react";
+import { useEffect, useState } from "react";
 
 export function Navbar() {
   const t = useTranslations("Navbar");
+  const { connected } = useWallet();
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    const t = setTimeout(() => setMounted(true), 0);
+    return () => clearTimeout(t);
+  }, []);
 
   return (
-    <nav className="h-16 border-b border-ink-primary flex items-center justify-between px-12 bg-bg-base sticky top-0 z-50">
+    <nav className="h-16 border-b border-border flex items-center justify-between px-12 bg-bg-base sticky top-0 z-50">
       <div className="flex items-center gap-4">
         <Logo className="h-6 w-auto text-ink-primary" />
         <span className="font-bold uppercase tracking-widest text-[13px]">
@@ -34,13 +43,15 @@ export function Navbar() {
         ))}
       </div>
       <div className="flex gap-4">
-        <Button
-          asChild
-          variant="landingSecondary"
-          className="rounded-none uppercase text-xs font-bold px-4 py-2 h-auto gap-3"
-        >
-          <Link href="/dashboard">{t("cta.dashboard")}</Link>
-        </Button>
+        {mounted && connected && (
+          <Button
+            asChild
+            variant="landingSecondary"
+            className="rounded-none uppercase text-xs font-bold px-4 py-2 h-auto gap-3"
+          >
+            <Link href="/dashboard">{t("cta.dashboard")}</Link>
+          </Button>
+        )}
         <Button
           asChild
           variant="landingPrimary"

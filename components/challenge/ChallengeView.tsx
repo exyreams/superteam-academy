@@ -67,7 +67,7 @@ export function ChallengeView({ lesson: initialLesson, courseSlug }: ChallengeVi
       <div className="grid grid-cols-[60px_1fr_400px] grid-rows-[48px_1fr] h-full w-full">
         
         {/* Top Bar (Header) - Spans all columns */}
-        <div className="col-span-3 pb-px bg-ink-secondary"> {/* border-bottom hack */}
+        <div className="col-span-3 pb-px bg-border"> {/* border-bottom hack */}
            <ChallengeHeader 
              moduleTitle={lesson.moduleTitle || 'Unknown Module'} 
              lessonTitle={lesson.title} 
@@ -76,14 +76,14 @@ export function ChallengeView({ lesson: initialLesson, courseSlug }: ChallengeVi
         </div>
 
         {/* Nav Rail */}
-        <div className="row-start-2 border-r border-ink-secondary bg-bg-base">
+        <div className="row-start-2 border-r border-border bg-bg-base">
           <NavRail />
         </div>
 
         {/* Main Stage (Middle Column) */}
-        <div className="row-start-2 flex flex-col min-w-0 border-r border-ink-secondary bg-bg-base relative">
+        <div className="row-start-2 flex flex-col min-w-0 border-r border-border bg-bg-base relative">
             {/* Challenge Meta */}
-            <div className="p-6 bg-ink-primary/5 border-b border-ink-secondary">
+            <div className="p-6 bg-ink-primary/5 border-b border-border">
               <span className="text-[10px] uppercase font-bold tracking-widest text-ink-secondary block mb-1">Challenge // Hard</span>
               <h1 className="font-display font-bold text-[24px] uppercase leading-none tracking-tight truncate">
                 {lesson.title}
@@ -100,7 +100,7 @@ export function ChallengeView({ lesson: initialLesson, courseSlug }: ChallengeVi
             </div>
 
             {/* Control Bar */}
-            <div className="h-14 bg-bg-base border-t border-ink-secondary flex items-center justify-between px-6 z-10 relative shrink-0">
+            <div className="h-14 bg-bg-base border-t border-border flex items-center justify-between px-6 z-10 relative shrink-0">
                <div className="text-[10px] uppercase tracking-widest text-ink-secondary">
                  Last Compiled: {isRunning ? 'Running...' : 'Just now'}
                </div>
@@ -130,7 +130,7 @@ export function ChallengeView({ lesson: initialLesson, courseSlug }: ChallengeVi
         </div>
 
         {/* Sidebar (Right Column) */}
-        <div className="row-start-2 border-l border-ink-secondary bg-bg-base overflow-hidden flex flex-col h-full">
+        <div className="row-start-2 border-l border-border bg-bg-base overflow-hidden flex flex-col h-full">
           <ChallengeSidebar 
             lesson={lesson} 
             onComplete={handleComplete}
