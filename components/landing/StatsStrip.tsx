@@ -10,10 +10,13 @@ interface CounterProps {
   suffix?: string;
 }
 
+// Counter Component
+// Smoothly animates a number from 0 to the 'end' value over a set duration.
+// Uses requestAnimationFrame for performant, fluid updates.
 function Counter({ end, duration = 2, prefix = '', suffix = '' }: CounterProps) {
   const [count, setCount] = useState(0);
   const ref = useRef(null);
-  const isInView = useInView(ref, { once: true });
+  const isInView = useInView(ref, { once: true }); // Only animate when the user scrolls it into view
 
   useEffect(() => {
     if (!isInView) return;
@@ -44,6 +47,8 @@ function Counter({ end, duration = 2, prefix = '', suffix = '' }: CounterProps) 
   );
 }
 
+// Stats Strip Section
+// Displays key ecosystem growth metrics with counting animations.
 export function StatsStrip() {
   const stats = [
     { label: "Active Students", value: 12402, prefix: '', suffix: '' },
@@ -65,9 +70,11 @@ export function StatsStrip() {
             index !== stats.length - 1 ? "md:border-r" : ""
           } ${index % 2 === 0 ? "border-r md:border-r-0" : ""}`}
         >
+          {/* Metric Label */}
           <span className="block text-[11px] text-ink-secondary uppercase tracking-widest mb-2">
             {stat.label}
           </span>
+          {/* Animated Value */}
           <span className="block font-display font-bold leading-[0.9] -tracking-[0.02em] text-[48px]">
             <Counter 
               end={stat.value} 

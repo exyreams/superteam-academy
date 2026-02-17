@@ -4,6 +4,8 @@ import { motion } from 'framer-motion';
 import Image from 'next/image';
 
 
+// Partner Logo Component
+// Renders a branded logo with theme-aware filter and hover effects.
 const PartnerLogo = ({ name, src }: { name: string; src: string }) => (
   <Image 
     src={src} 
@@ -14,8 +16,12 @@ const PartnerLogo = ({ name, src }: { name: string; src: string }) => (
   />
 );
 
+// Partners Section
+// Displays a seamless, infinitely scrolling carousel of ecosystem partners.
 export function Partners() {
+  // List of ecosystem partners and their corresponding logo assets
   const partners = [
+    { name: "Superteam", src: "/logo.svg", showLabel: true },
     { name: "Solana", src: "/images/partners/solana.svg", showLabel: true },
     { name: "Jupiter", src: "/images/partners/jupyter.svg", showLabel: true },
     { name: "Helium", src: "/images/partners/helium.svg", showLabel: true },

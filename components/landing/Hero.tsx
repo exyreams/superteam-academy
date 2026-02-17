@@ -7,12 +7,17 @@ import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/routing";
 import { TypingAnimation } from "@/components/shared/TypingAnimation";
 
+// Hero Section
+// Displays the primary value proposition with a large typographic title,
+// description, and call-to-action buttons.
+// Also includes a technical typing animation of a Solana program.
 export function Hero() {
   const t = useTranslations("Hero");
 
   return (
     <header className="px-12 py-[120px] border-b border-ink-secondary/20 dark:border-border grid grid-cols-1 lg:grid-cols-2 gap-16 relative">
       <div className="flex flex-col justify-center">
+        {/* Entrance Badge */}
         <motion.span
           initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0 }}
@@ -22,6 +27,7 @@ export function Hero() {
           {t("badge")}
         </motion.span>
         
+        {/* Main Title - Uses Rich Text for Line Breaks */}
         <motion.h1
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -29,7 +35,8 @@ export function Hero() {
           className="font-display font-bold leading-[0.9] -tracking-[0.02em] text-[120px] mb-6"
         >
           {t.rich("title", {
-            br: <br />,
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            br: <br /> as any,
           })}
         </motion.h1>
         

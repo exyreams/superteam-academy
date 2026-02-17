@@ -27,9 +27,13 @@ const testimonials = [
   }
 ];
 
+// Testimonials Section
+// Features first-hand reports from industry-leading engineers and founders.
+// Implements an auto-sliding carousel with Framer Motion transitions.
 export function Testimonials() {
   const [currentIndex, setCurrentIndex] = useState(0);
 
+  // Automatic cycle every 5 seconds
   useEffect(() => {
     const timer = setInterval(() => {
       setCurrentIndex((prev) => (prev + 1) % testimonials.length);
@@ -39,11 +43,13 @@ export function Testimonials() {
 
   return (
     <section className="bg-ink-primary dark:bg-transparent dark:border-y dark:border-ink-secondary/20 text-bg-base dark:text-ink-primary px-12 py-20 min-h-[500px] flex flex-col justify-center relative overflow-hidden">
+      {/* Aesthetic Section Label */}
       <div className="absolute top-12 left-12 text-[11px] uppercase tracking-widest opacity-60">
         Student Intelligence Report
       </div>
       
       <div className="relative max-w-[900px]">
+        {/* Animated Slide Container */}
         <AnimatePresence mode="wait">
           <motion.div
             key={currentIndex}
@@ -52,10 +58,12 @@ export function Testimonials() {
             exit={{ opacity: 0, x: -20 }}
             transition={{ duration: 0.5, ease: "easeInOut" }}
           >
+            {/* The Quote */}
             <blockquote className="font-display font-bold leading-[0.9] -tracking-[0.02em] text-[32px] md:text-[40px] mb-8">
               &quot;{testimonials[currentIndex].quote}&quot;
             </blockquote>
             
+            {/* Author Attribution */}
             <div className="flex items-center gap-4">
               <div 
                 className="w-12 h-12 border border-bg-base" 
@@ -72,7 +80,7 @@ export function Testimonials() {
         </AnimatePresence>
       </div>
 
-      {/* Navigation Dots */}
+      {/* Navigation Pulse Dots */}
       <div className="absolute bottom-12 right-12 flex gap-2">
         {testimonials.map((_, idx) => (
           <button
