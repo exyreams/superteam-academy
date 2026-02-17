@@ -15,7 +15,7 @@ export function NavRail() {
   ];
 
   return (
-    <aside className="border-r border-border flex flex-col items-center pt-6 bg-bg-base gap-8">
+    <aside className="border-r border-ink-secondary/20 dark:border-border flex flex-col items-center pt-6 bg-bg-surface gap-8 sticky top-12 h-[calc(100vh-48px)]">
       {/* Navigation Items */}
       <div className="flex flex-col gap-8">
         {navItems.map((item) => {
@@ -25,8 +25,8 @@ export function NavRail() {
               key={item.label}
               href={item.href}
               className={cn(
-                'w-8 h-8 border border-transparent flex items-center justify-center relative transition-all hover:border-ink-primary hover:bg-[rgba(13,20,18,0.05)]',
-                item.active && 'border-ink-primary bg-[rgba(13,20,18,0.05)]'
+                'w-8 h-8 border border-transparent flex items-center justify-center relative transition-all hover:border-ink-primary hover:bg-ink-primary/5',
+                item.active && 'border-ink-primary bg-ink-primary/5'
               )}
               title={item.label}
             >
@@ -47,8 +47,8 @@ export function NavRail() {
       <Link
         href="/profile"
         className={cn(
-          'w-8 h-8 border border-transparent flex items-center justify-center relative transition-all hover:border-ink-primary hover:bg-[rgba(13,20,18,0.05)] mt-auto',
-          pathname?.includes('/profile') && 'border-ink-primary bg-[rgba(13,20,18,0.05)]'
+          'w-8 h-8 border border-transparent flex items-center justify-center relative transition-all hover:border-ink-primary hover:bg-ink-primary/5 mt-auto',
+          pathname?.includes('/profile') && 'border-ink-primary bg-ink-primary/5'
         )}
         title="Profile"
       >
@@ -66,8 +66,8 @@ export function NavRail() {
       <Link
         href="/settings"
         className={cn(
-          'w-8 h-8 border border-transparent flex items-center justify-center relative transition-all hover:border-ink-primary hover:bg-[rgba(13,20,18,0.05)] mb-6',
-          pathname === '/settings' && 'border-ink-primary bg-[rgba(13,20,18,0.05)]'
+          'w-8 h-8 border border-transparent flex items-center justify-center relative transition-all hover:border-ink-primary hover:bg-ink-primary/5 mb-6',
+          pathname === '/settings' && 'border-ink-primary bg-ink-primary/5'
         )}
         title="Settings"
       >

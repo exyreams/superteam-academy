@@ -26,14 +26,14 @@ export default function CoursesPage() {
           <main className="px-8 py-8 overflow-y-auto">
             {/* Header */}
             <div className="mb-12">
-              <div className="mb-6 border-b border-border pb-4 relative">
+              <div className="mb-6 border-b border-ink-secondary/20 dark:border-border pb-4 relative">
                 <span className="bg-ink-primary text-bg-base px-3 py-1 text-[10px] uppercase tracking-widest inline-block mb-3">
                   DATABASE ACCESS
                 </span>
                 <h1 className="font-display font-bold leading-[0.9] -tracking-[0.02em] text-[48px]">
                   COURSE CATALOG
                 </h1>
-                <div className="absolute bottom-[-3px] right-0 w-full h-px border-b border-dashed border-ink-secondary" />
+                <div className="absolute bottom-[-3px] right-0 w-full h-px border-b border-dashed border-ink-secondary/20 dark:border-border" />
               </div>
 
               {/* Search and Filters */}
@@ -51,7 +51,7 @@ export default function CoursesPage() {
           </main>
 
           {/* Right: Context Panel */}
-          <aside className="bg-bg-base px-6 py-8 flex flex-col gap-12 border-l border-ink-secondary overflow-y-auto">
+          <aside className="bg-bg-base px-6 py-8 flex flex-col gap-12 border-l border-ink-secondary/20 dark:border-border overflow-y-auto">
             <SessionStats stats={mockUserStats} />
             <LastAccessed course={mockLastAccessed} />
           </aside>

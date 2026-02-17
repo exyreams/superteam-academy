@@ -45,7 +45,7 @@ export default function CourseDetailPage() {
         </main>
 
         {/* Right: Reviews Sidebar */}
-        <aside className="bg-bg-base px-6 py-8 border-l border-ink-secondary overflow-y-auto">
+        <aside className="bg-bg-base px-6 py-8 border-l border-ink-secondary/20 dark:border-border overflow-y-auto">
           <ReviewsList reviews={course.reviews} />
         </aside>
       </div>
