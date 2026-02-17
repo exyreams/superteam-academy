@@ -148,5 +148,105 @@
     "module": "MÓDULO",
     "previous": "ANTERIOR",
     "nextLesson": "SIGUIENTE LECCIÓN"
+  },
+  "Dashboard": {
+    "activeCourses": {
+      "label": "Operaciones Actuales",
+      "title": "CURSOS ACTIVOS",
+      "progress": "PROGRESO",
+      "resume": "Continuar"
+    },
+    "recommendedTracks": {
+      "label": "Próximos Objetivos",
+      "title": "RUTAS RECOMENDADAS",
+      "enroll": "INSCRIBIRSE"
+    },
+    "recentActivity": {
+      "label": "Historial de Registro",
+      "title": "ACTIVIDAD RECIENTE"
+    },
+    "userHUD": {
+      "title": "PERFIL DEL OPERADOR",
+      "xpBalance": "SALDO DE XP",
+      "globalRank": "RANGO GLOBAL",
+      "level": "NIVEL",
+      "xpToLevel": "XP PARA NIV"
+    },
+    "streak": {
+      "title": "Racha Activa",
+      "days": "D"
+    },
+    "achievements": {
+      "title": "Últimos Logros"
+    },
+    "terminal": "ABRIR TERMINAL [F1]"
+  },
+  "Profile": {
+    "operatorId": "ID_OPERADOR",
+    "enrolledSince": "INSCRITO DESDE",
+    "location": "LOC",
+    "skillRadar": {
+      "title": "RADAR_DE_APTITUD"
+    },
+    "achievements": {
+      "title": "LOGROS // EXHIBICIÓN"
+    },
+    "credentials": {
+      "label": "PRUEBAS_EN_CADENA",
+      "title": "cNFTs EN EVOLUCIÓN",
+      "verified": "VERIFICADO",
+      "viewOnSolscan": "VER_EN_SOLSCAN"
+    },
+    "quickStats": {
+      "title": "ESTADÍSTICAS_RÁPIDAS",
+      "rank": "RANGO",
+      "vouchers": "VALES"
+    },
+    "courseLedger": {
+      "title": "REGISTRO_DE_CURSOS"
+    },
+    "metadata": {
+      "title": "METADATA.JSON"
+    }
+  },
+  "Leaderboard": {
+    "header": {
+      "label": "Clasificación Global",
+      "title": "TABLA DE CLASIFICACIÓN DE OPERADORES",
+      "updated": "Actualizado"
+    },
+    "filters": {
+      "weekly": "Semanal",
+      "monthly": "Mensual",
+      "allTime": "Todos los Tiempos",
+      "allTracks": "FILTRO: TODAS LAS RUTAS",
+      "rust": "FUNDAMENTOS DE RUST",
+      "solana": "BÁSICOS DE SOLANA",
+      "anchor": "FRAMEWORK ANCHOR",
+      "cycle": "Ciclo",
+      "stage": "Etapa"
+    },
+    "table": {
+      "xp": "XP",
+      "level": "NIV",
+      "streak": "D RACHA",
+      "you": "TÚ"
+    },
+    "loadMore": "-- [ VER PRÓXIMOS 50 OPERADORES ] --",
+    "userStanding": {
+      "title": "TU POSICIÓN",
+      "globalRank": "RANGO GLOBAL",
+      "percentile": "PERCENTIL",
+      "xpToFirst": "XP PARA #1",
+      "rewards": "RECOMPENSAS",
+      "eligible": "ELEGIBLE"
+    },
+    "seasonalPrizes": {
+      "title": "PREMIOS DE TEMPORADA",
+      "topFinishers": "Top 3 Finalistas:"
+    },
+    "activityFeed": {
+      "title": "Feed de Actividad"
+    }
   }
 }

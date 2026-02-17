@@ -148,5 +148,105 @@
     "module": "MODULE",
     "previous": "PREVIOUS",
     "nextLesson": "NEXT LESSON"
+  },
+  "Dashboard": {
+    "activeCourses": {
+      "label": "Current Operations",
+      "title": "ACTIVE COURSES",
+      "progress": "PROGRESS",
+      "resume": "Resume"
+    },
+    "recommendedTracks": {
+      "label": "Next Targets",
+      "title": "RECOMMENDED TRACKS",
+      "enroll": "ENROLL"
+    },
+    "recentActivity": {
+      "label": "Log History",
+      "title": "RECENT ACTIVITY"
+    },
+    "userHUD": {
+      "title": "OPERATOR PROFILE",
+      "xpBalance": "XP BALANCE",
+      "globalRank": "GLOBAL RANK",
+      "level": "LEVEL",
+      "xpToLevel": "XP TO LVL"
+    },
+    "streak": {
+      "title": "Active Streak",
+      "days": "D"
+    },
+    "achievements": {
+      "title": "Latest Achievements"
+    },
+    "terminal": "OPEN TERMINAL [F1]"
+  },
+  "Profile": {
+    "operatorId": "OPERATOR_ID",
+    "enrolledSince": "ENROLLED SINCE",
+    "location": "LOC",
+    "skillRadar": {
+      "title": "APTITUDE_RADAR"
+    },
+    "achievements": {
+      "title": "ACHIEVEMENTS // SHOWCASE"
+    },
+    "credentials": {
+      "label": "ON-CHAIN_PROOFS",
+      "title": "EVOLVING cNFTs",
+      "verified": "VERIFIED",
+      "viewOnSolscan": "VIEW_ON_SOLSCAN"
+    },
+    "quickStats": {
+      "title": "QUICK_STATS",
+      "rank": "RANK",
+      "vouchers": "VOUCHERS"
+    },
+    "courseLedger": {
+      "title": "COURSE_LEDGER"
+    },
+    "metadata": {
+      "title": "METADATA.JSON"
+    }
+  },
+  "Leaderboard": {
+    "header": {
+      "label": "Global Ranking",
+      "title": "OPERATOR LEADERBOARD",
+      "updated": "Updated"
+    },
+    "filters": {
+      "weekly": "Weekly",
+      "monthly": "Monthly",
+      "allTime": "All-Time",
+      "allTracks": "FILTER: ALL TRACKS",
+      "rust": "RUST FUNDAMENTALS",
+      "solana": "SOLANA BASICS",
+      "anchor": "ANCHOR FRAMEWORK",
+      "cycle": "Cycle",
+      "stage": "Stage"
+    },
+    "table": {
+      "xp": "XP",
+      "level": "LVL",
+      "streak": "D STREAK",
+      "you": "YOU"
+    },
+    "loadMore": "-- [ VIEW NEXT 50 OPERATORS ] --",
+    "userStanding": {
+      "title": "YOUR STANDING",
+      "globalRank": "GLOBAL RANK",
+      "percentile": "PERCENTILE",
+      "xpToFirst": "XP TO #1",
+      "rewards": "REWARDS",
+      "eligible": "ELIGIBLE"
+    },
+    "seasonalPrizes": {
+      "title": "SEASONAL PRIZES",
+      "topFinishers": "Top 3 Finishers:"
+    },
+    "activityFeed": {
+      "title": "Activity Feed"
+    }
   }
 }

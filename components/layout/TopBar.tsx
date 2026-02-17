@@ -1,7 +1,8 @@
 'use client';
 
-import { Logo } from '@/components/ui/logo';
+import { Logo } from '@/components/shared/logo';
 import { ModeToggle } from '@/components/theme-toggle';
+import { LanguageDropdown } from '@/components/LanguageDropdown';
 
 interface TopBarProps {
   walletAddress?: string;
@@ -20,8 +21,9 @@ export function TopBar({ walletAddress = '0xKD...92A' }: TopBarProps) {
         </div>
       </div>
 
-      {/* Right: Theme Toggle and User */}
+      {/* Right: Language, Theme Toggle and User */}
       <div className="flex gap-6 items-center">
+        <LanguageDropdown />
         <ModeToggle />
         <div className="text-[11px]">
           USER: {walletAddress}

@@ -1,6 +1,6 @@
 'use client';
 
-import { Logo } from "@/components/ui/logo";
+import { Logo } from "@/components/shared/logo";
 import { useTranslations } from "next-intl";
 import { Link, usePathname, useRouter } from "@/i18n/routing";
 

@@ -148,5 +148,105 @@
     "module": "MÓDULO",
     "previous": "ANTERIOR",
     "nextLesson": "PRÓXIMA LIÇÃO"
+  },
+  "Dashboard": {
+    "activeCourses": {
+      "label": "Operações Atuais",
+      "title": "CURSOS ATIVOS",
+      "progress": "PROGRESSO",
+      "resume": "Continuar"
+    },
+    "recommendedTracks": {
+      "label": "Próximos Alvos",
+      "title": "TRILHAS RECOMENDADAS",
+      "enroll": "INSCREVER"
+    },
+    "recentActivity": {
+      "label": "Histórico de Registro",
+      "title": "ATIVIDADE RECENTE"
+    },
+    "userHUD": {
+      "title": "PERFIL DO OPERADOR",
+      "xpBalance": "SALDO DE XP",
+      "globalRank": "CLASSIFICAÇÃO GLOBAL",
+      "level": "NÍVEL",
+      "xpToLevel": "XP PARA NÍV"
+    },
+    "streak": {
+      "title": "Sequência Ativa",
+      "days": "D"
+    },
+    "achievements": {
+      "title": "Últimas Conquistas"
+    },
+    "terminal": "ABRIR TERMINAL [F1]"
+  },
+  "Profile": {
+    "operatorId": "ID_OPERADOR",
+    "enrolledSince": "INSCRITO DESDE",
+    "location": "LOC",
+    "skillRadar": {
+      "title": "RADAR_DE_APTIDÃO"
+    },
+    "achievements": {
+      "title": "CONQUISTAS // VITRINE"
+    },
+    "credentials": {
+      "label": "PROVAS_NA_CADEIA",
+      "title": "cNFTs EM EVOLUÇÃO",
+      "verified": "VERIFICADO",
+      "viewOnSolscan": "VER_NO_SOLSCAN"
+    },
+    "quickStats": {
+      "title": "ESTATÍSTICAS_RÁPIDAS",
+      "rank": "CLASSIFICAÇÃO",
+      "vouchers": "VOUCHERS"
+    },
+    "courseLedger": {
+      "title": "REGISTRO_DE_CURSOS"
+    },
+    "metadata": {
+      "title": "METADATA.JSON"
+    }
+  },
+  "Leaderboard": {
+    "header": {
+      "label": "Classificação Global",
+      "title": "TABELA DE CLASSIFICAÇÃO DE OPERADORES",
+      "updated": "Atualizado"
+    },
+    "filters": {
+      "weekly": "Semanal",
+      "monthly": "Mensal",
+      "allTime": "Todos os Tempos",
+      "allTracks": "FILTRO: TODAS AS TRILHAS",
+      "rust": "FUNDAMENTOS DE RUST",
+      "solana": "BÁSICOS DE SOLANA",
+      "anchor": "FRAMEWORK ANCHOR",
+      "cycle": "Ciclo",
+      "stage": "Estágio"
+    },
+    "table": {
+      "xp": "XP",
+      "level": "NÍV",
+      "streak": "D SEQUÊNCIA",
+      "you": "VOCÊ"
+    },
+    "loadMore": "-- [ VER PRÓXIMOS 50 OPERADORES ] --",
+    "userStanding": {
+      "title": "SUA POSIÇÃO",
+      "globalRank": "CLASSIFICAÇÃO GLOBAL",
+      "percentile": "PERCENTIL",
+      "xpToFirst": "XP PARA #1",
+      "rewards": "RECOMPENSAS",
+      "eligible": "ELEGÍVEL"
+    },
+    "seasonalPrizes": {
+      "title": "PRÊMIOS DA TEMPORADA",
+      "topFinishers": "Top 3 Finalistas:"
+    },
+    "activityFeed": {
+      "title": "Feed de Atividade"
+    }
   }
 }
