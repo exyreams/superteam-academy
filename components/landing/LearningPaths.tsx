@@ -29,7 +29,7 @@ export function LearningPaths() {
   ];
 
   return (
-    <section className="px-12 py-20 border-b border-ink-secondary/20 dark:border-border bg-bg-base relative z-10">
+    <section className="px-6 lg:px-12 py-16 lg:py-20 border-b border-ink-secondary/20 dark:border-border bg-bg-base relative z-10">
       {/* Section Header with "View All" Link */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
@@ -42,7 +42,7 @@ export function LearningPaths() {
           <span className="text-[11px] uppercase tracking-widest text-ink-secondary block mb-2">
             {t("subtitle")}
           </span>
-          <h2 className="font-display font-bold leading-[0.9] -tracking-[0.02em] text-[48px]">{t("title")}</h2>
+          <h2 className="font-display font-bold leading-[0.9] -tracking-[0.02em] text-[32px] md:text-[48px]">{t("title")}</h2>
         </div>
         <Link
           href="/courses"

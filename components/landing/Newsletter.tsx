@@ -6,8 +6,8 @@ import { Input } from "@/components/ui/input";
 // Collects operator emails for technical updates and ecosystem opportunities.
 export function Newsletter() {
   return (
-    <section className="py-20 px-12 border-t border-ink-secondary/20 dark:border-border bg-bg-base">
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+    <section className="py-16 md:py-20 px-6 md:px-12 border-t border-ink-secondary/20 dark:border-border bg-bg-base">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center">
         {/* Newsletter Pitch */}
         <div>
           <h4 className="uppercase tracking-widest font-bold text-2xl mb-4">Newsletter</h4>

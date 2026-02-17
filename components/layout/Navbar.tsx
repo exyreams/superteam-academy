@@ -8,9 +8,12 @@ import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/routing";
 import { useWallet } from "@solana/wallet-adapter-react";
 import { useEffect, useState } from "react";
+import { Sheet, SheetContent, SheetTrigger, SheetTitle, SheetHeader, SheetDescription } from "@/components/ui/sheet";
+import { ListIcon, House, Book, Trophy, Gift, SquaresFour, ArrowRightIcon } from "@phosphor-icons/react";
 
 export function Navbar() {
   const t = useTranslations("Navbar");
+
   const { connected } = useWallet();
   const [mounted, setMounted] = useState(false);
 
@@ -20,14 +23,17 @@ export function Navbar() {
   }, []);
 
   return (
-    <nav className="h-16 border-b border-ink-secondary/20 dark:border-border flex items-center justify-center lg:justify-between px-12 bg-bg-surface sticky top-0 z-50">
+    <nav className="h-16 border-b border-ink-secondary/20 dark:border-border flex items-center justify-between px-6 lg:px-12 bg-bg-surface sticky top-0 z-50">
+      {/* Brand Logo */}
       <Link href="/" className="flex items-center gap-4 hover:opacity-80 transition-opacity">
         <Logo className="h-6 w-auto text-ink-primary" />
-        <span className="font-bold uppercase tracking-widest text-[13px]">
+        <span className="font-bold uppercase tracking-widest text-[13px] hidden min-[375px]:inline-block">
           {t("brand")}
         </span>
       </Link>
-      <div className="flex gap-8">
+
+      {/* Desktop Navigation */}
+      <div className="hidden lg:flex gap-8">
         {[
           { label: t("links.catalog"), href: "/courses" },
           { label: t("links.leaderboard"), href: "/leaderboard" },
@@ -42,7 +48,9 @@ export function Navbar() {
           </Link>
         ))}
       </div>
-      <div className="flex gap-4">
+
+      {/* Desktop Actions */}
+      <div className="hidden lg:flex gap-4">
         {mounted && connected && (
           <Button
             asChild
@@ -61,6 +69,94 @@ export function Navbar() {
         </Button>
         <WalletButton />
         <ModeToggle />
+      </div>
+
+      {/* Mobile Menu Trigger */}
+      <div className="lg:hidden flex items-center gap-4">
+        <Sheet>
+          <SheetTrigger asChild>
+            <Button variant="ghost" size="icon" className="text-ink-primary">
+              <ListIcon size={24} />
+            </Button>
+          </SheetTrigger>
+          <SheetContent side="right" className="bg-bg-surface border-l border-ink-secondary/20 dark:border-border w-full sm:w-[400px] p-0 flex flex-col">
+            <SheetHeader className="p-6 border-b border-ink-secondary/20 dark:border-border">
+              <SheetTitle className="sr-only">Menu</SheetTitle>
+              <SheetDescription className="sr-only">
+                Navigation menu for mobile devices
+              </SheetDescription>
+              <div className="flex items-center gap-3">
+                <Logo className="h-5 w-auto text-ink-primary" />
+                <span className="font-bold uppercase tracking-widest text-[11px] text-ink-primary">
+                  {t("brand")}
+                </span>
+              </div>
+            </SheetHeader>
+            
+            <div className="flex-1 overflow-y-auto p-6 flex flex-col gap-8">
+              {/* Mobile Links */}
+              <div className="flex flex-col">
+                {[
+                  { label: "Home", href: "/", icon: House },
+                  { label: t("links.catalog"), href: "/courses", icon: Book },
+                  { label: t("links.leaderboard"), href: "/leaderboard", icon: Trophy },
+                  { label: t("links.rewards"), href: "/rewards", icon: Gift },
+                ].map((item) => (
+                  <Link
+                    key={item.label}
+                    href={item.href}
+                    className="flex items-center gap-4 py-3 text-ink-primary group border-b border-ink-secondary/10 last:border-0"
+                  >
+                    <div className="w-8 h-8 flex items-center justify-center border border-ink-secondary/20 dark:border-border bg-bg-base transition-colors group-hover:border-ink-primary group-hover:bg-ink-primary/5">
+                      <item.icon size={16} weight="fill" />
+                    </div>
+                    <span className="font-bold uppercase tracking-widest text-sm group-hover:text-ink-primary/80 transition-colors">
+                      {item.label}
+                    </span>
+                  </Link>
+                ))}
+              </div>
+
+              {/* Mobile Actions */}
+              <div className="mt-auto flex flex-col gap-4">
+                <div className="flex flex-col gap-3">
+                  <div className="w-full flex justify-center [&_.wallet-adapter-button]:w-full [&_.wallet-adapter-button]:justify-center [&_.wallet-adapter-button]:h-[42px] [&_.wallet-adapter-button]:bg-ink-primary! [&_.wallet-adapter-button]:rounded-none! [&_.wallet-adapter-button]:font-mono! [&_.wallet-adapter-button]:text-sm! [&_.wallet-adapter-button]:uppercase! [&_.wallet-adapter-button]:font-bold!">
+                     <WalletButton/>
+                  </div>
+                  
+                  {mounted && connected ? (
+                    <Button
+                      asChild
+                      variant="landingSecondary"
+                      className="w-full rounded-none uppercase text-xs font-bold h-[42px] justify-center gap-2"
+                    >
+                      <Link href="/dashboard">
+                        <SquaresFour size={16} weight="bold" />
+                        {t("cta.dashboard")}
+                      </Link>
+                    </Button>
+                  ) : (
+                    <Button
+                      asChild
+                      variant="landingPrimary"
+                      className="w-full rounded-none uppercase text-xs font-bold h-[42px] justify-center gap-2"
+                    >
+                      <Link href="/courses">
+                        {t("cta.start")}
+                        <ArrowRightIcon size={14} weight="bold" />
+                      </Link>
+                    </Button>
+                  )}
+                </div>
+                
+                <div className="flex items-center justify-between pt-4 border-t border-ink-secondary/20 dark:border-border">
+                  <span className="text-[10px] uppercase tracking-widest text-ink-secondary">Theme</span>
+                  <ModeToggle />
+                </div>
+              </div>
+            </div>
+          </SheetContent>
+        </Sheet>
       </div>
     </nav>
   );

@@ -42,7 +42,7 @@ export function Testimonials() {
   }, []);
 
   return (
-    <section className="bg-ink-primary dark:bg-transparent dark:border-y dark:border-ink-secondary/20 text-bg-base dark:text-ink-primary px-12 py-20 min-h-[500px] flex flex-col justify-center relative overflow-hidden">
+    <section className="bg-ink-primary dark:bg-transparent dark:border-y dark:border-ink-secondary/20 text-bg-base dark:text-ink-primary px-6 md:px-12 py-16 md:py-20 min-h-[400px] md:min-h-[500px] flex flex-col justify-center relative overflow-hidden">
       {/* Aesthetic Section Label */}
       <div className="absolute top-12 left-12 text-[11px] uppercase tracking-widest opacity-60">
         Student Intelligence Report
@@ -59,7 +59,7 @@ export function Testimonials() {
             transition={{ duration: 0.5, ease: "easeInOut" }}
           >
             {/* The Quote */}
-            <blockquote className="font-display font-bold leading-[0.9] -tracking-[0.02em] text-[32px] md:text-[40px] mb-8">
+            <blockquote className="font-display font-bold leading-[0.9] -tracking-[0.02em] text-[24px] md:text-[40px] mb-8">
               &quot;{testimonials[currentIndex].quote}&quot;
             </blockquote>
             

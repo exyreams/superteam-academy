@@ -26,7 +26,7 @@ export function Features() {
           viewport={{ once: true }}
           transition={{ duration: 0.6, delay: i * 0.2 }}
           // Right border logic: only apply border to the first item (left side) on desktop
-          className={`p-16 flex flex-col gap-6 group ${i === 0 ? 'border-r border-ink-secondary/20 dark:border-border' : ''}`}
+          className={`p-8 md:p-16 flex flex-col gap-6 group ${i === 0 ? 'border-b md:border-b-0 md:border-r border-ink-secondary/20 dark:border-border' : ''}`}
         >
           {/* Feature Icon - Phosphor Icons Library */}
           <div>

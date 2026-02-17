@@ -39,7 +39,7 @@ export function Partners() {
       style={{ maskImage: 'linear-gradient(to right, transparent, black 20%, black 80%, transparent)' }}
     >
       <motion.div
-        className="flex gap-24 items-center whitespace-nowrap"
+        className="flex gap-12 md:gap-24 items-center whitespace-nowrap"
         animate={{
           x: ["0%", "-50%"],
         }}

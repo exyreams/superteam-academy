@@ -66,7 +66,7 @@ export function StatsStrip() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5, delay: index * 0.1 }}
-          className={`p-8 text-center border-b md:border-b-0 border-ink-secondary/20 dark:border-border ${
+          className={`p-6 md:p-8 text-center border-b md:border-b-0 border-ink-secondary/20 dark:border-border ${
             index !== stats.length - 1 ? "md:border-r" : ""
           } ${index % 2 === 0 ? "border-r md:border-r-0" : ""}`}
         >
@@ -75,7 +75,7 @@ export function StatsStrip() {
             {stat.label}
           </span>
           {/* Animated Value */}
-          <span className="block font-display font-bold leading-[0.9] -tracking-[0.02em] text-[48px]">
+          <span className="block font-display font-bold leading-[0.9] -tracking-[0.02em] text-[32px] md:text-[48px]">
             <Counter 
               end={stat.value} 
               prefix={stat.prefix}
