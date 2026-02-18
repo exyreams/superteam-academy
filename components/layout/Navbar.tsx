@@ -9,7 +9,7 @@ import { Link } from "@/i18n/routing";
 import { useWallet } from "@solana/wallet-adapter-react";
 import { useEffect, useState } from "react";
 import { Sheet, SheetContent, SheetTrigger, SheetTitle, SheetHeader, SheetDescription } from "@/components/ui/sheet";
-import { ListIcon, House, Book, Trophy, Gift, SquaresFour, ArrowRightIcon } from "@phosphor-icons/react";
+import { ListIcon, HouseIcon, BookIcon, TrophyIcon, GiftIcon, SquaresFourIcon, ArrowRightIcon } from "@phosphor-icons/react";
 
 export function Navbar() {
   const t = useTranslations("Navbar");
@@ -97,10 +97,10 @@ export function Navbar() {
               {/* Mobile Links */}
               <div className="flex flex-col">
                 {[
-                  { label: "Home", href: "/", icon: House },
-                  { label: t("links.catalog"), href: "/courses", icon: Book },
-                  { label: t("links.leaderboard"), href: "/leaderboard", icon: Trophy },
-                  { label: t("links.rewards"), href: "/rewards", icon: Gift },
+                  { label: "Home", href: "/", icon: HouseIcon },
+                  { label: t("links.catalog"), href: "/courses", icon: BookIcon },
+                  { label: t("links.leaderboard"), href: "/leaderboard", icon: TrophyIcon },
+                  { label: t("links.rewards"), href: "/rewards", icon: GiftIcon },
                 ].map((item) => (
                   <Link
                     key={item.label}
@@ -131,7 +131,7 @@ export function Navbar() {
                       className="w-full rounded-none uppercase text-xs font-bold h-[42px] justify-center gap-2"
                     >
                       <Link href="/dashboard">
-                        <SquaresFour size={16} weight="bold" />
+                        <SquaresFourIcon size={16} weight="bold" />
                         {t("cta.dashboard")}
                       </Link>
                     </Button>
