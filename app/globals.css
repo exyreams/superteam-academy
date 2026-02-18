@@ -149,7 +149,7 @@
 
 @layer base {
   :root {
-    --bg-surface: #DCE5E4; /* Slightly darker than base */
+    --bg-surface: #FFFFFF; /* High contrast for cards */
   }
   .dark {
     --bg-surface: #141211; /* Slightly lighter than base (Stone 925) */

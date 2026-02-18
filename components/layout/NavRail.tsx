@@ -15,9 +15,9 @@ export function NavRail() {
   ];
 
   return (
-    <aside className="border-r border-ink-secondary/20 dark:border-border hidden lg:flex flex-col items-center pt-6 bg-bg-surface gap-8 sticky top-12 h-[calc(100vh-48px)]">
+    <aside className="border-r border-ink-secondary/20 dark:border-border hidden lg:flex flex-col items-center pt-6 bg-bg-surface gap-5 sticky top-12 h-[calc(100vh-48px)]">
       {/* Navigation Items */}
-      <div className="flex flex-col gap-8">
+      <div className="flex flex-col gap-5">
         {navItems.map((item) => {
           const Icon = item.icon;
           return (
@@ -25,8 +25,8 @@ export function NavRail() {
               key={item.label}
               href={item.href}
               className={cn(
-                'w-8 h-8 border border-transparent flex items-center justify-center relative transition-all hover:border-ink-primary hover:bg-ink-primary/5',
-                item.active && 'border-ink-primary bg-ink-primary/5'
+                'w-8 h-8 flex items-center justify-center relative transition-all border border-transparent hover:bg-ink-primary/5',
+                item.active && 'border-ink-secondary/20 bg-ink-primary/5'
               )}
               title={item.label}
             >
@@ -35,9 +35,6 @@ export function NavRail() {
                 className="text-ink-primary"
                 weight={item.active ? "duotone" : "regular"}
               />
-              {item.active && (
-                <div className="absolute -right-px -top-px w-1 h-1 bg-ink-primary" />
-              )}
             </Link>
           );
         })}
@@ -47,8 +44,8 @@ export function NavRail() {
       <Link
         href="/profile"
         className={cn(
-          'w-8 h-8 border border-transparent flex items-center justify-center relative transition-all hover:border-ink-primary hover:bg-ink-primary/5 mt-auto',
-          pathname?.includes('/profile') && 'border-ink-primary bg-ink-primary/5'
+          'w-8 h-8 flex items-center justify-center relative transition-all border border-transparent hover:bg-ink-primary/5 mt-auto',
+          pathname?.includes('/profile') && 'border-ink-secondary/20 bg-ink-primary/5'
         )}
         title="Profile"
       >
@@ -57,17 +54,14 @@ export function NavRail() {
           className="text-ink-primary"
           weight={pathname?.includes('/profile') ? "duotone" : "regular"}
         />
-        {pathname?.includes('/profile') && (
-          <div className="absolute -right-px -top-px w-1 h-1 bg-ink-primary" />
-        )}
       </Link>
 
       {/* Settings at bottom */}
       <Link
         href="/settings"
         className={cn(
-          'w-8 h-8 border border-transparent flex items-center justify-center relative transition-all hover:border-ink-primary hover:bg-ink-primary/5 mb-6',
-          pathname === '/settings' && 'border-ink-primary bg-ink-primary/5'
+          'w-8 h-8 flex items-center justify-center relative transition-all border border-transparent hover:bg-ink-primary/5 mb-6',
+          pathname === '/settings' && 'border-ink-secondary/20 bg-ink-primary/5'
         )}
         title="Settings"
       >
@@ -76,9 +70,6 @@ export function NavRail() {
           className="text-ink-primary"
           weight={pathname === '/settings' ? "duotone" : "regular"}
         />
-        {pathname === '/settings' && (
-          <div className="absolute -right-px -top-px w-1 h-1 bg-ink-primary" />
-        )}
       </Link>
     </aside>
   );

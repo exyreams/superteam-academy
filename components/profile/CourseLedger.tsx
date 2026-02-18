@@ -1,7 +1,7 @@
 'use client';
 
 import { CourseProgress } from '@/lib/data/user';
-import { ProgressBar } from '@/components/shared/ProgressBar';
+import { Progress } from '@/components/ui/progress';
 
 interface CourseLedgerProps {
   courses: CourseProgress[];
@@ -23,7 +23,7 @@ export function CourseLedger({ courses }: CourseLedgerProps) {
             <span className="text-[10px] uppercase tracking-widest">
               {course.courseCode}
             </span>
-            <ProgressBar progress={course.progress} />
+            <Progress value={course.progress} />
             <span className="text-[10px] text-right">
               {course.progress}%
             </span>
