@@ -14,6 +14,11 @@ const languages = [
   { code: 'en', label: 'EN' },
   { code: 'es', label: 'ES' },
   { code: 'pt-br', label: 'PT-BR' },
+  { code: 'hi', label: 'HI' },
+  { code: 'zh', label: 'ZH' },
+  { code: 'fr', label: 'FR' },
+  { code: 'ru', label: 'RU' },
+  { code: 'jp', label: 'JP' },
 ];
 
 export function LanguageDropdown() {

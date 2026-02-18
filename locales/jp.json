@@ -1,0 +1,262 @@
+{
+  "Hero": {
+    "badge": "ターミナルアクセス許可",
+    "title": "SOLANAで{br}未来を築く",
+    "description": "次世代のSolanaアーキテクトのための最高の技術トレーニンググラウンド。ハードウェアアクセラレーションカリキュラムで、ゼロから本番環境へ。",
+    "explore": "コースを探す",
+    "discord": "Discordに参加"
+  },
+  "Navbar": {
+    "brand": "SUPERTEAM ACADEMY",
+    "links": {
+      "catalog": "カタログ",
+      "leaderboard": "リーダーボード",
+      "rewards": "報酬"
+    },
+    "cta": {
+      "dashboard": "ダッシュボード",
+      "start": "学習を開始"
+    }
+  },
+  "Footer": {
+    "brand": "SUPERTEAM ACADEMY",
+    "description": "Solanaエコシステムのための分散型大学。学生が所有。",
+    "language": "言語:",
+    "copyright": "© 2026 Superteam Academy // 無断複写・転載を禁じます",
+    "headers": {
+      "platform": "プラットフォーム",
+      "socials": "ソーシャル"
+    },
+    "links": {
+      "catalog": "カタログ",
+      "leaderboard": "リーダーボード",
+      "dashboard": "ダッシュボード",
+      "profile": "プロフィール"
+    }
+  },
+  "Features": {
+    "proofs": {
+      "title": "オンチェーン証明",
+      "description": "完了したすべてのモジュールは、ウォレットに譲渡不可能な認証情報を発行します。学習しながら暗号的に検証可能な履歴書を作成します。"
+    },
+    "compiler": {
+      "title": "ライブコンパイラ",
+      "description": "環境設定は不要です。リアルタイムのフィードバックを備えたブラウザベースのIDEで、Solanaプログラムを直接作成、テスト、デプロイします。"
+    }
+  },
+  "LearningPaths": {
+    "subtitle": "利用可能な操作",
+    "title": "学習パス",
+    "viewAll": "すべてのトラックを表示",
+    "tracks": {
+      "beginner": {
+        "path": "パス 01 // 初級",
+        "title": "SOLANAの基礎",
+        "description": "ベースレイヤーをマスターします。アカウント、トランザクション、Sealevelランタイム。",
+        "meta": "12 モジュール // 40 XP"
+      },
+      "intermediate": {
+        "path": "パス 02 // 中級",
+        "title": "ANCHORフレームワーク",
+        "description": "業界標準のRust DSLを使用した迅速なプログラム開発。",
+        "meta": "8 モジュール // 120 XP"
+      },
+      "advanced": {
+        "path": "パス 03 // 上級",
+        "title": "プロトコルセキュリティ",
+        "description": "監査手法、一般的な攻撃ベクトル、および不変条件テスト。",
+        "meta": "15 モジュール // 300 XP"
+      }
+    }
+  },
+  "Courses": {
+    "search": {
+      "placeholder": "検索キーワード: SOLANA, RUST, ANCHOR..."
+    },
+    "filters": {
+      "all": "すべて",
+      "dev": "開発",
+      "defi": "DEFI",
+      "active": "アクティブなフィルタ"
+    },
+    "curatedPaths": {
+      "title": "厳選されたパス",
+      "subtitle": "推奨シーケンス",
+      "tracks": {
+        "beginner": "初級トラック",
+        "intermediate": "中級トラック",
+        "advanced": "上級専門分野"
+      },
+      "modules": "モジュール",
+      "complete": "完了",
+      "startPath": "パスを開始"
+    },
+    "individualModules": {
+      "title": "個別モジュール",
+      "sort": "並べ替え: 人気順"
+    },
+    "difficulty": {
+      "beginner": "初級",
+      "intermediate": "中級",
+      "advanced": "上級",
+      "expert": "エキスパート"
+    },
+    "locked": "ロック中",
+    "stats": {
+      "title": "セッション統計",
+      "totalXP": "合計XP",
+      "coursesActive": "アクティブなコース",
+      "completionRate": "完了率",
+      "certificates": "証明書"
+    },
+    "lastAccessed": {
+      "title": "最終アクセス",
+      "resume": "モジュールを再開"
+    }
+  },
+  "CourseDetail": {
+    "header": {
+      "label": "コース詳細"
+    },
+    "metadata": {
+      "instructor": "インストラクター",
+      "duration": "期間",
+      "difficulty": "難易度"
+    },
+    "xpBounty": "XPバウンティ",
+    "buttons": {
+      "enroll": "今すぐ登録",
+      "continue": "コースを続ける"
+    },
+    "curriculum": {
+      "title": "カリキュラム",
+      "completion": "完了"
+    },
+    "reviews": {
+      "title": "学生のフィードバック",
+      "viewAll": "すべてのレビューを表示"
+    }
+  },
+  "Lesson": {
+    "reference": "リファレンス",
+    "needHint": "ヒントが必要ですか？",
+    "ago": "前",
+    "autosaved": "自動保存済み",
+    "solution": "解決策",
+    "output": "出力",
+    "runTests": "テストを実行",
+    "module": "モジュール",
+    "previous": "前へ",
+    "nextLesson": "次のレッスン"
+  },
+  "Dashboard": {
+    "activeCourses": {
+      "label": "現在の操作",
+      "title": "アクティブなコース",
+      "progress": "進捗",
+      "resume": "再開"
+    },
+    "recommendedTracks": {
+      "label": "次のターゲット",
+      "title": "推奨トラック",
+      "enroll": "登録"
+    },
+    "recentActivity": {
+      "label": "ログ履歴",
+      "title": "最近のアクティビティ"
+    },
+    "userHUD": {
+      "title": "オペレータープロフィール",
+      "xpBalance": "XP残高",
+      "globalRank": "グローバルランク",
+      "level": "レベル",
+      "xpToLevel": "レベルアップまで"
+    },
+    "streak": {
+      "title": "アクティブストリーク",
+      "days": "日"
+    },
+    "achievements": {
+      "title": "最新の実績"
+    },
+    "terminal": "ターミナルを開く [F1]"
+  },
+  "Profile": {
+    "operatorId": "オペレーターID",
+    "enrolledSince": "登録日",
+    "location": "場所",
+    "skillRadar": {
+      "title": "適性レーダー"
+    },
+    "achievements": {
+      "title": "実績 // ショーケース"
+    },
+    "credentials": {
+      "label": "オンチェーン証明",
+      "title": "進化するcNFT",
+      "verified": "検証済み",
+      "viewOnSolscan": "SOLSCANで表示"
+    },
+    "quickStats": {
+      "title": "クイック統計",
+      "rank": "ランク",
+      "vouchers": "バウチャー"
+    },
+    "courseLedger": {
+      "title": "コース台帳"
+    },
+    "metadata": {
+      "title": "METADATA.JSON"
+    }
+  },
+  "Leaderboard": {
+    "header": {
+      "label": "グローバルランキング",
+      "title": "オペレーターリーダーボード",
+      "updated": "更新済み"
+    },
+    "filters": {
+      "weekly": "週間",
+      "monthly": "月間",
+      "allTime": "全期間",
+      "allTracks": "フィルタ: すべてのトラック",
+      "rust": "RUSTの基礎",
+      "solana": "SOLANAの基礎",
+      "anchor": "ANCHORフレームワーク",
+      "cycle": "サイクル",
+      "stage": "ステージ"
+    },
+    "table": {
+      "xp": "XP",
+      "level": "LVL",
+      "streak": "日ストリーク",
+      "you": "あなた"
+    },
+    "loadMore": "-- [ 次の50人のオペレーターを表示 ] --",
+    "userStanding": {
+      "title": "あなたの順位",
+      "globalRank": "グローバルランク",
+      "percentile": "パーセンタイル",
+      "xpToFirst": "1位までのXP",
+      "rewards": "報酬",
+      "eligible": "対象"
+    },
+    "seasonalPrizes": {
+      "title": "季節の賞品",
+      "topFinishers": "上位3名:"
+    },
+    "activityFeed": {
+      "title": "アクティビティフィード"
+    }
+  },
+  "Wallet": {
+    "title": "ウォレット接続",
+    "detected": "検出済み"
+  },
+  "Newsletter": {
+    "title": "ニュースレター",
+    "description": "毎週の技術アップデートとエコシステムの機会を直接受信トレイにお届けします。",
+    "placeholder": "OPERADOR@EMAIL.COM",
+    "button": "購読する"
+  }
+}

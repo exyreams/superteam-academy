@@ -1,0 +1,262 @@
+{
+  "Hero": {
+    "badge": "टर्मिनल एक्सेस स्वीकृत",
+    "title": "SOLANA पर अपना{br}भविष्य बनाएं",
+    "description": "अगली पीढ़ी के सोलाना आर्किटेक्ट्स के लिए प्रमुख तकनीकी प्रशिक्षण मैदान। हमारे हार्डवेयर-त्वरित पाठ्यक्रम के साथ शून्य से प्रोडक्शन-रेडी बनें।",
+    "explore": "पाठ्यक्रम देखें",
+    "discord": "डिस्कॉर्ड से जुड़ें"
+  },
+  "Navbar": {
+    "brand": "सुपरटीम अकादमी",
+    "links": {
+      "catalog": "कैटलॉग",
+      "leaderboard": "लीडरबोर्ड",
+      "rewards": "इनाम"
+    },
+    "cta": {
+      "dashboard": "डैशबोर्ड",
+      "start": "सीखना शुरू करें"
+    }
+  },
+  "Footer": {
+    "brand": "सुपरटीम अकादमी",
+    "description": "सोलाना इकोसिस्टम के लिए विकेंद्रीकृत विश्वविद्यालय। छात्रों के स्वामित्व में।",
+    "language": "भाषा:",
+    "copyright": "© 2026 सुपरटीम अकादमी // सर्वाधिकार सुरक्षित",
+    "headers": {
+      "platform": "प्लेटफ़ॉर्म",
+      "socials": "सोशल"
+    },
+    "links": {
+      "catalog": "कैटलॉग",
+      "leaderboard": "लीडरबोर्ड",
+      "dashboard": "डैशबोर्ड",
+      "profile": "प्रोफ़ाइल"
+    }
+  },
+  "Features": {
+    "proofs": {
+      "title": "ऑन-चेन सबूत",
+      "description": "आपके द्वारा पूरा किया गया प्रत्येक मॉड्यूल आपके वॉलेट को एक गैर-हस्तांतरणीय क्रेडेंशियल जारी करता है। सीखते समय क्रिप्टोग्राफ़िक रूप से सत्यापन योग्य बायोडाटा बनाएं।"
+    },
+    "compiler": {
+      "title": "लाइव कंपाइलर",
+      "description": "किसी वातावरण सेटअप की आवश्यकता नहीं है। वास्तविक समय की प्रतिक्रिया के साथ हमारे ब्राउज़र-आधारित आईडीई में सीधे सोलाना प्रोग्राम लिखें, परीक्षण करें और तैनात करें।"
+    }
+  },
+  "LearningPaths": {
+    "subtitle": "उपलब्ध ऑपरेशन्स",
+    "title": "लर्निंग पाथ्स",
+    "viewAll": "सभी ट्रैक देखें",
+    "tracks": {
+      "beginner": {
+        "path": "पथ 01 // शुरुआती",
+        "title": "सोलाना फंडामेंटल्स",
+        "description": "बेस लेयर में महारत हासिल करें। खाते, लेनदेन, और सीलेवल रनटाइम।",
+        "meta": "12 मॉड्यूल // 40 XP"
+      },
+      "intermediate": {
+        "path": "पथ 02 // इंटरमीडिएट",
+        "title": "एंकर फ्रेमवर्क",
+        "description": "उद्योग-मानक रस्ट डीएसएल का उपयोग करके रैपिड प्रोग्राम विकास।",
+        "meta": "8 मॉड्यूल // 120 XP"
+      },
+      "advanced": {
+        "path": "पथ 03 // एडवांस्ड",
+        "title": "प्रोटोकॉल सुरक्षा",
+        "description": "ऑडिट तकनीक, सामान्य हमले वैक्टर, और इनवेरिएंट परीक्षण।",
+        "meta": "15 मॉड्यूल // 300 XP"
+      }
+    }
+  },
+  "Courses": {
+    "search": {
+      "placeholder": "खोज कीवर्ड: SOLANA, RUST, ANCHOR..."
+    },
+    "filters": {
+      "all": "सभी",
+      "dev": "देव",
+      "defi": "डीफाई",
+      "active": "सक्रिय फिल्टर्स"
+    },
+    "curatedPaths": {
+      "title": "क्यूरेटेड पाथ्स",
+      "subtitle": "अनुशंसित क्रम",
+      "tracks": {
+        "beginner": "शुरुआती ट्रैक",
+        "intermediate": "इंटरमीडिएट ट्रैक",
+        "advanced": "एडवांस्ड विशेषज्ञता"
+      },
+      "modules": "मॉड्यूल",
+      "complete": "पूर्ण",
+      "startPath": "पथ शुरू करें"
+    },
+    "individualModules": {
+      "title": "व्यक्तिगत मॉड्यूल",
+      "sort": "क्रमबद्ध: लोकप्रियता"
+    },
+    "difficulty": {
+      "beginner": "शुरुआती",
+      "intermediate": "इंटरमीडिएट",
+      "advanced": "एडवांस्ड",
+      "expert": "विशेषज्ञ"
+    },
+    "locked": "लॉक किया गया",
+    "stats": {
+      "title": "सत्र आँकड़े",
+      "totalXP": "कुल XP",
+      "coursesActive": "सक्रिय पाठ्यक्रम",
+      "completionRate": "पूर्णता दर",
+      "certificates": "प्रमाणपत्र"
+    },
+    "lastAccessed": {
+      "title": "अंतिम बार देखा गया",
+      "resume": "मॉड्यूल फिर से शुरू करें"
+    }
+  },
+  "CourseDetail": {
+    "header": {
+      "label": "पाठ्यक्रम विवरण"
+    },
+    "metadata": {
+      "instructor": "प्रशिक्षक",
+      "duration": "अवधि",
+      "difficulty": "कठिनाई"
+    },
+    "xpBounty": "XP बाउंटी",
+    "buttons": {
+      "enroll": "अभी नामांकन करें",
+      "continue": "पाठ्यक्रम जारी रखें"
+    },
+    "curriculum": {
+      "title": "पाठ्यक्रम",
+      "completion": "पूर्णता"
+    },
+    "reviews": {
+      "title": "छात्र प्रतिक्रिया",
+      "viewAll": "सभी समीक्षाएं देखें"
+    }
+  },
+  "Lesson": {
+    "reference": "संदर्भ",
+    "needHint": "क्या संकेत चाहिए?",
+    "ago": "पहले",
+    "autosaved": "ऑटो सेव्ड",
+    "solution": "समाधान",
+    "output": "आउटपुट",
+    "runTests": "टेस्ट चलाएं",
+    "module": "मॉड्यूल",
+    "previous": " पिछला",
+    "nextLesson": "अगला पाठ"
+  },
+  "Dashboard": {
+    "activeCourses": {
+      "label": "वर्तमान ऑपरेशन्स",
+      "title": "सक्रिय पाठ्यक्रम",
+      "progress": "प्रगति",
+      "resume": "फिर से शुरू करें"
+    },
+    "recommendedTracks": {
+      "label": "अगले लक्ष्य",
+      "title": "अनुशंसित ट्रैक",
+      "enroll": "नामांकन करें"
+    },
+    "recentActivity": {
+      "label": "लॉग इतिहास",
+      "title": "हाल की गतिविधि"
+    },
+    "userHUD": {
+      "title": "ऑपरेटर प्रोफ़ाइल",
+      "xpBalance": "XP शेष",
+      "globalRank": "वैश्विक रैंक",
+      "level": "स्तर",
+      "xpToLevel": "XP स्तर तक"
+    },
+    "streak": {
+      "title": "सक्रिय स्ट्रीक",
+      "days": "दिन"
+    },
+    "achievements": {
+      "title": "नवीनतम उपलब्धियां"
+    },
+    "terminal": "टर्मिनल खोलें [F1]"
+  },
+  "Profile": {
+    "operatorId": "ऑपरेटर आईडी",
+    "enrolledSince": "तब से नामांकित",
+    "location": "स्थान",
+    "skillRadar": {
+      "title": "योग्यता रडार"
+    },
+    "achievements": {
+      "title": "उपलब्धियां // शोकेस"
+    },
+    "credentials": {
+      "label": "ऑन-चेन सबूत",
+      "title": "विकसित cNFTs",
+      "verified": "सत्यापित",
+      "viewOnSolscan": "SOLSCAN पर देखें"
+    },
+    "quickStats": {
+      "title": "त्वरित आँकड़े",
+      "rank": "रैंक",
+      "vouchers": "वाउचर"
+    },
+    "courseLedger": {
+      "title": "पाठ्यक्रम बहीखाता"
+    },
+    "metadata": {
+      "title": "METADATA.JSON"
+    }
+  },
+  "Leaderboard": {
+    "header": {
+      "label": "वैश्विक रैंकिंग",
+      "title": "ऑपरेटर लीडरबोर्ड",
+      "updated": "अपडेट किया गया"
+    },
+    "filters": {
+      "weekly": "साप्ताहिक",
+      "monthly": "मासिक",
+      "allTime": "सभी समय",
+      "allTracks": "फ़िल्टर: सभी ट्रैक",
+      "rust": "रस्ट फंडामेंटल्स",
+      "solana": "सोलाना बेसिक्स",
+      "anchor": "एंकर फ्रेमवर्क",
+      "cycle": "चक्र",
+      "stage": "चरण"
+    },
+    "table": {
+      "xp": "XP",
+      "level": "स्तर",
+      "streak": "दिन स्ट्रीक",
+      "you": "आप"
+    },
+    "loadMore": "-- [ अगले 50 ऑपरेटर्स देखें ] --",
+    "userStanding": {
+      "title": "आपकी स्थिति",
+      "globalRank": "वैश्विक रैंक",
+      "percentile": "परसेंटाइल",
+      "xpToFirst": "XP से #1",
+      "rewards": "इनाम",
+      "eligible": "पात्र"
+    },
+    "seasonalPrizes": {
+      "title": "मौसमी पुरस्कार",
+      "topFinishers": "शीर्ष 3 फिनिशर्स:"
+    },
+    "activityFeed": {
+      "title": "गतिविधि फ़ीड"
+    }
+  },
+  "Wallet": {
+    "title": "वॉलेट कनेक्ट करें",
+    "detected": "पता चला"
+  },
+  "Newsletter": {
+    "title": "न्यूज़लेटर",
+    "description": "सीधे अपने इनबॉक्स में साप्ताहिक तकनीकी अपडेट और इकोसिस्टम के अवसर प्राप्त करें।",
+    "placeholder": "OPERADOR@EMAIL.COM",
+    "button": "सब्सक्राइब करें"
+  }
+}

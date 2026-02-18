@@ -47,6 +47,11 @@ export function Footer() {
                   <SelectItem value="en">English (EN)</SelectItem>
                   <SelectItem value="es">Español (ES)</SelectItem>
                   <SelectItem value="pt-br">Português (PT-BR)</SelectItem>
+                  <SelectItem value="hi">हिंदी (HI)</SelectItem>
+                  <SelectItem value="zh">中文 (ZH)</SelectItem>
+                  <SelectItem value="fr">Français (FR)</SelectItem>
+                  <SelectItem value="ru">Русский (RU)</SelectItem>
+                  <SelectItem value="jp">日本語 (JP)</SelectItem>
                 </SelectContent>
               </Select>
             </div>

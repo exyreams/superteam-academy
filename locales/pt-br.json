@@ -252,5 +252,11 @@
     "activityFeed": {
       "title": "Feed de Atividade"
     }
+  },
+  "Newsletter": {
+    "title": "Newsletter",
+    "description": "Receba atualizações técnicas semanais e oportunidades do ecossistema diretamente em sua caixa de entrada.",
+    "placeholder": "OPERADOR@EMAIL.COM",
+    "button": "Inscrever-se"
   }
 }

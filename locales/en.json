@@ -252,5 +252,11 @@
   "Wallet": {
     "title": "Connect Wallet",
     "detected": "DETECTED"
+  },
+  "Newsletter": {
+    "title": "Newsletter",
+    "description": "Get weekly technical updates and ecosystem opportunities delivered straight to your inbox.",
+    "placeholder": "OPERATOR@EMAIL.COM",
+    "button": "Subscribe"
   }
 }

@@ -1,0 +1,262 @@
+{
+  "Hero": {
+    "badge": "Доступ к терминалу разрешен",
+    "title": "СОЗДАЙТЕ СВОЕ{br}БУДУЩЕЕ НА{br}SOLANA",
+    "description": "Лучшая техническая площадка для подготовки следующего поколения архитекторов Solana. Пройдите путь с нуля до готового к продакшену специалиста с нашей программой.",
+    "explore": "Изучить курсы",
+    "discord": "Присоединиться к Discord"
+  },
+  "Navbar": {
+    "brand": "АКАДЕМИЯ SUPERTEAM",
+    "links": {
+      "catalog": "Каталог",
+      "leaderboard": "Рейтинг",
+      "rewards": "Награды"
+    },
+    "cta": {
+      "dashboard": "Панель",
+      "start": "Начать"
+    }
+  },
+  "Footer": {
+    "brand": "АКАДЕМИЯ SUPERTEAM",
+    "description": "Децентрализованный университет для экосистемы Solana. Принадлежит студентам.",
+    "language": "Язык:",
+    "copyright": "© 2026 Superteam Academy // Все права защищены",
+    "headers": {
+      "platform": "Платформа",
+      "socials": "Соцсети"
+    },
+    "links": {
+      "catalog": "Каталог",
+      "leaderboard": "Рейтинг",
+      "dashboard": "Панель",
+      "profile": "Профиль"
+    }
+  },
+  "Features": {
+    "proofs": {
+      "title": "ОНЧЕЙН ДОКАЗАТЕЛЬСТВА",
+      "description": "Каждый пройденный вами модуль выдает нетрансферабельный сертификат на ваш кошелек. Создайте криптографически проверяемое резюме в процессе обучения."
+    },
+    "compiler": {
+      "title": "LIVE КОМПИЛЯТОР",
+      "description": "Настройка среды не требуется. Пишите, тестируйте и развертывайте программы Solana прямо в нашем браузерном IDE с обратной связью в реальном времени."
+    }
+  },
+  "LearningPaths": {
+    "subtitle": "Доступные операции",
+    "title": "ПУТИ ОБУЧЕНИЯ",
+    "viewAll": "Смотреть все",
+    "tracks": {
+      "beginner": {
+        "path": "Путь 01 // Новичок",
+        "title": "ОСНОВЫ SOLANA",
+        "description": "Освойте базовый уровень. Аккаунты, транзакции и среда выполнения Sealevel.",
+        "meta": "12 МОДУЛЕЙ // 40 XP"
+      },
+      "intermediate": {
+        "path": "Путь 02 // Средний",
+        "title": "ФРЕЙМВОРК ANCHOR",
+        "description": "Быстрая разработка программ с использованием отраслевого стандарта Rust DSL.",
+        "meta": "8 МОДУЛЕЙ // 120 XP"
+      },
+      "advanced": {
+        "path": "Путь 03 // Продвинутый",
+        "title": "БЕЗОПАСНОСТЬ ПРОТОКОЛА",
+        "description": "Методы аудита, распространенные векторы атак и инвариантное тестирование.",
+        "meta": "15 МОДУЛЕЙ // 300 XP"
+      }
+    }
+  },
+  "Courses": {
+    "search": {
+      "placeholder": "ПОИСК: SOLANA, RUST, ANCHOR..."
+    },
+    "filters": {
+      "all": "ВСЕ",
+      "dev": "DEV",
+      "defi": "DEFI",
+      "active": "АКТИВНЫЕ ФИЛЬТРЫ"
+    },
+    "curatedPaths": {
+      "title": "ИЗБРАННЫЕ ПУТИ",
+      "subtitle": "РЕКОМЕНДУЕМЫЕ",
+      "tracks": {
+        "beginner": "ДЛЯ НОВИЧКОВ",
+        "intermediate": "СРЕДНИЙ УРОВЕНЬ",
+        "advanced": "ПРОДВИНУТЫЙ"
+      },
+      "modules": "МОДУЛИ",
+      "complete": "ЗАВЕРШЕНО",
+      "startPath": "НАЧАТЬ ПУТЬ"
+    },
+    "individualModules": {
+      "title": "ОТДЕЛЬНЫЕ МОДУЛИ",
+      "sort": "СОРТИРОВКА: ПОПУЛЯРНОСТЬ"
+    },
+    "difficulty": {
+      "beginner": "НОВИЧОК",
+      "intermediate": "СРЕДНИЙ",
+      "advanced": "ПРОДВИНУТЫЙ",
+      "expert": "ЭКСПЕРТ"
+    },
+    "locked": "ЗАКРЫТО",
+    "stats": {
+      "title": "СТАТИСТИКА СЕССИИ",
+      "totalXP": "ВСЕГО XP",
+      "coursesActive": "АКТИВНЫЕ КУРСЫ",
+      "completionRate": "ПРОЦЕНТ ЗАВЕРШЕНИЯ",
+      "certificates": "СЕРТИФИКАТЫ"
+    },
+    "lastAccessed": {
+      "title": "ПОСЛЕДНИЙ ДОСТУП",
+      "resume": "ПРОДОЛЖИТЬ МОДУЛЬ"
+    }
+  },
+  "CourseDetail": {
+    "header": {
+      "label": "Детали курса"
+    },
+    "metadata": {
+      "instructor": "Инструктор",
+      "duration": "Длительность",
+      "difficulty": "Сложность"
+    },
+    "xpBounty": "Награда XP",
+    "buttons": {
+      "enroll": "ЗАПИСАТЬСЯ",
+      "continue": "ПРОДОЛЖИТЬ КУРС"
+    },
+    "curriculum": {
+      "title": "Учебный план",
+      "completion": "ЗАВЕРШЕНИЕ"
+    },
+    "reviews": {
+      "title": "Отзывы студентов",
+      "viewAll": "СМОТРЕТЬ ВСЕ ОТЗЫВЫ"
+    }
+  },
+  "Lesson": {
+    "reference": "СПРАВКА",
+    "needHint": "НУЖНА ПОДСКАЗКА?",
+    "ago": "назад",
+    "autosaved": "АВТОСОХРАНЕНИЕ",
+    "solution": "РЕШЕНИЕ",
+    "output": "ВЫВОД",
+    "runTests": "ЗАПУСТИТЬ ТЕСТЫ",
+    "module": "МОДУЛЬ",
+    "previous": "ПРЕДЫДУЩИЙ",
+    "nextLesson": "СЛЕДУЮЩИЙ УРОК"
+  },
+  "Dashboard": {
+    "activeCourses": {
+      "label": "Текущие операции",
+      "title": "АКТИВНЫЕ КУРСЫ",
+      "progress": "ПРОГРЕСС",
+      "resume": "Продолжить"
+    },
+    "recommendedTracks": {
+      "label": "Следующие цели",
+      "title": "РЕКОМЕНДУЕМЫЕ ПУТИ",
+      "enroll": "ЗАПИСАТЬСЯ"
+    },
+    "recentActivity": {
+      "label": "История логов",
+      "title": "НЕДАВНЯЯ АКТИВНОСТЬ"
+    },
+    "userHUD": {
+      "title": "ПРОФИЛЬ ОПЕРАТОРА",
+      "xpBalance": "БАЛАНС XP",
+      "globalRank": "ГЛОБАЛЬНЫЙ РАНГ",
+      "level": "УРОВЕНЬ",
+      "xpToLevel": "XP ДО УРОВНЯ"
+    },
+    "streak": {
+      "title": "Активная серия",
+      "days": "Д"
+    },
+    "achievements": {
+      "title": "Последние достижения"
+    },
+    "terminal": "ОТКРЫТЬ ТЕРМИНАЛ [F1]"
+  },
+  "Profile": {
+    "operatorId": "ID ОПЕРАТОРА",
+    "enrolledSince": "ЗАРЕГИСТРИРОВАН",
+    "location": "МЕСТОПОЛОЖЕНИЕ",
+    "skillRadar": {
+      "title": "РАДАР НАВЫКОВ"
+    },
+    "achievements": {
+      "title": "ДОСТИЖЕНИЯ // ВИТРИНА"
+    },
+    "credentials": {
+      "label": "ОНЧЕЙН ДОКАЗАТЕЛЬСТВА",
+      "title": "ЭВОЛЮЦИОНИРУЮЩИЕ cNFT",
+      "verified": "ПРОВЕРЕНО",
+      "viewOnSolscan": "СМОТРЕТЬ НА SOLSCAN"
+    },
+    "quickStats": {
+      "title": "БЫСТРАЯ СТАТИСТИКА",
+      "rank": "РАНГ",
+      "vouchers": "ВАУЧЕРЫ"
+    },
+    "courseLedger": {
+      "title": "ЖУРНАЛ КУРСОВ"
+    },
+    "metadata": {
+      "title": "METADATA.JSON"
+    }
+  },
+  "Leaderboard": {
+    "header": {
+      "label": "Глобальный рейтинг",
+      "title": "ТАБЛИЦА ЛИДЕРОВ",
+      "updated": "Обновлено"
+    },
+    "filters": {
+      "weekly": "Неделя",
+      "monthly": "Месяц",
+      "allTime": "Все время",
+      "allTracks": "ФИЛЬТР: ВСЕ ТРЕКИ",
+      "rust": "ОСНОВЫ RUST",
+      "solana": "ОСНОВЫ SOLANA",
+      "anchor": "ФРЕЙМВОРК ANCHOR",
+      "cycle": "Цикл",
+      "stage": "Этап"
+    },
+    "table": {
+      "xp": "XP",
+      "level": "УР",
+      "streak": "СЕРИЯ Д",
+      "you": "ВЫ"
+    },
+    "loadMore": "-- [ ПОКАЗАТЬ СЛЕДУЮЩИХ 50 ] --",
+    "userStanding": {
+      "title": "ВАША ПОЗИЦИЯ",
+      "globalRank": "ГЛОБАЛЬНЫЙ РАНГ",
+      "percentile": "ПРОЦЕНТИЛЬ",
+      "xpToFirst": "XP ДО #1",
+      "rewards": "НАГРАДЫ",
+      "eligible": "ДОСТУПНО"
+    },
+    "seasonalPrizes": {
+      "title": "СЕЗОННЫЕ ПРИЗЫ",
+      "topFinishers": "Топ 3 финалиста:"
+    },
+    "activityFeed": {
+      "title": "Лента активности"
+    }
+  },
+  "Wallet": {
+    "title": "Подключить кошелек",
+    "detected": "ОБНАРУЖЕНО"
+  },
+  "Newsletter": {
+    "title": "Рассылка",
+    "description": "Получайте еженедельные технические обновления и возможности экосистемы прямо на ваш почтовый ящик.",
+    "placeholder": "OPERADOR@EMAIL.COM",
+    "button": "Подписаться"
+  }
+}

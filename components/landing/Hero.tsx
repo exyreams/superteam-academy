@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/routing";
 import { TypingAnimation } from "@/components/shared/TypingAnimation";
+import { DotGrid } from "@/components/shared/DotGrid";
 
 // Hero Section
 // Displays the primary value proposition with a large typographic title,
@@ -15,8 +16,12 @@ export function Hero() {
   const t = useTranslations("Hero");
 
   return (
-    <header className="px-6 lg:px-12 py-16 lg:py-[120px] border-b border-ink-secondary/20 dark:border-border grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 relative">
-      <div className="flex flex-col justify-center">
+    <header className="px-6 lg:px-12 py-16 lg:py-[120px] border-b border-ink-secondary/20 dark:border-border grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 relative overflow-hidden">
+      {/* Dot Grid Background */}
+      {/* Dot Grid Background */}
+      <DotGrid />
+
+      <div className="flex flex-col justify-center relative z-10">
         {/* Entrance Badge */}
         <motion.span
           initial={{ opacity: 0, x: -20 }}
@@ -82,7 +87,7 @@ export function Hero() {
         initial={{ opacity: 0, scale: 0.95 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.8, delay: 0.3 }}
-        className="hidden lg:flex relative border border-ink-secondary/20 dark:border-border bg-[rgba(13,20,18,0.02)] items-center justify-center p-4 lg:p-8 min-h-[300px] lg:min-h-[400px]"
+        className="hidden lg:flex relative z-10 border border-ink-secondary/20 dark:border-border bg-[rgba(13,20,18,0.02)] items-center justify-center p-4 lg:p-8 min-h-[300px] lg:min-h-[400px]"
       >
         {/* Corner Accents with floating animation */}
         {[
