@@ -75,7 +75,7 @@ export function ProfileView({
         {/* Context Panel (Right Sidebar) */}
         <aside className="border-t lg:border-t-0 lg:border-l border-border bg-bg-base p-6 flex flex-col gap-8 overflow-visible lg:overflow-y-auto">
           {/* Quick Stats */}
-          <div className="border border-border p-4 relative">
+          <div className="border border-border bg-bg-surface p-4 relative">
             <span className="absolute -top-2.5 left-3 bg-bg-base px-2 text-[10px] uppercase tracking-widest font-bold">
               QUICK_STATS
             </span>

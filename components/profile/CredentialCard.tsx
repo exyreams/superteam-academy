@@ -24,7 +24,7 @@ export function CredentialCard({ credential }: CredentialCardProps) {
     credential.track.toLowerCase().replace(/[_\s]+/g, '-');
 
   return (
-    <div className="border border-ink-secondary p-3 bg-white group hover:border-ink-primary transition-colors">
+    <div className="border border-border p-3 bg-bg-surface group hover:border-ink-primary transition-colors">
       <Link href={`/${locale}/certificates/${certificateId}`} className="block">
         <div
           className="w-full aspect-square mb-3 relative overflow-hidden cursor-pointer"

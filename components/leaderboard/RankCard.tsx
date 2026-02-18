@@ -13,7 +13,7 @@ export function RankCard({ entry, showCrosshair = false }: RankCardProps) {
       className={`grid grid-cols-[60px_50px_1fr_120px_80px_100px] items-center px-6 py-3 border relative transition-all ${
         entry.isCurrentUser
           ? 'bg-ink-primary text-bg-base border-ink-primary'
-          : 'border-ink-secondary bg-bg-base hover:border-ink-primary hover:shadow-[2px_2px_0_rgba(13,20,18,0.1)]'
+          : 'border-border bg-bg-surface hover:border-ink-primary hover:shadow-[4px_4px_0_rgba(13,20,18,0.1)] dark:hover:shadow-[4px_4px_0_rgba(255,255,255,0.1)]'
       }`}
     >
       {/* Crosshair decoration for top ranks */}

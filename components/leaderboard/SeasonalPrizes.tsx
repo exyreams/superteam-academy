@@ -2,7 +2,7 @@
 
 export function SeasonalPrizes() {
   return (
-    <div className="border border-dashed border-ink-secondary p-4 relative opacity-80">
+    <div className="border border-dashed border-ink-secondary bg-bg-surface p-4 relative opacity-80">
       <span className="absolute -top-2.5 left-3 bg-bg-base px-2 text-[10px] uppercase tracking-widest font-bold">
         SEASONAL PRIZES
       </span>
