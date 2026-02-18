@@ -10,7 +10,7 @@ interface RankCardProps {
 export function RankCard({ entry, showCrosshair = false }: RankCardProps) {
   return (
     <div
-      className={`grid grid-cols-[60px_50px_1fr_120px_80px_100px] items-center px-6 py-3 border relative transition-all ${
+      className={`grid grid-cols-[40px_1fr_auto] md:grid-cols-[60px_50px_1fr_120px_80px_100px] items-center px-4 md:px-6 py-3 border relative transition-all ${
         entry.isCurrentUser
           ? 'bg-ink-primary text-bg-base border-ink-primary'
           : 'border-border bg-bg-surface hover:border-ink-primary hover:shadow-[4px_4px_0_rgba(13,20,18,0.1)] dark:hover:shadow-[4px_4px_0_rgba(255,255,255,0.1)]'
@@ -31,13 +31,13 @@ export function RankCard({ entry, showCrosshair = false }: RankCardProps) {
       )}
       
       {/* Rank Number */}
-      <div className="font-display text-2xl font-bold">
+      <div className="font-display text-xl md:text-2xl font-bold">
         {entry.rank.toString().padStart(2, '0')}
       </div>
       
-      {/* Avatar */}
+      {/* Avatar (Desktop Only) */}
       <div
-        className={`w-8 h-8 border flex items-center justify-center text-base ${
+        className={`w-8 h-8 border hidden md:flex items-center justify-center text-base ${
           entry.isCurrentUser
             ? 'border-bg-base/30 bg-bg-base/10'
             : 'border-ink-secondary bg-ink-primary/5'
@@ -47,27 +47,27 @@ export function RankCard({ entry, showCrosshair = false }: RankCardProps) {
       </div>
       
       {/* Username */}
-      <div className="font-bold pl-3">
+      <div className="font-bold pl-0 md:pl-3 truncate">
         {entry.username}
       </div>
       
       {/* XP */}
-      <div className="font-display text-xl text-right pr-6">
+      <div className="font-display text-lg md:text-xl text-right pr-0 md:pr-6">
         {entry.xp.toLocaleString()}{' '}
         <span className={`text-[10px] ${entry.isCurrentUser ? 'opacity-40' : 'text-ink-secondary'}`}>
           XP
         </span>
       </div>
       
-      {/* Level Badge */}
-      <div>
+      {/* Level Badge (Desktop Only) */}
+      <div className="hidden md:block">
         <span className="text-[10px] border border-current px-1.5 py-0.5 inline-block uppercase tracking-widest">
           LVL {entry.level}
         </span>
       </div>
       
-      {/* Streak */}
-      <div className="text-right text-[10px] font-medium">
+      {/* Streak (Desktop Only) */}
+      <div className="text-right text-[10px] font-medium hidden md:block">
         {entry.streak}
         <span className={entry.isCurrentUser ? 'opacity-60' : 'text-ink-secondary'}>
           D STREAK

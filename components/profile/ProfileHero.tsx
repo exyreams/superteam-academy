@@ -8,7 +8,7 @@ interface ProfileHeroProps {
 
 export function ProfileHero({ profile }: ProfileHeroProps) {
   return (
-    <div className="grid grid-cols-[180px_1fr] gap-8 p-8 border border-ink-primary bg-white/30 relative">
+    <div className="grid grid-cols-1 md:grid-cols-[180px_1fr] gap-8 p-8 border border-border bg-bg-surface relative">
       {/* Corner crosshairs */}
       <div className="absolute -top-1 -left-1 w-2.5 h-2.5">
         <div className="absolute w-full h-px bg-ink-secondary top-1/2"></div>

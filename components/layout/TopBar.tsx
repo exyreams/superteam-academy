@@ -26,8 +26,10 @@ export function TopBar() {
       <div className="flex gap-4 items-center">
         <LanguageDropdown />
         <ModeToggle />
-        <div className="h-6 w-px bg-ink-secondary/20 dark:bg-border mx-2" />
-        <WalletButton />
+        <div className="hidden lg:flex items-center gap-4">
+          <div className="h-6 w-px bg-ink-secondary/20 dark:bg-border mx-2" />
+          <WalletButton />
+        </div>
       </div>
     </header>
   );

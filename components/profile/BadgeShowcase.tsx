@@ -11,7 +11,7 @@ export function BadgeShowcase({ achievements, maxSlots = 8 }: BadgeShowcaseProps
   const slots = Array.from({ length: maxSlots }, (_, i) => achievements[i] || null);
   
   return (
-    <div className="border border-ink-secondary p-6 bg-bg-base">
+    <div className="border border-border p-6 bg-bg-surface h-full">
       <span className="text-[10px] uppercase tracking-widest font-bold block mb-4">
         ACHIEVEMENTS // SHOWCASE
       </span>

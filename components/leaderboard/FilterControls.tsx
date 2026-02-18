@@ -37,12 +37,12 @@ export function FilterControls({ onFilterChange }: FilterControlsProps) {
   };
 
   return (
-    <div className="flex gap-6 mb-8 items-center">
+    <div className="flex flex-col lg:flex-row gap-4 lg:gap-6 mb-8 items-start lg:items-center">
       {/* Period Tab Group */}
-      <div className="flex border border-ink-secondary">
+      <div className="flex border border-ink-secondary w-full lg:w-auto overflow-x-auto">
         <button
           onClick={() => handlePeriodChange('weekly')}
-          className={`px-4 py-2 text-[11px] uppercase tracking-widest border-r border-ink-secondary ${
+          className={`flex-1 lg:flex-none px-4 py-2 text-[11px] uppercase tracking-widest border-r border-ink-secondary ${
             activePeriod === 'weekly'
               ? 'bg-ink-primary text-bg-base'
               : 'bg-transparent text-ink-secondary hover:bg-ink-primary/5'
@@ -52,7 +52,7 @@ export function FilterControls({ onFilterChange }: FilterControlsProps) {
         </button>
         <button
           onClick={() => handlePeriodChange('monthly')}
-          className={`px-4 py-2 text-[11px] uppercase tracking-widest border-r border-ink-secondary ${
+          className={`flex-1 lg:flex-none px-4 py-2 text-[11px] uppercase tracking-widest border-r border-ink-secondary ${
             activePeriod === 'monthly'
               ? 'bg-ink-primary text-bg-base'
               : 'bg-transparent text-ink-secondary hover:bg-ink-primary/5'
@@ -62,7 +62,7 @@ export function FilterControls({ onFilterChange }: FilterControlsProps) {
         </button>
         <button
           onClick={() => handlePeriodChange('all-time')}
-          className={`px-4 py-2 text-[11px] uppercase tracking-widest ${
+          className={`flex-1 lg:flex-none px-4 py-2 text-[11px] uppercase tracking-widest ${
             activePeriod === 'all-time'
               ? 'bg-ink-primary text-bg-base'
               : 'bg-transparent text-ink-secondary hover:bg-ink-primary/5'
@@ -73,21 +73,23 @@ export function FilterControls({ onFilterChange }: FilterControlsProps) {
       </div>
 
       {/* Track Filter Dropdown */}
-      <Select value={activeTrack} onValueChange={handleTrackChange}>
-        <SelectTrigger className="w-[200px] h-auto py-2 px-3 text-[11px] uppercase tracking-widest border-ink-secondary bg-transparent">
-          <SelectValue />
-        </SelectTrigger>
-        <SelectContent>
-          {trackOptions.map((option) => (
-            <SelectItem key={option.value} value={option.value} className="text-[11px] uppercase tracking-widest">
-              {option.label}
-            </SelectItem>
-          ))}
-        </SelectContent>
-      </Select>
+      <div className="w-full lg:w-auto">
+        <Select value={activeTrack} onValueChange={handleTrackChange}>
+          <SelectTrigger className="w-full lg:w-[200px] h-auto py-2 px-3 text-[11px] uppercase tracking-widest border-ink-secondary bg-transparent">
+            <SelectValue />
+          </SelectTrigger>
+          <SelectContent>
+            {trackOptions.map((option) => (
+              <SelectItem key={option.value} value={option.value} className="text-[11px] uppercase tracking-widest">
+                {option.label}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
+      </div>
 
       {/* Cycle Info */}
-      <div className="text-[10px] uppercase tracking-widest text-ink-secondary ml-auto">
+      <div className="text-[10px] uppercase tracking-widest text-ink-secondary ml-0 lg:ml-auto w-full lg:w-auto text-right">
         Cycle 42 {"//"} Stage 3
       </div>
     </div>

@@ -15,7 +15,7 @@ interface CertificateViewProps {
 
 export function CertificateView({ certificate }: CertificateViewProps) {
   return (
-    <div className="min-h-screen bg-bg-base">
+    <div className="min-h-screen bg-bg-base overflow-x-hidden">
       {/* App Shell Grid */}
       <div className="grid grid-cols-1 lg:grid-cols-[60px_1fr_350px] lg:grid-rows-[48px_1fr] min-h-screen lg:h-screen lg:overflow-hidden max-w-full">
         {/* Top Bar - spans all columns */}
@@ -30,7 +30,7 @@ export function CertificateView({ certificate }: CertificateViewProps) {
         <section className="p-4 lg:p-10 overflow-visible lg:overflow-y-auto flex flex-col gap-8">
           {/* Section Header */}
           <div className="border-b border-border pb-3">
-            <span className="bg-ink-primary text-white px-2 py-1 text-[10px] uppercase tracking-widest inline-block">
+            <span className="bg-ink-primary text-bg-base px-2 py-1 text-[10px] uppercase tracking-widest inline-block">
               Credential Issued
             </span>
             <h2 className="font-display text-2xl lg:text-[32px] leading-none -tracking-wider mt-2">

@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button';
 import { ListIcon, SquaresFour, Book, Trophy, Users, Gear, User } from '@phosphor-icons/react';
 import { Link, usePathname } from '@/i18n/routing';
 import { Logo } from '@/components/shared/logo';
+import { WalletButton } from "@/components/shared/WalletButton";
 import { cn } from '@/lib/utils';
 import { useState } from 'react';
 
@@ -57,12 +58,12 @@ export function MobileNav() {
                   href={item.href}
                   onClick={() => setOpen(false)}
                   className={cn(
-                    'flex items-center gap-4 px-4 py-3 rounded-none border border-transparent transition-colors hover:bg-ink-primary/5 hover:border-ink-primary/20',
+                    'flex items-center gap-3 px-4 py-2 rounded-none border border-transparent transition-colors hover:bg-ink-primary/5 hover:border-ink-primary/20',
                     item.active && 'bg-ink-primary/5 border-ink-primary text-ink-primary'
                   )}
                 >
-                  <Icon size={20} weight={item.active ? 'fill' : 'regular'} className={cn(item.active ? "text-ink-primary" : "text-ink-primary/70")} />
-                  <span className={cn("font-bold uppercase tracking-widest text-sm", item.active ? "text-ink-primary" : "text-ink-primary/70")}>
+                  <Icon size={18} weight={item.active ? 'fill' : 'regular'} className={cn(item.active ? "text-ink-primary" : "text-ink-primary/70")} />
+                  <span className={cn("font-bold uppercase tracking-widest text-xs", item.active ? "text-ink-primary" : "text-ink-primary/70")}>
                     {item.label}
                   </span>
                 </Link>
@@ -70,8 +71,11 @@ export function MobileNav() {
             })}
           </div>
 
-          <div className="mt-auto flex flex-col gap-1 pt-6 border-t border-ink-secondary/10">
-             <span className="text-[10px] uppercase tracking-widest text-ink-secondary px-4 mb-2">Account</span>
+          <div className="mt-auto flex flex-col gap-1 pt-4 border-t border-ink-secondary/10">
+             <div className="px-4 mb-2">
+               <WalletButton />
+             </div>
+             <span className="text-[10px] uppercase tracking-widest text-ink-secondary px-4 mb-1">Account</span>
             {bottomItems.map((item) => {
               const Icon = item.icon;
               return (
@@ -80,12 +84,12 @@ export function MobileNav() {
                   href={item.href}
                   onClick={() => setOpen(false)}
                   className={cn(
-                    'flex items-center gap-4 px-4 py-3 rounded-none border border-transparent transition-colors hover:bg-ink-primary/5 hover:border-ink-primary/20',
+                    'flex items-center gap-3 px-4 py-2 rounded-none border border-transparent transition-colors hover:bg-ink-primary/5 hover:border-ink-primary/20',
                     item.active && 'bg-ink-primary/5 border-ink-primary text-ink-primary'
                   )}
                 >
-                  <Icon size={20} weight={item.active ? 'fill' : 'regular'} className={cn(item.active ? "text-ink-primary" : "text-ink-primary/70")} />
-                  <span className={cn("font-bold uppercase tracking-widest text-sm", item.active ? "text-ink-primary" : "text-ink-primary/70")}>
+                  <Icon size={18} weight={item.active ? 'fill' : 'regular'} className={cn(item.active ? "text-ink-primary" : "text-ink-primary/70")} />
+                  <span className={cn("font-bold uppercase tracking-widest text-xs", item.active ? "text-ink-primary" : "text-ink-primary/70")}>
                     {item.label}
                   </span>
                 </Link>

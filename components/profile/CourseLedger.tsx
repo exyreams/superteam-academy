@@ -9,7 +9,7 @@ interface CourseLedgerProps {
 
 export function CourseLedger({ courses }: CourseLedgerProps) {
   return (
-    <div>
+    <div className="border border-border bg-bg-surface p-6">
       <span className="text-[10px] uppercase tracking-widest font-bold block mb-4">
         COURSE_LEDGER
       </span>

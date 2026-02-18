@@ -9,24 +9,7 @@ interface OnChainMetadataProps {
 export function OnChainMetadata({ onChain }: OnChainMetadataProps) {
   return (
     <div className="border border-ink-secondary p-4 relative">
-      <div className="absolute -top-1 -left-1 w-2.5 h-2.5">
-        <div className="absolute w-full h-px bg-ink-secondary top-1/2"></div>
-        <div className="absolute h-full w-px bg-ink-secondary left-1/2"></div>
-      </div>
-      <div className="absolute -top-1 -right-1 w-2.5 h-2.5">
-        <div className="absolute w-full h-px bg-ink-secondary top-1/2"></div>
-        <div className="absolute h-full w-px bg-ink-secondary left-1/2"></div>
-      </div>
-      <div className="absolute -bottom-1 -left-1 w-2.5 h-2.5">
-        <div className="absolute w-full h-px bg-ink-secondary top-1/2"></div>
-        <div className="absolute h-full w-px bg-ink-secondary left-1/2"></div>
-      </div>
-      <div className="absolute -bottom-1 -right-1 w-2.5 h-2.5">
-        <div className="absolute w-full h-px bg-ink-secondary top-1/2"></div>
-        <div className="absolute h-full w-px bg-ink-secondary left-1/2"></div>
-      </div>
-      
-      <span className="absolute -top-2.5 left-3 bg-bg-base px-2 text-[10px] uppercase tracking-widest font-bold">
+      <span className="absolute -top-2.5 left-3 bg-bg-base px-2 text-[10px] uppercase tracking-widest font-bold text-ink-primary">
         On-Chain Metadata
       </span>
       
