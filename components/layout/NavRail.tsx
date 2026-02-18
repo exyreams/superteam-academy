@@ -33,7 +33,7 @@ export function NavRail() {
               <Icon
                 size={18}
                 className="text-ink-primary"
-                weight={item.active ? 'fill' : 'regular'}
+                weight={item.active ? "duotone" : "regular"}
               />
               {item.active && (
                 <div className="absolute -right-px -top-px w-1 h-1 bg-ink-primary" />
@@ -55,7 +55,7 @@ export function NavRail() {
         <User
           size={18}
           className="text-ink-primary"
-          weight={pathname?.includes('/profile') ? 'fill' : 'regular'}
+          weight={pathname?.includes('/profile') ? "duotone" : "regular"}
         />
         {pathname?.includes('/profile') && (
           <div className="absolute -right-px -top-px w-1 h-1 bg-ink-primary" />
@@ -74,7 +74,7 @@ export function NavRail() {
         <Gear
           size={18}
           className="text-ink-primary"
-          weight={pathname === '/settings' ? 'fill' : 'regular'}
+          weight={pathname === '/settings' ? "duotone" : "regular"}
         />
         {pathname === '/settings' && (
           <div className="absolute -right-px -top-px w-1 h-1 bg-ink-primary" />

@@ -35,7 +35,7 @@ export function Features() {
         >
           {/* Feature Icon - Phosphor Icons Library */}
           <div>
-            <feature.icon size={32} className="group-hover:text-ink-primary transition-colors" />
+            <feature.icon size={32} weight="duotone" className="group-hover:text-ink-primary transition-colors" />
           </div>
 
           {/* Localized Content */}

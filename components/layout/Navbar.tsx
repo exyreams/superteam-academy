@@ -5,7 +5,7 @@ import { ModeToggle } from "@/components/theme-toggle";
 import { Logo } from "@/components/shared/logo";
 import { WalletButton } from "@/components/shared/WalletButton";
 import { useTranslations } from "next-intl";
-import { Link } from "@/i18n/routing";
+import { Link, usePathname } from "@/i18n/routing";
 import { useWallet } from "@solana/wallet-adapter-react";
 import { useEffect, useState } from "react";
 import { Sheet, SheetContent, SheetTrigger, SheetTitle, SheetHeader, SheetDescription } from "@/components/ui/sheet";
@@ -13,6 +13,7 @@ import { ListIcon, HouseIcon, BookIcon, TrophyIcon, GiftIcon, SquaresFourIcon, A
 
 export function Navbar() {
   const t = useTranslations("Navbar");
+  const pathname = usePathname();
 
   const { connected } = useWallet();
   const [mounted, setMounted] = useState(false);
@@ -101,20 +102,26 @@ export function Navbar() {
                   { label: t("links.catalog"), href: "/courses", icon: BookIcon },
                   { label: t("links.leaderboard"), href: "/leaderboard", icon: TrophyIcon },
                   { label: t("links.rewards"), href: "/rewards", icon: GiftIcon },
-                ].map((item) => (
-                  <Link
-                    key={item.label}
-                    href={item.href}
-                    className="flex items-center gap-4 py-3 text-ink-primary group border-b border-ink-secondary/10 last:border-0"
-                  >
-                    <div className="w-8 h-8 flex items-center justify-center border border-ink-secondary/20 dark:border-border bg-bg-base transition-colors group-hover:border-ink-primary group-hover:bg-ink-primary/5">
-                      <item.icon size={16} weight="fill" />
-                    </div>
-                    <span className="font-bold uppercase tracking-widest text-sm group-hover:text-ink-primary/80 transition-colors">
-                      {item.label}
-                    </span>
-                  </Link>
-                ))}
+                ].map((item) => {
+                  const isActive = item.href === '/' 
+                    ? pathname === '/' 
+                    : pathname?.startsWith(item.href);
+                  
+                  return (
+                    <Link
+                      key={item.label}
+                      href={item.href}
+                      className="flex items-center gap-4 py-3 text-ink-primary group border-b border-ink-secondary/10 last:border-0"
+                    >
+                      <div className={`w-8 h-8 flex items-center justify-center border border-ink-secondary/20 dark:border-border transition-colors group-hover:border-ink-primary group-hover:bg-ink-primary/5 ${isActive ? 'bg-ink-primary/5 border-ink-primary' : 'bg-bg-base'}`}>
+                        <item.icon size={16} weight={isActive ? "duotone" : "regular"} />
+                      </div>
+                      <span className={`font-bold uppercase tracking-widest text-sm transition-colors ${isActive ? 'text-ink-primary' : 'group-hover:text-ink-primary/80'}`}>
+                        {item.label}
+                      </span>
+                    </Link>
+                  );
+                })}
               </div>
 
               {/* Mobile Actions */}
@@ -131,7 +138,7 @@ export function Navbar() {
                       className="w-full rounded-none uppercase text-xs font-bold h-[42px] justify-center gap-2"
                     >
                       <Link href="/dashboard">
-                        <SquaresFourIcon size={16} weight="bold" />
+                        <SquaresFourIcon size={16} weight="duotone" />
                         {t("cta.dashboard")}
                       </Link>
                     </Button>
@@ -143,7 +150,7 @@ export function Navbar() {
                     >
                       <Link href="/courses">
                         {t("cta.start")}
-                        <ArrowRightIcon size={14} weight="bold" />
+                        <ArrowRightIcon size={14} weight="duotone" />
                       </Link>
                     </Button>
                   )}

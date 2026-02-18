@@ -64,7 +64,7 @@ export function Hero() {
               className="rounded-none uppercase text-xs font-bold px-8 py-4 h-auto font-mono gap-3 w-full sm:w-auto justify-center"
             >
               <Link href="/courses">
-                {t("explore")} <ArrowRightIcon size={16} />
+                {t("explore")} <ArrowRightIcon size={16} weight="duotone" />
               </Link>
             </Button>
           </motion.div>
