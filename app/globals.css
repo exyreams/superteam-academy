@@ -8,6 +8,7 @@
 @theme inline {
   --color-bg-base: var(--bg-base);
   --color-bg-surface: var(--bg-surface);
+  --color-bg-struct: var(--bg-struct);
   --color-ink-primary: var(--ink-primary);
   --color-ink-secondary: var(--ink-secondary);
   --color-ink-tertiary: var(--ink-tertiary);
@@ -61,6 +62,7 @@
 
 :root {
   --bg-base: #E3ECEB;
+  --bg-struct: #DCE5E4;
   --ink-primary: #0D1412;
   --ink-secondary: #5C6E6A;
   --ink-tertiary: #8FA39F;
@@ -104,6 +106,7 @@
 .dark {
   /* STONE THEME (Warm Dark) */
   --bg-base: #0c0a09;
+  --bg-struct: #141211;
   --ink-primary: #fafaf9; /* Stone-50 */
   --ink-secondary: #a8a29e; /* Stone-400 */
   --ink-tertiary: #57534e; /* Stone-600 */
@@ -149,7 +152,7 @@
 
 @layer base {
   :root {
-    --bg-surface: #FFFFFF; /* High contrast for cards */
+    --bg-surface: #DCE5E4; /* Slightly darker than base */
   }
   .dark {
     --bg-surface: #141211; /* Slightly lighter than base (Stone 925) */

@@ -10,7 +10,7 @@ import { MobileNav } from '@/components/layout/MobileNav';
 
 export function TopBar() {
   return (
-    <header className="border-b border-ink-secondary/20 dark:border-border flex items-center justify-between px-6 bg-bg-surface h-12 sticky top-0 z-40">
+    <header className="border-b border-ink-secondary/20 dark:border-border flex items-center justify-between px-6 bg-bg-struct h-12 sticky top-0 z-40">
       {/* Left: Logo and Brand */}
       <div className="flex gap-6 items-center">
         <MobileNav />
