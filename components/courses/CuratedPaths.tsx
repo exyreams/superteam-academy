@@ -39,17 +39,18 @@ export function CuratedPaths({ paths }: CuratedPathsProps) {
             <Link
               key={path.id}
               href={`/courses/${path.slug}`}
-              className="border border-ink-secondary bg-bg-base hover:border-ink-primary hover:shadow-[4px_4px_0_rgba(13,20,18,0.1)] hover:translate-x-[-2px] hover:translate-y-[-2px] transition-all relative group"
+              className="border border-border bg-bg-surface hover:border-ink-primary hover:shadow-[4px_4px_0_var(--color-border)] hover:translate-x-[-2px] hover:translate-y-[-2px] transition-all relative group"
             >
               {/* Corner accents */}
               <div className="absolute -top-px -left-px w-2 h-2 border-t-2 border-l-2 border-ink-primary" />
               <div className="absolute -bottom-px -right-px w-2 h-2 border-b-2 border-r-2 border-ink-primary" />
 
-              <div className="grid grid-cols-[1.2fr_1fr] h-full">
+              <div className="grid grid-cols-[100px_1fr] sm:grid-cols-[1.2fr_1fr] h-full">
                 {/* Visual */}
-                <div className="bg-[rgba(92,110,106,0.05)] border-r border-ink-secondary relative flex items-center justify-center bg-[linear-gradient(45deg,var(--ink-secondary)_1px,transparent_1px)] bg-size-[10px_10px]">
-                  <Icon size={48} className="text-ink-primary" weight="fill" />
-                  <div className="absolute bottom-3 left-3 text-[10px] uppercase tracking-widest text-ink-secondary">
+                <div className="bg-ink-secondary/5 border-r border-border relative flex items-center justify-center bg-[linear-gradient(45deg,var(--ink-secondary)_1px,transparent_1px)] bg-size-[10px_10px]">
+                  <Icon size={32} className="text-ink-primary sm:hidden" weight="fill" />
+                  <Icon size={48} className="text-ink-primary hidden sm:block" weight="fill" />
+                  <div className="absolute bottom-3 left-3 text-[10px] uppercase tracking-widest text-ink-secondary hidden sm:block">
                     REF: {path.ref}
                   </div>
                 </div>
@@ -70,17 +71,17 @@ export function CuratedPaths({ paths }: CuratedPathsProps) {
 
                   <div className="mt-6">
                     <div className="flex gap-2 mb-3">
-                      <span className="text-[10px] uppercase tracking-widest px-2 py-1 border border-ink-secondary">
+                      <span className="text-[10px] uppercase tracking-widest px-2 py-1 border border-border">
                         {path.modules} {t('curatedPaths.modules')}
                       </span>
-                      <span className="text-[10px] uppercase tracking-widest px-2 py-1 border border-ink-secondary">
+                      <span className="text-[10px] uppercase tracking-widest px-2 py-1 border border-border">
                         {path.duration}
                       </span>
                     </div>
 
                     {path.progress > 0 ? (
                       <>
-                        <div className="h-1 bg-[rgba(13,20,18,0.1)] w-full relative mb-2">
+                        <div className="h-1 bg-ink-secondary/10 w-full relative mb-2">
                           <div
                             className="h-full bg-ink-primary relative"
                             style={{ width: `${path.progress}%` }}

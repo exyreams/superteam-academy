@@ -48,10 +48,10 @@ export function CourseCard({ course }: CourseCardProps) {
   return (
     <Link
       href={course.isLocked ? '#' : `/courses/${course.slug}`}
-      className={`border border-ink-secondary bg-bg-base relative flex flex-col transition-all ${
+      className={`border border-border bg-bg-surface relative flex flex-col transition-all ${
         course.isLocked
           ? 'opacity-70 cursor-not-allowed'
-          : 'hover:border-ink-primary hover:shadow-[4px_4px_0_rgba(13,20,18,0.1)] hover:translate-x-[-2px] hover:translate-y-[-2px]'
+          : 'hover:border-ink-primary hover:shadow-[4px_4px_0_var(--color-border)] hover:translate-x-[-2px] hover:translate-y-[-2px]'
       }`}
     >
       {/* Corner accents */}
@@ -59,10 +59,10 @@ export function CourseCard({ course }: CourseCardProps) {
       <div className="absolute -bottom-px -right-px w-2 h-2 border-b-2 border-r-2 border-ink-primary" />
 
       {/* Thumbnail */}
-      <div className="h-[140px] border-b border-ink-secondary bg-[rgba(13,20,18,0.03)] relative overflow-hidden flex items-center justify-center">
-        <div className="w-full h-full bg-[repeating-linear-gradient(45deg,transparent,transparent_10px,rgba(92,110,106,0.05)_10px,rgba(92,110,106,0.05)_20px)]" />
+      <div className="h-[140px] border-b border-border bg-ink-secondary/5 relative overflow-hidden flex items-center justify-center">
+        <div className="w-full h-full bg-[repeating-linear-gradient(45deg,transparent,transparent_10px,var(--color-line-grid)_10px,var(--color-line-grid)_20px)]" />
         {renderCategoryIcon(course.category, course.isLocked)}
-        <div className="absolute top-2 right-2 text-[10px] uppercase tracking-widest px-2 py-1 border border-ink-secondary bg-bg-base">
+        <div className="absolute top-2 right-2 text-[10px] uppercase tracking-widest px-2 py-1 border border-border bg-bg-surface">
           {getCategoryLabel(course.category)}
         </div>
       </div>
@@ -80,7 +80,7 @@ export function CourseCard({ course }: CourseCardProps) {
 
         <div className="mt-4">
           <div className="flex justify-between mb-2">
-            <span className="text-[10px] uppercase tracking-widest px-2 py-1 border border-ink-secondary">
+            <span className="text-[10px] uppercase tracking-widest px-2 py-1 border border-border">
               {t(`difficulty.${course.difficulty}`)}
             </span>
             <span className="text-[10px] uppercase tracking-widest">
@@ -96,7 +96,7 @@ export function CourseCard({ course }: CourseCardProps) {
           </div>
 
           {!course.isLocked && (
-            <div className="h-1 bg-[rgba(13,20,18,0.1)] w-full relative">
+            <div className="h-1 bg-ink-secondary/10 w-full relative">
               <div
                 className="h-full bg-ink-primary relative"
                 style={{ width: `${course.progress}%` }}

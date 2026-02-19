@@ -6,6 +6,7 @@ import { SessionStats } from '@/components/courses/SessionStats';
 import { LastAccessed } from '@/components/courses/LastAccessed';
 import { NavRail } from '@/components/layout/NavRail';
 import { TopBar } from '@/components/layout/TopBar';
+import { DotGrid } from '@/components/shared/DotGrid';
 
 export default function CoursesPage() {
   return (
@@ -21,9 +22,10 @@ export default function CoursesPage() {
         <NavRail />
 
         {/* Main Content Area */}
-        <div className="grid grid-cols-1 lg:grid-cols-[1fr_320px] overflow-visible lg:overflow-hidden">
+        <div className="grid grid-cols-1 lg:grid-cols-[1fr_320px] overflow-visible lg:overflow-hidden relative">
+          <DotGrid />
           {/* Left: Course Catalog */}
-          <main className="px-4 py-6 lg:px-8 lg:py-8 overflow-visible lg:overflow-y-auto">
+          <main className="px-4 py-6 lg:px-8 lg:py-8 overflow-visible lg:overflow-y-auto relative z-10">
             {/* Header */}
             <div className="mb-8 lg:mb-12">
               <div className="mb-6 border-b border-ink-secondary/20 dark:border-border pb-4 relative">
@@ -51,7 +53,7 @@ export default function CoursesPage() {
           </main>
 
           {/* Right: Context Panel */}
-          <aside className="bg-bg-base px-6 py-8 flex flex-col gap-12 border-t lg:border-t-0 border-l-0 lg:border-l border-ink-secondary/20 dark:border-border overflow-visible lg:overflow-y-auto">
+          <aside className="bg-bg-base px-6 py-8 flex flex-col gap-12 border-t lg:border-t-0 border-l-0 lg:border-l border-ink-secondary/20 dark:border-border overflow-visible lg:overflow-y-auto relative z-10">
             <SessionStats stats={mockUserStats} />
             <LastAccessed course={mockLastAccessed} />
           </aside>

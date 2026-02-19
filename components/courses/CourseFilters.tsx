@@ -42,11 +42,11 @@ export function CourseFilters() {
   return (
     <>
       {/* Search Bar */}
-      <div className="flex-1 border border-ink-secondary flex items-center px-4 bg-bg-base mb-4">
+      <div className="flex-1 border border-ink-secondary/20 flex items-center px-4 bg-bg-surface mb-4 transition-all focus-within:border-ink-primary focus-within:ring-1 focus-within:ring-ink-primary/5">
         <Terminal className="text-ink-secondary mr-3" size={16} />
         <input
           type="text"
-          className="border-none bg-transparent w-full py-3 font-mono text-[13px] text-ink-primary placeholder:text-ink-secondary focus:outline-none"
+          className="border-none bg-transparent w-full py-3 font-mono text-base md:text-[13px] text-ink-primary placeholder:text-ink-secondary/50 focus:outline-none"
           placeholder={t('search.placeholder')}
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
@@ -55,7 +55,7 @@ export function CourseFilters() {
       </div>
 
       {/* Filter Buttons */}
-      <div className="flex gap-4 mb-4">
+      <div className="flex flex-wrap gap-2 md:gap-4 mb-4">
         {filters.map((filter) => {
           const Icon = filter.icon;
           return (
@@ -63,10 +63,10 @@ export function CourseFilters() {
               key={filter.id}
               onClick={() => handleFilterClick(filter.id)}
               className={cn(
-                'border border-ink-secondary px-4 py-2 text-[11px] uppercase tracking-widest font-bold flex items-center gap-2 transition-all',
+                'border border-border px-3 md:px-4 py-2 text-[10px] md:text-[11px] uppercase tracking-widest font-bold flex items-center gap-2 transition-all flex-grow md:flex-grow-0 justify-center',
                 activeFilter === filter.id
                   ? 'bg-ink-primary text-bg-base border-ink-primary'
-                  : 'bg-transparent text-ink-primary hover:bg-ink-primary hover:text-bg-base'
+                  : 'bg-transparent text-ink-primary hover:bg-ink-primary hover:text-bg-base hover:border-ink-primary'
               )}
             >
               <Icon size={14} weight={activeFilter === filter.id ? 'fill' : 'regular'} />
@@ -85,7 +85,7 @@ export function CourseFilters() {
           {activeFilters.map((filter) => (
             <div
               key={filter}
-              className="text-[10px] uppercase tracking-widest px-2 py-1 border border-ink-secondary bg-ink-primary text-bg-base flex items-center gap-1 cursor-pointer hover:opacity-80"
+              className="text-[10px] uppercase tracking-widest px-2 py-1 border border-border bg-ink-primary text-bg-base flex items-center gap-1 cursor-pointer hover:opacity-80"
               onClick={() => removeFilter(filter)}
             >
               {filter} <X size={10} />

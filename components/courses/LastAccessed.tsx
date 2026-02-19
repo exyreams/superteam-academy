@@ -14,7 +14,7 @@ export function LastAccessed({ course }: LastAccessedProps) {
   const t = useTranslations('Courses');
 
   return (
-    <div className="border border-dashed border-ink-secondary p-4 bg-[rgba(13,20,18,0.02)] relative">
+    <div className="border border-dashed border-border p-4 bg-bg-surface relative">
       {/* Crosshairs */}
       <div className="absolute -top-[5px] -right-[5px] w-[10px] h-[10px]">
         <div className="absolute bg-ink-secondary w-full h-px top-1/2" />
@@ -32,7 +32,7 @@ export function LastAccessed({ course }: LastAccessedProps) {
         {course.title}
       </h4>
 
-      <div className="h-1 bg-[rgba(13,20,18,0.1)] w-full relative my-3">
+      <div className="h-1 bg-ink-secondary/10 w-full relative my-3">
         <div
           className="h-full bg-ink-primary relative"
           style={{ width: `${course.progress}%` }}
@@ -58,8 +58,7 @@ export function LastAccessed({ course }: LastAccessedProps) {
 
       <Button
         asChild
-        variant="landingPrimary"
-        className="w-full rounded-none uppercase text-[10px] font-bold px-3 py-2 h-auto tracking-widest mt-4"
+        className="w-full rounded-none uppercase text-[10px] font-bold px-3 py-2 h-auto tracking-widest mt-4 bg-ink-primary text-bg-base hover:bg-ink-primary/90"
       >
         <Link href={`/courses/${course.courseId}`}>
           {t('lastAccessed.resume')}

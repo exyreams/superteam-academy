@@ -28,7 +28,7 @@ export function SessionStats({ stats }: SessionStatsProps) {
           <div
             key={item.label}
             className={`flex justify-between py-2 ${
-              index < statItems.length - 1 ? 'border-b border-dashed border-[rgba(92,110,106,0.3)]' : ''
+              index < statItems.length - 1 ? 'border-b border-dashed border-border' : ''
             }`}
           >
             <span className="text-[10px] uppercase tracking-widest text-ink-secondary">
