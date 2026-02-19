@@ -30,9 +30,9 @@ export function ChallengeEditor({ initialCode = '', onChange, fileName = 'src/li
   return (
     <div className="flex flex-col h-full bg-[#1e1e1e] relative overflow-hidden">
       {/* Editor Header */}
-      <div className="bg-ink-primary text-bg-base px-4 py-2 flex justify-between items-center text-[11px] font-mono border-b border-ink-secondary/20">
+      <div className="bg-ink-primary text-bg-base px-4 py-2 flex justify-between items-center text-[11px] font-mono border-b border-bg-base/20">
         <span className="font-bold">{fileName}</span>
-        <span className="text-ink-secondary uppercase tracking-widest text-[9px]">Auto-saving...</span>
+        <span className="text-bg-base/70 uppercase tracking-widest text-[9px]">Auto-saving...</span>
       </div>
 
       {/* Editor Body */}

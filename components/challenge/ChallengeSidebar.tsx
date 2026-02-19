@@ -1,6 +1,6 @@
 'use client';
 
-import { Check as CheckIcon, X as XIcon, CheckCircle as CheckCircleIcon } from '@phosphor-icons/react';
+import { CheckIcon,XIcon, CheckCircleIcon } from '@phosphor-icons/react';
 import { Lesson } from '@/lib/data/lesson';
 import ReactMarkdown from 'react-markdown';
 // import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
@@ -14,20 +14,20 @@ interface ChallengeSidebarProps {
 
 export function ChallengeSidebar({ lesson, onComplete, isRunningTests }: ChallengeSidebarProps) {
   return (
-    <aside className="w-[400px] flex flex-col border-l border-border bg-bg-base overflow-hidden">
+    <aside className="w-full flex flex-col h-full bg-bg-base overflow-hidden">
       {/* Objective Section */}
       <div className="p-6 border-b border-border bg-bg-base overflow-y-auto max-h-[40%] custom-scrollbar">
-        <span className="block text-[10px] uppercase font-bold tracking-widest mb-3">Objective</span>
-        <div className="bg-bg-base border border-border p-4 relative">
+        <span className="block text-[10px] uppercase font-bold tracking-widest mb-3 text-ink-secondary">Objective</span>
+        <div className="bg-bg-surface border border-border p-4 relative">
           {/* Card Accent */}
-          <div className="absolute -top-1.5 -left-1.5 w-2.5 h-2.5 bg-bg-base border-t border-l border-ink-primary" />
+          <div className="absolute -top-1.5 -left-1.5 w-2.5 h-2.5 bg-bg-surface border-t border-l border-ink-primary" />
           
           <div className="text-[12px] leading-relaxed text-ink-primary prose prose-sm max-w-none">
              <ReactMarkdown
               components={{
                 p: ({ children }) => <span className="m-0 block mb-2">{children}</span>,
                 code: ({ children }) => (
-                  <span className="bg-ink-secondary/10 px-1 py-0.5 rounded text-[11px] font-mono text-ink-primary mx-0.5 border border-ink-secondary/20">
+                  <span className="bg-ink-secondary/10 px-1 py-0.5 rounded text-[11px] font-mono text-ink-primary mx-0.5 border border-border">
                     {children}
                   </span>
                 ),
@@ -41,20 +41,20 @@ export function ChallengeSidebar({ lesson, onComplete, isRunningTests }: Challen
 
       {/* Test Cases Section */}
       <div className="flex-1 p-6 border-b border-border bg-ink-primary/5 overflow-y-auto custom-scrollbar">
-         <span className="block text-[10px] uppercase font-bold tracking-widest mb-3">Test Cases</span>
+         <span className="block text-[10px] uppercase font-bold tracking-widest mb-3 text-ink-secondary">Test Cases</span>
          <div className="space-y-3">
             {lesson.testCases?.map((test, i) => (
               <div 
                 key={i} 
-                className={`flex items-center gap-3 p-3 border-l-2 bg-bg-base/50 ${
+                className={`flex items-center gap-3 p-3 border-l-2 bg-bg-base ${
                   test.status === 'pass' ? 'border-green-600' : 
-                  test.status === 'fail' ? 'border-red-600' : 'border-ink-tertiary'
+                  test.status === 'fail' ? 'border-red-600' : 'border-ink-secondary'
                 }`}
               >
                 {/* Status Dot */}
                  <div className={`w-2 h-2 rounded-full shrink-0 ${
                     test.status === 'pass' ? 'bg-green-600' : 
-                    test.status === 'fail' ? 'bg-red-600' : 'bg-ink-tertiary'
+                    test.status === 'fail' ? 'bg-red-600' : 'bg-ink-secondary'
                  }`} />
                  
                  <div className="flex-1 min-w-0">
@@ -74,10 +74,10 @@ export function ChallengeSidebar({ lesson, onComplete, isRunningTests }: Challen
       </div>
 
       {/* Output Panel & Actions */}
-      <div className="flex flex-col border-t border-border bg-ink-primary text-ink-secondary h-[40%]">
+      <div className="flex flex-col bg-ink-primary text-bg-base h-[40%]">
         <div className="flex-1 p-6 font-mono text-[11px] overflow-y-auto custom-scrollbar">
-          <span className="block text-[10px] uppercase font-bold tracking-widest mb-2 text-ink-tertiary">Console Output</span>
-          <pre className="whitespace-pre-wrap leading-relaxed text-[#A8B5B2]">
+          <span className="block text-[10px] uppercase font-bold tracking-widest mb-2 text-bg-base/50">Console Output</span>
+          <pre className="whitespace-pre-wrap leading-relaxed text-bg-base/80">
             {lesson.consoleOutput || '> Ready...'}
           </pre>
         </div>
