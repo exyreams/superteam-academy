@@ -32,7 +32,7 @@ export function ModuleList({ modules, progress, courseSlug }: ModuleListProps) {
           <div className="text-[10px] uppercase tracking-widest text-ink-secondary">
             {t('curriculum.completion')}: {progress}%
           </div>
-          <div className="h-1 bg-[rgba(13,20,18,0.1)] w-[150px] relative mt-1">
+          <div className="h-1 bg-ink-secondary/10 w-[150px] relative mt-1">
             <div
               className="h-full bg-ink-primary relative"
               style={{ width: `${progress}%` }}
@@ -53,7 +53,7 @@ export function ModuleList({ modules, progress, courseSlug }: ModuleListProps) {
             <div
               key={module.id}
               className={cn(
-                'border border-ink-secondary bg-[rgba(255,255,255,0.2)] p-4',
+                'border border-border bg-bg-surface p-4',
                 isLocked && 'opacity-60'
               )}
             >
@@ -86,8 +86,8 @@ export function ModuleList({ modules, progress, courseSlug }: ModuleListProps) {
                       key={lesson.id}
                       href={`/courses/${courseSlug}/lessons/${lesson.id}`}
                       className={cn(
-                        'flex items-center justify-between py-2 hover:bg-[rgba(13,20,18,0.05)] transition-colors cursor-pointer',
-                        index < module.lessons.length - 1 && 'border-b border-dashed border-ink-secondary/30'
+                        'flex items-center justify-between py-2 hover:bg-ink-secondary/5 transition-colors cursor-pointer',
+                        index < module.lessons.length - 1 && 'border-b border-dashed border-border'
                       )}
                     >
                       <div className="flex items-center gap-3">

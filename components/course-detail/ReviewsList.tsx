@@ -33,7 +33,7 @@ export function ReviewsList({ reviews }: ReviewsListProps) {
         {reviews.map((review) => (
           <div
             key={review.id}
-            className="border border-ink-secondary bg-[rgba(255,255,255,0.3)] p-4 text-[11px]"
+            className="border border-border bg-bg-surface p-4 text-[11px]"
           >
             <div className="flex gap-1 mb-1">{renderStars(review.rating)}</div>
             <div className="font-bold mb-1">&ldquo;{review.title}&rdquo;</div>
