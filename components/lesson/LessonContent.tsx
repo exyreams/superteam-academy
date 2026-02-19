@@ -19,7 +19,7 @@ export function LessonContent({ reference, title, content, hints }: LessonConten
   const [showHints, setShowHints] = useState(false);
 
   return (
-    <div className="px-12 pt-12 text-ink-primary">
+    <div className="px-4 lg:px-12 pt-12 text-ink-primary">
       {/* Header */}
       <div className="mb-2 text-[10px] uppercase tracking-widest text-ink-secondary">
         {t('reference')}: {reference}
@@ -65,7 +65,7 @@ export function LessonContent({ reference, title, content, hints }: LessonConten
                 </SyntaxHighlighter>
               ) : (
                 <code
-                  className="bg-[rgba(13,20,18,0.08)] px-1 py-0.5 text-[12px] font-mono"
+                  className="bg-ink-secondary/10 px-1 py-0.5 text-[12px] font-mono"
                   {...props}
                 >
                   {children}
@@ -83,7 +83,7 @@ export function LessonContent({ reference, title, content, hints }: LessonConten
 
       {/* Hints Section */}
       {hints && hints.length > 0 && (
-        <div className="mt-10 border border-dashed border-ink-secondary p-4">
+        <div className="mt-10 border border-dashed border-ink-secondary/50 p-4">
           <button
             onClick={() => setShowHints(!showHints)}
             className="flex items-center gap-2 text-[10px] uppercase font-bold tracking-widest cursor-pointer w-full"

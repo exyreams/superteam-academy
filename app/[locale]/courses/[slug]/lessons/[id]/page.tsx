@@ -34,7 +34,7 @@ export default async function LessonViewPage({ params }: { params: Promise<{ slu
         <NavRail />
 
         {/* Module Sidebar */}
-        <div className="hidden lg:block h-full overflow-hidden border-r border-ink-secondary/20 dark:border-border bg-bg-base">
+        <div className="hidden lg:block h-full overflow-hidden border-r border-border bg-bg-base">
             <ModuleOverview
             moduleNumber={lesson.moduleNumber}
             moduleTitle={lesson.moduleTitle}
@@ -46,7 +46,7 @@ export default async function LessonViewPage({ params }: { params: Promise<{ slu
         {/* Main Content Area - Split View */}
         <main className="flex flex-col lg:grid lg:grid-cols-2 h-auto lg:h-full overflow-visible lg:overflow-hidden relative">
           {/* Resizer Divider */}
-          <div className="hidden lg:block absolute left-1/2 top-0 bottom-0 w-px bg-ink-secondary z-10 cursor-col-resize" />
+          <div className="hidden lg:block absolute left-1/2 top-0 bottom-0 w-px bg-border z-10 cursor-col-resize" />
 
           {/* Left: Lesson Content */}
           <div className="overflow-visible lg:overflow-hidden flex flex-col h-auto lg:h-full">
@@ -57,7 +57,7 @@ export default async function LessonViewPage({ params }: { params: Promise<{ slu
                 content={lesson.content}
                 hints={lesson.hints}
               />
-              <div className="px-6 lg:px-12 pb-12">
+              <div className="px-4 lg:px-12 pb-12">
                 <LessonNavigation
                   courseSlug={slug || 'solana-fundamentals'}
                   prevLessonId={lesson.prevLessonId}
@@ -69,7 +69,7 @@ export default async function LessonViewPage({ params }: { params: Promise<{ slu
           </div>
 
           {/* Right: Code Editor */}
-          <div className="overflow-hidden h-[500px] lg:h-auto border-t lg:border-t-0 border-ink-secondary/20 dark:border-border">
+          <div className="overflow-hidden h-[500px] lg:h-auto border-t lg:border-t-0 border-border">
             <CodeEditor
               initialCode={lesson.codeTemplate}
               solution={lesson.solution}

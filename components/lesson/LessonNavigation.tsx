@@ -40,9 +40,7 @@ export function LessonNavigation({ courseSlug, prevLessonId, nextLessonId, nextL
         <Link href={`/courses/${courseSlug}/lessons/${nextLessonId}`}>
           <Button
             variant="landingPrimary"
-            className={`rounded-none uppercase text-[10px] font-bold px-4 py-2 h-auto tracking-widest flex items-center gap-2 ${
-              nextLessonType === 'challenge' ? 'bg-ink-primary text-bg-base hover:bg-ink-primary/90' : ''
-            }`}
+            className="rounded-none uppercase text-[10px] font-bold px-4 py-2 h-auto tracking-widest flex items-center gap-2"
           >
             {nextLessonType === 'challenge' ? 'START CHALLENGE' : t('nextLesson')} <CaretRightIcon size={12} weight="bold" />
           </Button>

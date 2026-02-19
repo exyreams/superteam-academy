@@ -39,7 +39,7 @@ export function CodeEditor({ initialCode = '', solution }: CodeEditorProps) {
   };
 
   return (
-    <div className="flex flex-col h-full border-l border-ink-secondary">
+    <div className="flex flex-col h-full border-l border-border">
       {/* Editor Header */}
       <div className="bg-ink-primary text-bg-base px-4 py-2 flex justify-between items-center">
         <span className="text-[10px] font-bold uppercase tracking-widest">SRC/LIB.RS</span>
@@ -100,7 +100,7 @@ export function CodeEditor({ initialCode = '', solution }: CodeEditorProps) {
       </div>
 
       {/* Editor Footer */}
-      <div className="px-6 py-4 border-t border-ink-secondary bg-bg-base flex justify-between items-center">
+      <div className="px-6 py-4 border-t border-border bg-bg-base flex justify-between items-center">
         <div className="text-[10px] uppercase tracking-widest text-ink-secondary">
           {t('output')}: SYSTEM READY
         </div>

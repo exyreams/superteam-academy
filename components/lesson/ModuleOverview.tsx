@@ -24,9 +24,9 @@ export function ModuleOverview({ moduleNumber, moduleTitle, lessons, courseSlug 
   };
 
   return (
-    <aside className="border-r border-ink-secondary flex flex-col bg-[rgba(13,20,18,0.02)] overflow-y-auto">
+    <aside className="border-r border-border flex flex-col bg-bg-surface overflow-y-auto">
       {/* Sidebar Header */}
-      <div className="p-6 border-b border-ink-secondary/30">
+      <div className="p-6 border-b border-border">
         <div className="text-[10px] uppercase tracking-widest text-ink-secondary mb-1">
           {t('module')} {moduleNumber.toString().padStart(2, '0')}
         </div>
@@ -40,10 +40,10 @@ export function ModuleOverview({ moduleNumber, moduleTitle, lessons, courseSlug 
             <Link
               href={`/courses/${courseSlug}/lessons/${lesson.id}`}
               className={cn(
-                'flex items-center gap-3 px-6 py-4 border-b border-ink-secondary/20 transition-colors',
+                'flex items-center gap-3 px-6 py-4 border-b border-border transition-colors',
                 lesson.active && 'bg-bg-base border-l-4 border-l-ink-primary pl-[20px]',
                 lesson.completed && 'text-ink-tertiary',
-                !lesson.locked && !lesson.active && 'hover:bg-[rgba(13,20,18,0.05)]',
+                !lesson.locked && !lesson.active && 'hover:bg-ink-secondary/5',
                 lesson.locked && 'cursor-not-allowed opacity-60'
               )}
             >
