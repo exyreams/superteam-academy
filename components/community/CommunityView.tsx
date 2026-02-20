@@ -4,17 +4,19 @@ import { NavRail } from '@/components/layout/NavRail';
 import { TopBar } from '@/components/layout/TopBar';
 import { DotGrid } from '@/components/shared/DotGrid';
 import { Button } from '@/components/ui/button';
-import { UsersThreeIcon, CalendarBlankIcon, DiscordLogoIcon, ChatCircleTextIcon, ArrowRightIcon } from '@phosphor-icons/react';
-import { mockEvents, mockDiscussions } from '@/lib/data/community';
+import { Link } from '@/i18n/routing';
+import { UsersThreeIcon, DiscordLogoIcon, ChatCircleTextIcon, ArrowRightIcon, PlusIcon } from '@phosphor-icons/react';
+import { mockDiscussions } from '@/lib/data/community';
+import { CommunitySidebar } from '@/components/community/CommunitySidebar';
 
 export function CommunityView() {
   return (
     <div className="min-h-screen bg-bg-base relative">
-      <DotGrid opacity={0.3} />
+      <DotGrid />
 
-      <div className="grid grid-cols-1 lg:grid-cols-[60px_1fr] lg:grid-rows-[48px_1fr] min-h-screen relative z-10">
+      <div className="grid grid-cols-1 lg:grid-cols-[60px_1fr_350px] lg:grid-rows-[48px_1fr] min-h-screen lg:h-screen lg:overflow-hidden max-w-full relative z-10">
         {/* Top Bar */}
-        <div className="col-span-1 lg:col-span-2">
+        <div className="col-span-1 lg:col-span-3">
           <TopBar />
         </div>
 
@@ -22,7 +24,7 @@ export function CommunityView() {
         <NavRail />
 
         {/* Main Stage */}
-        <main className="p-4 lg:p-8 flex flex-col gap-10 max-w-7xl mx-auto w-full">
+        <main className="p-4 lg:p-8 flex flex-col gap-10 overflow-visible lg:overflow-y-auto w-full">
           {/* Header */}
           <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-6 border-b border-ink-secondary/20 dark:border-border pb-6">
             <div>
@@ -42,38 +44,51 @@ export function CommunityView() {
             </Button>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-            {/* Left Column (2/3) */}
-            <div className="lg:col-span-2 flex flex-col gap-8">
+          <div className="flex flex-col gap-8">
               
               {/* Discussions */}
               <section>
-                <div className="flex items-center gap-2 mb-4">
-                  <ChatCircleTextIcon weight="duotone" className="w-5 h-5 text-ink-primary" />
-                  <h2 className="font-bold uppercase tracking-widest text-[13px]">Active Transmissions</h2>
+                <div className="flex items-center justify-between mb-4">
+                  <div className="flex items-center gap-2">
+                    <ChatCircleTextIcon weight="duotone" className="w-5 h-5 text-ink-primary" />
+                    <h2 className="font-bold uppercase tracking-widest text-[13px]">Active Transmissions</h2>
+                  </div>
+                  <Button asChild variant="outline" className="h-8 rounded-none text-[10px] uppercase tracking-widest font-bold border-ink-primary text-ink-primary hover:bg-ink-primary hover:text-bg-base transition-colors flex items-center gap-1 px-3">
+                    <Link href="/community/new">
+                      <PlusIcon weight="bold" /> NEW TRANSMISSION
+                    </Link>
+                  </Button>
                 </div>
                 
                 <div className="border border-ink-secondary/20 dark:border-border bg-surface/50 backdrop-blur-sm divide-y divide-ink-secondary/20 dark:divide-border">
                   {mockDiscussions.map(disc => (
-                    <div key={disc.id} className="p-4 hover:bg-fg-base/5 transition-colors group cursor-pointer">
-                      <div className="flex justify-between gap-4">
+                    <Link href={`/community/${disc.slug}`} key={disc.id} className="block group border-b border-ink-secondary/20 dark:border-border last:border-0 relative bg-surface/50 hover:bg-ink-primary/5 transition-colors">
+                      {/* Corner Accents */}
+                      <div className="absolute top-0 right-0 w-2 h-2 border-t border-r border-ink-primary opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                      <div className="absolute bottom-0 right-0 w-2 h-2 border-b border-r border-ink-primary opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                      
+                      <div className="p-4 flex justify-between gap-4">
                         <div>
-                          <span className="text-[10px] uppercase tracking-widest text-[#14F195] mb-1 block">
+                          <span className="text-[10px] uppercase tracking-widest text-bg-base bg-ink-primary px-1.5 py-0.5 mb-2 inline-block font-bold">
                             [{disc.category}]
                           </span>
-                          <h3 className="font-bold group-hover:text-ink-primary transition-colors">{disc.title}</h3>
-                          <p className="text-xs text-ink-secondary mt-1">Initiated by {disc.author}</p>
+                          <h3 className="font-display text-xl leading-none mt-1 group-hover:text-ink-primary transition-colors">{disc.title}</h3>
+                          <p className="text-[11px] uppercase tracking-widest text-ink-secondary mt-2 flex items-center gap-1.5">
+                             <i className={disc.avatar}></i> INIT BY {disc.author}
+                          </p>
                         </div>
-                        <div className="text-right shrink-0">
-                          <div className="text-xs font-bold">{disc.replies} RESP</div>
-                          <div className="text-[10px] text-ink-tertiary mt-1">{disc.lastActive}</div>
+                        <div className="text-right shrink-0 flex flex-col justify-between items-end">
+                          <div className="text-[11px] font-bold font-mono border border-ink-secondary/30 px-2 py-0.5 bg-bg-surface">{disc.replies} RESP</div>
+                          <div className="text-[10px] text-ink-tertiary mt-1 uppercase tracking-widest">{disc.lastActive}</div>
                         </div>
                       </div>
-                    </div>
+                    </Link>
                   ))}
                   <div className="p-3 bg-fg-base/5 flex justify-center border-t border-ink-secondary/20 dark:border-border">
-                    <Button variant="ghost" className="text-[11px] uppercase tracking-widest h-auto py-1 hover:text-ink-primary">
-                      View All Threads <ArrowRightIcon className="w-3 h-3 ml-1" />
+                    <Button asChild variant="ghost" className="text-[11px] uppercase tracking-widest h-auto py-1 hover:text-ink-primary">
+                      <Link href="/community/threads">
+                        View All Threads <ArrowRightIcon className="w-3 h-3 ml-1" />
+                      </Link>
                     </Button>
                   </div>
                 </div>
@@ -87,47 +102,24 @@ export function CommunityView() {
                 </div>
                 <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
                    {[1,2,3,4].map(i => (
-                     <div key={i} className="border border-ink-secondary/20 dark:border-border bg-surface p-4 text-center">
-                        <div className="w-12 h-12 bg-fg-base/10 mx-auto rounded-none mb-3 border border-border" />
-                        <div className="font-bold text-sm">User_{100+i}</div>
-                        <div className="text-[10px] text-[#14F195] uppercase tracking-widest mt-1">Helpful</div>
+                     <div key={i} className="border border-ink-secondary/20 dark:border-border bg-surface p-4 text-center relative group hover:border-ink-primary transition-colors cursor-default">
+                        <div className="absolute top-0 left-0 w-1.5 h-1.5 border-t border-l border-ink-primary opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                        <div className="absolute bottom-0 right-0 w-1.5 h-1.5 border-b border-r border-ink-primary opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                        
+                        <div className="w-12 h-12 bg-ink-primary/5 mx-auto rounded-none mb-3 border border-border flex items-center justify-center text-xl text-ink-primary/70 group-hover:text-ink-primary group-hover:bg-ink-primary/10 transition-colors">
+                           <i className={i % 2 === 0 ? "bi bi-person-bounding-box" : "bi bi-person-badge" }></i>
+                        </div>
+                        <div className="font-bold text-sm truncate uppercase tracking-widest">USER_{100+i}</div>
+                        <div className="text-[10px] text-ink-secondary uppercase tracking-widest mt-1 border-t border-ink-secondary/20 pt-1">Rank {i}</div>
                      </div>
                    ))}
                 </div>
-              </section>
-
-            </div>
-
-            {/* Right Column (1/3) */}
-            <div className="flex flex-col gap-8">
-              
-              {/* Events Radar */}
-               <section>
-                <div className="flex items-center gap-2 mb-4">
-                  <CalendarBlankIcon weight="duotone" className="w-5 h-5 text-ink-primary" />
-                  <h2 className="font-bold uppercase tracking-widest text-[13px]">Events Radar</h2>
-                </div>
-
-                <div className="space-y-4">
-                  {mockEvents.map(event => (
-                    <div key={event.id} className="border border-ink-secondary/20 dark:border-border bg-surface/50 p-4 border-l-2 border-l-[#9945FF]">
-                        <div className="flex justify-between items-start mb-2">
-                           <span className="text-[10px] uppercase tracking-widest text-ink-secondary">{event.type}</span>
-                           <span className="text-[10px] font-bold bg-fg-base/10 px-1">{event.attendees} Attending</span>
-                        </div>
-                        <h3 className="font-bold mb-1 leading-tight">{event.title}</h3>
-                        <div className="text-xs text-ink-secondary mb-3">{event.date} • {event.location}</div>
-                        <Button variant="outline" className="w-full uppercase text-[10px] h-7 rounded-none tracking-widest">
-                            RSVP
-                        </Button>
-                    </div>
-                  ))}
-                </div>
                </section>
 
-            </div>
           </div>
         </main>
+
+        <CommunitySidebar />
       </div>
     </div>
   );
