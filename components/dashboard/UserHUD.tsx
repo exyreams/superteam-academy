@@ -3,7 +3,7 @@
 import { UserStats } from '@/lib/data/user';
 import { StatCard } from '@/components/shared/StatCard';
 import { Progress } from '@/components/ui/progress';
-import { Coins, Globe } from '@phosphor-icons/react';
+import { CoinsIcon, GlobeIcon } from '@phosphor-icons/react';
 
 interface UserHUDProps {
   stats: UserStats;
@@ -20,12 +20,12 @@ export function UserHUD({ stats }: UserHUDProps) {
         <StatCard 
           label="XP BALANCE" 
           value={stats.xp.toLocaleString()} 
-          icon={<Coins size={16} weight="duotone" />}
+          icon={<CoinsIcon size={16} weight="duotone" />}
         />
         <StatCard 
           label="GLOBAL RANK" 
           value={`#${stats.globalRank.toLocaleString()}`} 
-          icon={<Globe size={16} weight="duotone" />}
+          icon={<GlobeIcon size={16} weight="duotone" />}
         />
       </div>
       

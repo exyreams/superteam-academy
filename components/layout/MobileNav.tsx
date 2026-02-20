@@ -2,7 +2,7 @@
 
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger, SheetDescription } from '@/components/ui/sheet';
 import { Button } from '@/components/ui/button';
-import { ListIcon, SquaresFour, Book, Trophy, Users, Gear, User } from '@phosphor-icons/react';
+import { ListIcon, SquaresFourIcon, BookIcon, TrophyIcon, UsersIcon, GearIcon, UserIcon, ShieldCheckIcon, ChalkboardTeacherIcon } from '@phosphor-icons/react';
 import { Link, usePathname } from '@/i18n/routing';
 import { Logo } from '@/components/shared/logo';
 import { WalletButton } from "@/components/shared/WalletButton";
@@ -14,15 +14,17 @@ export function MobileNav() {
   const [open, setOpen] = useState(false);
 
   const navItems = [
-    { icon: SquaresFour, label: 'Dashboard', href: '/dashboard', active: pathname === '/dashboard' },
-    { icon: Book, label: 'Courses', href: '/courses', active: pathname?.includes('/courses') },
-    { icon: Trophy, label: 'Leaderboard', href: '/leaderboard', active: pathname === '/leaderboard' },
-    { icon: Users, label: 'Community', href: '/community', active: pathname === '/community' },
+    { icon: SquaresFourIcon, label: 'Dashboard', href: '/dashboard', active: pathname === '/dashboard' },
+    { icon: BookIcon, label: 'Courses', href: '/courses', active: pathname?.includes('/courses') },
+    { icon: TrophyIcon, label: 'Leaderboard', href: '/leaderboard', active: pathname === '/leaderboard' },
+    { icon: UsersIcon, label: 'Community', href: '/community', active: pathname === '/community' },
   ];
 
   const bottomItems = [
-    { icon: User, label: 'Profile', href: '/profile', active: pathname?.includes('/profile') },
-    { icon: Gear, label: 'Settings', href: '/settings', active: pathname === '/settings' },
+    { icon: UserIcon, label: 'Profile', href: '/profile', active: pathname?.includes('/profile') },
+    { icon: ChalkboardTeacherIcon, label: 'Creator', href: '/creator', active: pathname === '/creator' },
+    { icon: ShieldCheckIcon, label: 'Admin', href: '/admin', active: pathname === '/admin' },
+    { icon: GearIcon, label: 'Settings', href: '/settings', active: pathname === '/settings' },
   ];
 
   return (

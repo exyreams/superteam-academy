@@ -1,17 +1,17 @@
 'use client';
 
 import { Link, usePathname } from '@/i18n/routing';
-import { SquaresFour, Book, Trophy, Users, Gear, User } from '@phosphor-icons/react';
+import { SquaresFourIcon, BookIcon, TrophyIcon, UsersIcon, GearIcon, UserIcon, ShieldCheckIcon, ChalkboardTeacherIcon } from '@phosphor-icons/react';
 import { cn } from '@/lib/utils';
 
 export function NavRail() {
   const pathname = usePathname();
 
   const navItems = [
-    { icon: SquaresFour, label: 'Dashboard', href: '/dashboard', active: pathname === '/dashboard' },
-    { icon: Book, label: 'Courses', href: '/courses', active: pathname?.includes('/courses') },
-    { icon: Trophy, label: 'Leaderboard', href: '/leaderboard', active: pathname === '/leaderboard' },
-    { icon: Users, label: 'Community', href: '/community', active: pathname === '/community' },
+    { icon: SquaresFourIcon, label: 'Dashboard', href: '/dashboard', active: pathname === '/dashboard' },
+    { icon: BookIcon, label: 'Courses', href: '/courses', active: pathname?.includes('/courses') },
+    { icon: TrophyIcon, label: 'Leaderboard', href: '/leaderboard', active: pathname === '/leaderboard' },
+    { icon: UsersIcon, label: 'Community', href: '/community', active: pathname === '/community' },
   ];
 
   return (
@@ -49,10 +49,42 @@ export function NavRail() {
         )}
         title="Profile"
       >
-        <User
+        <UserIcon
           size={18}
           className="text-ink-primary"
           weight={pathname?.includes('/profile') ? "duotone" : "regular"}
+        />
+      </Link>
+
+      {/* Creator Icon */}
+      <Link
+        href="/creator"
+        className={cn(
+          'w-8 h-8 flex items-center justify-center relative transition-all border border-transparent hover:bg-ink-primary/5 mb-2',
+          pathname === '/creator' && 'border-ink-secondary/20 bg-ink-primary/5'
+        )}
+        title="Creator Studio"
+      >
+        <ChalkboardTeacherIcon
+          size={18}
+          className="text-ink-primary"
+          weight={pathname === '/creator' ? "duotone" : "regular"}
+        />
+      </Link>
+
+      {/* Admin Icon - above settings */}
+      <Link
+        href="/admin"
+        className={cn(
+          'w-8 h-8 flex items-center justify-center relative transition-all border border-transparent hover:bg-ink-primary/5 mb-2',
+          pathname === '/admin' && 'border-ink-secondary/20 bg-ink-primary/5'
+        )}
+        title="Admin Dashboard"
+      >
+        <ShieldCheckIcon
+          size={18}
+          className="text-ink-primary"
+          weight={pathname === '/admin' ? "duotone" : "regular"}
         />
       </Link>
 
@@ -65,7 +97,7 @@ export function NavRail() {
         )}
         title="Settings"
       >
-        <Gear
+        <GearIcon
           size={18}
           className="text-ink-primary"
           weight={pathname === '/settings' ? "duotone" : "regular"}

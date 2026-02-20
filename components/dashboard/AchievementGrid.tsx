@@ -3,28 +3,28 @@
 import React from 'react';
 import { Achievement } from '@/lib/data/achievements';
 import { 
-  Footprints, Trophy, Lightning, CalendarCheck, Calendar, Fire, 
-  Cpu, ShieldCheck, Stack, Users, ChatCircle, Star, SealCheck, 
-  Bug, Medal, RocketLaunch, LockKey 
+  FootprintsIcon, TrophyIcon, LightningIcon, CalendarCheckIcon, CalendarIcon, FireIcon, 
+  CpuIcon, ShieldCheckIcon, StackIcon, UsersIcon, ChatCircleIcon, StarIcon, SealCheckIcon, 
+  BugIcon, MedalIcon, RocketLaunchIcon, LockKeyIcon, Icon 
 } from "@phosphor-icons/react";
 
-const iconMap: Record<string, React.ElementType> = {
-  'bi-footprints': Footprints,
-  'bi-trophy': Trophy,
-  'bi-lightning': Lightning,
-  'bi-calendar-week': CalendarCheck,
-  'bi-calendar-month': Calendar,
-  'bi-fire': Fire,
-  'bi-cpu-fill': Cpu,
-  'bi-shield-lock': ShieldCheck,
-  'bi-layers': Stack,
-  'bi-people-fill': Users,
-  'bi-chat': ChatCircle,
-  'bi-star-fill': Star,
-  'bi-patch-check': SealCheck,
-  'bi-bug-fill': Bug,
-  'bi-award': Medal,
-  'bi-rocket-takeoff-fill': RocketLaunch,
+const iconMap: Record<string, Icon> = {
+  'bi-footprints': FootprintsIcon,
+  'bi-trophy': TrophyIcon,
+  'bi-lightning': LightningIcon,
+  'bi-calendar-week': CalendarCheckIcon,
+  'bi-calendar-month': CalendarIcon,
+  'bi-fire': FireIcon,
+  'bi-cpu-fill': CpuIcon,
+  'bi-shield-lock': ShieldCheckIcon,
+  'bi-layers': StackIcon,
+  'bi-people-fill': UsersIcon,
+  'bi-chat': ChatCircleIcon,
+  'bi-star-fill': StarIcon,
+  'bi-patch-check': SealCheckIcon,
+  'bi-bug-fill': BugIcon,
+  'bi-award': MedalIcon,
+  'bi-rocket-takeoff-fill': RocketLaunchIcon,
 };
 
 interface AchievementGridProps {
@@ -43,7 +43,7 @@ export function AchievementGrid({ achievements, maxSlots = 8 }: AchievementGridP
       
       <div className="grid grid-cols-4 gap-3">
         {slots.map((achievement, index) => {
-          const IconComponent = achievement ? iconMap[achievement.icon] || Trophy : LockKey;
+          const IconComponent = achievement ? iconMap[achievement.icon] || TrophyIcon : LockKeyIcon;
           
           return (
             <div
