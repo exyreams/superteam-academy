@@ -53,8 +53,8 @@ export interface CourseDetail {
 }
 
 export const mockCourseDetail: CourseDetail = {
-  id: '1',
-  slug: 'solana-fundamentals',
+  id: 'mock-1',
+  slug: 'mock-solana-fundamentals',
   title: 'SOLANA FUNDAMENTALS',
   ref: 'SOL-001',
   category: 'DEV-101',

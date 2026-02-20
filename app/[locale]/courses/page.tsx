@@ -1,4 +1,4 @@
-import { mockCourses, mockLearningPaths, mockUserStats, mockLastAccessed } from '@/lib/data/courses';
+import { mockCourses, mockLearningPaths, mockUserStats, mockLastAccessed, Course } from '@/lib/data/courses';
 import { CourseFilters } from '@/components/courses/CourseFilters';
 import { CuratedPaths } from '@/components/courses/CuratedPaths';
 import { CourseGrid } from '@/components/courses/CourseGrid';
@@ -7,8 +7,20 @@ import { LastAccessed } from '@/components/courses/LastAccessed';
 import { NavRail } from '@/components/layout/NavRail';
 import { TopBar } from '@/components/layout/TopBar';
 import { DotGrid } from '@/components/shared/DotGrid';
+import { client, ALL_COURSES_QUERY } from '@/sanity/client';
 
-export default function CoursesPage() {
+export default async function CoursesPage() {
+  
+  let sanityData: Course[] = [];
+  try {
+    sanityData = await client.fetch(ALL_COURSES_QUERY, {}, { cache: 'no-store' });
+  } catch {
+    console.warn("Sanity fetch failed, falling back to mock courses only");
+  }
+
+  // Merge Sanity data with mock data so the UI doesn't look empty before they add lots of courses
+  const mergedCourses = [...sanityData, ...mockCourses];
+
   return (
     <div className="min-h-screen bg-bg-base">
       {/* App Shell Grid */}
@@ -46,7 +58,7 @@ export default function CoursesPage() {
             <CuratedPaths paths={mockLearningPaths} />
 
             {/* Course Grid */}
-            <CourseGrid courses={mockCourses} />
+            <CourseGrid courses={mergedCourses} />
 
             {/* Bottom spacing */}
             <div className="h-12" />

@@ -4,6 +4,7 @@ import { NavRail } from '@/components/layout/NavRail';
 import { TopBar } from '@/components/layout/TopBar';
 import { DotGrid } from '@/components/shared/DotGrid';
 import { mockCreatorCourses } from '@/lib/data/creator';
+import { Link } from '@/i18n/routing';
 import { PlusIcon, ChalkboardTeacherIcon, GearIcon, PencilSimpleIcon, EyeIcon, UploadSimpleIcon } from '@phosphor-icons/react';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
@@ -35,9 +36,11 @@ export function CreatorView() {
               </p>
             </div>
             
-            <Button className="bg-ink-primary hover:bg-ink-primary/90 text-bg-base font-bold uppercase tracking-widest rounded-none flex items-center gap-2">
-               <PlusIcon weight="bold" />
-               New Module
+            <Button className="bg-ink-primary hover:bg-ink-primary/90 text-bg-base font-bold uppercase tracking-widest rounded-none flex items-center gap-2" asChild>
+               <Link href="/creator/studio">
+                 <PlusIcon weight="bold" />
+                 New Module
+               </Link>
             </Button>
           </div>
 
@@ -76,8 +79,10 @@ export function CreatorView() {
                             </div>
 
                             <div className="flex items-center gap-2 shrink-0">
-                               <Button variant="outline" size="icon" className="h-8 w-8 rounded-none border-border" title="Edit Content">
-                                  <PencilSimpleIcon className="w-4 h-4 text-ink-secondary hover:text-ink-primary" />
+                               <Button variant="outline" size="icon" className="h-8 w-8 rounded-none border-border" title="Edit Content" asChild>
+                                  <Link href="/creator/studio">
+                                    <PencilSimpleIcon className="w-4 h-4 text-ink-secondary hover:text-ink-primary" />
+                                  </Link>
                                </Button>
                                <Button variant="outline" size="icon" className="h-8 w-8 rounded-none border-border" title="Preview">
                                   <EyeIcon className="w-4 h-4 text-ink-secondary hover:text-ink-primary" />

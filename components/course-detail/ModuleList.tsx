@@ -15,7 +15,9 @@ interface ModuleListProps {
 
 export function ModuleList({ modules, progress, courseSlug }: ModuleListProps) {
   const t = useTranslations('CourseDetail');
-  const [expandedModules, setExpandedModules] = useState<string[]>(['mod-1', 'mod-2']);
+  const [expandedModules, setExpandedModules] = useState<string[]>(
+    modules.length > 0 ? [modules[0].id] : []
+  );
 
   const toggleModule = (moduleId: string) => {
     setExpandedModules((prev) =>
@@ -63,7 +65,7 @@ export function ModuleList({ modules, progress, courseSlug }: ModuleListProps) {
                 onClick={() => !isLocked && toggleModule(module.id)}
               >
                 <span className="font-bold uppercase tracking-wide">
-                  MODULE {module.number.toString().padStart(2, '0')}: {module.title}
+                  {module.title}
                 </span>
                 {isLocked ? (
                   <LockIcon size={16} className="text-ink-primary" />

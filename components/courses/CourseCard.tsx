@@ -25,7 +25,7 @@ export function CourseCard({ course }: CourseCardProps) {
     return labels[category] || 'XXX';
   };
 
-  const renderCategoryIcon = (category: string, locked: boolean) => {
+  const renderCategoryIcon = (category: string | undefined, locked: boolean | undefined) => {
     const className = `absolute ${locked ? 'text-ink-secondary' : 'text-ink-primary'}`;
     const size = 32;
 
@@ -41,8 +41,16 @@ export function CourseCard({ course }: CourseCardProps) {
       case 'web3':
         return <Desktop size={size} className={className} />;
       default:
-        return <Lock size={size} className={className} />;
+        // Use default icon if no category or unknown category is provided
+        return <Desktop size={size} className={className} />;
     }
+  };
+
+  const getDifficultyLabel = (diff: string | number) => {
+    if (diff === 1 || diff === '1') return t('difficulty.beginner');
+    if (diff === 2 || diff === '2') return t('difficulty.intermediate');
+    if (diff === 3 || diff === '3') return t('difficulty.advanced');
+    return t(`difficulty.${diff}`) || diff;
   };
 
   return (
@@ -60,11 +68,17 @@ export function CourseCard({ course }: CourseCardProps) {
 
       {/* Thumbnail */}
       <div className="h-[140px] border-b border-border bg-ink-secondary/5 relative overflow-hidden flex items-center justify-center">
-        <div className="w-full h-full bg-[repeating-linear-gradient(45deg,transparent,transparent_10px,var(--color-line-grid)_10px,var(--color-line-grid)_20px)]" />
-        {renderCategoryIcon(course.category, course.isLocked)}
-        <div className="absolute top-2 right-2 text-[10px] uppercase tracking-widest px-2 py-1 border border-border bg-bg-surface">
-          {getCategoryLabel(course.category)}
-        </div>
+        {course.imageUrl ? (
+            <img src={course.imageUrl} alt={course.title} className="w-full h-full object-cover opacity-80" />
+        ) : (
+            <>
+              <div className="w-full h-full bg-[repeating-linear-gradient(45deg,transparent,transparent_10px,var(--color-line-grid)_10px,var(--color-line-grid)_20px)]" />
+              {renderCategoryIcon(course.category, course.isLocked)}
+              <div className="absolute top-2 right-2 text-[10px] uppercase tracking-widest px-2 py-1 border border-border bg-bg-surface">
+                {getCategoryLabel(course.category || 'other')}
+              </div>
+            </>
+        )}
       </div>
 
       {/* Content */}
@@ -81,7 +95,7 @@ export function CourseCard({ course }: CourseCardProps) {
         <div className="mt-4">
           <div className="flex justify-between mb-2">
             <span className="text-[10px] uppercase tracking-widest px-2 py-1 border border-border">
-              {t(`difficulty.${course.difficulty}`)}
+              {getDifficultyLabel(course.difficulty)}
             </span>
             <span className="text-[10px] uppercase tracking-widest">
               {course.isLocked ? (
@@ -95,13 +109,13 @@ export function CourseCard({ course }: CourseCardProps) {
             </span>
           </div>
 
-          {!course.isLocked && (
+          {!course.isLocked && (course.progress ?? 0) > 0 && (
             <div className="h-1 bg-ink-secondary/10 w-full relative">
               <div
                 className="h-full bg-ink-primary relative"
                 style={{ width: `${course.progress}%` }}
               >
-                {course.progress > 0 && (
+                {(course.progress ?? 0) > 0 && (
                   <div className="absolute right-0 -top-px h-[6px] w-px bg-ink-primary" />
                 )}
               </div>

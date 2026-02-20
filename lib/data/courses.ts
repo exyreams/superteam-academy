@@ -1,16 +1,22 @@
 export interface Course {
-  id: string;
+  id?: string; // Legacy ID
+  _id?: string; // Sanity Document ID
   slug: string;
   title: string;
   description: string;
-  category: 'rust' | 'core' | 'spl' | 'security' | 'web3' | 'defi' | 'other';
-  difficulty: 'beginner' | 'intermediate' | 'advanced' | 'expert';
-  duration: string; // e.g., "4H 30M"
-  durationMinutes: number;
-  progress: number; // 0-100
-  isLocked: boolean;
-  modules: number;
-  xp: number;
+  imageUrl?: string;
+  category?: string; // legacy string
+  difficulty: number | string; // Sanity stores 1 (Beginner), 2 (Medium), 3 (Hard)
+  duration?: string;
+  durationMinutes?: number;
+  progress?: number;
+  isLocked?: boolean;
+  modules?: number;
+  moduleCount?: number;
+  xp?: number;
+  xp_per_lesson?: number;
+  track_id?: number;
+  track_level?: number;
 }
 
 export interface LearningPath {
@@ -138,8 +144,8 @@ export const mockCourses: Course[] = [
 // Mock learning paths
 export const mockLearningPaths: LearningPath[] = [
   {
-    id: 'solana-fundamentals',
-    slug: 'solana-fundamentals',
+    id: 'mock-solana-fundamentals',
+    slug: 'mock-solana-fundamentals',
     ref: 'SL-001',
     track: 'beginner',
     title: 'SOLANA FUNDAMENTALS',
