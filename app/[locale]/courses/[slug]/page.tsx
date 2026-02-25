@@ -93,6 +93,7 @@ export default async function CourseDetailPage({ params }: { params: Promise<{ s
         {/* Main Content Area */}
         <main className="px-4 py-6 lg:px-8 lg:py-8 overflow-visible lg:overflow-y-auto">
           <CourseHeader
+            courseSlug={course.slug}
             title={course.title}
             courseRef={course.ref}
             category={course.category}

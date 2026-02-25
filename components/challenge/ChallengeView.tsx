@@ -8,6 +8,8 @@ import { ChallengeSidebar } from './ChallengeSidebar';
 import { Play as PlayIcon, ArrowsClockwise as RefreshCwIcon, Trophy as TrophyIcon } from '@phosphor-icons/react';
 import { Button } from '@/components/ui/button';
 import { NavRail } from '@/components/layout/NavRail';
+import { useWallet } from "@solana/wallet-adapter-react";
+import { toast } from "sonner";
 
 interface ChallengeViewProps {
   lesson: Lesson;
@@ -15,10 +17,12 @@ interface ChallengeViewProps {
 }
 
 export function ChallengeView({ lesson: initialLesson, courseSlug }: ChallengeViewProps) {
+  const wallet = useWallet();
   const [lesson, setLesson] = useState(initialLesson);
   const [code, setCode] = useState(initialLesson.codeTemplate || '');
   const [isRunning, setIsRunning] = useState(false);
   const [showSuccessToast, setShowSuccessToast] = useState(false);
+  const [isCompleting, setIsCompleting] = useState(false);
 
   /* 
    * Note: We rely on the parent component to remount ChallengeView (via key prop) when the lesson changes.
@@ -56,9 +60,40 @@ export function ChallengeView({ lesson: initialLesson, courseSlug }: ChallengeVi
     setLesson(initialLesson);
   };
 
-  const handleComplete = () => {
-    setShowSuccessToast(true);
-    // Here we would call an API to mark completion
+  const handleComplete = async () => {
+    if (!wallet.publicKey) {
+      toast.error("Please connect your wallet to save progress.");
+      return;
+    }
+    
+    setIsCompleting(true);
+    try {
+      // 1. Send the completion request to the backend signer
+      const res = await fetch('/api/lesson/complete', {
+         method: 'POST',
+         headers: { 'Content-Type': 'application/json' },
+         body: JSON.stringify({
+             courseSlug: courseSlug,
+             learnerAddress: wallet.publicKey.toBase58(),
+             // For dynamic lookup we use the ordered index from earlier, but here we can mock lessonIndex temporarily 
+             // Ideally this index is passed in as a prop from page.tsx 
+             lessonIndex: 0 
+         })
+      });
+      
+      if (!res.ok) {
+         const errorData = await res.json();
+         throw new Error(errorData.error || "Failed to mark complete");
+      }
+      
+      setShowSuccessToast(true);
+      toast.success("Progress saved on-chain!");
+    } catch (error) {
+        console.error(error);
+        toast.error(`Error saving progress: ${error instanceof Error ? error.message : "Unknown error"}`);
+    } finally {
+        setIsCompleting(false);
+    }
   };
 
   return (
@@ -130,7 +165,7 @@ export function ChallengeView({ lesson: initialLesson, courseSlug }: ChallengeVi
           <ChallengeSidebar 
             lesson={lesson} 
             onComplete={handleComplete}
-            isRunningTests={isRunning}
+            isRunningTests={isRunning || isCompleting}
           />
         </div>
 

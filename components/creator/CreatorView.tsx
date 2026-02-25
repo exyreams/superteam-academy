@@ -1,128 +1,568 @@
-'use client';
+"use client";
 
-import { NavRail } from '@/components/layout/NavRail';
-import { TopBar } from '@/components/layout/TopBar';
-import { DotGrid } from '@/components/shared/DotGrid';
-import { mockCreatorCourses } from '@/lib/data/creator';
-import { Link } from '@/i18n/routing';
-import { PlusIcon, ChalkboardTeacherIcon, GearIcon, PencilSimpleIcon, EyeIcon, UploadSimpleIcon } from '@phosphor-icons/react';
-import { cn } from '@/lib/utils';
-import { Button } from '@/components/ui/button';
+import { NavRail } from "@/components/layout/NavRail";
+import { TopBar } from "@/components/layout/TopBar";
+import { DotGrid } from "@/components/shared/DotGrid";
+import { Link } from "@/i18n/routing";
+import {
+  PlusIcon,
+  ChalkboardTeacherIcon,
+  GearIcon,
+  PencilSimpleIcon,
+  EyeIcon,
+  RocketLaunchIcon,
+  ListIcon,
+  GridFourIcon,
+} from "@phosphor-icons/react";
+import { cn } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
+import { useWallet } from "@solana/wallet-adapter-react";
+import { useEffect, useState } from "react";
+import { client } from "@/sanity/client";
+import { getProgram, getConfigPda, XP_MINT, connection } from "@/lib/anchor/client";
+import {
+  publishCourseToChain,
+  checkCourseOnChainStatus,
+} from "@/lib/services/course-publisher";
+import { toast } from "sonner";
+import { Keypair, PublicKey, SystemProgram } from "@solana/web3.js";
+import { TOKEN_2022_PROGRAM_ID } from "@solana/spl-token";
+
+interface Course {
+  _id: string;
+  title: string;
+  slug: string;
+  description: string;
+  imageUrl?: string;
+  difficulty: number;
+  moduleCount: number;
+  onChainStatus?: string;
+  coursePda?: string;
+  onChain?: {
+    isPublished: boolean;
+    enrollments?: number;
+    isActive?: boolean;
+  };
+}
 
 export function CreatorView() {
-  return (
-    <div className="min-h-screen bg-bg-base relative">
-      <DotGrid opacity={0.3} />
+  const wallet = useWallet();
+  const [courses, setCourses] = useState<Course[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [publishing, setPublishing] = useState<string | null>(null);
+  const [isInitialized, setIsInitialized] = useState<boolean | null>(null);
+  const [isInitializing, setIsInitializing] = useState(false);
+  const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
 
-      <div className="grid grid-cols-1 lg:grid-cols-[60px_1fr] lg:grid-rows-[48px_1fr] min-h-screen relative z-10">
+  // Fetch courses from Sanity and check initialization
+  useEffect(() => {
+    async function initCheck() {
+       if (wallet.publicKey) {
+          const [configPda] = getConfigPda();
+          const accountInfo = await connection.getAccountInfo(configPda);
+          setIsInitialized(!!accountInfo);
+       } else {
+         setIsInitialized(null);
+       }
+    }
+    
+    async function fetchCourses() {
+      try {
+        const data = await client.fetch(`
+          *[_type == "course"] | order(_createdAt desc) {
+            _id,
+            title,
+            "slug": slug.current,
+            description,
+            "imageUrl": image.asset->url,
+            difficulty,
+            track_id,
+            track_level,
+            xp_per_lesson,
+            onChainStatus,
+            coursePda,
+            "moduleCount": count(modules)
+          }
+        `);
+
+        // Check on-chain status for each course
+        if (wallet.publicKey) {
+          const program = getProgram(wallet);
+          if (program) {
+            const coursesWithStatus = await Promise.all(
+              data.map(async (course: Course) => {
+                const onChainStatus = await checkCourseOnChainStatus(
+                  program,
+                  course.slug,
+                );
+                return { ...course, onChain: onChainStatus };
+              }),
+            );
+            setCourses(coursesWithStatus);
+          } else {
+            setCourses(data);
+          }
+        } else {
+          setCourses(data);
+        }
+      } catch (error) {
+        console.error("Error fetching courses:", error);
+        toast.error("Failed to load courses");
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    initCheck().then(fetchCourses);
+  }, [wallet.publicKey, wallet]);
+
+  // Publish course to blockchain
+  async function handlePublishCourse(course: Course) {
+    if (!wallet.publicKey) {
+      toast.error("Please connect your wallet first");
+      return;
+    }
+
+    const program = getProgram(wallet);
+    if (!program) {
+      toast.error("Failed to initialize program");
+      return;
+    }
+
+    setPublishing(course._id);
+    toast.info("Publishing course to blockchain...");
+
+    try {
+      const result = await publishCourseToChain(
+        program,
+        course.slug,
+        wallet.publicKey,
+      );
+
+      if (result.status === "published") {
+        toast.success("Course published successfully!");
+        // Refresh courses
+        const updatedCourses = courses.map((c) =>
+          c._id === course._id
+            ? {
+                ...c,
+                onChain: { isPublished: true, enrollments: 0 },
+                coursePda: result.coursePda,
+              }
+            : c,
+        );
+        setCourses(updatedCourses);
+      } else {
+        toast.error(result.error || "Failed to publish course");
+      }
+    } catch (error) {
+      const errorMessage =
+        error instanceof Error ? error.message : "Failed to publish course";
+      console.error("Error publishing course:", error);
+      toast.error(errorMessage);
+    } finally {
+      setPublishing(null);
+    }
+  }
+
+  // Handle Initializing the program
+  async function handleInitialize() {
+    if (!wallet.publicKey) {
+      toast.error("Please connect your wallet first");
+      return;
+    }
+
+    const program = getProgram(wallet);
+    if (!program) {
+      toast.error("Failed to initialize program");
+      return;
+    }
+
+    setIsInitializing(true);
+    toast.info("Initializing program...");
+
+    try {
+       // 1. Fetch the XP Mint Keypair from our secure API
+       const res = await fetch('/api/init');
+       if (!res.ok) {
+           const errorData = await res.json();
+           throw new Error(errorData.error || "Failed to fetch mint keypair");
+       }
+       const { secretKey } = await res.json();
+       const xpMintKeypair = Keypair.fromSecretKey(new Uint8Array(secretKey));
+
+       // 2. Derive PDAs
+       const [configPda] = getConfigPda();
+       
+       // Anchor equivalent of PublicKey.findProgramAddressSync
+       const [minterPda] = PublicKey.findProgramAddressSync(
+            [Buffer.from("minter"), wallet.publicKey.toBuffer()],
+            program.programId
+       );
+
+       // 3. Send Initialization Transaction
+       const tx = await program.methods
+         .initialize()
+         .accountsPartial({
+           config: configPda,
+           xpMint: XP_MINT,
+           authority: wallet.publicKey,
+           backendMinterRole: minterPda,
+           systemProgram: SystemProgram.programId,
+           tokenProgram: TOKEN_2022_PROGRAM_ID,
+         })
+         .signers([xpMintKeypair])
+         .rpc();
+
+       console.log("Initialization transaction:", tx);
+       toast.success("Program initialized successfully!");
+       setIsInitialized(true);
+    } catch (error) {
+        console.error("Init Error:", error);
+        toast.error(`Initialization Failed: ${error instanceof Error ? error.message : "Unknown error"}`);
+    } finally {
+        setIsInitializing(false);
+    }
+  }
+
+  return (
+    <div className="min-h-screen bg-bg-base">
+      <div className="grid grid-cols-1 lg:grid-cols-[60px_1fr] lg:grid-rows-[48px_1fr] min-h-screen lg:h-screen lg:overflow-hidden max-w-full">
         <div className="col-span-1 lg:col-span-2">
           <TopBar />
         </div>
 
         <NavRail />
 
-        <main className="p-4 lg:p-8 flex flex-col gap-10 max-w-7xl mx-auto w-full">
-          {/* Header */}
-          <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-6 border-b border-ink-secondary/20 dark:border-border pb-6">
-            <div>
-              <span className="bg-[#14F195] text-bg-base px-2 py-1 text-[10px] uppercase tracking-widest inline-block mb-2 font-bold">
-                Instructor Console
-              </span>
-              <h1 className="font-display text-4xl lg:text-5xl leading-none -tracking-wider text-ink-primary">
-                CONTENT STUDIO
-              </h1>
-              <p className="text-ink-secondary mt-2 max-w-xl text-sm">
-                Create courses, build challenges, and publish content to Arweave.
-              </p>
+        <div className="overflow-visible lg:overflow-hidden relative">
+          <DotGrid />
+          <main className="px-4 py-6 lg:px-8 lg:py-8 overflow-visible lg:overflow-y-auto relative z-10 h-full">
+            {/* Header */}
+            <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-6 mb-8 lg:mb-12">
+              <div className="mb-6 border-b border-ink-secondary/20 dark:border-border pb-4 relative w-full md:w-auto flex-1">
+                <span className="bg-[#14F195] text-ink-primary dark:text-bg-base px-3 py-1 text-[10px] uppercase tracking-widest inline-block mb-3 font-bold">
+                  INSTRUCTOR CONSOLE
+                </span>
+                <h1 className="font-display font-bold leading-[0.9] -tracking-[0.02em] text-[36px] lg:text-[48px] text-ink-primary">
+                  CONTENT STUDIO
+                </h1>
+                <p className="text-ink-secondary mt-3 max-w-xl text-sm mb-4">
+                  Create courses, build challenges, and publish content to
+                  the blockchain.
+                </p>
+                <div className="flex items-start sm:items-center gap-2 text-xs text-ink-secondary">
+                   <span className="bg-[#FFB020]/20 dark:bg-[#FFB020]/10 text-[#bd7500] dark:text-[#FFB020] px-2 py-0.5 font-bold uppercase tracking-widest text-[9px]">NOTICE</span>
+                   <span>To publish a course on-chain, your wallet must hold the <strong className="text-ink-primary font-bold">CREATOR</strong> Role NFT.</span>
+                </div>
+                <div className="absolute bottom-[-3px] right-0 w-full h-px border-b border-dashed border-ink-secondary/10 dark:border-border" />
+              </div>
+
+              <Button
+                className="bg-ink-primary hover:bg-ink-primary/90 text-bg-base font-bold uppercase tracking-widest rounded-none flex items-center gap-2 mb-6"
+                asChild
+              >
+                <Link href="/creator/studio">
+                  <PlusIcon weight="bold" />
+                  New Course
+                </Link>
+              </Button>
             </div>
-            
-            <Button className="bg-ink-primary hover:bg-ink-primary/90 text-bg-base font-bold uppercase tracking-widest rounded-none flex items-center gap-2" asChild>
-               <Link href="/creator/studio">
-                 <PlusIcon weight="bold" />
-                 New Module
-               </Link>
-            </Button>
-          </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
-             
-             {/* Main Content Area */}
-             <div className="lg:col-span-3 flex flex-col gap-6">
-                 <div className="flex items-center justify-between mb-2">
-                     <h2 className="font-display text-xl uppercase tracking-widest text-ink-primary flex items-center gap-2">
-                        <ChalkboardTeacherIcon weight="duotone" className="w-6 h-6" /> My Courses
-                     </h2>
-                 </div>
+          {!wallet.publicKey ? (
+            <div className="border border-border bg-surface/50 p-12 text-center rounded-sm">
+                <h2 className="font-display text-2xl mb-4">CONNECT WALLET</h2>
+                <p className="text-ink-secondary mb-6">Connect your wallet to access the Creator Studio and manage on-chain courses.</p>
+            </div>
+          ) : isInitialized === false ? (
+              <div className="border border-ink-secondary/10 bg-white/40 dark:bg-[#FFB020]/5 p-12 text-center rounded-sm max-w-2xl mx-auto w-full border-t-4 border-t-[#FFB020] shadow-xl shadow-ink-primary/5">
+                  <RocketLaunchIcon weight="duotone" className="w-16 h-16 mx-auto mb-6 text-[#FFB020]" />
+                  <h2 className="font-display text-3xl mb-4 text-[#FFB020]">INITIALIZE PLATFORM</h2>
+                  <p className="text-ink-secondary mb-8 leading-relaxed max-w-lg mx-auto">
+                    The Smart Contract has been deployed to Devnet but needs to be initialized. 
+                    This is a one-time transaction that configures the Protocol PDA, registers the XP Token Mint, and assigns your wallet as the backend signer.
+                  </p>
+                  <Button 
+                    className="bg-ink-primary hover:bg-ink-primary/90 text-[#14F195] font-bold uppercase tracking-widest rounded-none h-12 px-8"
+                    onClick={handleInitialize}
+                    disabled={isInitializing}
+                  >
+                     {isInitializing ? "Processing Transaction..." : "Initialize Spl-Token & Config PDA"}
+                  </Button>
+              </div>
+          ) : (
+          <div className="flex flex-col gap-8">
+            {/* Main Content Area */}
+            <div className="flex flex-col gap-6">
+              <div className="flex items-center justify-between mb-2">
+                <h2 className="font-display text-xl uppercase tracking-widest text-ink-primary flex items-center gap-2">
+                  <ChalkboardTeacherIcon weight="duotone" className="w-6 h-6" />{" "}
+                  My Courses
+                </h2>
+                <div className="flex gap-2 border border-ink-secondary/10 bg-white/20 dark:bg-surface p-1">
+                  <button 
+                    onClick={() => setViewMode('grid')}
+                    className={cn("p-1.5 transition-colors", viewMode === 'grid' ? "bg-ink-primary text-[#14F195]" : "text-ink-secondary hover:text-ink-primary")}
+                  >
+                    <GridFourIcon className="w-4 h-4" />
+                  </button>
+                  <button 
+                    onClick={() => setViewMode('list')}
+                    className={cn("p-1.5 transition-colors", viewMode === 'list' ? "bg-ink-primary text-[#14F195]" : "text-ink-secondary hover:text-ink-primary")}
+                  >
+                    <ListIcon className="w-4 h-4" />
+                  </button>
+                </div>
+              </div>
 
-                 <div className="space-y-4">
-                     {mockCreatorCourses.map(course => (
-                         <div key={course.id} className="border border-border bg-surface/50 p-4 transition-colors hover:border-ink-secondary/50 group flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-                            <div className="flex-1">
-                               <div className="flex items-center gap-3 mb-1">
-                                  <h3 className="font-bold text-lg">{course.title}</h3>
-                                  <span className={cn(
-                                     "text-[10px] uppercase tracking-widest px-2 py-0.5",
-                                     course.status === 'ACTIVE' ? "bg-[#14F195]/10 text-[#14F195]" : 
-                                     course.status === 'ARCHIVED' ? "bg-ink-secondary/10 text-ink-secondary" :
-                                     "bg-[#FFB020]/10 text-[#FFB020]"
-                                  )}>
-                                     {course.status}
+              <div className={cn(
+                viewMode === 'grid' 
+                  ? "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-6"
+                  : "flex flex-col gap-4"
+              )}>
+                {loading ? (
+                  <div className="text-center py-8 text-ink-secondary col-span-full">
+                    Loading courses...
+                  </div>
+                ) : courses.length === 0 ? (
+                  <div className="border border-border bg-surface/50 p-8 text-center col-span-full">
+                    <p className="text-ink-secondary mb-4">
+                      No courses yet. Create your first course in Sanity Studio.
+                    </p>
+                    <Button
+                      className="bg-ink-primary hover:bg-ink-primary/90 text-bg-base font-bold uppercase tracking-widest rounded-none"
+                      asChild
+                    >
+                      <Link href="/creator/studio">
+                        <PlusIcon weight="bold" className="mr-2" />
+                        Create Course
+                      </Link>
+                    </Button>
+                  </div>
+                ) : (
+                  courses.map((course) => {
+                    const isPublished = course.onChain?.isPublished || false;
+                    const isDraft = !isPublished;
+                    const isPublishing = publishing === course._id;
+
+                    return (
+                      viewMode === 'list' ? (
+                        <div
+                          key={course._id}
+                          className="border border-ink-secondary/15 bg-bg-surface relative p-5 transition-all group hover:border-ink-primary hover:shadow-[6px_6px_0_rgba(13,20,18,0.08)] dark:hover:shadow-[4px_4px_0_var(--color-border)] hover:translate-x-[-2px] hover:translate-y-[-2px] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4"
+                        >
+                          {/* Corner accents */}
+                          <div className="absolute -top-px -left-px w-2 h-2 border-t-2 border-l-2 border-ink-primary" />
+                          <div className="absolute -bottom-px -right-px w-2 h-2 border-b-2 border-r-2 border-ink-primary" />
+
+                          {/* Thumbnail */}
+                          <div className="w-[120px] h-[80px] shrink-0 border border-ink-secondary/10 bg-ink-secondary/2 dark:bg-ink-secondary/5 relative overflow-hidden hidden sm:flex items-center justify-center">
+                            {course.imageUrl ? (
+                                <img src={course.imageUrl} alt={course.title} className="w-full h-full object-cover opacity-80" />
+                            ) : (
+                                <div className="w-full h-full bg-[repeating-linear-gradient(45deg,transparent,transparent_10px,var(--color-line-grid)_10px,var(--color-line-grid)_20px)]" />
+                            )}
+                          </div>
+
+                          <div className="flex-1">
+                            <div className="flex items-center gap-3 mb-1">
+                              <h3 className="font-bold text-lg">
+                                {course.title}
+                              </h3>
+                              <span
+                                className={cn(
+                                  "text-[10px] uppercase tracking-widest px-2 py-0.5",
+                                  isPublished
+                                    ? "bg-[#14F195]/10 text-[#14F195]"
+                                    : "bg-[#FFB020]/10 text-[#FFB020]",
+                                )}
+                              >
+                                {isPublished ? "PUBLISHED" : "DRAFT"}
+                              </span>
+                            </div>
+                            <div className="flex items-center gap-4 text-xs text-ink-secondary">
+                              <span>{course.moduleCount || 0} Modules</span>
+                              {isPublished && (
+                                <>
+                                  <span className="w-1 h-1 bg-border rounded-full" />
+                                  <span>
+                                    {course.onChain?.enrollments || 0} Enrolled
                                   </span>
-                               </div>
-                               <div className="flex items-center gap-4 text-xs text-ink-secondary">
-                                  <span>{course.modules} Modules</span>
-                                  <span className="w-1 h-1 bg-border rounded-full" />
-                                  <span>{course.enrolledCount.toLocaleString()} Enrolled</span>
-                                  <span className="w-1 h-1 bg-border rounded-full" />
-                                  <span>Earns {course.xpReward} XP</span>
-                               </div>
+                                </>
+                              )}
+                              <span className="w-1 h-1 bg-border rounded-full" />
+                              <span>Difficulty: {course.difficulty || 1}</span>
                             </div>
+                          </div>
 
-                            <div className="flex items-center gap-2 shrink-0">
-                               <Button variant="outline" size="icon" className="h-8 w-8 rounded-none border-border" title="Edit Content" asChild>
-                                  <Link href="/creator/studio">
-                                    <PencilSimpleIcon className="w-4 h-4 text-ink-secondary hover:text-ink-primary" />
-                                  </Link>
-                               </Button>
-                               <Button variant="outline" size="icon" className="h-8 w-8 rounded-none border-border" title="Preview">
+                          <div className="flex items-center gap-2 shrink-0">
+                            {isDraft && (
+                              <Button
+                                className="bg-[#14F195] hover:bg-[#14F195]/90 text-ink-primary dark:text-bg-base font-bold uppercase tracking-widest rounded-none text-xs h-8 px-3"
+                                onClick={() => handlePublishCourse(course)}
+                                disabled={isPublishing || !wallet.publicKey}
+                              >
+                                {isPublishing ? (
+                                  <>Publishing...</>
+                                ) : (
+                                  <>
+                                    <RocketLaunchIcon
+                                      className="w-4 h-4 mr-1"
+                                      weight="bold"
+                                    />
+                                    Publish to Chain
+                                  </>
+                                )}
+                              </Button>
+                            )}
+                            <Button
+                              variant="outline"
+                              size="icon"
+                              className="h-8 w-8 rounded-none border-ink-secondary/20 hover:border-ink-primary"
+                              title="Edit Content"
+                              asChild
+                            >
+                              <Link href="/creator/studio">
+                                <PencilSimpleIcon className="w-4 h-4 text-ink-secondary hover:text-ink-primary" />
+                              </Link>
+                            </Button>
+                            <Button
+                              variant="outline"
+                              size="icon"
+                              className="h-8 w-8 rounded-none border-ink-secondary/20 hover:border-ink-primary"
+                              title="Preview"
+                              asChild
+                            >
+                               <Link href={`/courses/${course.slug}`}>
                                   <EyeIcon className="w-4 h-4 text-ink-secondary hover:text-ink-primary" />
-                               </Button>
-                               <Button variant="outline" size="icon" className="h-8 w-8 rounded-none border-border" title="Settings">
-                                  <GearIcon className="w-4 h-4 text-ink-secondary hover:text-ink-primary" />
-                               </Button>
+                               </Link>
+                            </Button>
+                            <Button
+                              variant="outline"
+                              size="icon"
+                              className="h-8 w-8 rounded-none border-ink-secondary/20 hover:border-ink-primary"
+                              title="Settings"
+                            >
+                              <GearIcon className="w-4 h-4 text-ink-secondary hover:text-ink-primary" />
+                            </Button>
+                          </div>
+                      </div>
+                    ) : (
+                        <div
+                          key={course._id}
+                          className="border border-ink-secondary/15 bg-bg-surface relative flex flex-col transition-all group hover:border-ink-primary hover:shadow-[6px_6px_0_rgba(13,20,18,0.08)] dark:hover:shadow-[4px_4px_0_var(--color-border)] hover:translate-x-[-2px] hover:translate-y-[-2px]"
+                        >
+                        {/* Corner accents */}
+                        <div className="absolute -top-px -left-px w-2 h-2 border-t-2 border-l-2 border-ink-primary" />
+                        <div className="absolute -bottom-px -right-px w-2 h-2 border-b-2 border-r-2 border-ink-primary" />
+
+                        {/* Thumbnail */}
+                        <div className="h-[120px] border-b border-ink-secondary/10 bg-ink-secondary/2 dark:bg-ink-secondary/5 relative overflow-hidden flex items-center justify-center">
+                          {course.imageUrl ? (
+                              <img src={course.imageUrl} alt={course.title} className="w-full h-full object-cover opacity-80" />
+                          ) : (
+                              <>
+                                <div className="w-full h-full bg-[repeating-linear-gradient(45deg,transparent,transparent_10px,var(--color-line-grid)_10px,var(--color-line-grid)_20px)]" />
+                                <div className="absolute top-2 right-2 flex gap-2">
+                                  <span
+                                    className={cn(
+                                      "text-[10px] uppercase tracking-widest px-2 py-1 border border-border bg-bg-surface font-bold",
+                                      isPublished
+                                        ? "text-[#14F195]"
+                                        : "text-[#FFB020]"
+                                    )}
+                                  >
+                                    {isPublished ? "PUBLISHED" : "DRAFT"}
+                                  </span>
+                                </div>
+                              </>
+                          )}
+                        </div>
+
+                        {/* Content */}
+                        <div className="p-4 flex-1 flex flex-col">
+                          <div className="flex-1">
+                            <h4 className="font-display font-bold leading-[1] -tracking-[0.02em] text-[24px] mb-2 line-clamp-2">
+                              {course.title}
+                            </h4>
+                            <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-[11px] text-ink-secondary uppercase tracking-widest font-bold mb-4">
+                              <span>{course.moduleCount || 0} Modules</span>
+                              <span className="w-1 h-1 bg-border rounded-full" />
+                              <span>Diff: {course.difficulty || 1}</span>
+                              {isPublished && (
+                                <>
+                                  <span className="w-1 h-1 bg-border rounded-full" />
+                                  <span className="text-[#14F195]">{course.onChain?.enrollments || 0} Enrolled</span>
+                                </>
+                              )}
                             </div>
-                         </div>
-                     ))}
-                 </div>
-             </div>
-
-             {/* Sidebar Actions */}
-             <div className="flex flex-col gap-6">
-                 
-                 <div className="border border-border bg-surface p-4">
-                     <h3 className="font-bold uppercase tracking-widest text-[11px] mb-4 text-ink-secondary border-b border-border pb-2">Creator Hub</h3>
-                     <div className="space-y-3">
-                         <Button variant="ghost" className="w-full justify-start text-xs rounded-none h-8 px-2 hover:bg-fg-base/5">
-                            <UploadSimpleIcon className="w-4 h-4 mr-2" /> Asset Library
-                         </Button>
-                         <Button variant="ghost" className="w-full justify-start text-xs rounded-none h-8 px-2 hover:bg-fg-base/5">
-                            <GearIcon className="w-4 h-4 mr-2" /> Publisher Settings
-                         </Button>
-                     </div>
-                 </div>
-
-                 <div className="border border-[#9945FF]/30 bg-[#9945FF]/5 p-4">
-                     <h3 className="font-bold uppercase tracking-widest text-[#9945FF] text-[11px] mb-2">Notice</h3>
-                     <p className="text-xs text-ink-secondary leading-relaxed">
-                        To publish a course on-chain, your wallet must hold the `CREATOR` Role NFT issued by the Multisig Authority.
-                     </p>
-                 </div>
-                 
-             </div>
-
+                          </div>
+                      
+                          {/* Actions Footer */}
+                          <div className="mt-auto pt-4 border-t border-ink-secondary/10 flex flex-col gap-2">
+                            {isDraft && (
+                              <Button
+                                className="bg-[#14F195] hover:bg-[#14F195]/90 text-ink-primary dark:text-bg-base font-bold uppercase tracking-widest rounded-none text-[10px] h-8 w-full"
+                                onClick={() => handlePublishCourse(course)}
+                                disabled={isPublishing || !wallet.publicKey}
+                              >
+                                {isPublishing ? (
+                                  <>Publishing...</>
+                                ) : (
+                                  <>
+                                    <RocketLaunchIcon
+                                      className="w-4 h-4 mr-1"
+                                      weight="bold"
+                                    />
+                                    Publish to Chain
+                                  </>
+                                )}
+                              </Button>
+                            )}
+                            
+                            <div className="grid grid-cols-3 gap-2">
+                              <Button
+                                variant="outline"
+                                className="h-8 rounded-none border-ink-secondary/20 hover:border-ink-primary hover:text-ink-primary text-xs"
+                                title="Edit Content"
+                                asChild
+                              >
+                                <Link href="/creator/studio" className="flex items-center justify-center gap-1">
+                                  <PencilSimpleIcon className="w-3 h-3" /> Edit
+                                </Link>
+                              </Button>
+                              <Button
+                                variant="outline"
+                                className="h-8 rounded-none border-ink-secondary/20 hover:border-ink-primary hover:text-ink-primary text-xs"
+                                title="Preview"
+                                asChild
+                              >
+                                <Link href={`/courses/${course.slug}`} className="flex items-center justify-center gap-1">
+                                  <EyeIcon className="w-3 h-3" /> View
+                                </Link>
+                              </Button>
+                              <Button
+                                variant="outline"
+                                className="h-8 rounded-none border-ink-secondary/20 hover:border-ink-primary hover:text-ink-primary text-xs"
+                                title="Settings"
+                              >
+                                <GearIcon className="w-3 h-3" />
+                              </Button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    )
+                  );
+                })
+              )}
+              </div>
+            </div>
           </div>
+          )}
+          <div className="h-12" />
         </main>
       </div>
     </div>
-  );
+  </div>
+);
 }

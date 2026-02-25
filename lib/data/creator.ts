@@ -1,3 +1,17 @@
+export interface DraftLesson {
+  id: string;
+  title: string;
+  type: 'reading' | 'challenge';
+  content: Record<string, unknown>[]; 
+}
+
+export interface DraftModule {
+  id: string;
+  title: string;
+  order: number;
+  lessons: DraftLesson[];
+}
+
 export interface CreatorCourse {
   id: string;
   title: string;
@@ -5,7 +19,7 @@ export interface CreatorCourse {
   lastModified: string;
   enrolledCount: number;
   xpReward: number;
-  modules: number;
+  modules: number | DraftModule[];
 }
 
 export const mockCreatorCourses: CreatorCourse[] = [
