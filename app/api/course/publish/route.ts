@@ -34,7 +34,7 @@ export async function POST(request: Request) {
 
 		// 0. Verify Admin Session
 		const session = await getSessionServer();
-		if (!session || (session.user as any).role !== "admin") {
+		if (!session || (session.user as { role?: string }).role !== "admin") {
 			return NextResponse.json(
 				{ error: "Unauthorized: Admins only" },
 				{ status: 401 },

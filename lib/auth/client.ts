@@ -4,4 +4,4 @@ export const authClient = createAuthClient({
 	// Since we are developing locally, Next.js handles the base URL by default
 });
 
-export const { signIn, signUp, useSession, signOut } = authClient;
+export const { signIn, signUp, useSession, signOut, linkSocial } = authClient;

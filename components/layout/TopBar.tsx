@@ -3,7 +3,8 @@
 import { Logo } from "@/components/shared/logo";
 import { ModeToggle } from "@/components/theme-toggle";
 import { LanguageDropdown } from "@/components/LanguageDropdown";
-import { AuthWalletButton } from "@/components/shared/AuthWalletButton";
+import Image from "next/image";
+
 import { useWallet } from "@solana/wallet-adapter-react";
 import { useEffect, useState } from "react";
 import { getXpBalance, calculateLevel } from "@/lib/anchor/services";
@@ -11,6 +12,7 @@ import { Link } from "@/i18n/routing";
 import { useSession, signOut } from "@/lib/auth/client";
 import { SignOut } from "@phosphor-icons/react";
 
+import { Button } from "@/components/ui/button";
 import { MobileNav } from "@/components/layout/MobileNav";
 
 export function TopBar() {
@@ -82,15 +84,16 @@ export function TopBar() {
 						<div className="h-9 w-24 bg-ink-secondary/20 animate-pulse rounded-md" />
 					) : session ? (
 						<div className="flex items-center gap-3 bg-ink-secondary/10 px-3 py-1.5 rounded-full border border-ink-secondary/20">
-							<div className="w-6 h-6 rounded-full bg-blue-500 overflow-hidden">
+							<div className="w-6 h-6 rounded-full bg-blue-500 overflow-hidden relative">
 								{session.user.image ? (
-									<img
+									<Image
 										src={session.user.image}
 										alt="Avatar"
-										className="w-full h-full object-cover"
+										fill
+										className="object-cover"
 									/>
 								) : (
-									<div className="w-full h-full flex items-center justify-center text-[10px] text-white font-bold uppercase bg-gradient-to-br from-indigo-500 to-purple-600">
+									<div className="w-full h-full flex items-center justify-center text-[10px] text-white font-bold uppercase bg-linear-to-br from-indigo-500 to-purple-600">
 										{session.user.name?.[0] || "U"}
 									</div>
 								)}
@@ -118,7 +121,13 @@ export function TopBar() {
 							</button>
 						</div>
 					) : (
-						<AuthWalletButton />
+						<Button
+							asChild
+							variant="outline"
+							className="rounded-none uppercase text-xs font-bold px-4 py-2 h-auto gap-3 border-ink-secondary/20 hover:bg-ink-primary/5 text-ink-primary"
+						>
+							<Link href="/auth/login">Login / Sign up</Link>
+						</Button>
 					)}
 				</div>
 			</div>

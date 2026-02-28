@@ -1,262 +1,303 @@
 {
-  "Hero": {
-    "badge": "终端访问已授权",
-    "title": "在 SOLANA 上\n铸造你的未来",
-    "description": "下一代 Solana 架构师的首选技术训练场。通过我们的硬件加速课程，从零基础走向生产就绪。",
-    "explore": "探索课程",
-    "discord": "加入 Discord"
-  },
-  "Navbar": {
-    "brand": "SUPERTEAM ACADEMY",
-    "links": {
-      "catalog": "目录",
-      "leaderboard": "排行榜",
-      "rewards": "奖励"
-    },
-    "cta": {
-      "dashboard": "仪表板",
-      "start": "开始学习"
-    }
-  },
-  "Footer": {
-    "brand": "SUPERTEAM ACADEMY",
-    "description": "Solana 生态系统的去中心化大学。由学生拥有。",
-    "language": "语言：",
-    "copyright": "© 2026 Superteam Academy // 保留所有权利",
-    "headers": {
-      "platform": "平台",
-      "socials": "社交"
-    },
-    "links": {
-      "catalog": "目录",
-      "leaderboard": "排行榜",
-      "dashboard": "仪表板",
-      "profile": "个人资料"
-    }
-  },
-  "Features": {
-    "proofs": {
-      "title": "链上证明",
-      "description": "您完成的每个模块都会向您的钱包颁发不可转让的凭证。在学习过程中建立可加密验证的简历。"
-    },
-    "compiler": {
-      "title": "实时编译器",
-      "description": "无需环境设置。直接在我们基于浏览器的 IDE 中编写、测试和部署 Solana 程序，并获得实时反馈。"
-    }
-  },
-  "LearningPaths": {
-    "subtitle": "可用操作",
-    "title": "学习路径",
-    "viewAll": "查看所有轨道",
-    "tracks": {
-      "beginner": {
-        "path": "路径 01 // 初学者",
-        "title": "SOLANA 基础",
-        "description": "掌握基础层。账户、交易和 Sealevel 运行时。",
-        "meta": "12 模块 // 40 XP"
-      },
-      "intermediate": {
-        "path": "路径 02 // 中级",
-        "title": "ANCHOR 框架",
-        "description": "使用行业标准的 Rust DSL 进行快速程序开发。",
-        "meta": "8 模块 // 120 XP"
-      },
-      "advanced": {
-        "path": "路径 03 // 高级",
-        "title": "协议安全",
-        "description": "审计技术、常见攻击向量和不变性测试。",
-        "meta": "15 模块 // 300 XP"
-      }
-    }
-  },
-  "Courses": {
-    "search": {
-      "placeholder": "搜索关键词：SOLANA, RUST, ANCHOR..."
-    },
-    "filters": {
-      "all": "全部",
-      "dev": "开发",
-      "defi": "DEFI",
-      "active": "活动过滤器"
-    },
-    "curatedPaths": {
-      "title": "精选路径",
-      "subtitle": "推荐序列",
-      "tracks": {
-        "beginner": "初学者轨道",
-        "intermediate": "中级轨道",
-        "advanced": "高级专业化"
-      },
-      "modules": "模块",
-      "complete": "完成",
-      "startPath": "开始路径"
-    },
-    "individualModules": {
-      "title": "单个模块",
-      "sort": "排序：受欢迎程度"
-    },
-    "difficulty": {
-      "beginner": "初学者",
-      "intermediate": "中级",
-      "advanced": "高级",
-      "expert": "专家"
-    },
-    "locked": "已锁定",
-    "stats": {
-      "title": "会话统计",
-      "totalXP": "总 XP",
-      "coursesActive": "活跃课程",
-      "completionRate": "完成率",
-      "certificates": "证书"
-    },
-    "lastAccessed": {
-      "title": "上次访问",
-      "resume": "恢复模块"
-    }
-  },
-  "CourseDetail": {
-    "header": {
-      "label": "课程详情"
-    },
-    "metadata": {
-      "instructor": "讲师",
-      "duration": "时长",
-      "difficulty": "难度"
-    },
-    "xpBounty": "XP 赏金",
-    "buttons": {
-      "enroll": "立即注册",
-      "continue": "继续课程"
-    },
-    "curriculum": {
-      "title": "课程",
-      "completion": "完成"
-    },
-    "reviews": {
-      "title": "学生反馈",
-      "viewAll": "查看所有评论"
-    }
-  },
-  "Lesson": {
-    "reference": "参考",
-    "needHint": "需要提示吗？",
-    "ago": "前",
-    "autosaved": "自动保存",
-    "solution": "解决方案",
-    "output": "输出",
-    "runTests": "运行测试",
-    "module": "模块",
-    "previous": "上一个",
-    "nextLesson": "下一课"
-  },
-  "Dashboard": {
-    "activeCourses": {
-      "label": "当前操作",
-      "title": "活跃课程",
-      "progress": "进度",
-      "resume": "恢复"
-    },
-    "recommendedTracks": {
-      "label": "下一个目标",
-      "title": "推荐轨道",
-      "enroll": "注册"
-    },
-    "recentActivity": {
-      "label": "日志历史",
-      "title": "最近活动"
-    },
-    "userHUD": {
-      "title": "操作员资料",
-      "xpBalance": "XP 余额",
-      "globalRank": "全球排名",
-      "level": "等级",
-      "xpToLevel": "升级所需 XP"
-    },
-    "streak": {
-      "title": "活跃连胜",
-      "days": "天"
-    },
-    "achievements": {
-      "title": "最新成就"
-    },
-    "terminal": "打开终端 [F1]"
-  },
-  "Profile": {
-    "operatorId": "操作员 ID",
-    "enrolledSince": "注册时间",
-    "location": "位置",
-    "skillRadar": {
-      "title": "能力雷达"
-    },
-    "achievements": {
-      "title": "成就 // 展示"
-    },
-    "credentials": {
-      "label": "链上证明",
-      "title": "进化的 cNFTs",
-      "verified": "已验证",
-      "viewOnSolscan": "在 SOLSCAN 上查看"
-    },
-    "quickStats": {
-      "title": "快速统计",
-      "rank": "排名",
-      "vouchers": "代金券"
-    },
-    "courseLedger": {
-      "title": "课程分类账"
-    },
-    "metadata": {
-      "title": "元数据.JSON"
-    }
-  },
-  "Leaderboard": {
-    "header": {
-      "label": "全球排名",
-      "title": "操作员排行榜",
-      "updated": "已更新"
-    },
-    "filters": {
-      "weekly": "每周",
-      "monthly": "每月",
-      "allTime": "所有时间",
-      "allTracks": "过滤器：所有轨道",
-      "rust": "RUST 基础",
-      "solana": "SOLANA 基础",
-      "anchor": "ANCHOR 框架",
-      "cycle": "周期",
-      "stage": "阶段"
-    },
-    "table": {
-      "xp": "XP",
-      "level": "等级",
-      "streak": "天连胜",
-      "you": "你"
-    },
-    "loadMore": "-- [ 查看接下来 50 位操作员 ] --",
-    "userStanding": {
-      "title": "你的排名",
-      "globalRank": "全球排名",
-      "percentile": "百分位",
-      "xpToFirst": "距第一名 XP",
-      "rewards": "奖励",
-      "eligible": "符合资格"
-    },
-    "seasonalPrizes": {
-      "title": "季节性奖品",
-      "topFinishers": "前 3 名完成者："
-    },
-    "activityFeed": {
-      "title": "活动源"
-    }
-  },
-  "Wallet": {
-    "title": "连接钱包",
-    "detected": "已检测"
-  },
-  "Newsletter": {
-    "title": "通讯",
-    "description": "每周接收技术更新和生态系统机会，直接发送到您的收件箱。",
-    "placeholder": "OPERADOR@EMAIL.COM",
-    "button": "订阅"
-  }
+	"Hero": {
+		"badge": "终端访问已授权",
+		"title": "在 SOLANA 上\n铸造你的未来",
+		"description": "下一代 Solana 架构师的首选技术训练场。通过我们的硬件加速课程，从零基础走向生产就绪。",
+		"explore": "探索课程",
+		"discord": "加入 Discord"
+	},
+	"Navbar": {
+		"brand": "SUPERTEAM ACADEMY",
+		"links": {
+			"catalog": "目录",
+			"leaderboard": "排行榜",
+			"rewards": "奖励"
+		},
+		"cta": {
+			"dashboard": "仪表板",
+			"start": "开始学习"
+		}
+	},
+	"Footer": {
+		"brand": "SUPERTEAM ACADEMY",
+		"description": "Solana 生态系统的去中心化大学。由学生拥有。",
+		"language": "语言：",
+		"copyright": "© 2026 Superteam Academy // 保留所有权利",
+		"headers": {
+			"platform": "平台",
+			"socials": "社交"
+		},
+		"links": {
+			"catalog": "目录",
+			"leaderboard": "排行榜",
+			"dashboard": "仪表板",
+			"profile": "个人资料"
+		}
+	},
+	"Features": {
+		"proofs": {
+			"title": "链上证明",
+			"description": "您完成的每个模块都会向您的钱包颁发不可转让的凭证。在学习过程中建立可加密验证的简历。"
+		},
+		"compiler": {
+			"title": "实时编译器",
+			"description": "无需环境设置。直接在我们基于浏览器的 IDE 中编写、测试和部署 Solana 程序，并获得实时反馈。"
+		}
+	},
+	"LearningPaths": {
+		"subtitle": "可用操作",
+		"title": "学习路径",
+		"viewAll": "查看所有轨道",
+		"tracks": {
+			"beginner": {
+				"path": "路径 01 // 初学者",
+				"title": "SOLANA 基础",
+				"description": "掌握基础层。账户、交易和 Sealevel 运行时。",
+				"meta": "12 模块 // 40 XP"
+			},
+			"intermediate": {
+				"path": "路径 02 // 中级",
+				"title": "ANCHOR 框架",
+				"description": "使用行业标准的 Rust DSL 进行快速程序开发。",
+				"meta": "8 模块 // 120 XP"
+			},
+			"advanced": {
+				"path": "路径 03 // 高级",
+				"title": "协议安全",
+				"description": "审计技术、常见攻击向量和不变性测试。",
+				"meta": "15 模块 // 300 XP"
+			}
+		}
+	},
+	"Courses": {
+		"search": {
+			"placeholder": "搜索关键词：SOLANA, RUST, ANCHOR..."
+		},
+		"filters": {
+			"all": "全部",
+			"dev": "开发",
+			"defi": "DEFI",
+			"active": "活动过滤器"
+		},
+		"curatedPaths": {
+			"title": "精选路径",
+			"subtitle": "推荐序列",
+			"tracks": {
+				"beginner": "初学者轨道",
+				"intermediate": "中级轨道",
+				"advanced": "高级专业化"
+			},
+			"modules": "模块",
+			"complete": "完成",
+			"startPath": "开始路径"
+		},
+		"individualModules": {
+			"title": "单个模块",
+			"sort": "排序：受欢迎程度"
+		},
+		"difficulty": {
+			"beginner": "初学者",
+			"intermediate": "中级",
+			"advanced": "高级",
+			"expert": "专家"
+		},
+		"locked": "已锁定",
+		"stats": {
+			"title": "会话统计",
+			"totalXP": "总 XP",
+			"coursesActive": "活跃课程",
+			"completionRate": "完成率",
+			"certificates": "证书"
+		},
+		"lastAccessed": {
+			"title": "上次访问",
+			"resume": "恢复模块"
+		}
+	},
+	"CourseDetail": {
+		"header": {
+			"label": "课程详情"
+		},
+		"metadata": {
+			"instructor": "讲师",
+			"duration": "时长",
+			"difficulty": "难度"
+		},
+		"xpBounty": "XP 赏金",
+		"buttons": {
+			"enroll": "立即注册",
+			"continue": "继续课程"
+		},
+		"curriculum": {
+			"title": "课程",
+			"completion": "完成"
+		},
+		"reviews": {
+			"title": "学生反馈",
+			"viewAll": "查看所有评论"
+		}
+	},
+	"Lesson": {
+		"reference": "参考",
+		"needHint": "需要提示吗？",
+		"ago": "前",
+		"autosaved": "自动保存",
+		"solution": "解决方案",
+		"output": "输出",
+		"runTests": "运行测试",
+		"module": "模块",
+		"previous": "上一个",
+		"nextLesson": "下一课"
+	},
+	"Dashboard": {
+		"activeCourses": {
+			"label": "当前操作",
+			"title": "活跃课程",
+			"progress": "进度",
+			"resume": "恢复"
+		},
+		"recommendedTracks": {
+			"label": "下一个目标",
+			"title": "推荐轨道",
+			"enroll": "注册"
+		},
+		"recentActivity": {
+			"label": "日志历史",
+			"title": "最近活动"
+		},
+		"userHUD": {
+			"title": "操作员资料",
+			"xpBalance": "XP 余额",
+			"globalRank": "全球排名",
+			"level": "等级",
+			"xpToLevel": "升级所需 XP"
+		},
+		"streak": {
+			"title": "活跃连胜",
+			"days": "天"
+		},
+		"achievements": {
+			"title": "最新成就"
+		},
+		"terminal": "打开终端 [F1]"
+	},
+	"Profile": {
+		"operatorId": "操作员 ID",
+		"enrolledSince": "注册时间",
+		"location": "位置",
+		"skillRadar": {
+			"title": "能力雷达"
+		},
+		"achievements": {
+			"title": "成就 // 展示"
+		},
+		"credentials": {
+			"label": "链上证明",
+			"title": "进化的 cNFTs",
+			"verified": "已验证",
+			"viewOnSolscan": "在 SOLSCAN 上查看"
+		},
+		"quickStats": {
+			"title": "快速统计",
+			"rank": "排名",
+			"vouchers": "代金券"
+		},
+		"courseLedger": {
+			"title": "课程分类账"
+		},
+		"metadata": {
+			"title": "元数据.JSON"
+		}
+	},
+	"Leaderboard": {
+		"header": {
+			"label": "全球排名",
+			"title": "操作员排行榜",
+			"updated": "已更新"
+		},
+		"filters": {
+			"weekly": "每周",
+			"monthly": "每月",
+			"allTime": "所有时间",
+			"allTracks": "过滤器：所有轨道",
+			"rust": "RUST 基础",
+			"solana": "SOLANA 基础",
+			"anchor": "ANCHOR 框架",
+			"cycle": "周期",
+			"stage": "阶段"
+		},
+		"table": {
+			"xp": "XP",
+			"level": "等级",
+			"streak": "天连胜",
+			"you": "你"
+		},
+		"loadMore": "-- [ 查看接下来 50 位操作员 ] --",
+		"userStanding": {
+			"title": "你的排名",
+			"globalRank": "全球排名",
+			"percentile": "百分位",
+			"xpToFirst": "距第一名 XP",
+			"rewards": "奖励",
+			"eligible": "符合资格"
+		},
+		"seasonalPrizes": {
+			"title": "季节性奖品",
+			"topFinishers": "前 3 名完成者："
+		},
+		"activityFeed": {
+			"title": "活动源"
+		}
+	},
+	"Wallet": {
+		"title": "连接钱包",
+		"detected": "已检测"
+	},
+	"Newsletter": {
+		"title": "通讯",
+		"description": "每周接收技术更新和生态系统机会，直接发送到您的收件箱。",
+		"placeholder": "OPERADOR@EMAIL.COM",
+		"button": "订阅"
+	},
+	"Auth": {
+		"login": {
+			"title": "欢迎回来",
+			"subtitle": "访问您的操作员仪表板并继续您的进度。",
+			"emailPlaceholder": "电子邮件地址",
+			"passwordPlaceholder": "密码",
+			"button": "通过电子邮件登录",
+			"authenticating": "认证中...",
+			"noAccount": "还没有账号？",
+			"createLink": "初始化操作员"
+		},
+		"signup": {
+			"title": "初始化操作员",
+			"subtitle": "开始您作为卓越 Solana 架构师的旅程。",
+			"emailPlaceholder": "电子邮件地址",
+			"passwordPlaceholder": "密码",
+			"button": "通过电子邮件初始化",
+			"initializing": "初始化中...",
+			"web3Native": "Web3 原生",
+			"web3NativeDesc": "虽然您可以使用社交身份进行初始化，但真正的进阶需要关联一个安全的 Solana 钱包操作员。",
+			"hasAccount": "已经初始化？",
+			"loginLink": "访问仪表板"
+		},
+		"shared": {
+			"brandingBadgeLogin": "协议入口",
+			"brandingTitleLogin": "在 SOLANA 上\n铸就未来",
+			"brandingDescLogin": "为下一代 Solana 架构师打造的首要技术训练场。通过我们的硬件加速课程，从零基础迈向生产就绪。",
+			"brandingBadgeSignup": "新操作员初始化",
+			"brandingTitleSignup": "获得您的\n链上凭证",
+			"brandingDescSignup": "您完成的每个模块都会向您的钱包发放一份经加密验证的技能证明。在学习的过程中打造一份无懈可击的简历。",
+			"systemOnline": "系统在线 // 终端访问",
+			"orContinueWith": "或继续使用"
+		},
+		"walletButton": {
+			"github": "继续使用 GitHub",
+			"google": "继续使用 Google",
+			"walletSignIn": "通过钱包登录",
+			"walletConnect": "连接钱包",
+			"authenticating": "认证中..."
+		}
+	}
 }

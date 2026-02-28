@@ -1,262 +1,303 @@
 {
-  "Wallet": {
-    "title": "Conectar Carteira",
-    "detected": "DETECTADO"
-  },
-  "Hero": {
-    "badge": "Acesso ao Terminal Concedido",
-    "title": "FORJE SEU\nFUTURO NA\nSOLANA",
-    "description": "O principal campo de treinamento técnico para a próxima geração de arquitetos Solana. Vá do zero à produção com nosso currículo acelerado por hardware.",
-    "explore": "Explorar Cursos",
-    "discord": "Entrar no Discord"
-  },
-  "Navbar": {
-    "brand": "SUPERTEAM ACADEMY",
-    "links": {
-      "catalog": "Catálogo",
-      "leaderboard": "Classificação",
-      "rewards": "Recompensas"
-    },
-    "cta": {
-      "dashboard": "Painel",
-      "start": "Começar a Aprender"
-    }
-  },
-  "Footer": {
-    "brand": "SUPERTEAM ACADEMY",
-    "description": "A universidade descentralizada para o ecossistema Solana. Pertencente aos estudantes.",
-    "language": "Idioma:",
-    "copyright": "© 2026 Superteam Academy // Todos os direitos reservados",
-    "headers": {
-      "platform": "Plataforma",
-      "socials": "Redes Sociais"
-    },
-    "links": {
-      "catalog": "Catálogo",
-      "leaderboard": "Classificação",
-      "dashboard": "Painel",
-      "profile": "Perfil"
-    }
-  },
-  "Features": {
-    "proofs": {
-      "title": "PROVAS ON-CHAIN",
-      "description": "Cada módulo que você completa emite uma credencial intransferível para sua carteira. Construa um currículo criptograficamente verificável enquanto aprende."
-    },
-    "compiler": {
-      "title": "COMPILADOR AO VIVO",
-      "description": "Nenhuma configuração de ambiente necessária. Escreva, teste e implante programas Solana diretamente em nosso IDE baseado em navegador com feedback em tempo real."
-    }
-  },
-  "LearningPaths": {
-    "subtitle": "Operações Disponíveis",
-    "title": "TRILHAS DE APRENDIZAGEM",
-    "viewAll": "Ver todas as trilhas",
-    "tracks": {
-      "beginner": {
-        "path": "Trilha 01 // Iniciante",
-        "title": "FUNDAMENTOS SOLANA",
-        "description": "Domine a camada base. Contas, transações e o tempo de execução Sealevel.",
-        "meta": "12 MÓDULOS // 40 XP"
-      },
-      "intermediate": {
-        "path": "Trilha 02 // Intermediário",
-        "title": "FRAMEWORK ANCHOR",
-        "description": "Desenvolvimento rápido de programas usando a DSL padrão da indústria em Rust.",
-        "meta": "8 MÓDULOS // 120 XP"
-      },
-      "advanced": {
-        "path": "Trilha 03 // Avançado",
-        "title": "SEGURANÇA DE PROTOCOLO",
-        "description": "Técnicas de auditoria, vetores de ataque comuns e testes de invariantes.",
-        "meta": "15 MÓDULOS // 300 XP"
-      }
-    }
-  },
-  "Courses": {
-    "search": {
-      "placeholder": "BUSCAR PALAVRAS-CHAVE: SOLANA, RUST, ANCHOR..."
-    },
-    "filters": {
-      "all": "TODOS",
-      "dev": "DEV",
-      "defi": "DEFI",
-      "active": "FILTROS ATIVOS"
-    },
-    "curatedPaths": {
-      "title": "CAMINHOS CURADOS",
-      "subtitle": "SEQUÊNCIAS RECOMENDADAS",
-      "tracks": {
-        "beginner": "TRILHA INICIANTE",
-        "intermediate": "TRILHA INTERMEDIÁRIA",
-        "advanced": "ESPECIALIZAÇÃO AVANÇADA"
-      },
-      "modules": "MÓDULOS",
-      "complete": "COMPLETO",
-      "startPath": "INICIAR TRILHA"
-    },
-    "individualModules": {
-      "title": "MÓDULOS INDIVIDUAIS",
-      "sort": "ORDENAR: POPULARIDADE"
-    },
-    "difficulty": {
-      "beginner": "INICIANTE",
-      "intermediate": "INTERMEDIÁRIO",
-      "advanced": "AVANÇADO",
-      "expert": "ESPECIALISTA"
-    },
-    "locked": "BLOQUEADO",
-    "stats": {
-      "title": "ESTATÍSTICAS DA SESSÃO",
-      "totalXP": "XP TOTAL",
-      "coursesActive": "CURSOS ATIVOS",
-      "completionRate": "TAXA DE CONCLUSÃO",
-      "certificates": "CERTIFICADOS"
-    },
-    "lastAccessed": {
-      "title": "ÚLTIMO ACESSO",
-      "resume": "RETOMAR MÓDULO"
-    }
-  },
-  "CourseDetail": {
-    "header": {
-      "label": "Detalhes do Curso"
-    },
-    "metadata": {
-      "instructor": "Instrutor",
-      "duration": "Duração",
-      "difficulty": "Dificuldade"
-    },
-    "xpBounty": "Recompensa XP",
-    "buttons": {
-      "enroll": "INSCREVER-SE AGORA",
-      "continue": "CONTINUAR CURSO"
-    },
-    "curriculum": {
-      "title": "Currículo",
-      "completion": "CONCLUSÃO"
-    },
-    "reviews": {
-      "title": "Feedback dos Alunos",
-      "viewAll": "VER TODOS OS COMENTÁRIOS"
-    }
-  },
-  "Lesson": {
-    "reference": "REFERÊNCIA",
-    "needHint": "PRECISA DE DICA?",
-    "ago": "atrás",
-    "autosaved": "SALVO AUTOMATICAMENTE",
-    "solution": "SOLUÇÃO",
-    "output": "SAÍDA",
-    "runTests": "EXECUTAR TESTES",
-    "module": "MÓDULO",
-    "previous": "ANTERIOR",
-    "nextLesson": "PRÓXIMA LIÇÃO"
-  },
-  "Dashboard": {
-    "activeCourses": {
-      "label": "Operações Atuais",
-      "title": "CURSOS ATIVOS",
-      "progress": "PROGRESSO",
-      "resume": "Continuar"
-    },
-    "recommendedTracks": {
-      "label": "Próximos Alvos",
-      "title": "TRILHAS RECOMENDADAS",
-      "enroll": "INSCREVER"
-    },
-    "recentActivity": {
-      "label": "Histórico de Registro",
-      "title": "ATIVIDADE RECENTE"
-    },
-    "userHUD": {
-      "title": "PERFIL DO OPERADOR",
-      "xpBalance": "SALDO DE XP",
-      "globalRank": "CLASSIFICAÇÃO GLOBAL",
-      "level": "NÍVEL",
-      "xpToLevel": "XP PARA NÍV"
-    },
-    "streak": {
-      "title": "Sequência Ativa",
-      "days": "D"
-    },
-    "achievements": {
-      "title": "Últimas Conquistas"
-    },
-    "terminal": "ABRIR TERMINAL [F1]"
-  },
-  "Profile": {
-    "operatorId": "ID_OPERADOR",
-    "enrolledSince": "INSCRITO DESDE",
-    "location": "LOC",
-    "skillRadar": {
-      "title": "RADAR_DE_APTIDÃO"
-    },
-    "achievements": {
-      "title": "CONQUISTAS // VITRINE"
-    },
-    "credentials": {
-      "label": "PROVAS_NA_CADEIA",
-      "title": "cNFTs EM EVOLUÇÃO",
-      "verified": "VERIFICADO",
-      "viewOnSolscan": "VER_NO_SOLSCAN"
-    },
-    "quickStats": {
-      "title": "ESTATÍSTICAS_RÁPIDAS",
-      "rank": "CLASSIFICAÇÃO",
-      "vouchers": "VOUCHERS"
-    },
-    "courseLedger": {
-      "title": "REGISTRO_DE_CURSOS"
-    },
-    "metadata": {
-      "title": "METADATA.JSON"
-    }
-  },
-  "Leaderboard": {
-    "header": {
-      "label": "Classificação Global",
-      "title": "TABELA DE CLASSIFICAÇÃO DE OPERADORES",
-      "updated": "Atualizado"
-    },
-    "filters": {
-      "weekly": "Semanal",
-      "monthly": "Mensal",
-      "allTime": "Todos os Tempos",
-      "allTracks": "FILTRO: TODAS AS TRILHAS",
-      "rust": "FUNDAMENTOS DE RUST",
-      "solana": "BÁSICOS DE SOLANA",
-      "anchor": "FRAMEWORK ANCHOR",
-      "cycle": "Ciclo",
-      "stage": "Estágio"
-    },
-    "table": {
-      "xp": "XP",
-      "level": "NÍV",
-      "streak": "D SEQUÊNCIA",
-      "you": "VOCÊ"
-    },
-    "loadMore": "-- [ VER PRÓXIMOS 50 OPERADORES ] --",
-    "userStanding": {
-      "title": "SUA POSIÇÃO",
-      "globalRank": "CLASSIFICAÇÃO GLOBAL",
-      "percentile": "PERCENTIL",
-      "xpToFirst": "XP PARA #1",
-      "rewards": "RECOMPENSAS",
-      "eligible": "ELEGÍVEL"
-    },
-    "seasonalPrizes": {
-      "title": "PRÊMIOS DA TEMPORADA",
-      "topFinishers": "Top 3 Finalistas:"
-    },
-    "activityFeed": {
-      "title": "Feed de Atividade"
-    }
-  },
-  "Newsletter": {
-    "title": "Newsletter",
-    "description": "Receba atualizações técnicas semanais e oportunidades do ecossistema diretamente em sua caixa de entrada.",
-    "placeholder": "OPERADOR@EMAIL.COM",
-    "button": "Inscrever-se"
-  }
+	"Wallet": {
+		"title": "Conectar Carteira",
+		"detected": "DETECTADO"
+	},
+	"Hero": {
+		"badge": "Acesso ao Terminal Concedido",
+		"title": "FORJE SEU\nFUTURO NA\nSOLANA",
+		"description": "O principal campo de treinamento técnico para a próxima geração de arquitetos Solana. Vá do zero à produção com nosso currículo acelerado por hardware.",
+		"explore": "Explorar Cursos",
+		"discord": "Entrar no Discord"
+	},
+	"Navbar": {
+		"brand": "SUPERTEAM ACADEMY",
+		"links": {
+			"catalog": "Catálogo",
+			"leaderboard": "Classificação",
+			"rewards": "Recompensas"
+		},
+		"cta": {
+			"dashboard": "Painel",
+			"start": "Começar a Aprender"
+		}
+	},
+	"Footer": {
+		"brand": "SUPERTEAM ACADEMY",
+		"description": "A universidade descentralizada para o ecossistema Solana. Pertencente aos estudantes.",
+		"language": "Idioma:",
+		"copyright": "© 2026 Superteam Academy // Todos os direitos reservados",
+		"headers": {
+			"platform": "Plataforma",
+			"socials": "Redes Sociais"
+		},
+		"links": {
+			"catalog": "Catálogo",
+			"leaderboard": "Classificação",
+			"dashboard": "Painel",
+			"profile": "Perfil"
+		}
+	},
+	"Features": {
+		"proofs": {
+			"title": "PROVAS ON-CHAIN",
+			"description": "Cada módulo que você completa emite uma credencial intransferível para sua carteira. Construa um currículo criptograficamente verificável enquanto aprende."
+		},
+		"compiler": {
+			"title": "COMPILADOR AO VIVO",
+			"description": "Nenhuma configuração de ambiente necessária. Escreva, teste e implante programas Solana diretamente em nosso IDE baseado em navegador com feedback em tempo real."
+		}
+	},
+	"LearningPaths": {
+		"subtitle": "Operações Disponíveis",
+		"title": "TRILHAS DE APRENDIZAGEM",
+		"viewAll": "Ver todas as trilhas",
+		"tracks": {
+			"beginner": {
+				"path": "Trilha 01 // Iniciante",
+				"title": "FUNDAMENTOS SOLANA",
+				"description": "Domine a camada base. Contas, transações e o tempo de execução Sealevel.",
+				"meta": "12 MÓDULOS // 40 XP"
+			},
+			"intermediate": {
+				"path": "Trilha 02 // Intermediário",
+				"title": "FRAMEWORK ANCHOR",
+				"description": "Desenvolvimento rápido de programas usando a DSL padrão da indústria em Rust.",
+				"meta": "8 MÓDULOS // 120 XP"
+			},
+			"advanced": {
+				"path": "Trilha 03 // Avançado",
+				"title": "SEGURANÇA DE PROTOCOLO",
+				"description": "Técnicas de auditoria, vetores de ataque comuns e testes de invariantes.",
+				"meta": "15 MÓDULOS // 300 XP"
+			}
+		}
+	},
+	"Courses": {
+		"search": {
+			"placeholder": "BUSCAR PALAVRAS-CHAVE: SOLANA, RUST, ANCHOR..."
+		},
+		"filters": {
+			"all": "TODOS",
+			"dev": "DEV",
+			"defi": "DEFI",
+			"active": "FILTROS ATIVOS"
+		},
+		"curatedPaths": {
+			"title": "CAMINHOS CURADOS",
+			"subtitle": "SEQUÊNCIAS RECOMENDADAS",
+			"tracks": {
+				"beginner": "TRILHA INICIANTE",
+				"intermediate": "TRILHA INTERMEDIÁRIA",
+				"advanced": "ESPECIALIZAÇÃO AVANÇADA"
+			},
+			"modules": "MÓDULOS",
+			"complete": "COMPLETO",
+			"startPath": "INICIAR TRILHA"
+		},
+		"individualModules": {
+			"title": "MÓDULOS INDIVIDUAIS",
+			"sort": "ORDENAR: POPULARIDADE"
+		},
+		"difficulty": {
+			"beginner": "INICIANTE",
+			"intermediate": "INTERMEDIÁRIO",
+			"advanced": "AVANÇADO",
+			"expert": "ESPECIALISTA"
+		},
+		"locked": "BLOQUEADO",
+		"stats": {
+			"title": "ESTATÍSTICAS DA SESSÃO",
+			"totalXP": "XP TOTAL",
+			"coursesActive": "CURSOS ATIVOS",
+			"completionRate": "TAXA DE CONCLUSÃO",
+			"certificates": "CERTIFICADOS"
+		},
+		"lastAccessed": {
+			"title": "ÚLTIMO ACESSO",
+			"resume": "RETOMAR MÓDULO"
+		}
+	},
+	"CourseDetail": {
+		"header": {
+			"label": "Detalhes do Curso"
+		},
+		"metadata": {
+			"instructor": "Instrutor",
+			"duration": "Duração",
+			"difficulty": "Dificuldade"
+		},
+		"xpBounty": "Recompensa XP",
+		"buttons": {
+			"enroll": "INSCREVER-SE AGORA",
+			"continue": "CONTINUAR CURSO"
+		},
+		"curriculum": {
+			"title": "Currículo",
+			"completion": "CONCLUSÃO"
+		},
+		"reviews": {
+			"title": "Feedback dos Alunos",
+			"viewAll": "VER TODOS OS COMENTÁRIOS"
+		}
+	},
+	"Lesson": {
+		"reference": "REFERÊNCIA",
+		"needHint": "PRECISA DE DICA?",
+		"ago": "atrás",
+		"autosaved": "SALVO AUTOMATICAMENTE",
+		"solution": "SOLUÇÃO",
+		"output": "SAÍDA",
+		"runTests": "EXECUTAR TESTES",
+		"module": "MÓDULO",
+		"previous": "ANTERIOR",
+		"nextLesson": "PRÓXIMA LIÇÃO"
+	},
+	"Dashboard": {
+		"activeCourses": {
+			"label": "Operações Atuais",
+			"title": "CURSOS ATIVOS",
+			"progress": "PROGRESSO",
+			"resume": "Continuar"
+		},
+		"recommendedTracks": {
+			"label": "Próximos Alvos",
+			"title": "TRILHAS RECOMENDADAS",
+			"enroll": "INSCREVER"
+		},
+		"recentActivity": {
+			"label": "Histórico de Registro",
+			"title": "ATIVIDADE RECENTE"
+		},
+		"userHUD": {
+			"title": "PERFIL DO OPERADOR",
+			"xpBalance": "SALDO DE XP",
+			"globalRank": "CLASSIFICAÇÃO GLOBAL",
+			"level": "NÍVEL",
+			"xpToLevel": "XP PARA NÍV"
+		},
+		"streak": {
+			"title": "Sequência Ativa",
+			"days": "D"
+		},
+		"achievements": {
+			"title": "Últimas Conquistas"
+		},
+		"terminal": "ABRIR TERMINAL [F1]"
+	},
+	"Profile": {
+		"operatorId": "ID_OPERADOR",
+		"enrolledSince": "INSCRITO DESDE",
+		"location": "LOC",
+		"skillRadar": {
+			"title": "RADAR_DE_APTIDÃO"
+		},
+		"achievements": {
+			"title": "CONQUISTAS // VITRINE"
+		},
+		"credentials": {
+			"label": "PROVAS_NA_CADEIA",
+			"title": "cNFTs EM EVOLUÇÃO",
+			"verified": "VERIFICADO",
+			"viewOnSolscan": "VER_NO_SOLSCAN"
+		},
+		"quickStats": {
+			"title": "ESTATÍSTICAS_RÁPIDAS",
+			"rank": "CLASSIFICAÇÃO",
+			"vouchers": "VOUCHERS"
+		},
+		"courseLedger": {
+			"title": "REGISTRO_DE_CURSOS"
+		},
+		"metadata": {
+			"title": "METADATA.JSON"
+		}
+	},
+	"Leaderboard": {
+		"header": {
+			"label": "Classificação Global",
+			"title": "TABELA DE CLASSIFICAÇÃO DE OPERADORES",
+			"updated": "Atualizado"
+		},
+		"filters": {
+			"weekly": "Semanal",
+			"monthly": "Mensal",
+			"allTime": "Todos os Tempos",
+			"allTracks": "FILTRO: TODAS AS TRILHAS",
+			"rust": "FUNDAMENTOS DE RUST",
+			"solana": "BÁSICOS DE SOLANA",
+			"anchor": "FRAMEWORK ANCHOR",
+			"cycle": "Ciclo",
+			"stage": "Estágio"
+		},
+		"table": {
+			"xp": "XP",
+			"level": "NÍV",
+			"streak": "D SEQUÊNCIA",
+			"you": "VOCÊ"
+		},
+		"loadMore": "-- [ VER PRÓXIMOS 50 OPERADORES ] --",
+		"userStanding": {
+			"title": "SUA POSIÇÃO",
+			"globalRank": "CLASSIFICAÇÃO GLOBAL",
+			"percentile": "PERCENTIL",
+			"xpToFirst": "XP PARA #1",
+			"rewards": "RECOMPENSAS",
+			"eligible": "ELEGÍVEL"
+		},
+		"seasonalPrizes": {
+			"title": "PRÊMIOS DA TEMPORADA",
+			"topFinishers": "Top 3 Finalistas:"
+		},
+		"activityFeed": {
+			"title": "Feed de Atividade"
+		}
+	},
+	"Newsletter": {
+		"title": "Newsletter",
+		"description": "Receba atualizações técnicas semanais e oportunidades do ecossistema diretamente em sua caixa de entrada.",
+		"placeholder": "OPERADOR@EMAIL.COM",
+		"button": "Inscrever-se"
+	},
+	"Auth": {
+		"login": {
+			"title": "Bem-vindo de volta",
+			"subtitle": "Acesse seu painel de operador e continue seu progresso.",
+			"emailPlaceholder": "Endereço de E-mail",
+			"passwordPlaceholder": "Senha",
+			"button": "Login via E-mail",
+			"authenticating": "Autenticando...",
+			"noAccount": "Não tem uma conta?",
+			"createLink": "Inicializar Operador"
+		},
+		"signup": {
+			"title": "Inicializar Operador",
+			"subtitle": "Comece sua jornada como um distinto arquiteto Solana.",
+			"emailPlaceholder": "Endereço de E-mail",
+			"passwordPlaceholder": "Senha",
+			"button": "Inicializar via E-mail",
+			"initializing": "INICIALIZANDO...",
+			"web3Native": "Nativo Web3",
+			"web3NativeDesc": "Embora você possa inicializar com identidade social, a progressão real requer a vinculação de um operador de carteira Solana seguro.",
+			"hasAccount": "Já inicializado?",
+			"loginLink": "Acessar Painel"
+		},
+		"shared": {
+			"brandingBadgeLogin": "Entrada do Protocolo",
+			"brandingTitleLogin": "FORJE SEU\nFUTURO NA\nSOLANA",
+			"brandingDescLogin": "O principal campo de treinamento técnico para a próxima geração de arquitetos Solana. Vá do zero ao pronto para produção com nosso currículo acelerado por hardware.",
+			"brandingBadgeSignup": "Nova Inicialização de Operador",
+			"brandingTitleSignup": "CONQUISTE SUAS\nCREDENCIAIS\nON-CHAIN",
+			"brandingDescSignup": "Cada módulo concluído emite uma prova de habilidade verificable criptográficamente para sua carteira. Construa um currículo inquestionável enquanto aprende.",
+			"systemOnline": "SISTEMA ONLINE // ACESSO AO TERMINAL",
+			"orContinueWith": "OU CONTINUAR COM"
+		},
+		"walletButton": {
+			"github": "Continuar com GitHub",
+			"google": "Continuar com Google",
+			"walletSignIn": "Entrar via Carteira",
+			"walletConnect": "Conectar Carteira",
+			"authenticating": "Autenticando..."
+		}
+	}
 }

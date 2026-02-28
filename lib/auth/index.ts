@@ -19,9 +19,18 @@ export const auth = betterAuth({
 		},
 	},
 	emailAndPassword: {
-		enabled: false, // We use purely wallet signatures
+		enabled: true,
 	},
-	socialProviders: {},
+	socialProviders: {
+		github: {
+			clientId: process.env.GITHUB_CLIENT_ID || "",
+			clientSecret: process.env.GITHUB_CLIENT_SECRET || "",
+		},
+		google: {
+			clientId: process.env.GOOGLE_CLIENT_ID || "",
+			clientSecret: process.env.GOOGLE_CLIENT_SECRET || "",
+		},
+	},
 	plugins: [
 		// Custom Solana Credentials plugin
 		{
@@ -104,6 +113,105 @@ export const auth = betterAuth({
 								JSON.stringify({ error: "Authentication failed" }),
 								{ status: 500 },
 							);
+						}
+					},
+				),
+				linkSolana: createAuthEndpoint(
+					"/link/solana",
+					{
+						method: "POST",
+					},
+					// eslint-disable-next-line @typescript-eslint/no-explicit-any
+					async (ctx: any) => {
+						if (!ctx.request) {
+							return new Response(JSON.stringify({ error: "No request" }), {
+								status: 400,
+							});
+						}
+
+						const body = await ctx.request.json();
+						const { publicKey, signature, message } = body;
+
+						if (!publicKey || !signature || !message) {
+							return new Response(
+								JSON.stringify({ error: "Missing parameters" }),
+								{ status: 400 },
+							);
+						}
+
+						try {
+							// Verify the signature
+							const signatureUint8 = bs58.decode(signature);
+							const messageUint8 = new TextEncoder().encode(message);
+							const pubKeyUint8 = bs58.decode(publicKey);
+
+							const isValid = nacl.sign.detached.verify(
+								messageUint8,
+								signatureUint8,
+								pubKeyUint8,
+							);
+
+							if (!isValid) {
+								return new Response(
+									JSON.stringify({ error: "Invalid signature" }),
+									{ status: 401 },
+								);
+							}
+
+							// Ensure user is logged in
+							let currentSession = null;
+							try {
+								// Attempt to extract session from headers
+								currentSession = await ctx.context.internalAdapter.getSession(
+									ctx.request,
+								);
+							} catch (e) {
+								/* ignore */
+							}
+
+							// If BA's internal lookup fails or isn't populated, we fallback to requesting it manually if possible, but let's assume it works here
+							if (!currentSession && ctx.context.session) {
+								currentSession = ctx.context.session;
+							}
+
+							// Check cookies if still null
+							if (!currentSession) {
+								// We have to rely on the client sending the auth cookie which BA parses.
+								// If we get here it means the user isn't authenticated yet
+								return new Response(
+									JSON.stringify({ error: "Not authenticated" }),
+									{ status: 401 },
+								);
+							}
+
+							const userId = currentSession.session
+								? currentSession.session.userId
+								: currentSession.user?.id;
+
+							if (!userId) {
+								return new Response(
+									JSON.stringify({ error: "Invalid session structure" }),
+									{ status: 401 },
+								);
+							}
+
+							// Create new account linking
+							await ctx.context.internalAdapter.createAccount({
+								userId: userId,
+								providerId: "solana",
+								accountId: publicKey,
+								createdAt: new Date(),
+								updatedAt: new Date(),
+							});
+
+							return new Response(JSON.stringify({ success: true }), {
+								status: 200,
+							});
+						} catch (error) {
+							console.error(error);
+							return new Response(JSON.stringify({ error: "Linking failed" }), {
+								status: 500,
+							});
 						}
 					},
 				),
