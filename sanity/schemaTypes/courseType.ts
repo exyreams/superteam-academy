@@ -50,6 +50,29 @@ export const courseType = defineType({
       of: [{ type: "reference", to: [{ type: "module" }] }],
     }),
 
+    // Editorial Status (Draft -> Review Pending -> Published)
+    defineField({
+      name: "status",
+      title: "Editorial Status",
+      type: "string",
+      options: {
+        list: [
+          { title: "Draft", value: "draft" },
+          { title: "Review Pending", value: "review_pending" },
+          { title: "Published", value: "published" },
+        ],
+      },
+      initialValue: "draft",
+    }),
+
+    defineField({
+      name: "creatorWallet",
+      title: "Creator Wallet Address",
+      type: "string",
+      description: "Solana wallet address of the course creator. Used for on-chain publication.",
+      readOnly: true,
+    }),
+
     // On-chain metadata (read-only, managed by publish workflow)
     defineField({
       name: "onChainStatus",

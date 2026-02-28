@@ -20,10 +20,7 @@ import { useWallet } from "@solana/wallet-adapter-react";
 import { useEffect, useState } from "react";
 import { client } from "@/sanity/client";
 import { getProgram, getConfigPda, XP_MINT, connection } from "@/lib/anchor/client";
-import {
-  publishCourseToChain,
-  checkCourseOnChainStatus,
-} from "@/lib/services/course-publisher";
+import { checkCourseOnChainStatus } from "@/lib/services/course-publisher";
 import { toast } from "sonner";
 import { Keypair, PublicKey, SystemProgram } from "@solana/web3.js";
 import { TOKEN_2022_PROGRAM_ID } from "@solana/spl-token";
@@ -36,6 +33,7 @@ interface Course {
   imageUrl?: string;
   difficulty: number;
   moduleCount: number;
+  status?: string;
   onChainStatus?: string;
   coursePda?: string;
   onChain?: {
@@ -76,6 +74,7 @@ export function CreatorView() {
             description,
             "imageUrl": image.asset->url,
             difficulty,
+            status,
             track_id,
             track_level,
             xp_per_lesson,
@@ -116,50 +115,42 @@ export function CreatorView() {
     initCheck().then(fetchCourses);
   }, [wallet.publicKey, wallet]);
 
-  // Publish course to blockchain
-  async function handlePublishCourse(course: Course) {
+  // Submit course for review
+  async function handleSubmitForReview(course: Course) {
     if (!wallet.publicKey) {
       toast.error("Please connect your wallet first");
       return;
     }
 
-    const program = getProgram(wallet);
-    if (!program) {
-      toast.error("Failed to initialize program");
-      return;
-    }
-
     setPublishing(course._id);
-    toast.info("Publishing course to blockchain...");
+    toast.info("Submitting course for review...");
 
     try {
-      const result = await publishCourseToChain(
-        program,
-        course.slug,
-        wallet.publicKey,
-      );
+      const response = await fetch('/api/course/submit-review', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ 
+          courseId: course._id,
+          creatorWallet: wallet.publicKey.toString()
+        }),
+      });
 
-      if (result.status === "published") {
-        toast.success("Course published successfully!");
-        // Refresh courses
+      if (response.ok) {
+        toast.success("Course submitted for review!");
+        // Refresh local status
         const updatedCourses = courses.map((c) =>
           c._id === course._id
-            ? {
-                ...c,
-                onChain: { isPublished: true, enrollments: 0 },
-                coursePda: result.coursePda,
-              }
+            ? { ...c, status: "review_pending" }
             : c,
         );
         setCourses(updatedCourses);
       } else {
-        toast.error(result.error || "Failed to publish course");
+        const errorData = await response.json();
+        toast.error(errorData.error || "Failed to submit course");
       }
     } catch (error) {
-      const errorMessage =
-        error instanceof Error ? error.message : "Failed to publish course";
-      console.error("Error publishing course:", error);
-      toast.error(errorMessage);
+      console.error("Error submitting course:", error);
+      toast.error("Failed to submit course");
     } finally {
       setPublishing(null);
     }
@@ -340,8 +331,9 @@ export function CreatorView() {
                   </div>
                 ) : (
                   courses.map((course) => {
-                    const isPublished = course.onChain?.isPublished || false;
-                    const isDraft = !isPublished;
+                    const isPublished = course.status === 'published' || course.onChain?.isPublished;
+                    const isPending = course.status === 'review_pending';
+                    const isDraft = !isPublished && !isPending;
                     const isPublishing = publishing === course._id;
 
                     return (
@@ -373,10 +365,12 @@ export function CreatorView() {
                                   "text-[10px] uppercase tracking-widest px-2 py-0.5",
                                   isPublished
                                     ? "bg-[#14F195]/10 text-[#14F195]"
+                                    : isPending 
+                                    ? "bg-[#9945FF]/10 text-[#9945FF]"
                                     : "bg-[#FFB020]/10 text-[#FFB020]",
                                 )}
                               >
-                                {isPublished ? "PUBLISHED" : "DRAFT"}
+                                {isPublished ? "PUBLISHED" : isPending ? "IN REVIEW" : "DRAFT"}
                               </span>
                             </div>
                             <div className="flex items-center gap-4 text-xs text-ink-secondary">
@@ -398,20 +392,28 @@ export function CreatorView() {
                             {isDraft && (
                               <Button
                                 className="bg-[#14F195] hover:bg-[#14F195]/90 text-ink-primary dark:text-bg-base font-bold uppercase tracking-widest rounded-none text-xs h-8 px-3"
-                                onClick={() => handlePublishCourse(course)}
+                                onClick={() => handleSubmitForReview(course)}
                                 disabled={isPublishing || !wallet.publicKey}
                               >
                                 {isPublishing ? (
-                                  <>Publishing...</>
+                                  <>Submitting...</>
                                 ) : (
                                   <>
                                     <RocketLaunchIcon
                                       className="w-4 h-4 mr-1"
                                       weight="bold"
                                     />
-                                    Publish to Chain
+                                    Submit for Review
                                   </>
                                 )}
+                              </Button>
+                            )}
+                            {isPending && (
+                              <Button
+                                disabled
+                                className="bg-[#9945FF]/20 text-[#9945FF] font-bold uppercase tracking-widest rounded-none text-xs h-8 px-3 cursor-not-allowed"
+                              >
+                                Pending Review
                               </Button>
                             )}
                             <Button
@@ -468,10 +470,12 @@ export function CreatorView() {
                                       "text-[10px] uppercase tracking-widest px-2 py-1 border border-border bg-bg-surface font-bold",
                                       isPublished
                                         ? "text-[#14F195]"
+                                        : isPending
+                                        ? "text-[#9945FF]"
                                         : "text-[#FFB020]"
                                     )}
                                   >
-                                    {isPublished ? "PUBLISHED" : "DRAFT"}
+                                    {isPublished ? "PUBLISHED" : isPending ? "IN REVIEW" : "DRAFT"}
                                   </span>
                                 </div>
                               </>
@@ -502,20 +506,28 @@ export function CreatorView() {
                             {isDraft && (
                               <Button
                                 className="bg-[#14F195] hover:bg-[#14F195]/90 text-ink-primary dark:text-bg-base font-bold uppercase tracking-widest rounded-none text-[10px] h-8 w-full"
-                                onClick={() => handlePublishCourse(course)}
+                                onClick={() => handleSubmitForReview(course)}
                                 disabled={isPublishing || !wallet.publicKey}
                               >
                                 {isPublishing ? (
-                                  <>Publishing...</>
+                                  <>Submitting...</>
                                 ) : (
                                   <>
                                     <RocketLaunchIcon
                                       className="w-4 h-4 mr-1"
                                       weight="bold"
                                     />
-                                    Publish to Chain
+                                    Submit for Review
                                   </>
                                 )}
+                              </Button>
+                            )}
+                            {isPending && (
+                              <Button
+                                disabled
+                                className="bg-[#9945FF]/20 text-[#9945FF] font-bold uppercase tracking-widest rounded-none text-[10px] h-8 w-full cursor-not-allowed"
+                              >
+                                Pending Review
                               </Button>
                             )}
                             

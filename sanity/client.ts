@@ -16,10 +16,28 @@ export const ALL_COURSES_QUERY = `
     description,
     "imageUrl": image.asset->url,
     difficulty,
+    status,
+    creatorWallet,
     track_id,
     track_level,
     xp_per_lesson,
     "moduleCount": count(modules)
+  }
+`
+
+export const PENDING_REVIEW_COURSES_QUERY = `
+  *[_type == "course" && status == "review_pending"] {
+    _id,
+    title,
+    "slug": slug.current,
+    description,
+    "imageUrl": image.asset->url,
+    difficulty,
+    xp_per_lesson,
+    creator_reward_xp,
+    creatorWallet,
+    "moduleCount": count(modules),
+    _updatedAt
   }
 `
 

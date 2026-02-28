@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { Keypair, PublicKey, Connection } from "@solana/web3.js";
-import { Program, AnchorProvider, Wallet } from "@coral-xyz/anchor";
+import { Program, AnchorProvider } from "@coral-xyz/anchor";
 import fs from "fs";
 import path from "path";
 import IDL from "@/lib/anchor/idl/onchain_academy.json";
@@ -46,7 +46,27 @@ export async function POST(request: Request) {
 
     // 2. Initialize Program Instance Server-Side
     // We wrap the backend signer in an Anchor Wallet object
-    const anchorWallet = new Wallet(backendSigner);
+    const anchorWallet = {
+      publicKey: backendSigner.publicKey,
+      signTransaction: async <T extends import("@solana/web3.js").Transaction | import("@solana/web3.js").VersionedTransaction>(tx: T) => {
+        if ('version' in tx) {
+            tx.sign([backendSigner]);
+        } else {
+            tx.partialSign(backendSigner);
+        }
+        return tx;
+      },
+      signAllTransactions: async <T extends import("@solana/web3.js").Transaction | import("@solana/web3.js").VersionedTransaction>(txs: T[]) => {
+        return txs.map((tx) => {
+            if ('version' in tx) {
+                tx.sign([backendSigner]);
+            } else {
+                tx.partialSign(backendSigner);
+            }
+            return tx;
+        });
+      }
+    };
     const provider = new AnchorProvider(
       connection,
       anchorWallet,
