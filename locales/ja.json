@@ -290,7 +290,12 @@
 			"brandingTitleSignup": "オンチェーン\n資格を獲得",
 			"brandingDescSignup": "完了した各モジュールは、暗号学的に検証可能なスキル証明をウォレットに発行します。学びながら疑いの余地のないレジュメを構築しましょう。",
 			"systemOnline": "システムオンライン // ターミナルアクセス",
-			"orContinueWith": "または次で継続"
+			"orContinueWith": "または次で継続",
+			"accessProtocol": "アクセスプロトコル",
+			"accessProtocolDesc": "メールアドレスを入力してサインインするか、アカウントを作成してください。",
+			"returningOperator": "// 既存のオペレーター — 認証",
+			"newOperator": "// 新規オペレーター — アカウント初期化中",
+			"continue": "続行"
 		},
 		"walletButton": {
 			"github": "GitHubで継続",
@@ -298,6 +303,164 @@
 			"walletSignIn": "ウォレットでサインイン",
 			"walletConnect": "ウォレットを接続",
 			"authenticating": "認証中..."
+		}
+	},
+	"Onboarding": {
+		"badge": "オペレーター初期化",
+		"brandingTitle": "オペレーターを\n初期化して\nください",
+		"brandingDesc": "Solanaビルダーネットワークに参加するためのプロフィールを設定してください。各ステップでAcademyプロトコルへの完全アクセスが解放されます。",
+		"systemOnline": "システム_オンライン — ステップ",
+		"of": "/",
+		"steps": {
+			"identity": "アイデンティティ",
+			"signature": "ニューラル署名",
+			"profile": "プロフィール",
+			"learningPath": "学習パス",
+			"wallet": "ウォレット"
+		},
+		"step1": {
+			"badge": "ステップ 1 / 5",
+			"title": "あなたのアイデンティティ",
+			"subtitle": "オペレーター表示名を設定してください。これがリーダーボードとプロフィールでの表示名になります。",
+			"namePlaceholder": "0xあなたのエイリアス",
+			"nameLabel": "表示名",
+			"emailLabel": "メール（読み取り専用）"
+		},
+		"step2": {
+			"badge": "ステップ 2 / 5",
+			"title": "ニューラル署名",
+			"subtitle": "あなたのデジタルアイデンティティは手続き的に初期化されます。最適な共鳴に達するまで、一意の署名を再ロールできます。",
+			"reroll": "署名を再生成",
+			"description": "この署名は、アカデミープロトコル全体であなたの一意のオペレーターIDとして機能します。"
+		},
+		"step3": {
+			"badge": "ステップ 3 / 5",
+			"title": "あなたのプロフィール",
+			"subtitle": "コミュニティにあなたについて教えてください。すべてのフィールドは任意です。",
+			"bioPlaceholder": "シニアSolanaアーキテクト。分散型の未来を構築しています...",
+			"locationPlaceholder": "場所（例: TOKYO_JP）",
+			"twitterPlaceholder": "X / Twitter @ハンドル",
+			"githubPlaceholder": "GitHubユーザー名",
+			"websitePlaceholder": "ポートフォリオ / ウェブサイトURL",
+			"skip": "このステップをスキップ"
+		},
+		"step4": {
+			"badge": "ステップ 4 / 5",
+			"title": "学習パス",
+			"subtitle": "習得したいトラックを選択してください。少なくとも1つ選んでください。",
+			"tracks": {
+				"rust": {
+					"label": "Rust",
+					"desc": "システムプログラミングとパフォーマンス"
+				},
+				"anchor": {
+					"label": "Anchor",
+					"desc": "Solanaスマートコントラクトフレームワーク"
+				},
+				"defi": {
+					"label": "DeFi",
+					"desc": "分散型金融プロトコル"
+				},
+				"security": {
+					"label": "セキュリティ",
+					"desc": "監査と脆弱性研究"
+				},
+				"frontend": {
+					"label": "フロントエンド",
+					"desc": "Web3 dApp開発"
+				}
+			}
+		},
+		"step5": {
+			"badge": "ステップ 5 / 5",
+			"title": "ウォレットを接続",
+			"subtitle": "オンチェーン認証情報とXPを受け取るためにSolanaウォレットをリンクしてください。後で設定から接続することもできます。",
+			"externalLabel": "外部アカウントを連携",
+			"linkGithub": "GitHubを連携",
+			"linkGoogle": "Googleを連携",
+			"requiredFor": "必要なもの",
+			"requirements": [
+				"オンチェーンXP soulboundトークン",
+				"Metaplex Core NFT",
+				"コース修了の証明"
+			],
+			"launch": "ダッシュボードを開く →",
+			"launching": "初期化中...",
+			"skip": "今はウォレットをスキップ"
+		},
+		"nav": {
+			"back": "戻る",
+			"next": "次へ",
+			"continue": "続行"
+		}
+	},
+	"Settings": {
+		"profile": {
+			"title": "オペレータープロフィール",
+			"avatarHint": "アバターは接続されたOAuthプロバイダー（Google / GitHub）から取得されます。",
+			"nameLabel": "表示名",
+			"namePlaceholder": "0xYourHandle",
+			"bioLabel": "自己紹介 / ターミナルグリーティング",
+			"bioPlaceholder": "シニアSolanaアーキテクト。分散型の未来を構築中...",
+			"locationLabel": "場所",
+			"locationPlaceholder": "TOKYO_JP",
+			"socialLabel": "ソーシャルリンク",
+			"twitterPlaceholder": "X / Twitter @ハンドル",
+			"githubPlaceholder": "GitHubユーザー名",
+			"websitePlaceholder": "ポートフォリオ / ウェブサイトURL",
+			"save": "プロフィールを保存",
+			"saving": "保存中...",
+			"saved": "プロフィールが正常に更新されました。"
+		},
+		"account": {
+			"title": "アカウントと認証",
+			"emailLabel": "メインメール",
+			"emailHint": "メールは認証プロバイダーによって管理されています。",
+			"walletsLabel": "接続済みウォレット",
+			"oauthLabel": "OAuthプロバイダー",
+			"active": "アクティブ",
+			"linkWallet": "ウォレットを連携",
+			"linking": "連携中...",
+			"link": "連携",
+			"walletLinked": "ウォレットが正常に連携されました。",
+			"walletError": "ウォレットの連携エラー。別のアカウントに紐づいていないか確認してください。",
+			"oauthError": "{provider}リンクの開始に失敗しました"
+		},
+		"tabs": {
+			"profile": "プロフィール",
+			"account": "アカウント",
+			"interface": "インターフェース",
+			"privacy": "プライバシー"
+		},
+		"view": {
+			"badge": "ユーザー設定",
+			"title": "システム設定"
+		},
+		"interface": {
+			"title": "インターフェース設定",
+			"languageLabel": "システム言語",
+			"themeLabel": "ターミナルテーマ",
+			"themeDesc": "ライトとダークのコアを切り替え",
+			"themeDark": "ダークモード",
+			"themeLight": "ライトモード",
+			"notificationsLabel": "通知",
+			"newCourses": "新しいコースのリリース",
+			"leaderboardAlerts": "リーダーボードランクアラート",
+			"directMessages": "ダイレクトメッセージ",
+			"save": "設定を保存",
+			"saving": "保存中...",
+			"saved": "設定が保存されました。"
+		},
+		"privacy": {
+			"title": "プライバシー & データ",
+			"visibilityLabel": "公開表示",
+			"visibilityDesc": "グローバルリーダーボードにプロフィールを表示",
+			"dataArchiveLabel": "データアーカイブ",
+			"exportBtn": "↓ オペレーターデータをエクスポート (.JSON)",
+			"save": "プライバシー設定を確定",
+			"saving": "保存中...",
+			"saved": "プライバシー設定が保存されました。",
+			"exported": "データが正常にエクスポートされました。"
 		}
 	}
 }

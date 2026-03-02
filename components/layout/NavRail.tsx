@@ -1,23 +1,28 @@
+/**
+ * @fileoverview Left-side navigation rail for desktop view.
+ * Provides a vertical set of icon-based links for quick access to core sections.
+ */
 "use client";
 
-import { Link, usePathname } from "@/i18n/routing";
 import {
-	SquaresFourIcon,
 	BookIcon,
-	TrophyIcon,
-	UsersIcon,
-	GearIcon,
-	UserIcon,
-	ShieldCheckIcon,
 	ChalkboardTeacherIcon,
+	GearIcon,
+	ShieldCheckIcon,
+	SignInIcon,
+	SquaresFourIcon,
+	TrophyIcon,
+	UserIcon,
+	UserPlusIcon,
+	UsersIcon,
 } from "@phosphor-icons/react";
-import { SignIn, UserPlus } from "@phosphor-icons/react";
-import { cn } from "@/lib/utils";
+import { Link, usePathname } from "@/i18n/routing";
 import { useSession } from "@/lib/auth/client";
+import { cn } from "@/lib/utils";
 
 export function NavRail() {
 	const pathname = usePathname();
-	const { data: session } = useSession();
+	const { data: session, isPending } = useSession();
 
 	const navItems = [
 		{
@@ -73,7 +78,13 @@ export function NavRail() {
 			</div>
 
 			{/* Authenticated Links (Profile, Creator, Admin) */}
-			{session ? (
+			{isPending ? (
+				<div className="flex flex-col gap-5 mt-auto mb-2">
+					<div className="w-8 h-8 bg-ink-primary/5 animate-pulse border border-ink-secondary/10" />
+					<div className="w-8 h-8 bg-ink-primary/5 animate-pulse border border-ink-secondary/10" />
+					<div className="w-8 h-8 bg-ink-primary/5 animate-pulse border border-ink-secondary/10" />
+				</div>
+			) : session ? (
 				<>
 					<Link
 						href="/profile"
@@ -136,7 +147,7 @@ export function NavRail() {
 						)}
 						title="Login"
 					>
-						<SignIn
+						<SignInIcon
 							size={18}
 							className="text-ink-primary"
 							weight={pathname === "/login" ? "duotone" : "regular"}
@@ -152,7 +163,7 @@ export function NavRail() {
 						)}
 						title="Initialize Operator"
 					>
-						<UserPlus
+						<UserPlusIcon
 							size={18}
 							className="text-ink-primary"
 							weight={pathname === "/signup" ? "duotone" : "regular"}

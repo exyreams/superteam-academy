@@ -1,8 +1,10 @@
+/**
+ * @fileoverview Language selection dropdown component.
+ * Allows users to switch between supported locales (EN, ES, PT-BR, etc.).
+ */
 "use client";
 
 import { useLocale, useTranslations } from "next-intl";
-import { useRouter, usePathname } from "@/i18n/routing";
-import { cn } from "@/lib/utils";
 import {
 	Select,
 	SelectContent,
@@ -10,6 +12,8 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from "@/components/ui/select";
+import { usePathname, useRouter } from "@/i18n/routing";
+import { cn } from "@/lib/utils";
 
 const languages = [
 	{ code: "en", label: "EN", full: "English (EN)" },
@@ -19,10 +23,10 @@ const languages = [
 	{ code: "zh", label: "ZH", full: "中文 (ZH)" },
 	{ code: "fr", label: "FR", full: "Français (FR)" },
 	{ code: "ru", label: "RU", full: "Русский (RU)" },
-	{ code: "jp", label: "JP", full: "日本語 (JP)" },
+	{ code: "ja", label: "JA", full: "日本語 (JA)" },
 ];
 
-type SupportedLocale = "en" | "es" | "pt-br" | "hi" | "zh" | "fr" | "ru" | "jp";
+type SupportedLocale = "en" | "es" | "pt-br" | "hi" | "zh" | "fr" | "ru" | "ja";
 
 interface LanguageDropdownProps {
 	variant?: "simple" | "detailed";

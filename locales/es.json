@@ -290,7 +290,12 @@
 			"brandingTitleSignup": "GANA TUS\nCREDENCIALES\nON-CHAIN",
 			"brandingDescSignup": "Cada módulo que completas emite una prueba de habilidad verificable criptográficamente a tu billetera. Construye un currículum incuestionable mientras aprendes.",
 			"systemOnline": "SISTEMA EN LÍNEA // ACCESO A LA TERMINAL",
-			"orContinueWith": "O CONTINUAR CON"
+			"orContinueWith": "O CONTINUAR CON",
+			"accessProtocol": "Protocolo de Acceso",
+			"accessProtocolDesc": "Ingresa tu email para iniciar sesión o crear una cuenta.",
+			"returningOperator": "// OPERADOR RECURRENTE — AUTENTICARSE",
+			"newOperator": "// NUEVO OPERADOR — INICIALIZANDO CUENTA",
+			"continue": "Continuar"
 		},
 		"walletButton": {
 			"github": "Continuar con GitHub",
@@ -298,6 +303,164 @@
 			"walletSignIn": "Iniciar sesión vía Billetera",
 			"walletConnect": "Conectar Billetera",
 			"authenticating": "Autenticando..."
+		}
+	},
+	"Onboarding": {
+		"badge": "INICIO DE OPERADOR",
+		"brandingTitle": "INICIALIZA\nTU\nOPERADOR",
+		"brandingDesc": "Configura tu perfil para unirte a la red de constructores de Solana. Cada paso desbloquea el acceso completo al protocolo Academy.",
+		"systemOnline": "SISTEMA_EN_LÍNEA — PASO",
+		"of": "de",
+		"steps": {
+			"identity": "Identidad",
+			"signature": "Firma Neuronal",
+			"profile": "Perfil",
+			"learningPath": "Ruta",
+			"wallet": "Billetera"
+		},
+		"step1": {
+			"badge": "PASO 1 / 5",
+			"title": "Tu Identidad",
+			"subtitle": "Establece tu nombre de operador. Así aparecerás en el ranking y perfil.",
+			"namePlaceholder": "0xTuAlias",
+			"nameLabel": "Nombre a Mostrar",
+			"emailLabel": "Email (solo lectura)"
+		},
+		"step2": {
+			"badge": "PASO 2 / 5",
+			"title": "Firma Neuronal",
+			"subtitle": "Tu identidad digital se inicializa procedimentalmente. Puedes regenerar tu firma única hasta que alcance la resonancia óptima.",
+			"reroll": "Regenerar Firma",
+			"description": "Esta firma sirve como tu ID de operador único en todo el protocolo Academy."
+		},
+		"step3": {
+			"badge": "PASO 3 / 5",
+			"title": "Tu Perfil",
+			"subtitle": "Cuéntale a la comunidad quién eres. Todos los campos son opcionales.",
+			"bioPlaceholder": "Arquitecto senior de Solana. Construyendo el futuro descentralizado...",
+			"locationPlaceholder": "Ubicación (ej. MADRID_ES)",
+			"twitterPlaceholder": "X / Twitter @alias",
+			"githubPlaceholder": "Usuario de GitHub",
+			"websitePlaceholder": "URL de portafolio / sitio web",
+			"skip": "Omitir este paso"
+		},
+		"step4": {
+			"badge": "PASO 4 / 5",
+			"title": "Ruta de Aprendizaje",
+			"subtitle": "Selecciona las pistas que quieres dominar. Elige al menos una.",
+			"tracks": {
+				"rust": {
+					"label": "Rust",
+					"desc": "Programación de sistemas y rendimiento"
+				},
+				"anchor": {
+					"label": "Anchor",
+					"desc": "Framework de contratos inteligentes Solana"
+				},
+				"defi": {
+					"label": "DeFi",
+					"desc": "Protocolos financieros descentralizados"
+				},
+				"security": {
+					"label": "Seguridad",
+					"desc": "Auditoría e investigación de vulnerabilidades"
+				},
+				"frontend": {
+					"label": "Frontend",
+					"desc": "Desarrollo de dApps Web3"
+				}
+			}
+		},
+		"step5": {
+			"badge": "PASO 5 / 5",
+			"title": "Conectar Billetera",
+			"subtitle": "Vincula una billetera Solana para recibir credenciales on-chain y XP. Puedes omitirlo y conectarte más tarde en la configuración.",
+			"externalLabel": "VINCULAR CUENTAS EXTERNAS",
+			"linkGithub": "Vincular GitHub",
+			"linkGoogle": "Vincular Google",
+			"requiredFor": "REQUERIDO PARA",
+			"requirements": [
+				"Tokens XP soulbound on-chain",
+				"NFTs Core de Metaplex",
+				"Pruebas de finalización de cursos"
+			],
+			"launch": "Ir al Dashboard →",
+			"launching": "Inicializando...",
+			"skip": "Omitir billetera por ahora"
+		},
+		"nav": {
+			"back": "Atrás",
+			"next": "Siguiente",
+			"continue": "Continuar"
+		}
+	},
+	"Settings": {
+		"profile": {
+			"title": "Perfil del Operador",
+			"avatarHint": "El avatar se obtiene de tu proveedor OAuth conectado (Google / GitHub).",
+			"nameLabel": "Nombre de Pantalla",
+			"namePlaceholder": "0xTuAlias",
+			"bioLabel": "Biografía / Saludo Terminal",
+			"bioPlaceholder": "Arquitecto senior de Solana. Construyendo el futuro descentralizado...",
+			"locationLabel": "Ubicación",
+			"locationPlaceholder": "MADRID_ES",
+			"socialLabel": "Enlaces de Redes Sociales",
+			"twitterPlaceholder": "X / Twitter @alias",
+			"githubPlaceholder": "Usuario de GitHub",
+			"websitePlaceholder": "URL de portafolio / sitio web",
+			"save": "Guardar Perfil",
+			"saving": "Guardando...",
+			"saved": "Perfil actualizado correctamente."
+		},
+		"account": {
+			"title": "Cuenta y Autenticación",
+			"emailLabel": "Correo Principal",
+			"emailHint": "El correo es administrado por tu proveedor de autenticación.",
+			"walletsLabel": "Billeteras Conectadas",
+			"oauthLabel": "Proveedores OAuth",
+			"active": "ACTIVO",
+			"linkWallet": "Vincular Billetera",
+			"linking": "Vinculando...",
+			"link": "Vincular",
+			"walletLinked": "Billetera vinculada correctamente.",
+			"walletError": "Error al vincular la billetera. Asegúrate de que no esté conectada a otra cuenta.",
+			"oauthError": "No se pudo iniciar el enlace con {provider}"
+		},
+		"tabs": {
+			"profile": "Perfil",
+			"account": "Cuenta",
+			"interface": "Interfaz",
+			"privacy": "Privacidad"
+		},
+		"view": {
+			"badge": "Configuración de Usuario",
+			"title": "AJUSTES DEL SISTEMA"
+		},
+		"interface": {
+			"title": "Preferencias de Interfaz",
+			"languageLabel": "Idioma del Sistema",
+			"themeLabel": "Tema del Terminal",
+			"themeDesc": "Alternar entre modo Claro y Oscuro",
+			"themeDark": "Modo Oscuro",
+			"themeLight": "Modo Claro",
+			"notificationsLabel": "Notificaciones",
+			"newCourses": "Nuevos Cursos Publicados",
+			"leaderboardAlerts": "Alertas de Posición en Clasificación",
+			"directMessages": "Mensajes Directos",
+			"save": "Guardar Preferencias",
+			"saving": "Guardando...",
+			"saved": "Preferencias guardadas."
+		},
+		"privacy": {
+			"title": "Privacidad & Datos",
+			"visibilityLabel": "Visibilidad Pública",
+			"visibilityDesc": "Mostrar perfil en la clasificación global",
+			"dataArchiveLabel": "Archivo de Datos",
+			"exportBtn": "↓ Exportar Datos del Operador (.JSON)",
+			"save": "Confirmar Ajustes de Privacidad",
+			"saving": "Guardando...",
+			"saved": "Ajustes de privacidad guardados.",
+			"exported": "Datos exportados correctamente."
 		}
 	}
 }

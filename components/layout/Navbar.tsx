@@ -1,34 +1,38 @@
+/**
+ * @fileoverview Primary application navigation bar for desktop and mobile.
+ * Includes branding, desktop links, theme toggle, user menu, and mobile menu trigger.
+ */
 "use client";
 
-import { Button } from "@/components/ui/button";
-import { ModeToggle } from "@/components/theme-toggle";
-import { Logo } from "@/components/shared/logo";
+import {
+	ArrowRightIcon,
+	BookIcon,
+	GiftIcon,
+	HouseIcon,
+	ListIcon,
+	SquaresFourIcon,
+	TrophyIcon,
+} from "@phosphor-icons/react";
 import { useTranslations } from "next-intl";
-import { Link, usePathname } from "@/i18n/routing";
-import { useSession } from "@/lib/auth/client";
 import { useEffect, useState } from "react";
+import { UserMenu } from "@/components/layout/UserMenu";
+import { Logo } from "@/components/shared/logo";
+import { ModeToggle } from "@/components/theme-toggle";
+import { Button } from "@/components/ui/button";
 import {
 	Sheet,
 	SheetContent,
-	SheetTrigger,
-	SheetTitle,
-	SheetHeader,
 	SheetDescription,
+	SheetHeader,
+	SheetTitle,
+	SheetTrigger,
 } from "@/components/ui/sheet";
-import {
-	ListIcon,
-	HouseIcon,
-	BookIcon,
-	TrophyIcon,
-	GiftIcon,
-	SquaresFourIcon,
-	ArrowRightIcon,
-} from "@phosphor-icons/react";
+import { Link, usePathname } from "@/i18n/routing";
+import { useSession } from "@/lib/auth/client";
 
 export function Navbar() {
 	const t = useTranslations("Navbar");
 	const pathname = usePathname();
-
 	const { data: session } = useSession();
 	const [mounted, setMounted] = useState(false);
 
@@ -68,15 +72,10 @@ export function Navbar() {
 			</div>
 
 			{/* Desktop Actions */}
-			<div className="hidden lg:flex gap-4">
+			<div className="hidden lg:flex items-center gap-4">
+				<ModeToggle />
 				{mounted && session ? (
-					<Button
-						asChild
-						variant="landingSecondary"
-						className="rounded-none uppercase text-xs font-bold px-4 py-2 h-auto gap-3"
-					>
-						<Link href="/dashboard">{t("cta.dashboard")}</Link>
-					</Button>
+					<UserMenu session={session} />
 				) : (
 					<div className="flex gap-4">
 						<Button
@@ -91,11 +90,10 @@ export function Navbar() {
 							variant="outline"
 							className="rounded-none uppercase text-xs font-bold px-4 py-2 h-auto gap-3 border-ink-secondary/20 hover:bg-ink-primary/5 text-ink-primary"
 						>
-							<Link href="/auth/login">Login / Sign up</Link>
+							<Link href="/auth">Login / Sign up</Link>
 						</Button>
 					</div>
 				)}
-				<ModeToggle />
 			</div>
 
 			{/* Mobile Menu Trigger */}
@@ -204,7 +202,7 @@ export function Navbar() {
 												variant="outline"
 												className="w-full rounded-none uppercase text-xs font-bold h-[42px] justify-center gap-2 border-ink-secondary/20 hover:bg-ink-primary/5 text-ink-primary"
 											>
-												<Link href="/auth/login">Login / Sign up</Link>
+												<Link href="/auth">Login / Sign up</Link>
 											</Button>
 										</>
 									)}

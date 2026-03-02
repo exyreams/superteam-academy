@@ -290,7 +290,12 @@
 			"brandingTitleSignup": "获得您的\n链上凭证",
 			"brandingDescSignup": "您完成的每个模块都会向您的钱包发放一份经加密验证的技能证明。在学习的过程中打造一份无懈可击的简历。",
 			"systemOnline": "系统在线 // 终端访问",
-			"orContinueWith": "或继续使用"
+			"orContinueWith": "或继续使用",
+			"accessProtocol": "访问协议",
+			"accessProtocolDesc": "输入您的电子邮件以登录或创建帐户。",
+			"returningOperator": "// 返回操作员 — 进行验证",
+			"newOperator": "// 新操作员 — 账户初始化中",
+			"continue": "继续"
 		},
 		"walletButton": {
 			"github": "继续使用 GitHub",
@@ -298,6 +303,164 @@
 			"walletSignIn": "通过钱包登录",
 			"walletConnect": "连接钱包",
 			"authenticating": "认证中..."
+		}
+	},
+	"Onboarding": {
+		"badge": "操作员初始化",
+		"brandingTitle": "初始化\n您的\n操作员",
+		"brandingDesc": "配置您的个人资料以加入Solana构建者网络。每个步骤都会解锁对Academy协议的完整访问权限。",
+		"systemOnline": "系统_在线 — 步骤",
+		"of": "/",
+		"steps": {
+			"identity": "身份",
+			"signature": "神经签名",
+			"profile": "个人资料",
+			"learningPath": "学习路径",
+			"wallet": "钱包"
+		},
+		"step1": {
+			"badge": "步骤 1 / 5",
+			"title": "您的身份",
+			"subtitle": "设置您的操作员显示名称。这将是您在排行榜和个人资料上的显示方式。",
+			"namePlaceholder": "0x您的别名",
+			"nameLabel": "显示名称",
+			"emailLabel": "电子邮件（只读）"
+		},
+		"step2": {
+			"badge": "步骤 2 / 5",
+			"title": "神经签名",
+			"subtitle": "您的数字身份是经过程序化初始化的。您可以重新生成您的唯一签名，直到达到最佳共振。",
+			"reroll": "重新生成签名",
+			"description": "此签名在整个学院协议中充当您的唯一操作员 ID。"
+		},
+		"step3": {
+			"badge": "步骤 3 / 5",
+			"title": "您的个人资料",
+			"subtitle": "向社区介绍自己。所有字段均为可选。",
+			"bioPlaceholder": "资深Solana架构师。正在构建去中心化的未来...",
+			"locationPlaceholder": "位置（如 上海_CN）",
+			"twitterPlaceholder": "X / Twitter @别名",
+			"githubPlaceholder": "GitHub用户名",
+			"websitePlaceholder": "作品集 / 网站URL",
+			"skip": "跳过此步骤"
+		},
+		"step4": {
+			"badge": "步骤 4 / 5",
+			"title": "学习路径",
+			"subtitle": "选择您想要掌握的赛道。至少选择一个。",
+			"tracks": {
+				"rust": {
+					"label": "Rust",
+					"desc": "系统编程与性能"
+				},
+				"anchor": {
+					"label": "Anchor",
+					"desc": "Solana智能合约框架"
+				},
+				"defi": {
+					"label": "DeFi",
+					"desc": "去中心化金融协议"
+				},
+				"security": {
+					"label": "安全",
+					"desc": "审计与漏洞研究"
+				},
+				"frontend": {
+					"label": "前端",
+					"desc": "Web3 dApp开发"
+				}
+			}
+		},
+		"step5": {
+			"badge": "步骤 5 / 5",
+			"title": "连接钱包",
+			"subtitle": "链接Solana钱包以接收链上凭证和XP。您可以跳过并稍后在设置中连接。",
+			"externalLabel": "关联外部账户",
+			"linkGithub": "关联 GitHub",
+			"linkGoogle": "关联 Google",
+			"requiredFor": "需要用于",
+			"requirements": [
+				"链上XP灵魂绑定代币",
+				"Metaplex Core NFT",
+				"课程完成证明"
+			],
+			"launch": "启动仪表板 →",
+			"launching": "初始化中...",
+			"skip": "暂时跳过钱包"
+		},
+		"nav": {
+			"back": "返回",
+			"next": "下一步",
+			"continue": "继续"
+		}
+	},
+	"Settings": {
+		"profile": {
+			"title": "操作员档案",
+			"avatarHint": "头像从您连接的 OAuth 提供商（Google / GitHub）获取。",
+			"nameLabel": "显示名称",
+			"namePlaceholder": "0x您的昵称",
+			"bioLabel": "简介 / 终端问候语",
+			"bioPlaceholder": "资深 Solana 架构师。构建去中心化未来...",
+			"locationLabel": "位置",
+			"locationPlaceholder": "BEIJING_CN",
+			"socialLabel": "社交媒体链接",
+			"twitterPlaceholder": "X / Twitter @昵称",
+			"githubPlaceholder": "GitHub 用户名",
+			"websitePlaceholder": "作品集 / 网站 URL",
+			"save": "保存档案",
+			"saving": "保存中...",
+			"saved": "档案更新成功。"
+		},
+		"account": {
+			"title": "账户与认证",
+			"emailLabel": "主邮箱",
+			"emailHint": "邮箱由您的认证提供商管理。",
+			"walletsLabel": "已连接钱包",
+			"oauthLabel": "OAuth 提供商",
+			"active": "已激活",
+			"linkWallet": "关联钱包",
+			"linking": "关联中...",
+			"link": "关联",
+			"walletLinked": "钱包关联成功。",
+			"walletError": "关联钱包时出错。请确认该钱包未绑定到其他账户。",
+			"oauthError": "无法启动 {provider} 链接"
+		},
+		"tabs": {
+			"profile": "个人资料",
+			"account": "账户",
+			"interface": "界面",
+			"privacy": "隐私"
+		},
+		"view": {
+			"badge": "用户配置",
+			"title": "系统设置"
+		},
+		"interface": {
+			"title": "界面偏好设置",
+			"languageLabel": "系统语言",
+			"themeLabel": "终端主题",
+			"themeDesc": "在亮色和暗色模式之间切换",
+			"themeDark": "深色模式",
+			"themeLight": "浅色模式",
+			"notificationsLabel": "通知",
+			"newCourses": "新课程发布",
+			"leaderboardAlerts": "排行榜排名提醒",
+			"directMessages": "私信",
+			"save": "保存偏好设置",
+			"saving": "保存中...",
+			"saved": "偏好设置已保存。"
+		},
+		"privacy": {
+			"title": "隐私 & 数据",
+			"visibilityLabel": "公开可见性",
+			"visibilityDesc": "在全球排行榜上显示个人资料",
+			"dataArchiveLabel": "数据存档",
+			"exportBtn": "↓ 导出操作员数据 (.JSON)",
+			"save": "提交隐私设置",
+			"saving": "保存中...",
+			"saved": "隐私设置已保存。",
+			"exported": "数据导出成功。"
 		}
 	}
 }

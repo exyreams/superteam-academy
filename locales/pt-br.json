@@ -290,7 +290,12 @@
 			"brandingTitleSignup": "CONQUISTE SUAS\nCREDENCIAIS\nON-CHAIN",
 			"brandingDescSignup": "Cada módulo concluído emite uma prova de habilidade verificable criptográficamente para sua carteira. Construa um currículo inquestionável enquanto aprende.",
 			"systemOnline": "SISTEMA ONLINE // ACESSO AO TERMINAL",
-			"orContinueWith": "OU CONTINUAR COM"
+			"orContinueWith": "OU CONTINUAR COM",
+			"accessProtocol": "Protocolo de Acesso",
+			"accessProtocolDesc": "Insira seu e-mail para fazer login ou criar uma conta.",
+			"returningOperator": "// OPERADOR JÁ REGISTRADO — AUTENTICAR",
+			"newOperator": "// NOVO OPERADOR — INICIALIZANDO CONTA",
+			"continue": "Continuar"
 		},
 		"walletButton": {
 			"github": "Continuar com GitHub",
@@ -298,6 +303,164 @@
 			"walletSignIn": "Entrar via Carteira",
 			"walletConnect": "Conectar Carteira",
 			"authenticating": "Autenticando..."
+		}
+	},
+	"Onboarding": {
+		"badge": "INÍCIO DO OPERADOR",
+		"brandingTitle": "INICIALIZE\nSEU\nOPERADOR",
+		"brandingDesc": "Configure seu perfil para entrar na rede de construtores Solana. Cada etapa desbloqueia o acesso completo ao protocolo Academy.",
+		"systemOnline": "SISTEMA_ONLINE — PASSO",
+		"of": "de",
+		"steps": {
+			"identity": "Identidade",
+			"signature": "Assinatura Neural",
+			"profile": "Perfil",
+			"learningPath": "Trilha",
+			"wallet": "Carteira"
+		},
+		"step1": {
+			"badge": "PASO 1 / 5",
+			"title": "Sua Identidade",
+			"subtitle": "Defina seu nome de operador. É assim que você aparecerá no ranking e perfil.",
+			"namePlaceholder": "0xSeuAlias",
+			"nameLabel": "Nome de Exibição",
+			"emailLabel": "Email (somente leitura)"
+		},
+		"step2": {
+			"badge": "PASO 2 / 5",
+			"title": "Assinatura Neural",
+			"subtitle": "Sua identidade digital é inicializada processualmente. Você pode trocar sua assinatura única até que ela atinja a ressonância ideal.",
+			"reroll": "Trocar Assinatura",
+			"description": "Esta assinatura serve como seu ID de operador único em todo o protocolo Academy."
+		},
+		"step3": {
+			"badge": "PASO 3 / 5",
+			"title": "Seu Perfil",
+			"subtitle": "Conte à comunidade quem você é. Todos os campos são opcionais.",
+			"bioPlaceholder": "Arquiteto sênior Solana. Construindo o futuro descentralizado...",
+			"locationPlaceholder": "Localização (ex. SÃO_PAULO_BR)",
+			"twitterPlaceholder": "X / Twitter @alias",
+			"githubPlaceholder": "Usuário do GitHub",
+			"websitePlaceholder": "URL do portfólio / site",
+			"skip": "Pular esta etapa"
+		},
+		"step4": {
+			"badge": "PASO 4 / 5",
+			"title": "Trilha de Aprendizado",
+			"subtitle": "Selecione as trilhas que deseja dominar. Escolha pelo menos uma.",
+			"tracks": {
+				"rust": {
+					"label": "Rust",
+					"desc": "Programação de sistemas e desempenho"
+				},
+				"anchor": {
+					"label": "Anchor",
+					"desc": "Framework de smart contracts Solana"
+				},
+				"defi": {
+					"label": "DeFi",
+					"desc": "Protocolos financeiros descentralizados"
+				},
+				"security": {
+					"label": "Segurança",
+					"desc": "Auditoria e pesquisa de vulnerabilidades"
+				},
+				"frontend": {
+					"label": "Frontend",
+					"desc": "Desenvolvimento de dApps Web3"
+				}
+			}
+		},
+		"step5": {
+			"badge": "PASO 5 / 5",
+			"title": "Conectar Carteira",
+			"subtitle": "Vincula uma carteira Solana para receber credenciais on-chain e XP. Você pode pular e conectar depois nas configurações.",
+			"externalLabel": "VINCULAR CONTAS EXTERNAS",
+			"linkGithub": "Vincular GitHub",
+			"linkGoogle": "Vincular Google",
+			"requiredFor": "NECESSÁRIO PARA",
+			"requirements": [
+				"Tokens XP soulbound on-chain",
+				"NFTs Core da Metaplex",
+				"Provas de conclusão de cursos"
+			],
+			"launch": "Ir ao Dashboard →",
+			"launching": "Inicializando...",
+			"skip": "Pular carteira por agora"
+		},
+		"nav": {
+			"back": "Voltar",
+			"next": "Próximo",
+			"continue": "Continuar"
+		}
+	},
+	"Settings": {
+		"profile": {
+			"title": "Perfil do Operador",
+			"avatarHint": "O avatar é obtido do provedor OAuth conectado (Google / GitHub).",
+			"nameLabel": "Nome de Exibição",
+			"namePlaceholder": "0xSeuAlias",
+			"bioLabel": "Bio / Saudação do Terminal",
+			"bioPlaceholder": "Arquiteto sênior de Solana. Construindo o futuro descentralizado...",
+			"locationLabel": "Localização",
+			"locationPlaceholder": "SAO_PAULO_BR",
+			"socialLabel": "Links de Redes Sociais",
+			"twitterPlaceholder": "X / Twitter @alias",
+			"githubPlaceholder": "Nome de usuário do GitHub",
+			"websitePlaceholder": "URL do portfólio / site",
+			"save": "Salvar Perfil",
+			"saving": "Salvando...",
+			"saved": "Perfil atualizado com sucesso."
+		},
+		"account": {
+			"title": "Conta e Autenticação",
+			"emailLabel": "E-mail Principal",
+			"emailHint": "O e-mail é gerenciado pelo seu provedor de autenticação.",
+			"walletsLabel": "Carteiras Conectadas",
+			"oauthLabel": "Provedores OAuth",
+			"active": "ATIVO",
+			"linkWallet": "Vincular Carteira",
+			"linking": "Vinculando...",
+			"link": "Vincular",
+			"walletLinked": "Carteira vinculada com sucesso.",
+			"walletError": "Erro ao vincular a carteira. Certifique-se de que não está conectada a outra conta.",
+			"oauthError": "Falha ao iniciar o link com {provider}"
+		},
+		"tabs": {
+			"profile": "Perfil",
+			"account": "Conta",
+			"interface": "Interface",
+			"privacy": "Privacidade"
+		},
+		"view": {
+			"badge": "Configuração do Usuário",
+			"title": "CONFIGURAÇÕES DO SISTEMA"
+		},
+		"interface": {
+			"title": "Preferências de Interface",
+			"languageLabel": "Idioma do Sistema",
+			"themeLabel": "Tema do Terminal",
+			"themeDesc": "Alternar entre modo Claro e Escuro",
+			"themeDark": "Modo Escuro",
+			"themeLight": "Modo Claro",
+			"notificationsLabel": "Notificações",
+			"newCourses": "Novos Cursos Lançados",
+			"leaderboardAlerts": "Alertas de Posição no Ranking",
+			"directMessages": "Mensagens Diretas",
+			"save": "Salvar Preferências",
+			"saving": "Salvando...",
+			"saved": "Preferências salvas."
+		},
+		"privacy": {
+			"title": "Privacidade & Dados",
+			"visibilityLabel": "Visibilidade Pública",
+			"visibilityDesc": "Mostrar perfil no ranking global",
+			"dataArchiveLabel": "Arquivo de Dados",
+			"exportBtn": "↓ Exportar Dados do Operador (.JSON)",
+			"save": "Confirmar Configurações de Privacidade",
+			"saving": "Salvando...",
+			"saved": "Configurações de privacidade salvas.",
+			"exported": "Dados exportados com sucesso."
 		}
 	}
 }

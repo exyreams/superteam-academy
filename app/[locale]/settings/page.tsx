@@ -1,23 +1,9 @@
-import { SettingsView } from '@/components/settings/SettingsView';
-import {
-  getUserSettings,
-  getSyncStatus,
-  getSystemNotices,
-  getSystemLog,
-} from '@/lib/data/settings';
+/**
+ * @fileoverview Settings page component.
+ * Serves as the entry point for the settings view within the localized route.
+ */
+import { SettingsView } from "@/components/settings/SettingsView";
 
 export default function SettingsPage() {
-  const settings = getUserSettings();
-  const syncStatus = getSyncStatus();
-  const systemNotices = getSystemNotices();
-  const systemLog = getSystemLog();
-
-  return (
-    <SettingsView
-      settings={settings}
-      syncStatus={syncStatus}
-      systemNotices={systemNotices}
-      systemLog={systemLog}
-    />
-  );
+	return <SettingsView />;
 }

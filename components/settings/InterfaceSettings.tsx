@@ -1,101 +1,152 @@
-'use client';
+/**
+ * @fileoverview Interface settings component for managing theme and language preferences.
+ */
+"use client";
 
-import { useState } from 'react';
-import { UserSettings } from '@/lib/data/settings';
+import { SlidersHorizontalIcon } from "@phosphor-icons/react";
+import { useTranslations } from "next-intl";
+import { useTheme } from "next-themes";
+import { useState, useTransition } from "react";
+import { toast } from "sonner";
+import { LanguageDropdown } from "@/components/LanguageDropdown";
+import { updateUserProfile } from "@/lib/actions/updateProfile";
+import { useSession } from "@/lib/auth/client";
 
-interface InterfaceSettingsProps {
-  settings: UserSettings['interface'];
+function CheckBox({
+	checked,
+	onClick,
+}: {
+	checked: boolean;
+	onClick: () => void;
+}) {
+	return (
+		<div
+			onClick={onClick}
+			role="checkbox"
+			aria-checked={checked}
+			className={`w-4 h-4 border border-ink-primary cursor-pointer flex items-center justify-center transition-colors ${checked ? "bg-ink-primary" : ""}`}
+		>
+			{checked && <div className="w-2 h-2 bg-bg-base" />}
+		</div>
+	);
 }
 
-export function InterfaceSettings({ settings }: InterfaceSettingsProps) {
-  const [notifications, setNotifications] = useState(settings.notifications);
+interface NotificationPrefs {
+	newCourses: boolean;
+	leaderboardAlerts: boolean;
+	directMessages: boolean;
+}
 
-  const toggleNotification = (key: keyof typeof notifications) => {
-    setNotifications(prev => ({ ...prev, [key]: !prev[key] }));
-  };
+export function InterfaceSettings() {
+	const t = useTranslations("Settings.interface");
+	const { data: session, refetch } = useSession();
+	const { theme, setTheme } = useTheme();
+	const [isPending, startTransition] = useTransition();
 
-  return (
-    <div className="border border-border bg-bg-surface p-6 flex flex-col gap-5">
-      <div className="border-b border-border pb-2 mb-2 flex items-center gap-2 font-bold uppercase tracking-widest text-[11px]">
-        <i className="bi bi-sliders"></i> Interface Prefs
-      </div>
+	const userAny = session?.user as {
+		language?: string;
+		notifications?: NotificationPrefs;
+	};
+	const [notifications, setNotifications] = useState<NotificationPrefs>(
+		userAny?.notifications ?? {
+			newCourses: true,
+			leaderboardAlerts: false,
+			directMessages: true,
+		},
+	);
 
-      {/* System Language */}
-      <div className="flex flex-col gap-1.5">
-        <label className="text-[10px] font-bold text-ink-secondary uppercase tracking-widest">
-          System Language
-        </label>
-        <select
-          defaultValue={settings.language}
-          className="bg-transparent border border-ink-secondary px-2.5 py-2.5 text-[13px] uppercase tracking-widest cursor-pointer focus:border-ink-primary outline-none"
-        >
-          <option value="en-us">English (EN-US)</option>
-          <option value="rust">Rust (STD-LIB)</option>
-          <option value="ja-jp">Japanese (JA-JP)</option>
-        </select>
-      </div>
+	const toggleNotification = (key: keyof NotificationPrefs) => {
+		setNotifications((prev) => ({ ...prev, [key]: !prev[key] }));
+	};
 
-      {/* Terminal Theme */}
-      <div className="flex items-center justify-between py-2">
-        <div>
-          <div className="font-bold uppercase tracking-widest text-[11px]">Terminal Theme</div>
-          <div className="text-[10px] text-ink-secondary tracking-widest">
-            Toggle between Light and Dark core
-          </div>
-        </div>
-        <button className="border border-ink-secondary bg-transparent px-3 py-1 text-[10px] uppercase tracking-widest hover:bg-ink-primary hover:text-bg-base transition-colors">
-          {settings.theme === 'light' ? 'Light Mode' : 'Dark Mode'}
-        </button>
-      </div>
+	const handleSave = () => {
+		startTransition(async () => {
+			const result = await updateUserProfile({ notifications });
+			if (result?.error) {
+				toast.error(result.error);
+			} else {
+				toast.success(t("saved"));
+				refetch();
+			}
+		});
+	};
 
-      {/* Notifications */}
-      <div className="flex flex-col gap-1.5">
-        <label className="text-[10px] font-bold text-ink-secondary uppercase tracking-widest">
-          Notifications
-        </label>
-        
-        <div className="flex items-center justify-between py-2">
-          <span className="text-[10px] tracking-widest">New Course Releases</span>
-          <div
-            onClick={() => toggleNotification('newCourses')}
-            className={`w-4 h-4 border border-ink-primary cursor-pointer flex items-center justify-center ${
-              notifications.newCourses ? 'bg-ink-primary' : ''
-            }`}
-          >
-            {notifications.newCourses && (
-              <div className="w-2 h-2 bg-bg-base"></div>
-            )}
-          </div>
-        </div>
+	return (
+		<div className="border border-border bg-bg-surface p-6 flex flex-col gap-5">
+			<div className="border-b border-border pb-2 mb-2 flex items-center gap-2 font-bold uppercase tracking-widest text-[11px]">
+				<SlidersHorizontalIcon size={14} weight="duotone" /> {t("title")}
+			</div>
 
-        <div className="flex items-center justify-between py-2">
-          <span className="text-[10px] tracking-widest">Leaderboard Rank Alerts</span>
-          <div
-            onClick={() => toggleNotification('leaderboardAlerts')}
-            className={`w-4 h-4 border border-ink-primary cursor-pointer flex items-center justify-center ${
-              notifications.leaderboardAlerts ? 'bg-ink-primary' : ''
-            }`}
-          >
-            {notifications.leaderboardAlerts && (
-              <div className="w-2 h-2 bg-bg-base"></div>
-            )}
-          </div>
-        </div>
+			{/* System Language */}
+			<div className="flex flex-col gap-1.5">
+				<label className="text-[10px] font-bold text-ink-secondary uppercase tracking-widest">
+					{t("languageLabel")}
+				</label>
+				<LanguageDropdown variant="detailed" className="w-full" />
+			</div>
 
-        <div className="flex items-center justify-between py-2">
-          <span className="text-[10px] tracking-widest">Direct Messages</span>
-          <div
-            onClick={() => toggleNotification('directMessages')}
-            className={`w-4 h-4 border border-ink-primary cursor-pointer flex items-center justify-center ${
-              notifications.directMessages ? 'bg-ink-primary' : ''
-            }`}
-          >
-            {notifications.directMessages && (
-              <div className="w-2 h-2 bg-bg-base"></div>
-            )}
-          </div>
-        </div>
-      </div>
-    </div>
-  );
+			{/* Terminal Theme */}
+			<div className="flex items-center justify-between py-2">
+				<div>
+					<div className="font-bold uppercase tracking-widest text-[11px]">
+						{t("themeLabel")}
+					</div>
+					<div className="text-[10px] text-ink-secondary tracking-widest">
+						{t("themeDesc")}
+					</div>
+				</div>
+				<button
+					type="button"
+					onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+					className="border border-ink-secondary/40 bg-transparent px-3 py-1 text-[10px] uppercase tracking-widest hover:bg-ink-primary hover:text-bg-base transition-colors"
+				>
+					{theme === "dark" ? t("themeDark") : t("themeLight")}
+				</button>
+			</div>
+
+			{/* Notifications */}
+			<div className="flex flex-col gap-1.5">
+				<label className="text-[10px] font-bold text-ink-secondary uppercase tracking-widest">
+					{t("notificationsLabel")}
+				</label>
+
+				<div className="flex items-center justify-between py-2">
+					<span className="text-[10px] tracking-widest">{t("newCourses")}</span>
+					<CheckBox
+						checked={notifications.newCourses}
+						onClick={() => toggleNotification("newCourses")}
+					/>
+				</div>
+
+				<div className="flex items-center justify-between py-2">
+					<span className="text-[10px] tracking-widest">
+						{t("leaderboardAlerts")}
+					</span>
+					<CheckBox
+						checked={notifications.leaderboardAlerts}
+						onClick={() => toggleNotification("leaderboardAlerts")}
+					/>
+				</div>
+
+				<div className="flex items-center justify-between py-2">
+					<span className="text-[10px] tracking-widest">
+						{t("directMessages")}
+					</span>
+					<CheckBox
+						checked={notifications.directMessages}
+						onClick={() => toggleNotification("directMessages")}
+					/>
+				</div>
+			</div>
+
+			<button
+				type="button"
+				onClick={handleSave}
+				disabled={isPending}
+				className="bg-ink-primary text-bg-base border border-ink-primary px-5 py-2.5 text-[12px] uppercase tracking-widest font-bold w-full hover:bg-ink-primary/90 transition-colors disabled:opacity-50"
+			>
+				{isPending ? t("saving") : t("save")}
+			</button>
+		</div>
+	);
 }

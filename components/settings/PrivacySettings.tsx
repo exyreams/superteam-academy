@@ -1,81 +1,104 @@
-'use client';
+/**
+ * @fileoverview Privacy settings component for managing public visibility and data export.
+ */
+"use client";
 
-import { useState } from 'react';
-import { UserSettings } from '@/lib/data/settings';
+import { EyeSlashIcon } from "@phosphor-icons/react";
+import { useTranslations } from "next-intl";
+import { useState, useTransition } from "react";
+import { toast } from "sonner";
+import { updateUserProfile } from "@/lib/actions/updateProfile";
+import { useSession } from "@/lib/auth/client";
 
-interface PrivacySettingsProps {
-  settings: UserSettings['privacy'];
-}
+export function PrivacySettings() {
+	const t = useTranslations("Settings.privacy");
+	const { data: session, refetch } = useSession();
+	const userAny = session?.user as { publicVisibility?: boolean };
+	const [isPending, startTransition] = useTransition();
 
-export function PrivacySettings({ settings }: PrivacySettingsProps) {
-  const [privacy, setPrivacy] = useState(settings);
+	const [publicVisibility, setPublicVisibility] = useState(
+		userAny?.publicVisibility ?? true,
+	);
 
-  const togglePrivacy = (key: keyof typeof privacy) => {
-    setPrivacy(prev => ({ ...prev, [key]: !prev[key] }));
-  };
+	const handleSave = () => {
+		startTransition(async () => {
+			const result = await updateUserProfile({ publicVisibility });
+			if (result?.error) {
+				toast.error(result.error);
+			} else {
+				toast.success(t("saved"));
+				refetch();
+			}
+		});
+	};
 
-  return (
-    <div className="border border-border bg-bg-surface p-6 flex flex-col gap-5">
-      <div className="border-b border-border pb-2 mb-2 flex items-center gap-2 font-bold uppercase tracking-widest text-[11px]">
-        <i className="bi bi-eye-slash"></i> Privacy &amp; Data
-      </div>
+	const handleExportData = async () => {
+		if (!session?.user) return;
+		const data = {
+			user: session.user,
+			exportedAt: new Date().toISOString(),
+			note: "This is your personal data from Superteam Academy.",
+		};
+		const blob = new Blob([JSON.stringify(data, null, 2)], {
+			type: "application/json",
+		});
+		const url = URL.createObjectURL(blob);
+		const a = document.createElement("a");
+		a.href = url;
+		a.download = `superteam-academy-data-${session.user.id?.slice(0, 8)}.json`;
+		a.click();
+		URL.revokeObjectURL(url);
+		toast.success(t("exported"));
+	};
 
-      {/* Public Visibility */}
-      <div className="flex items-center justify-between py-2">
-        <div>
-          <div className="font-bold uppercase tracking-widest text-[11px]">Public Visibility</div>
-          <div className="text-[10px] text-ink-secondary tracking-widest">
-            Show profile on global leaderboard
-          </div>
-        </div>
-        <div
-          onClick={() => togglePrivacy('publicVisibility')}
-          className={`w-4 h-4 border border-ink-primary cursor-pointer flex items-center justify-center ${
-            privacy.publicVisibility ? 'bg-ink-primary' : ''
-          }`}
-        >
-          {privacy.publicVisibility && (
-            <div className="w-2 h-2 bg-bg-base"></div>
-          )}
-        </div>
-      </div>
+	return (
+		<div className="border border-border bg-bg-surface p-6 flex flex-col gap-5">
+			<div className="border-b border-border pb-2 mb-2 flex items-center gap-2 font-bold uppercase tracking-widest text-[11px]">
+				<EyeSlashIcon size={14} weight="duotone" /> {t("title")}
+			</div>
 
-      {/* Anonymous Analytics */}
-      <div className="flex items-center justify-between py-2">
-        <div>
-          <div className="font-bold uppercase tracking-widest text-[11px]">Anonymous Analytics</div>
-          <div className="text-[10px] text-ink-secondary tracking-widest">
-            Help improve Academy telemetry
-          </div>
-        </div>
-        <div
-          onClick={() => togglePrivacy('anonymousAnalytics')}
-          className={`w-4 h-4 border border-ink-primary cursor-pointer flex items-center justify-center ${
-            privacy.anonymousAnalytics ? 'bg-ink-primary' : ''
-          }`}
-        >
-          {privacy.anonymousAnalytics && (
-            <div className="w-2 h-2 bg-bg-base"></div>
-          )}
-        </div>
-      </div>
+			{/* Public Visibility */}
+			<div className="flex items-center justify-between py-2">
+				<div>
+					<div className="font-bold uppercase tracking-widest text-[11px]">
+						{t("visibilityLabel")}
+					</div>
+					<div className="text-[10px] text-ink-secondary tracking-widest">
+						{t("visibilityDesc")}
+					</div>
+				</div>
+				<div
+					role="checkbox"
+					aria-checked={publicVisibility}
+					onClick={() => setPublicVisibility((v) => !v)}
+					className={`w-4 h-4 border border-ink-primary cursor-pointer flex items-center justify-center transition-colors ${publicVisibility ? "bg-ink-primary" : ""}`}
+				>
+					{publicVisibility && <div className="w-2 h-2 bg-bg-base" />}
+				</div>
+			</div>
 
-      {/* Data Archive */}
-      <div className="flex flex-col gap-1.5 mt-3">
-        <label className="text-[10px] font-bold text-ink-secondary uppercase tracking-widest">
-          Data Archive
-        </label>
-        <button className="border border-ink-secondary bg-transparent px-3 py-2.5 text-[11px] uppercase tracking-widest text-left hover:bg-ink-primary hover:text-bg-base hover:border-ink-primary transition-colors flex items-center gap-2">
-          <i className="bi bi-download"></i> Export Operator Data (.JSON)
-        </button>
-      </div>
+			{/* Data Archive */}
+			<div className="flex flex-col gap-1.5 mt-3">
+				<label className="text-[10px] font-bold text-ink-secondary uppercase tracking-widest">
+					{t("dataArchiveLabel")}
+				</label>
+				<button
+					type="button"
+					onClick={handleExportData}
+					className="border border-ink-secondary/40 bg-transparent px-3 py-2.5 text-[11px] uppercase tracking-widest text-left hover:bg-ink-primary hover:text-bg-base hover:border-ink-primary transition-colors"
+				>
+					{t("exportBtn")}
+				</button>
+			</div>
 
-      {/* Save Button */}
-      <div className="mt-auto pt-5">
-        <button className="bg-ink-primary text-bg-base border border-ink-primary px-5 py-2.5 text-[12px] uppercase tracking-widest font-bold w-full hover:bg-ink-primary/90 transition-colors">
-          Commit Changes to Mainnet
-        </button>
-      </div>
-    </div>
-  );
+			<button
+				type="button"
+				onClick={handleSave}
+				disabled={isPending}
+				className="bg-ink-primary text-bg-base border border-ink-primary px-5 py-2.5 text-[12px] uppercase tracking-widest font-bold w-full hover:bg-ink-primary/90 transition-colors disabled:opacity-50"
+			>
+				{isPending ? t("saving") : t("save")}
+			</button>
+		</div>
+	);
 }

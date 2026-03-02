@@ -290,7 +290,12 @@
 			"brandingTitleSignup": "EARN YOUR\nON-CHAIN\nCREDENTIALS",
 			"brandingDescSignup": "Every module you complete issues a cryptographically verifiable proof of skill to your wallet. Build an unquestionable resume as you learn.",
 			"systemOnline": "SYSTEM ONLINE // TERMINAL ACCESS",
-			"orContinueWith": "OR CONTINUE WITH"
+			"orContinueWith": "OR CONTINUE WITH",
+			"accessProtocol": "Access Protocol",
+			"accessProtocolDesc": "Enter your email to sign in or create an account.",
+			"returningOperator": "// RETURNING OPERATOR — AUTHENTICATE",
+			"newOperator": "// NEW OPERATOR — INITIALIZING ACCOUNT",
+			"continue": "Continue"
 		},
 		"walletButton": {
 			"github": "Continue with GitHub",
@@ -298,6 +303,161 @@
 			"walletSignIn": "Sign In via Wallet",
 			"walletConnect": "Connect Wallet",
 			"authenticating": "Authenticating..."
+		}
+	},
+	"Onboarding": {
+		"badge": "OPERATOR INIT",
+		"brandingTitle": "INITIALIZE\nYOUR\nOPERATOR",
+		"brandingDesc": "Configure your profile to join the Solana builder network. Each step unlocks access to the full Academy protocol.",
+		"systemOnline": "SYSTEM_ONLINE — STEP",
+		"of": "of",
+		"steps": {
+			"identity": "Identity",
+			"signature": "Signature",
+			"profile": "Profile",
+			"learningPath": "Path",
+			"wallet": "Wallet"
+		},
+		"step1": {
+			"badge": "STEP 1 / 5",
+			"title": "Your Identity",
+			"subtitle": "Set your operator display name. This is how you'll appear on the leaderboard and profile.",
+			"namePlaceholder": "0xYourHandle",
+			"nameLabel": "Display Name",
+			"emailLabel": "Email (read-only)"
+		},
+		"step2": {
+			"badge": "STEP 2 / 5",
+			"title": "Neural Signature",
+			"subtitle": "Your digital identity is procedurally initialized. You can reroll your unique signature until it reaches optimal resonance.",
+			"reroll": "Reroll Signature",
+			"description": "This signature serves as your unique operator ID across the Academy protocol."
+		},
+		"step3": {
+			"badge": "STEP 3 / 5",
+			"title": "Your Profile",
+			"subtitle": "Tell the community who you are. All fields are optional.",
+			"bioPlaceholder": "Senior Solana architect. Building the decentralized future...",
+			"locationPlaceholder": "Location (e.g. BERLIN_DE)",
+			"twitterPlaceholder": "X / Twitter @handle",
+			"githubPlaceholder": "GitHub username",
+			"websitePlaceholder": "Portfolio / website URL",
+			"skip": "Skip this step"
+		},
+		"step4": {
+			"badge": "STEP 4 / 5",
+			"title": "Learning Path",
+			"subtitle": "Select the tracks you want to master. Choose at least one.",
+			"tracks": {
+				"rust": {
+					"label": "Rust",
+					"desc": "Systems programming & performance"
+				},
+				"anchor": {
+					"label": "Anchor",
+					"desc": "Solana smart contract framework"
+				},
+				"defi": { "label": "DeFi", "desc": "Decentralized finance protocols" },
+				"security": {
+					"label": "Security",
+					"desc": "Audit & vulnerability research"
+				},
+				"frontend": { "label": "Frontend", "desc": "Web3 dApp development" }
+			}
+		},
+		"step5": {
+			"badge": "STEP 5 / 5",
+			"title": "Connect Wallet",
+			"subtitle": "Link a Solana wallet to receive on-chain credentials and XP. You can skip and connect later in settings.",
+			"externalLabel": "LINK EXTERNAL ACCOUNTS",
+			"linkGithub": "Link GitHub",
+			"linkGoogle": "Link Google",
+			"requiredFor": "REQUIRED FOR",
+			"requirements": [
+				"On-chain XP soulbound tokens",
+				"Metaplex Core credential NFTs",
+				"Course completion proofs"
+			],
+			"launch": "Launch Dashboard →",
+			"launching": "Initializing...",
+			"skip": "Skip wallet for now"
+		},
+		"nav": {
+			"back": "Back",
+			"next": "Next",
+			"continue": "Continue"
+		}
+	},
+	"Settings": {
+		"tabs": {
+			"profile": "Profile",
+			"account": "Account",
+			"interface": "Interface",
+			"privacy": "Privacy"
+		},
+		"view": {
+			"badge": "User Configuration",
+			"title": "SYSTEM SETTINGS"
+		},
+		"profile": {
+			"title": "Operator Profile",
+			"avatarHint": "Avatar is pulled from your connected OAuth provider (Google / GitHub).",
+			"nameLabel": "Display Name",
+			"namePlaceholder": "0xYourHandle",
+			"bioLabel": "Bio / Terminal Greeting",
+			"bioPlaceholder": "Senior Solana architect. Building the decentralized future...",
+			"locationLabel": "Location",
+			"locationPlaceholder": "BERLIN_DE",
+			"socialLabel": "Social Protocol Links",
+			"twitterPlaceholder": "X / Twitter @handle",
+			"githubPlaceholder": "GitHub username",
+			"websitePlaceholder": "Portfolio / Website URL",
+			"save": "Save Profile",
+			"saving": "Saving...",
+			"saved": "Profile updated successfully."
+		},
+		"account": {
+			"title": "Account & Auth",
+			"emailLabel": "Primary Email",
+			"emailHint": "Email is managed via your auth provider.",
+			"walletsLabel": "Connected Wallets",
+			"oauthLabel": "OAuth Providers",
+			"active": "ACTIVE",
+			"linkWallet": "Link Wallet",
+			"linking": "Linking...",
+			"unlinking": "Unlinking...",
+			"unlink": "Unlink",
+			"link": "Link",
+			"walletLinked": "Wallet linked successfully.",
+			"walletUnlinked": "Wallet unlinked successfully.",
+			"walletError": "Error linking wallet. Make sure it isn't already attached to another account.",
+			"oauthError": "Failed to initiate {provider} link"
+		},
+		"interface": {
+			"title": "Interface Prefs",
+			"languageLabel": "System Language",
+			"themeLabel": "Terminal Theme",
+			"themeDesc": "Toggle between Light and Dark core",
+			"themeDark": "Dark Mode",
+			"themeLight": "Light Mode",
+			"notificationsLabel": "Notifications",
+			"newCourses": "New Course Releases",
+			"leaderboardAlerts": "Leaderboard Rank Alerts",
+			"directMessages": "Direct Messages",
+			"save": "Save Preferences",
+			"saving": "Saving...",
+			"saved": "Preferences saved."
+		},
+		"privacy": {
+			"title": "Privacy & Data",
+			"visibilityLabel": "Public Visibility",
+			"visibilityDesc": "Show profile on global leaderboard",
+			"dataArchiveLabel": "Data Archive",
+			"exportBtn": "↓ Export Operator Data (.JSON)",
+			"save": "Commit Privacy Settings",
+			"saving": "Saving...",
+			"saved": "Privacy settings saved.",
+			"exported": "Data exported successfully."
 		}
 	}
 }

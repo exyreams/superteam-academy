@@ -290,7 +290,12 @@
 			"brandingTitleSignup": "GAGNEZ VOS\nACCRÉDITATIONS\nON-CHAIN",
 			"brandingDescSignup": "Chaque module que vous complétez délivre une preuve de compétence cryptographiquement vérifiable à votre portefeuille. Construisez un CV incontestable tout en apprenant.",
 			"systemOnline": "SYSTÈME EN LIGNE // ACCÈS AU TERMINAL",
-			"orContinueWith": "OU CONTINUER AVEC"
+			"orContinueWith": "OU CONTINUER AVEC",
+			"accessProtocol": "Protocole d'Accès",
+			"accessProtocolDesc": "Entrez votre e-mail pour vous connecter ou créer un compte.",
+			"returningOperator": "// OPÉRATEUR RÉCURRENT — S'AUTHENTIFIER",
+			"newOperator": "// NOUVEL OPÉRATEUR — INITIALISATION DU COMPTE",
+			"continue": "Continuer"
 		},
 		"walletButton": {
 			"github": "Continuer avec GitHub",
@@ -298,6 +303,164 @@
 			"walletSignIn": "Se connecter via le portefeuille",
 			"walletConnect": "Connecter le portefeuille",
 			"authenticating": "Authentification..."
+		}
+	},
+	"Onboarding": {
+		"badge": "INIT OPÉRATEUR",
+		"brandingTitle": "INITIALISEZ\nVOTRE\nOPÉRATEUR",
+		"brandingDesc": "Configurez votre profil pour rejoindre le réseau de développeurs Solana. Chaque étape déverrouille l'accès complet au protocole Academy.",
+		"systemOnline": "SYSTÈME_EN_LIGNE — ÉTAPE",
+		"of": "sur",
+		"steps": {
+			"identity": "Identité",
+			"signature": "Signature Neuronale",
+			"profile": "Profil",
+			"learningPath": "Parcours",
+			"wallet": "Portefeuille"
+		},
+		"step1": {
+			"badge": "ÉTAPE 1 / 5",
+			"title": "Votre Identité",
+			"subtitle": "Définissez votre nom d'opérateur. C'est ainsi que vous apparaîtrez sur le classement et le profil.",
+			"namePlaceholder": "0xVotreAlias",
+			"nameLabel": "Nom d'Affichage",
+			"emailLabel": "Email (lecture seule)"
+		},
+		"step2": {
+			"badge": "ÉTAPE 2 / 5",
+			"title": "Signature Neuronale",
+			"subtitle": "Votre identité numérique est initialisée de manière procédurale. Vous pouvez relancer votre signature unique jusqu'à ce qu'elle atteigne une résonance optimale.",
+			"reroll": "Relancer la Signature",
+			"description": "Cette signature sert d'ID d'opérateur unique à travers le protocole Academy."
+		},
+		"step3": {
+			"badge": "ÉTAPE 3 / 5",
+			"title": "Votre Profil",
+			"subtitle": "Présentez-vous à la communauté. Tous les champs sont optionnels.",
+			"bioPlaceholder": "Architecte Solana senior. Construisant l'avenir décentralisé...",
+			"locationPlaceholder": "Localisation (ex. PARIS_FR)",
+			"twitterPlaceholder": "X / Twitter @alias",
+			"githubPlaceholder": "Nom d'utilisateur GitHub",
+			"websitePlaceholder": "URL du portfolio / site web",
+			"skip": "Passer cette étape"
+		},
+		"step4": {
+			"badge": "ÉTAPE 4 / 5",
+			"title": "Parcours d'Apprentissage",
+			"subtitle": "Sélectionnez les pistes que vous souhaitez maîtriser. Choisissez au moins une.",
+			"tracks": {
+				"rust": {
+					"label": "Rust",
+					"desc": "Programmation système et performance"
+				},
+				"anchor": {
+					"label": "Anchor",
+					"desc": "Framework de smart contracts Solana"
+				},
+				"defi": {
+					"label": "DeFi",
+					"desc": "Protocoles financiers décentralisés"
+				},
+				"security": {
+					"label": "Sécurité",
+					"desc": "Audit et recherche de vulnérabilités"
+				},
+				"frontend": {
+					"label": "Frontend",
+					"desc": "Développement de dApps Web3"
+				}
+			}
+		},
+		"step5": {
+			"badge": "ÉTAPE 5 / 5",
+			"title": "Connecter le Portefeuille",
+			"subtitle": "Liez un portefeuille Solana pour recevoir des identifiants on-chain et des XP. Vous pouvez ignorer et vous connecter plus tard dans les paramètres.",
+			"externalLabel": "LIER DES COMPTES EXTERNES",
+			"linkGithub": "Lier GitHub",
+			"linkGoogle": "Lier Google",
+			"requiredFor": "REQUIS POUR",
+			"requirements": [
+				"Tokens XP soulbound on-chain",
+				"NFTs Core Metaplex",
+				"Preuves de complétion de cours"
+			],
+			"launch": "Lancer le Dashboard →",
+			"launching": "Initialisation...",
+			"skip": "Ignorer le portefeuille pour l'instant"
+		},
+		"nav": {
+			"back": "Retour",
+			"next": "Suivant",
+			"continue": "Continuer"
+		}
+	},
+	"Settings": {
+		"profile": {
+			"title": "Profil Opérateur",
+			"avatarHint": "L'avatar est récupéré de votre fournisseur OAuth connecté (Google / GitHub).",
+			"nameLabel": "Nom d'affichage",
+			"namePlaceholder": "0xVotreAlias",
+			"bioLabel": "Bio / Message d'accueil Terminal",
+			"bioPlaceholder": "Architecte senior Solana. Construire l'avenir décentralisé...",
+			"locationLabel": "Localisation",
+			"locationPlaceholder": "PARIS_FR",
+			"socialLabel": "Liens Réseaux Sociaux",
+			"twitterPlaceholder": "X / Twitter @alias",
+			"githubPlaceholder": "Nom d'utilisateur GitHub",
+			"websitePlaceholder": "URL portfolio / site web",
+			"save": "Enregistrer le profil",
+			"saving": "Enregistrement...",
+			"saved": "Profil mis à jour avec succès."
+		},
+		"account": {
+			"title": "Compte & Authentification",
+			"emailLabel": "E-mail principal",
+			"emailHint": "L'e-mail est géré par votre fournisseur d'authentification.",
+			"walletsLabel": "Portefeuilles connectés",
+			"oauthLabel": "Fournisseurs OAuth",
+			"active": "ACTIF",
+			"linkWallet": "Lier le portefeuille",
+			"linking": "Liaison...",
+			"link": "Lier",
+			"walletLinked": "Portefeuille lié avec succès.",
+			"walletError": "Erreur lors de la liaison du portefeuille. Assurez-vous qu'il n'est pas attaché à un autre compte.",
+			"oauthError": "Échec de l'initiation du lien {provider}"
+		},
+		"tabs": {
+			"profile": "Profil",
+			"account": "Compte",
+			"interface": "Interface",
+			"privacy": "Confidentialité"
+		},
+		"view": {
+			"badge": "Configuration Utilisateur",
+			"title": "PARAMÈTRES SYSTÈME"
+		},
+		"interface": {
+			"title": "Préférences d'Interface",
+			"languageLabel": "Langue du Système",
+			"themeLabel": "Thème du Terminal",
+			"themeDesc": "Basculer entre le mode Clair et Sombre",
+			"themeDark": "Mode Sombre",
+			"themeLight": "Mode Clair",
+			"notificationsLabel": "Notifications",
+			"newCourses": "Nouvelles Sorties de Cours",
+			"leaderboardAlerts": "Alertes de Classement",
+			"directMessages": "Messages Directs",
+			"save": "Enregistrer les Préférences",
+			"saving": "Enregistrement...",
+			"saved": "Préférences enregistrées."
+		},
+		"privacy": {
+			"title": "Confidentialité & Données",
+			"visibilityLabel": "Visibilité Publique",
+			"visibilityDesc": "Afficher le profil sur le classement mondial",
+			"dataArchiveLabel": "Archive de Données",
+			"exportBtn": "↓ Exporter les Données de l'Opérateur (.JSON)",
+			"save": "Valider les Paramètres de Confidentialité",
+			"saving": "Enregistrement...",
+			"saved": "Paramètres de confidentialité enregistrés.",
+			"exported": "Données exportées avec succès."
 		}
 	}
 }

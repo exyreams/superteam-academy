@@ -129,15 +129,11 @@ export const auth = betterAuth({
 							let signature: string | undefined;
 							let message: string | undefined;
 
-							const body = (
-								ctx as {
-									body?: {
-										publicKey?: string;
-										signature?: string;
-										message?: string;
-									};
-								}
-							).body;
+							const body = ctx.body as {
+								publicKey?: string;
+								signature?: string;
+								message?: string;
+							};
 							if (body) {
 								publicKey = body.publicKey;
 								signature = body.signature;
@@ -246,14 +242,22 @@ export const auth = betterAuth({
 							}
 
 							if (!userParams) {
+								if (!publicKey) {
+									return new Response(
+										JSON.stringify({
+											error: "Missing public key for user creation",
+										}),
+										{ status: 400 },
+									);
+								}
 								// Create new user linked to this pubkey
 								const newUser = await ctx.context.internalAdapter.createUser({
-									name: publicKey!.slice(0, 4) + "..." + publicKey!.slice(-4),
+									name: `${publicKey.slice(0, 4)}...${publicKey.slice(-4)}`,
 									email: `${publicKey}@solana.local`,
 									emailVerified: true,
 									role: "learner",
 									avatarSeed: Math.random().toString(36).substring(2, 15),
-									walletAddress: publicKey!,
+									walletAddress: publicKey,
 									createdAt: new Date(),
 									updatedAt: new Date(),
 								});
@@ -263,7 +267,7 @@ export const auth = betterAuth({
 								await db.insert(walletTable).values({
 									id: crypto.randomUUID(),
 									address: publicKey,
-									userId: userParams!.id,
+									userId: userParams.id,
 									provider: "solana",
 									isPrimary: true,
 									createdAt: new Date(),
@@ -272,7 +276,7 @@ export const auth = betterAuth({
 
 								// Create initial account record for Solana
 								await ctx.context.internalAdapter.createAccount({
-									userId: userParams!.id,
+									userId: userParams.id,
 									providerId: "solana",
 									accountId: publicKey,
 									createdAt: new Date(),
@@ -282,21 +286,17 @@ export const auth = betterAuth({
 
 							// Create session
 							const session = await ctx.context.internalAdapter.createSession(
-								userParams!.id,
+								userParams.id,
 							);
 
-							// Use BetterAuth's official setSessionCookie — this handles:
-							// 1. Signed cookie with the app secret
-							// 2. Session data cache cookie
-							// 3. Registering the new session in context
+							// Use BetterAuth's official setSessionCookie
 							await setSessionCookie(ctx, {
 								session,
-								user: userParams!,
+								user: userParams,
 							});
 
 							return ctx.json({ user: userParams, session });
 						} catch (error) {
-							console.error("[signInSolana] ERROR:", error);
 							return new Response(
 								JSON.stringify({
 									error: "Authentication failed",
@@ -449,7 +449,6 @@ export const auth = betterAuth({
 								status: 200,
 							});
 						} catch (error) {
-							console.error("Solana Link Error:", error);
 							return new Response(
 								JSON.stringify({
 									error:

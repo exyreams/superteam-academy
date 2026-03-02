@@ -1,3 +1,12 @@
+/**
+ * @fileoverview Better Auth client-side configuration.
+ * Provides hooks and methods for authentication, session management, and custom Solana actions.
+ * Exports signIn, signUp, useSession and other auth primitives for use across the application.
+ */
+/**
+ * @fileoverview Anchor client for Onchain Academy program.
+ * Provides specialized functions for deriving PDAs and interacting with the Solana program.
+ */
 import { Connection, PublicKey } from "@solana/web3.js";
 import { Program, AnchorProvider } from "@coral-xyz/anchor";
 import type { WalletContextState } from "@solana/wallet-adapter-react";

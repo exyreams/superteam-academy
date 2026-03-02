@@ -1,6 +1,7 @@
 /**
  * @fileoverview Better Auth client-side configuration.
  * Provides hooks and methods for authentication, session management, and custom Solana actions.
+ * Exports signIn, signUp, useSession and other auth primitives for use across the application.
  */
 import {
 	inferAdditionalFields,

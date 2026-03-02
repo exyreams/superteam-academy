@@ -290,7 +290,12 @@
 			"brandingTitleSignup": "अपनी ऑन-चेन\nक्रेडेंशियल अर्जित करें",
 			"brandingDescSignup": "आपके द्वारा पूरा किया गया प्रत्येक मॉड्यूल आपके वॉलेट में कौशल का एक क्रिप्टोग्राफ़िक रूप से सत्यापन योग्य प्रमाण जारी करता है। सीखते समय एक निर्विवाद बायोडाटा बनाएं।",
 			"systemOnline": "सिस्टम ऑनलाइन // टर्मिनल एक्सेस",
-			"orContinueWith": "या इसके साथ जारी रखें"
+			"orContinueWith": "या इसके साथ जारी रखें",
+			"accessProtocol": "एक्सेस प्रोटोकॉल",
+			"accessProtocolDesc": "साइन इन करने या खाता बनाने के लिए अपना ईमेल दर्ज करें।",
+			"returningOperator": "// पुराने ऑपरेटर — प्रमाणित करें",
+			"newOperator": "// नए ऑपरेटर — खाता प्रारंभ किया जा रहा है",
+			"continue": "जारी रखें"
 		},
 		"walletButton": {
 			"github": "GitHub के साथ जारी रखें",
@@ -298,6 +303,164 @@
 			"walletSignIn": "वॉलेट के माध्यम से साइन इन करें",
 			"walletConnect": "वॉलेट कनेक्ट करें",
 			"authenticating": "प्रमाणित किया जा रहा है..."
+		}
+	},
+	"Onboarding": {
+		"badge": "ऑपरेटर आरंभ",
+		"brandingTitle": "अपना\nऑपरेटर\nसेट करें",
+		"brandingDesc": "Solana बिल्डर नेटवर्क में शामिल होने के लिए अपनी प्रोफ़ाइल कॉन्फ़िगर करें। प्रत्येक चरण Academy प्रोटोकॉल तक पूर्ण पहुंच खोलता है।",
+		"systemOnline": "सिस्टम_ऑनलाइन — चरण",
+		"of": "का",
+		"steps": {
+			"identity": "पहचान",
+			"signature": "न्यूरल हस्ताक्षर",
+			"profile": "प्रोफ़ाइल",
+			"learningPath": "शिक्षा पथ",
+			"wallet": "वॉलेट"
+		},
+		"step1": {
+			"badge": "चरण 1 / 5",
+			"title": "आपकी पहचान",
+			"subtitle": "अपना ऑपरेटर नाम सेट करें। आप लीडरबोर्ड और प्रोफ़ाइल पर इसी नाम से दिखेंगे।",
+			"namePlaceholder": "0xआपकाAlias",
+			"nameLabel": "प्रदर्शन नाम",
+			"emailLabel": "ईमेल (केवल पठनीय)"
+		},
+		"step2": {
+			"badge": "चरण 2 / 5",
+			"title": "न्यूरल हस्ताक्षर",
+			"subtitle": "आपकी डिजिटल पहचान प्रक्रियात्मक रूप से शुरू की गई है। आप अपने अद्वितीय हस्ताक्षर को तब तक फिर से रोल कर सकते हैं जब तक कि यह इष्टतम प्रतिध्वनि तक न पहुंच जाए।",
+			"reroll": "हस्ताक्षर फिर से रोल करें",
+			"description": "यह हस्ताक्षर पूरे अकादमी प्रोटोकॉल में आपकी विशिष्ट ऑपरेटर आईडी के रूप में कार्य करता है।"
+		},
+		"step3": {
+			"badge": "चरण 3 / 5",
+			"title": "आपकी प्रोफ़ाइल",
+			"subtitle": "समुदाय को बताएं आप कौन हैं। सभी फ़ील्ड वैकल्पिक हैं।",
+			"bioPlaceholder": "वरिष्ठ Solana आर्किटेक्ट। विकेंद्रीकृत भविष्य बना रहे हैं...",
+			"locationPlaceholder": "स्थान (जैसे MUMBAI_IN)",
+			"twitterPlaceholder": "X / Twitter @हैंडल",
+			"githubPlaceholder": "GitHub उपयोगकर्ता नाम",
+			"websitePlaceholder": "पोर्टफोलियो / वेबसाइट URL",
+			"skip": "इस चरण को छोड़ें"
+		},
+		"step4": {
+			"badge": "चरण 4 / 5",
+			"title": "शिक्षा पथ",
+			"subtitle": "वे ट्रैक चुनें जिन्हें आप सीखना चाहते हैं। कम से कम एक चुनें।",
+			"tracks": {
+				"rust": {
+					"label": "Rust",
+					"desc": "सिस्टम प्रोग्रामिंग और प्रदर्शन"
+				},
+				"anchor": {
+					"label": "Anchor",
+					"desc": "Solana स्मार्ट कॉन्ट्रैक्ट फ्रेमवर्क"
+				},
+				"defi": {
+					"label": "DeFi",
+					"desc": "विकेंद्रीकृत वित्त प्रोटोकॉल"
+				},
+				"security": {
+					"label": "सुरक्षा",
+					"desc": "ऑडिट और कमजोरी अनुसंधान"
+				},
+				"frontend": {
+					"label": "Frontend",
+					"desc": "Web3 dApp विकास"
+				}
+			}
+		},
+		"step5": {
+			"badge": "चरण 5 / 5",
+			"title": "वॉलेट कनेक्ट करें",
+			"subtitle": "on-chain करेटेंशियल और XP प्राप्त करने के लिए Solana वॉलेट लिंक करें। आप इसे बाद में सेटिंग्स में कर सकते हैं।",
+			"externalLabel": "बाहरी खाते लिंक करें",
+			"linkGithub": "GitHub लिंक करें",
+			"linkGoogle": "Google लिंक करें",
+			"requiredFor": "आवश्यक है",
+			"requirements": [
+				"On-chain XP soulbound टोकन",
+				"Metaplex Core NFTs",
+				"कोर्स पूर्णता प्रमाण"
+			],
+			"launch": "Dashboard लॉन्च करें →",
+			"launching": "आरंभ हो रहा है...",
+			"skip": "अभी वॉलेट छोड़ें"
+		},
+		"nav": {
+			"back": "वापस",
+			"next": "अगला",
+			"continue": "जारी रखें"
+		}
+	},
+	"Settings": {
+		"profile": {
+			"title": "ऑपरेटर प्रोफ़ाइल",
+			"avatarHint": "अवतार आपके जुड़े OAuth प्रदाता (Google / GitHub) से लिया जाता है।",
+			"nameLabel": "प्रदर्शन नाम",
+			"namePlaceholder": "0xआपकाHalldle",
+			"bioLabel": "जीवनी / टर्मिनल ग्रीटिंग",
+			"bioPlaceholder": "वरिष्ठ Solana आर्किटेक्ट। विकेंद्रीकृत भविष्य का निर्माण...",
+			"locationLabel": "स्थान",
+			"locationPlaceholder": "DELHI_IN",
+			"socialLabel": "सोशल मीडिया लिंक",
+			"twitterPlaceholder": "X / Twitter @हैंडल",
+			"githubPlaceholder": "GitHub उपयोगकर्ता नाम",
+			"websitePlaceholder": "पोर्टफोलियो / वेबसाइट URL",
+			"save": "प्रोफ़ाइल सहेजें",
+			"saving": "सहेज रहे हैं...",
+			"saved": "प्रोफ़ाइल सफलतापूर्वक अपडेट हो गई।"
+		},
+		"account": {
+			"title": "खाता और प्रमाणीकरण",
+			"emailLabel": "प्राथमिक ईमेल",
+			"emailHint": "ईमेल आपके प्रमाणीकरण प्रदाता द्वारा प्रबंधित किया जाता है।",
+			"walletsLabel": "जुड़े वॉलेट",
+			"oauthLabel": "OAuth प्रदाता",
+			"active": "सक्रिय",
+			"linkWallet": "वॉलेट लिंक करें",
+			"linking": "लिंक हो रहा है...",
+			"link": "लिंक",
+			"walletLinked": "वॉलेट सफलतापूर्वक लिंक हो गया।",
+			"walletError": "वॉलेट लिंक करने में त्रुटि। सुनिश्चित करें कि यह किसी अन्य खाते से जुड़ा नहीं है।",
+			"oauthError": "{provider} लिंक शुरू करने में विफल"
+		},
+		"tabs": {
+			"profile": "प्रोफ़ाइल",
+			"account": "खाता",
+			"interface": "इंटरफ़ेस",
+			"privacy": "गोपनीयता"
+		},
+		"view": {
+			"badge": "उपयोगकर्ता कॉन्फ़िगरेशन",
+			"title": "सिस्टम सेटिंग्स"
+		},
+		"interface": {
+			"title": "इंटरफ़ेस प्राथमिकताएं",
+			"languageLabel": "सिस्टम भाषा",
+			"themeLabel": "टर्मिनल थीम",
+			"themeDesc": "लाइट और डार्क मोड के बीच टॉगल करें",
+			"themeDark": "डार्क मोड",
+			"themeLight": "लाइट मोड",
+			"notificationsLabel": "सूचनाएं",
+			"newCourses": "नए कोर्स प्रकाशित",
+			"leaderboardAlerts": "लीडरबोर्ड रैंक अलर्ट",
+			"directMessages": "सीधे संदेश",
+			"save": "प्राथमिकताएं सहेजें",
+			"saving": "सहेजा जा रहा है...",
+			"saved": "प्राथमिकताएं सहेजी गई।"
+		},
+		"privacy": {
+			"title": "गोपनीयता & डेटा",
+			"visibilityLabel": "सार्वजनिक दृश्यता",
+			"visibilityDesc": "वैश्विक लीडरबोर्ड पर प्रोफ़ाइल दिखाएं",
+			"dataArchiveLabel": "डेटा संग्रह",
+			"exportBtn": "↓ ऑपरेटर डेटा निर्यात करें (.JSON)",
+			"save": "गोपनीयता सेटिंग्स सहेजें",
+			"saving": "सहेजा जा रहा है...",
+			"saved": "गोपनीयता सेटिंग्स सहेजी गई।",
+			"exported": "डेटा सफलतापूर्वक निर्यात किया गया।"
 		}
 	}
 }
