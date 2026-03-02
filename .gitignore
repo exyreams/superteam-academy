@@ -42,3 +42,6 @@ next-env.d.ts
 
 # wallets
 wallets/
+
+# drizzle migration snapshots (auto-generated, SQL files are tracked)
+lib/db/migrations/meta/
