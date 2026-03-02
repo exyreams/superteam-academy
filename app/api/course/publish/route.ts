@@ -1,14 +1,19 @@
-import { NextResponse } from "next/server";
-import { Keypair, PublicKey, Connection, SystemProgram } from "@solana/web3.js";
-import { Program, AnchorProvider } from "@coral-xyz/anchor";
+/**
+ * @fileoverview Course publishing route handler.
+ * Creates a course on-chain via the Solana program and updates the course status in Sanity.
+ */
+
+import { AnchorProvider, Program } from "@coral-xyz/anchor";
+import { Connection, Keypair, PublicKey, SystemProgram } from "@solana/web3.js";
 import fs from "fs";
-import path from "path";
-import IDL from "@/lib/anchor/idl/onchain_academy.json";
-import type { OnchainAcademy } from "@/lib/anchor/idl/onchain_academy";
-import { getConfigPda, getCoursePda, CLUSTER_URL } from "@/lib/anchor/client";
-import { client } from "@/sanity/client";
+import { NextResponse } from "next/server";
 import { createClient } from "next-sanity";
+import path from "path";
+import { CLUSTER_URL, getConfigPda, getCoursePda } from "@/lib/anchor/client";
+import type { OnchainAcademy } from "@/lib/anchor/idl/onchain_academy";
+import IDL from "@/lib/anchor/idl/onchain_academy.json";
 import { getSessionServer } from "@/lib/auth/server";
+import { client } from "@/sanity/client";
 
 // Write-enabled client
 const writeClient = createClient({

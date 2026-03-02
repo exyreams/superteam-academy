@@ -1,3 +1,7 @@
+/**
+ * @fileoverview Course review submission route handler.
+ * Updates the course status to 'review_pending' in Sanity for editorial review.
+ */
 import { NextResponse } from "next/server";
 import { createClient } from "next-sanity";
 import { getSessionServer } from "@/lib/auth/server";

@@ -1,3 +1,8 @@
+/**
+ * @fileoverview Wallet authentication route handler.
+ * Manages Solana wallet signature verification, user account reconciliation,
+ * and session creation via BetterAuth.
+ */
 import bs58 from "bs58";
 import crypto from "crypto";
 import { eq } from "drizzle-orm";
@@ -7,6 +12,17 @@ import { auth } from "@/lib/auth";
 import { db } from "@/lib/db";
 import { user as userSchema, wallet as walletTable } from "@/lib/db/schema";
 
+/**
+ * POST handler for wallet-based authentication.
+ *
+ * Flow:
+ * 1. Verifies the Solana 'detached' signature.
+ * 2. Matches the public key against existing users (OAuth/Email/Wallet).
+ * 3. Creates a new user if no match is found.
+ * 4. Programmatically signs the user into a BetterAuth session.
+ *
+ * @param req The incoming NextRequest containing {publicKey, signature, message}.
+ */
 export async function POST(req: NextRequest) {
 	try {
 		const body = await req.json();
@@ -20,6 +36,7 @@ export async function POST(req: NextRequest) {
 		}
 
 		// 1. Verify the signature
+		// We use tweetnacl to verify that the 'message' was signed by the 'publicKey'
 		const signatureUint8 = bs58.decode(signature);
 		const messageUint8 = new TextEncoder().encode(message);
 		const pubKeyUint8 = bs58.decode(publicKey);
