@@ -1,121 +1,147 @@
+/**
+ * @fileoverview Solana wallet authentication button.
+ * Encapsulates the logic for signing a message with a Solana wallet and
+ * authenticating via a custom Better Auth endpoint.
+ */
 "use client";
 
+import { WalletIcon } from "@phosphor-icons/react";
 import { useWallet } from "@solana/wallet-adapter-react";
-import { WalletModal } from "@/components/shared/WalletModal";
-import { Button } from "@/components/ui/button";
+import { useMutation } from "@tanstack/react-query";
 import bs58 from "bs58";
+import { useLocale, useTranslations } from "next-intl";
 import { useState } from "react";
 import { toast } from "sonner";
-import { signIn } from "@/lib/auth/client";
-import { GithubLogo, GoogleLogo, Wallet } from "@phosphor-icons/react";
-import { useTranslations } from "next-intl";
+import { GitHubIcon, GoogleIcon } from "@/components/shared/Icons";
+import { WalletModal } from "@/components/shared/WalletModal";
+import { Button } from "@/components/ui/button";
+import { signIn, useSession } from "@/lib/auth/client";
 
-export function AuthWalletButton() {
+/**
+ * Component for social and wallet-based authentication.
+ *
+ * @param {boolean} [showSocial=true] - Whether to display GitHub and Google login options.
+ */
+export function AuthWalletButton({
+	showSocial = true,
+}: {
+	showSocial?: boolean;
+}) {
 	const { publicKey, signMessage, disconnect } = useWallet();
 	const t = useTranslations("Auth.walletButton");
-	const [loading, setLoading] = useState<string | null>(null);
+	const locale = useLocale();
+	const { refetch: refetchSession } = useSession();
 	const [modalOpen, setModalOpen] = useState(false);
 
-	// If the wallet exists but there is no session, we prompt for signature
-	const handleSignIn = async () => {
-		if (!publicKey || !signMessage) {
-			setModalOpen(true);
-			return;
-		}
+	const solanaMutation = useMutation({
+		mutationFn: async () => {
+			if (!publicKey || !signMessage) {
+				setModalOpen(true);
+				return;
+			}
 
-		try {
-			setLoading("wallet");
 			const message = `Sign this message to authenticate with Superteam Academy: ${Date.now()}`;
 			const messageBytes = new TextEncoder().encode(message);
-
-			// Request signature from Phantom
 			const signature = await signMessage(messageBytes);
 
-			// Send to our Custom Better Auth Plugin
 			const res = await fetch("/api/auth/sign-in/solana", {
 				method: "POST",
 				headers: { "Content-Type": "application/json" },
 				body: JSON.stringify({
 					publicKey: publicKey.toBase58(),
 					signature: bs58.encode(signature),
-					message: message,
+					message,
 				}),
 			});
 
-			if (!res.ok) throw new Error("Authentication failed");
-
-			// Reload UI to fetch the new Better Auth session
-			window.location.reload();
-		} catch (error) {
+			const data = await res.json();
+			if (!res.ok) throw new Error(data.error || "Authentication failed");
+			return data;
+		},
+		onSuccess: async () => {
+			toast.success("Wallet authenticated successfully");
+			await refetchSession();
+			// Redirection is handled in AuthView based on session state
+		},
+		onError: (error) => {
 			console.error(error);
-			toast.error("Failed to authenticate wallet");
-			disconnect(); // Clear the bad wallet state
-		} finally {
-			setLoading(null);
-		}
-	};
+			toast.error(
+				error instanceof Error
+					? error.message
+					: "Failed to authenticate wallet",
+			);
+			disconnect();
+		},
+	});
 
-	const handleOAuthSignIn = async (provider: "github" | "google") => {
-		try {
-			setLoading(provider);
-			await signIn.social({
+	const oauthMutation = useMutation({
+		mutationFn: async (provider: "github" | "google") => {
+			return await signIn.social({
 				provider,
-				callbackURL: "/",
+				callbackURL: `/${locale}/dashboard`, // Changed from `/${locale}` to be consistent
 			});
-		} catch {
+		},
+		onError: (error, provider) => {
 			toast.error(`Failed to sign in with ${provider}`);
-			setLoading(null);
-		}
-	};
+		},
+	});
+
+	const handleSignIn = () => solanaMutation.mutate();
+	const handleOAuthSignIn = (provider: "github" | "google") =>
+		oauthMutation.mutate(provider);
 
 	return (
 		<div className="flex flex-col w-full gap-3">
-			{/* GitHub SignIn */}
-			<Button
-				variant="outline"
-				onClick={() => handleOAuthSignIn("github")}
-				disabled={loading !== null}
-				className="w-full h-11 border-ink-secondary/20 bg-bg-surface hover:bg-ink-primary/5 text-ink-primary font-mono uppercase tracking-widest text-xs rounded-none transition-colors flex items-center justify-center gap-3"
-			>
-				{loading === "github" ? (
-					<div className="w-4 h-4 border-2 border-current border-t-transparent rounded-full animate-spin" />
-				) : (
-					<div className="flex items-center gap-3">
-						<GithubLogo className="w-5 h-5" />
-						{t("github")}
-					</div>
-				)}
-			</Button>
+			{showSocial && (
+				<>
+					{/* GitHub SignIn */}
+					<Button
+						variant="outline"
+						onClick={() => handleOAuthSignIn("github")}
+						disabled={oauthMutation.isPending || solanaMutation.isPending}
+						className="w-full h-11 border-ink-secondary/20 bg-bg-surface hover:bg-ink-primary/5 text-ink-primary font-mono uppercase tracking-widest text-xs rounded-none transition-colors flex items-center justify-center gap-3"
+					>
+						{oauthMutation.isPending && oauthMutation.variables === "github" ? (
+							<div className="w-4 h-4 border-2 border-current border-t-transparent rounded-full animate-spin" />
+						) : (
+							<div className="flex items-center gap-3">
+								<GitHubIcon className="w-5 h-5 text-ink-primary" />
+								{t("github")}
+							</div>
+						)}
+					</Button>
 
-			{/* Google SignIn */}
-			<Button
-				variant="outline"
-				onClick={() => handleOAuthSignIn("google")}
-				disabled={loading !== null}
-				className="w-full h-11 border-ink-secondary/20 bg-bg-surface hover:bg-ink-primary/5 text-ink-primary font-mono uppercase tracking-widest text-xs rounded-none transition-colors flex items-center justify-center gap-3"
-			>
-				{loading === "google" ? (
-					<div className="w-4 h-4 border-2 border-current border-t-transparent rounded-full animate-spin" />
-				) : (
-					<div className="flex items-center gap-3">
-						<GoogleLogo className="w-5 h-5" />
-						{t("google")}
-					</div>
-				)}
-			</Button>
+					{/* Google SignIn */}
+					<Button
+						variant="outline"
+						onClick={() => handleOAuthSignIn("google")}
+						disabled={oauthMutation.isPending || solanaMutation.isPending}
+						className="w-full h-11 border-ink-secondary/20 bg-bg-surface hover:bg-ink-primary/5 text-ink-primary font-mono uppercase tracking-widest text-xs rounded-none transition-colors flex items-center justify-center gap-3"
+					>
+						{oauthMutation.isPending && oauthMutation.variables === "google" ? (
+							<div className="w-4 h-4 border-2 border-current border-t-transparent rounded-full animate-spin" />
+						) : (
+							<div className="flex items-center gap-3">
+								<GoogleIcon className="w-5 h-5" />
+								{t("google")}
+							</div>
+						)}
+					</Button>
+				</>
+			)}
 
 			{/* Solana Wallet SignIn */}
 			<Button
 				onClick={handleSignIn}
-				disabled={loading !== null}
+				disabled={solanaMutation.isPending || oauthMutation.isPending}
 				className="w-full h-11 bg-ink-primary text-bg-base hover:bg-ink-secondary font-mono uppercase tracking-widest text-xs rounded-none transition-colors flex items-center justify-center gap-3"
 			>
-				{loading === "wallet" ? (
+				{solanaMutation.isPending ? (
 					<div className="w-4 h-4 border-2 border-current border-t-transparent rounded-full animate-spin" />
 				) : (
-					<Wallet className="w-5 h-5" />
+					<WalletIcon className="w-5 h-5" />
 				)}
-				{loading === "wallet"
+				{solanaMutation.isPending
 					? t("authenticating")
 					: publicKey
 						? t("walletSignIn")

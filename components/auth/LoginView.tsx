@@ -1,20 +1,32 @@
+/**
+ * @fileoverview Legacy or standalone Login view.
+ * Primarily used before the unified AuthView was implemented or for specific redirects.
+ */
 "use client";
 
-import { AuthWalletButton } from "@/components/auth/AuthWalletButton";
-import { Link } from "@/i18n/routing";
-import { ShieldCheck, EnvelopeSimple, LockKey } from "@phosphor-icons/react";
+import {
+	EnvelopeSimpleIcon,
+	LockKeyIcon,
+	ShieldCheckIcon,
+} from "@phosphor-icons/react";
 import { motion } from "framer-motion";
+import { useLocale, useTranslations } from "next-intl";
 import { useState } from "react";
-import { signIn } from "@/lib/auth/client";
 import { toast } from "sonner";
+import { AuthWalletButton } from "@/components/auth/AuthWalletButton";
+import { LanguageDropdown } from "@/components/LanguageDropdown";
+import { DotGrid } from "@/components/shared/DotGrid";
 import { Logo } from "@/components/shared/logo";
 import { ModeToggle } from "@/components/theme-toggle";
-import { LanguageDropdown } from "@/components/LanguageDropdown";
-import { useTranslations } from "next-intl";
-import { DotGrid } from "@/components/shared/DotGrid";
+import { Link } from "@/i18n/routing";
+import { signIn } from "@/lib/auth/client";
 
+/**
+ * A dedicated view for traditional email/password login.
+ */
 export function LoginView() {
 	const t = useTranslations("Auth");
+	const locale = useLocale();
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
 	const [loading, setLoading] = useState(false);
@@ -27,13 +39,13 @@ export function LoginView() {
 			const res = await signIn.email({
 				email,
 				password,
-				callbackURL: "/",
+				callbackURL: `/${locale}/dashboard`,
 			});
 			if (res.error) {
 				toast.error(res.error.message || t("login.error"));
 			} else {
 				toast.success(t("login.success") || "Successfully authenticated!");
-				window.location.href = "/";
+				window.location.href = `/${locale}`;
 			}
 		} catch (error) {
 			toast.error(
@@ -111,7 +123,7 @@ export function LoginView() {
 						<div className="relative z-10 space-y-6">
 							{/* Value Proposition */}
 							<div className="flex items-start gap-4 p-4 border border-ink-secondary/10 bg-bg-base/50">
-								<ShieldCheck
+								<ShieldCheckIcon
 									className="w-5 h-5 text-ink-primary shrink-0 mt-0.5"
 									weight="duotone"
 								/>
@@ -132,7 +144,7 @@ export function LoginView() {
 								className="flex flex-col gap-4 pt-2"
 							>
 								<div className="relative">
-									<EnvelopeSimple className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-ink-secondary" />
+									<EnvelopeSimpleIcon className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-ink-secondary" />
 									<input
 										type="email"
 										placeholder={t("login.emailPlaceholder")}
@@ -143,7 +155,7 @@ export function LoginView() {
 									/>
 								</div>
 								<div className="relative">
-									<LockKey className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-ink-secondary" />
+									<LockKeyIcon className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-ink-secondary" />
 									<input
 										type="password"
 										placeholder={t("login.passwordPlaceholder")}
