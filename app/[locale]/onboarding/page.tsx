@@ -31,7 +31,7 @@ export default async function OnboardingPage() {
 		where: eq(user.id, session.user.id),
 	});
 
-	if (dbUser?.onboardingCompleted) {
+	if (dbUser?.onboardingCompleted === true) {
 		redirect(`/${locale}/dashboard`);
 	}
 

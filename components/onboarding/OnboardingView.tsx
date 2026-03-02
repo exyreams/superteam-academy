@@ -34,10 +34,9 @@ import { DotGrid } from "@/components/shared/DotGrid";
 import { Logo } from "@/components/shared/logo";
 import { WalletModal } from "@/components/shared/WalletModal";
 import { ModeToggle } from "@/components/theme-toggle";
-import { useRouter } from "@/i18n/routing";
 import { updateUserProfile } from "@/lib/actions/updateProfile";
 import { linkWalletAction } from "@/lib/actions/wallets";
-import { linkSocial, useSession } from "@/lib/auth/client";
+import { authClient, linkSocial, useSession } from "@/lib/auth/client";
 
 /**
  * Maps track IDs to their respective icons.
@@ -106,7 +105,6 @@ export function OnboardingView() {
 	const t = useTranslations("Onboarding");
 	const locale = useLocale();
 	const { data: session } = useSession();
-	const router = useRouter();
 	const [step, setStep] = useState(1);
 	const [isPending, startTransition] = useTransition();
 	const { publicKey, signMessage } = useWallet();
@@ -235,7 +233,9 @@ export function OnboardingView() {
 				toast.error(result.error);
 			} else {
 				toast.success("Welcome aboard, operator!");
-				router.push("/dashboard");
+				// Force a session refresh and full-page navigation to avoid redirect loops
+				await authClient.getSession();
+				window.location.href = `/${locale}/dashboard`;
 			}
 		});
 	};

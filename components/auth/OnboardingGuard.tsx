@@ -24,15 +24,25 @@ export function OnboardingGuard() {
 		// If not logged in, we don't force onboarding (Auth Guard handles login)
 		if (!session) return;
 
-		// Explicitly type the user to include additional fields from Better Auth
+		// Strict typing for the user object including Better Auth additional fields
 		const user = session.user as typeof session.user & {
 			onboardingCompleted?: boolean;
+			onboarding_completed?: boolean; // Support potential Better Auth naming variations
 		};
-		const onboardingCompleted = user?.onboardingCompleted;
+
+		// Handle potential naming variations and ensure boolean comparison
+		const isOnboarded =
+			user?.onboardingCompleted === true || user?.onboarding_completed === true;
+		const isOnboardingPage = pathname.includes("/onboarding");
 
 		// If onboarding not completed and NOT on onboarding page, redirect
-		if (onboardingCompleted === false && !pathname.includes("/onboarding")) {
+		if (!isOnboarded && !isOnboardingPage) {
 			router.push("/onboarding");
+		}
+
+		// If already onboarded and ON onboarding page, redirect to dashboard
+		if (isOnboarded && isOnboardingPage) {
+			router.push("/dashboard");
 		}
 	}, [session, isPending, pathname, router]);
 
