@@ -123,13 +123,13 @@ export async function POST(req: NextRequest) {
 					walletAddress: publicKey,
 					avatarSeed: Math.random().toString(36).substring(2, 15),
 				})
-				.where(eq(userSchema.id, userId));
+				.where(eq(userSchema.id, userId as string));
 
 			// Create wallet record
 			await db.insert(walletTable).values({
-				id: crypto.randomUUID(),
-				address: publicKey,
-				userId: userId,
+				id: crypto.randomUUID() as string,
+				address: publicKey as string,
+				userId: userId as string,
 				provider: "solana",
 				isPrimary: true,
 				createdAt: new Date(),

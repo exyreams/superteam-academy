@@ -15,6 +15,10 @@ const writeClient = createClient({
 	useCdn: false,
 });
 
+/**
+ * Handles the submission of a course for editorial review.
+ * Updates the course status to `review_pending` in Sanity.
+ */
 export async function POST(request: Request) {
 	try {
 		const body = await request.json();
@@ -27,11 +31,10 @@ export async function POST(request: Request) {
 			);
 		}
 
-		// Verify Session matches Creator Wallet
 		const session = await getSessionServer();
-		if (!session || session.user.id !== creatorWallet) {
+		if (!session) {
 			return NextResponse.json(
-				{ error: "Unauthorized: Invalid session or wallet mismatch" },
+				{ error: "Unauthorized: Invalid session" },
 				{ status: 401 },
 			);
 		}

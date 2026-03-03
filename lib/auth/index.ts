@@ -2,17 +2,23 @@
  * @fileoverview Better Auth server-side configuration.
  * Defines the authentication engine, user schema extensions, and custom Solana plugin endpoints.
  */
+
+import { AnchorProvider, Program } from "@coral-xyz/anchor";
 import { betterAuth } from "better-auth";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
-import { sessionMiddleware } from "better-auth/api";
+import { createAuthEndpoint, sessionMiddleware } from "better-auth/api";
 import { setSessionCookie } from "better-auth/cookies";
-import { createAuthEndpoint } from "better-auth/plugins";
 import { multiSession } from "better-auth/plugins/multi-session";
 import bs58 from "bs58";
 import crypto from "crypto";
 import nacl from "tweetnacl";
+import { connection, getConfigPda } from "../anchor/client";
+import { OnchainAcademy } from "../anchor/idl/onchain_academy";
+import IDL_JSON from "../anchor/idl/onchain_academy.json";
 import { db } from "../db";
 import { wallet as walletTable } from "../db/schema";
+
+const IDL = IDL_JSON as OnchainAcademy;
 
 /**
  * The core authentication server instance.
@@ -23,6 +29,23 @@ export const auth = betterAuth({
 	database: drizzleAdapter(db, {
 		provider: "pg",
 	}),
+	databaseHooks: {
+		user: {
+			create: {
+				before: async (user) => {
+					const adminEmails = (process.env.ADMIN_EMAILS || "").split(",");
+					if (adminEmails.includes(user.email)) {
+						return {
+							data: {
+								...user,
+								role: "admin",
+							},
+						};
+					}
+				},
+			},
+		},
+	},
 	user: {
 		additionalFields: {
 			role: {
@@ -115,6 +138,10 @@ export const auth = betterAuth({
 		{
 			id: "solana",
 			endpoints: {
+				/**
+				 * Endpoint for Solana wallet sign-in.
+				 * Verifies signature and creates/reconciles user session.
+				 */
 				signInSolana: createAuthEndpoint(
 					"/sign-in/solana",
 					{
@@ -250,12 +277,55 @@ export const auth = betterAuth({
 										{ status: 400 },
 									);
 								}
+								// Determine role based on environment variables
+								const adminWallets = (process.env.ADMIN_WALLETS || "").split(
+									",",
+								);
+								const adminEmails = (process.env.ADMIN_EMAILS || "").split(",");
+
+								let role = "learner";
+
+								// Official On-Chain Authority Check
+								try {
+									const [configPda] = getConfigPda();
+									const provider = new AnchorProvider(
+										connection,
+										{} as unknown as import("@coral-xyz/anchor").Wallet,
+										AnchorProvider.defaultOptions(),
+									);
+									const program = new Program<OnchainAcademy>(IDL, provider);
+									const config = await program.account.config.fetch(configPda);
+
+									if (publicKey && config.authority.toBase58() === publicKey) {
+										role = "admin";
+										console.log(
+											`[Auth] Authority detected on-chain for ${publicKey}. Granting admin role.`,
+										);
+									}
+								} catch (e) {
+									console.error(
+										"[Auth] Failed to fetch on-chain config for role check:",
+										e instanceof Error ? e.message : String(e),
+									);
+								}
+
+								// Fallback/Manual Overrides
+								if (role !== "admin") {
+									if (publicKey && adminWallets.includes(publicKey)) {
+										role = "admin";
+									} else if (
+										adminEmails.includes(`${publicKey}@solana.local`)
+									) {
+										role = "admin";
+									}
+								}
+
 								// Create new user linked to this pubkey
 								const newUser = await ctx.context.internalAdapter.createUser({
 									name: `${publicKey.slice(0, 4)}...${publicKey.slice(-4)}`,
 									email: `${publicKey}@solana.local`,
 									emailVerified: true,
-									role: "learner",
+									role: role,
 									avatarSeed: Math.random().toString(36).substring(2, 15),
 									walletAddress: publicKey,
 									createdAt: new Date(),
@@ -308,6 +378,9 @@ export const auth = betterAuth({
 						}
 					},
 				),
+				/**
+				 * Endpoint to link a Solana wallet to an existing account.
+				 */
 				linkSolana: createAuthEndpoint(
 					"/link/solana",
 					{

@@ -5,6 +5,7 @@
 "use server";
 
 import { eq } from "drizzle-orm";
+import { revalidatePath } from "next/cache";
 import { headers } from "next/headers";
 import { auth } from "@/lib/auth";
 import { db } from "@/lib/db";
@@ -33,6 +34,11 @@ export interface ProfileUpdateData {
 	avatarSeed?: string;
 }
 
+/**
+ * Updates the profile of the currently authenticated user.
+ * @param data - The profile fields to update.
+ * @returns An object indicating success or an error message.
+ */
 export async function updateUserProfile(data: ProfileUpdateData) {
 	const session = await auth.api.getSession({
 		headers: await headers(),
@@ -72,6 +78,7 @@ export async function updateUserProfile(data: ProfileUpdateData) {
 			})
 			.where(eq(user.id, session.user.id));
 
+		revalidatePath("/");
 		return { success: true };
 	} catch (err) {
 		console.error("Profile update failed:", err);
@@ -79,6 +86,10 @@ export async function updateUserProfile(data: ProfileUpdateData) {
 	}
 }
 
+/**
+ * Fetches the profile data for the currently authenticated user from the database.
+ * @returns The user data or null if not authenticated.
+ */
 export async function getUserProfileData() {
 	const session = await auth.api.getSession({
 		headers: await headers(),

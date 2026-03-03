@@ -1,6 +1,6 @@
 /**
- * @fileoverview Lesson completion route handler.
- * Marks a lesson as complete on-chain and rewards the learner with XP tokens.
+ * @fileoverview API route to finalize a course on-chain.
+ * Rewards the learner with a completion bonus and triggers creator rewards.
  */
 
 import { AnchorProvider, Program } from "@coral-xyz/anchor";
@@ -21,55 +21,41 @@ import {
 import { OnchainAcademy } from "@/lib/anchor/idl/onchain_academy";
 import IDL from "@/lib/anchor/idl/onchain_academy.json";
 
-// Recreate connection instance for the server-side
 const connection = new Connection(CLUSTER_URL, "confirmed");
 
 /**
- * Handles the completion of a lesson for a learner.
- * Verifies lesson progress on-chain and mints XP tokens as a reward.
+ * Handles the finalization of a course for a learner.
+ * Verifies lesson completion and mints bonus XP.
  */
 export async function POST(request: Request) {
-	let lessonIndex: number | undefined;
 	try {
 		const body = (await request.json()) as {
 			courseSlug: string;
 			learnerAddress: string;
-			lessonIndex: number;
 		};
 		const { courseSlug, learnerAddress } = body;
-		lessonIndex = body.lessonIndex;
 
-		// Validate inputs
-		if (!courseSlug || !learnerAddress || typeof lessonIndex !== "number") {
+		if (!courseSlug || !learnerAddress) {
 			return NextResponse.json(
-				{
-					error:
-						"Missing required parameters: courseSlug, learnerAddress, lessonIndex",
-				},
+				{ error: "Missing courseSlug or learnerAddress" },
 				{ status: 400 },
 			);
 		}
 
 		const learnerPublicKey = new PublicKey(learnerAddress);
 
-		// 1. Load Backend Signer (Authority keypair)
+		// 1. Load Backend Signer
 		const keypairPath = path.resolve(process.cwd(), "wallets", "signer.json");
 		if (!fs.existsSync(keypairPath)) {
 			return NextResponse.json(
-				{
-					error:
-						"Backend signer keypair not found. Ensure wallets/signer.json exists.",
-				},
+				{ error: "Backend signer not found" },
 				{ status: 500 },
 			);
 		}
-
-		const raw = fs.readFileSync(keypairPath, "utf-8");
-		const secretKeyArray = JSON.parse(raw);
+		const secretKeyArray = JSON.parse(fs.readFileSync(keypairPath, "utf-8"));
 		const backendSigner = Keypair.fromSecretKey(new Uint8Array(secretKeyArray));
 
-		// 2. Initialize Program Instance Server-Side
-		// We wrap the backend signer in an Anchor Wallet object
+		// 2. Setup Program
 		const anchorWallet = {
 			publicKey: backendSigner.publicKey,
 			signTransaction: async <
@@ -108,17 +94,21 @@ export async function POST(request: Request) {
 			anchorWallet,
 			AnchorProvider.defaultOptions(),
 		);
-
 		const program = new Program<OnchainAcademy>(
 			IDL as OnchainAcademy,
 			provider,
 		);
 
-		// 3. Derive PDAs
+		// 3. Derive PDAs and Fetch Course Data
 		const [configPda] = getConfigPda();
 		const [coursePda] = getCoursePda(courseSlug);
 		const [enrollmentPda] = getEnrollmentPda(courseSlug, learnerPublicKey);
 
+		// Fetch course account to get creator address
+		const courseAccount = await program.account.course.fetch(coursePda);
+		const creatorPublicKey = courseAccount.creator;
+
+		// 4. Token Accounts
 		const XP_MINT = new PublicKey(process.env.NEXT_PUBLIC_XP_MINT!);
 		const TOKEN_2022_PROGRAM_ID = new PublicKey(
 			"TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb",
@@ -131,15 +121,24 @@ export async function POST(request: Request) {
 			TOKEN_2022_PROGRAM_ID,
 		);
 
-		// 4. Check if ATA exists, if not, create it
-		const ataInfo = await connection.getAccountInfo(learnerTokenAccount);
-		const instructions = [];
+		const creatorTokenAccount = getAssociatedTokenAddressSync(
+			XP_MINT,
+			creatorPublicKey,
+			false,
+			TOKEN_2022_PROGRAM_ID,
+		);
 
-		if (!ataInfo) {
-			console.log("ATA does not exist, adding creation instruction...");
+		// 5. Ensure Token Accounts exist
+		const instructions = [];
+		const [learnerAtaInfo, creatorAtaInfo] = await Promise.all([
+			connection.getAccountInfo(learnerTokenAccount),
+			connection.getAccountInfo(creatorTokenAccount),
+		]);
+
+		if (!learnerAtaInfo) {
 			instructions.push(
 				createAssociatedTokenAccountInstruction(
-					backendSigner.publicKey, // Payer
+					backendSigner.publicKey,
 					learnerTokenAccount,
 					learnerPublicKey,
 					XP_MINT,
@@ -148,15 +147,29 @@ export async function POST(request: Request) {
 			);
 		}
 
-		// 5. Send the Transaction
+		if (!creatorAtaInfo) {
+			instructions.push(
+				createAssociatedTokenAccountInstruction(
+					backendSigner.publicKey,
+					creatorTokenAccount,
+					creatorPublicKey,
+					XP_MINT,
+					TOKEN_2022_PROGRAM_ID,
+				),
+			);
+		}
+
+		// 6. Finalize Course
 		const tx = await program.methods
-			.completeLesson(lessonIndex)
+			.finalizeCourse()
 			.accountsPartial({
 				config: configPda,
 				course: coursePda,
 				enrollment: enrollmentPda,
 				learner: learnerPublicKey,
-				learnerTokenAccount: learnerTokenAccount,
+				learnerTokenAccount,
+				creatorTokenAccount,
+				creator: creatorPublicKey,
 				xpMint: XP_MINT,
 				backendSigner: backendSigner.publicKey,
 				tokenProgram: TOKEN_2022_PROGRAM_ID,
@@ -168,17 +181,17 @@ export async function POST(request: Request) {
 		return NextResponse.json({
 			success: true,
 			signature: tx,
-			message: `Lesson ${lessonIndex} marked complete.`,
+			message: "Course finalized! Completion bonus rewarded.",
 		});
-	} catch (error: unknown) {
-		console.error("Error completing lesson:", error);
+	} catch (error) {
+		console.error("Error finalizing course:", error);
 
-		// Handle LessonAlreadyCompleted gracefully
+		// Handle CourseAlreadyFinalized gracefully
 		const errorMessage = error instanceof Error ? error.message : String(error);
-		if (errorMessage.includes("LessonAlreadyCompleted")) {
+		if (errorMessage.includes("CourseAlreadyFinalized")) {
 			return NextResponse.json({
 				success: true,
-				message: `Lesson ${lessonIndex} was already completed on-chain.`,
+				message: "Course was already finalized on-chain.",
 			});
 		}
 

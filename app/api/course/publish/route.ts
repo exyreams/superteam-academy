@@ -5,6 +5,7 @@
 
 import { AnchorProvider, Program } from "@coral-xyz/anchor";
 import { Connection, Keypair, PublicKey, SystemProgram } from "@solana/web3.js";
+import crypto from "crypto";
 import fs from "fs";
 import { NextResponse } from "next/server";
 import { createClient } from "next-sanity";
@@ -26,6 +27,10 @@ const writeClient = createClient({
 
 const connection = new Connection(CLUSTER_URL, "confirmed");
 
+/**
+ * Handles the publication of a course from Sanity to the Solana blockchain.
+ * Validates course structure, derives PDAs, and sends the `createCourse` transaction.
+ */
 export async function POST(request: Request) {
 	try {
 		const { courseId, courseSlug, creatorAddress } = await request.json();
@@ -75,6 +80,7 @@ export async function POST(request: Request) {
         creator_reward_xp,
         min_completions_for_reward,
         "moduleCount": count(modules),
+        prerequisite_course-> { "slug": slug.current },
         modules[]-> {
           lessons[]-> {
             _id
@@ -167,18 +173,30 @@ export async function POST(request: Request) {
 						: 1
 				: course.difficulty || 1;
 
+		// Generate a unique 32-byte hash for contentTxId based on course metadata
+		// This acts as a version fingerprint
+		const hashInput = `${courseSlug}-${course._id}-${totalLessons}-${course.xp_per_lesson}`;
+		const contentHash = crypto.createHash("sha256").update(hashInput).digest();
+
+		// Prerequisite handling
+		let prerequisitePda: PublicKey | null = null;
+		if (course.prerequisite_course?.slug) {
+			const [pda] = getCoursePda(course.prerequisite_course.slug);
+			prerequisitePda = pda;
+		}
+
 		// 5. Send Transaction
 		const tx = await program.methods
 			.createCourse({
 				courseId: course.slug,
 				creator: creatorPublicKey,
-				contentTxId: new Array(32).fill(0), // Placeholder
+				contentTxId: Array.from(contentHash),
 				lessonCount: totalLessons,
 				difficulty: difficultyNum,
 				xpPerLesson: course.xp_per_lesson || 100,
 				trackId: course.track_id || 1,
 				trackLevel: course.track_level || 1,
-				prerequisite: null,
+				prerequisite: prerequisitePda,
 				creatorRewardXp: course.creator_reward_xp || 50,
 				minCompletionsForReward: course.min_completions_for_reward || 5,
 			})
@@ -197,8 +215,9 @@ export async function POST(request: Request) {
 				.patch(courseId)
 				.set({
 					status: "published",
+					onChainStatus: "published",
 					coursePda: coursePda.toBase58(),
-					// Note: onChainStatus is also there for redundancy, but status is our primary editorial flow
+					publishedAt: new Date().toISOString(),
 				})
 				.commit();
 		} else {
