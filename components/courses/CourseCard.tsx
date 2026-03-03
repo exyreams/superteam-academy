@@ -24,7 +24,6 @@ import { useCourseProgress } from "@/lib/hooks/use-course";
  * Props for the CourseCard component.
  */
 interface CourseCardProps {
-	/** The course object containing metadata and status */
 	course: Course;
 }
 

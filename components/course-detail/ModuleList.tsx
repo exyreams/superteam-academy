@@ -22,13 +22,10 @@ import { cn } from "@/lib/utils";
  * Props for the ModuleList component.
  */
 interface ModuleListProps {
-	/** Array of module data including lessons and completion status */
 	modules: Module[];
-	/** Overall course completion progress percentage */
+	/** Completion percentage */
 	progress: number;
-	/** Unique slug for the course */
 	courseSlug: string;
-	/** Whether the current user is enrolled in the course */
 	enrolled: boolean;
 }
 

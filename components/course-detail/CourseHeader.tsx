@@ -21,28 +21,19 @@ import { useEnroll } from "@/lib/hooks/use-course";
  * Props for the CourseHeader component.
  */
 interface CourseHeaderProps {
-	/** Unique slug for the course */
 	courseSlug: string;
-	/** Display title of the course */
 	title: string;
-	/** Reference code for the course (e.g., RUST-101) */
+	/** Reference code (e.g., RUST-101) */
 	courseRef: string;
-	/** Course category (e.g., Rust, Core) */
 	category: string;
-	/** Detailed course description */
 	description: string;
-	/** Instructor details */
 	instructor: {
 		name: string;
 		username: string;
 	};
-	/** Formatted duration (e.g., "4H 30M") */
 	duration: string;
-	/** Difficulty level (e.g., Beginner) */
 	difficulty: string;
-	/** XP reward for completing the course */
 	xpBounty: number;
-	/** Whether the current user is already enrolled */
 	enrolled: boolean;
 }
 

@@ -2,8 +2,10 @@
  * @fileoverview User profile and statistics data structures and mock data.
  * Defines interfaces for UserProfile, UserStats, CourseProgress, and provides helper functions for data retrieval.
  */
-// User profile and stats data structures
 
+/**
+ * Detailed user profile information.
+ */
 export interface UserProfile {
 	id: string;
 	username: string;
@@ -22,6 +24,9 @@ export interface UserProfile {
 	isPublic: boolean;
 }
 
+/**
+ * User activity statistics and level progress.
+ */
 export interface UserStats {
 	xp: number;
 	level: number;
@@ -34,11 +39,17 @@ export interface UserStats {
 	};
 }
 
+/**
+ * Represents a single day in the user's activity streak.
+ */
 export interface StreakDay {
 	date: string;
 	active: boolean;
 }
 
+/**
+ * High-level progress tracking for a single course enrollment.
+ */
 export interface CourseProgress {
 	courseId: string;
 	courseCode: string; // e.g., "RUST-101"
@@ -182,17 +193,32 @@ export const mockRecommendedCourses: RecommendedCourse[] = [
 ];
 
 // Helper functions
-export function getUserProfile(userId?: string): UserProfile {
+/**
+ * Retrieves the profile for a specific user.
+ * @param _userId - Optional ID of the user to fetch.
+ * @returns The UserProfile object.
+ */
+export function getUserProfile(_userId?: string): UserProfile {
 	// In real app, fetch by userId
 	return mockUserProfile;
 }
 
-export function getUserStats(userId?: string): UserStats {
+/**
+ * Retrieves statistics for a specific user.
+ * @param _userId - Optional ID of the user to fetch stats for.
+ * @returns The UserStats object.
+ */
+export function getUserStats(_userId?: string): UserStats {
 	// In real app, fetch by userId
 	return mockUserStats;
 }
 
-export function getCourseProgress(userId?: string): CourseProgress[] {
+/**
+ * Retrieves course progress for a specific user.
+ * @param _userId - Optional ID of the user to fetch progress for.
+ * @returns An array of CourseProgress objects.
+ */
+export function getCourseProgress(_userId?: string): CourseProgress[] {
 	// In real app, fetch by userId
 	return mockCourseProgress;
 }
