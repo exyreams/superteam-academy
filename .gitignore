@@ -46,3 +46,6 @@ wallets/
 # drizzle migration snapshots (auto-generated, SQL files are tracked)
 lib/db/migrations/meta/
 .env.local
+
+# Sentry Config File
+.env.sentry-build-plugin
