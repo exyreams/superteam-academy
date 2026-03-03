@@ -116,7 +116,8 @@
 	},
 	"CourseDetail": {
 		"header": {
-			"label": "コース詳細"
+			"label": "コース詳細",
+			"instructor": "インストラクター"
 		},
 		"metadata": {
 			"instructor": "インストラクター",
@@ -126,6 +127,7 @@
 		"xpBounty": "XPバウンティ",
 		"buttons": {
 			"enroll": "今すぐ登録",
+			"enrolling": "登録中...",
 			"continue": "コースを続ける"
 		},
 		"curriculum": {

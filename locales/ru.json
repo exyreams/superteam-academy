@@ -116,7 +116,8 @@
 	},
 	"CourseDetail": {
 		"header": {
-			"label": "Детали курса"
+			"label": "Детали курса",
+			"instructor": "Инструктор"
 		},
 		"metadata": {
 			"instructor": "Инструктор",
@@ -126,6 +127,7 @@
 		"xpBounty": "Награда XP",
 		"buttons": {
 			"enroll": "ЗАПИСАТЬСЯ",
+			"enrolling": "РЕГИСТРАЦИЯ...",
 			"continue": "ПРОДОЛЖИТЬ КУРС"
 		},
 		"curriculum": {

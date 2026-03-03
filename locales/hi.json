@@ -116,7 +116,8 @@
 	},
 	"CourseDetail": {
 		"header": {
-			"label": "पाठ्यक्रम विवरण"
+			"label": "पाठ्यक्रम विवरण",
+			"instructor": "प्रशिक्षक"
 		},
 		"metadata": {
 			"instructor": "प्रशिक्षक",
@@ -126,6 +127,7 @@
 		"xpBounty": "XP बाउंटी",
 		"buttons": {
 			"enroll": "अभी नामांकन करें",
+			"enrolling": "नामांकन हो रहा है...",
 			"continue": "पाठ्यक्रम जारी रखें"
 		},
 		"curriculum": {

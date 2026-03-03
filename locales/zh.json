@@ -116,7 +116,8 @@
 	},
 	"CourseDetail": {
 		"header": {
-			"label": "课程详情"
+			"label": "课程详情",
+			"instructor": "讲师"
 		},
 		"metadata": {
 			"instructor": "讲师",
@@ -126,6 +127,7 @@
 		"xpBounty": "XP 赏金",
 		"buttons": {
 			"enroll": "立即注册",
+			"enrolling": "正在报名...",
 			"continue": "继续课程"
 		},
 		"curriculum": {

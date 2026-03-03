@@ -120,7 +120,8 @@
 	},
 	"CourseDetail": {
 		"header": {
-			"label": "Detalhes do Curso"
+			"label": "Detalhes do Curso",
+			"instructor": "Instrutor"
 		},
 		"metadata": {
 			"instructor": "Instrutor",
@@ -130,6 +131,7 @@
 		"xpBounty": "Recompensa XP",
 		"buttons": {
 			"enroll": "INSCREVER-SE AGORA",
+			"enrolling": "INSCREVENDO...",
 			"continue": "CONTINUAR CURSO"
 		},
 		"curriculum": {

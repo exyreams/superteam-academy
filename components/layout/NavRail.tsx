@@ -118,22 +118,24 @@ export function NavRail() {
 						/>
 					</Link>
 
-					{/* Note: In a real app we'd conditionally check session.user.role === 'admin' before showing this */}
-					<Link
-						href="/admin"
-						className={cn(
-							"w-8 h-8 flex items-center justify-center relative transition-all border border-transparent hover:bg-ink-primary/5 mb-2",
-							pathname === "/admin" &&
-								"border-ink-secondary/20 bg-ink-primary/5",
-						)}
-						title="Admin Dashboard"
-					>
-						<ShieldCheckIcon
-							size={18}
-							className="text-ink-primary"
-							weight={pathname === "/admin" ? "duotone" : "regular"}
-						/>
-					</Link>
+					{/* Admin Dashboard (Admins Only) */}
+					{(session.user as { role?: string }).role === "admin" && (
+						<Link
+							href="/admin"
+							className={cn(
+								"w-8 h-8 flex items-center justify-center relative transition-all border border-transparent hover:bg-ink-primary/5 mb-2",
+								pathname === "/admin" &&
+									"border-ink-secondary/20 bg-ink-primary/5",
+							)}
+							title="Admin Dashboard"
+						>
+							<ShieldCheckIcon
+								size={18}
+								className="text-ink-primary"
+								weight={pathname === "/admin" ? "duotone" : "regular"}
+							/>
+						</Link>
+					)}
 				</>
 			) : (
 				/* Unauthenticated Links (Login, Signup) */
