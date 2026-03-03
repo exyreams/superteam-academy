@@ -14,9 +14,7 @@ import {
 	PlusIcon,
 	RocketLaunchIcon,
 } from "@phosphor-icons/react";
-import { TOKEN_2022_PROGRAM_ID } from "@solana/spl-token";
 import { useWallet } from "@solana/wallet-adapter-react";
-import { Keypair, PublicKey, SystemProgram } from "@solana/web3.js";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
@@ -25,12 +23,7 @@ import { TopBar } from "@/components/layout/TopBar";
 import { DotGrid } from "@/components/shared/DotGrid";
 import { Button } from "@/components/ui/button";
 import { Link } from "@/i18n/routing";
-import {
-	connection,
-	getConfigPda,
-	getProgram,
-	XP_MINT,
-} from "@/lib/anchor/client";
+import { getProgram } from "@/lib/anchor/client";
 import { checkCourseOnChainStatus } from "@/lib/services/course-publisher";
 import { cn } from "@/lib/utils";
 import { client } from "@/sanity/client";
@@ -46,6 +39,7 @@ interface Course {
 	status?: string;
 	onChainStatus?: string;
 	coursePda?: string;
+	creatorWallet?: string;
 	onChain?: {
 		isPublished: boolean;
 		enrollments?: number;
@@ -58,20 +52,12 @@ export function CreatorView() {
 	const [courses, setCourses] = useState<Course[]>([]);
 	const [loading, setLoading] = useState(true);
 	const [publishing, setPublishing] = useState<string | null>(null);
-	const [isInitialized, setIsInitialized] = useState<boolean | null>(null);
-	const [isInitializing, setIsInitializing] = useState(false);
 	const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
 
 	// Fetch courses from Sanity and check initialization
 	useEffect(() => {
 		async function initCheck() {
-			if (wallet.publicKey) {
-				const [configPda] = getConfigPda();
-				const accountInfo = await connection.getAccountInfo(configPda);
-				setIsInitialized(!!accountInfo);
-			} else {
-				setIsInitialized(null);
-			}
+			// Platform initialization check moved to AdminView
 		}
 
 		async function fetchCourses() {
@@ -90,6 +76,7 @@ export function CreatorView() {
             xp_per_lesson,
             onChainStatus,
             coursePda,
+            creatorWallet,
             "moduleCount": count(modules)
           }
         `);
@@ -164,68 +151,6 @@ export function CreatorView() {
 		}
 	}
 
-	// Handle Initializing the program
-	async function handleInitialize() {
-		if (!wallet.publicKey) {
-			toast.error("Please connect your wallet first");
-			return;
-		}
-
-		const program = getProgram(wallet);
-		if (!program) {
-			toast.error("Failed to initialize program");
-			return;
-		}
-
-		setIsInitializing(true);
-		toast.info("Initializing program...");
-
-		try {
-			// 1. Fetch the XP Mint Keypair from our secure API
-			const res = await fetch("/api/init");
-			if (!res.ok) {
-				const errorData = await res.json();
-				throw new Error(errorData.error || "Failed to fetch mint keypair");
-			}
-			const { secretKey } = await res.json();
-			const xpMintKeypair = Keypair.fromSecretKey(new Uint8Array(secretKey));
-
-			// 2. Derive PDAs
-			const [configPda] = getConfigPda();
-
-			// Anchor equivalent of PublicKey.findProgramAddressSync
-			const [minterPda] = PublicKey.findProgramAddressSync(
-				[Buffer.from("minter"), wallet.publicKey.toBuffer()],
-				program.programId,
-			);
-
-			// 3. Send Initialization Transaction
-			const tx = await program.methods
-				.initialize()
-				.accountsPartial({
-					config: configPda,
-					xpMint: XP_MINT,
-					authority: wallet.publicKey,
-					backendMinterRole: minterPda,
-					systemProgram: SystemProgram.programId,
-					tokenProgram: TOKEN_2022_PROGRAM_ID,
-				})
-				.signers([xpMintKeypair])
-				.rpc();
-
-			console.log("Initialization transaction:", tx);
-			toast.success("Program initialized successfully!");
-			setIsInitialized(true);
-		} catch (error) {
-			console.error("Init Error:", error);
-			toast.error(
-				`Initialization Failed: ${error instanceof Error ? error.message : "Unknown error"}`,
-			);
-		} finally {
-			setIsInitializing(false);
-		}
-	}
-
 	return (
 		<div className="min-h-screen bg-bg-base">
 			<div className="grid grid-cols-1 lg:grid-cols-[60px_1fr] lg:grid-rows-[48px_1fr] min-h-screen lg:h-screen lg:overflow-hidden max-w-full">
@@ -284,31 +209,6 @@ export function CreatorView() {
 									Connect your wallet to access the Creator Studio and manage
 									on-chain courses.
 								</p>
-							</div>
-						) : isInitialized === false ? (
-							<div className="border border-ink-secondary/10 bg-white/40 dark:bg-[#FFB020]/5 p-12 text-center rounded-sm max-w-2xl mx-auto w-full border-t-4 border-t-[#FFB020] shadow-xl shadow-ink-primary/5">
-								<RocketLaunchIcon
-									weight="duotone"
-									className="w-16 h-16 mx-auto mb-6 text-[#FFB020]"
-								/>
-								<h2 className="font-display text-3xl mb-4 text-[#FFB020]">
-									INITIALIZE PLATFORM
-								</h2>
-								<p className="text-ink-secondary mb-8 leading-relaxed max-w-lg mx-auto">
-									The Smart Contract has been deployed to Devnet but needs to be
-									initialized. This is a one-time transaction that configures
-									the Protocol PDA, registers the XP Token Mint, and assigns
-									your wallet as the backend signer.
-								</p>
-								<Button
-									className="bg-ink-primary hover:bg-ink-primary/90 text-[#14F195] font-bold uppercase tracking-widest rounded-none h-12 px-8"
-									onClick={handleInitialize}
-									disabled={isInitializing}
-								>
-									{isInitializing
-										? "Processing Transaction..."
-										: "Initialize Spl-Token & Config PDA"}
-								</Button>
 							</div>
 						) : (
 							<div className="flex flex-col gap-8">
@@ -378,9 +278,13 @@ export function CreatorView() {
 										) : (
 											courses.map((course) => {
 												const isPublished =
+													course.onChain?.isPublished ||
 													course.status === "published" ||
-													course.onChain?.isPublished;
-												const isPending = course.status === "review_pending";
+													course.onChainStatus === "published";
+												const isPending =
+													!isPublished &&
+													(course.status === "review_pending" ||
+														course.status === "in_review");
 												const isDraft = !isPublished && !isPending;
 												const isPublishing = publishing === course._id;
 
@@ -473,7 +377,7 @@ export function CreatorView() {
 																	disabled
 																	className="bg-[#9945FF]/20 text-[#9945FF] font-bold uppercase tracking-widest rounded-none text-xs h-8 px-3 cursor-not-allowed"
 																>
-																	Pending Review
+																	In Review
 																</Button>
 															)}
 															<Button
@@ -602,7 +506,7 @@ export function CreatorView() {
 																		disabled
 																		className="bg-[#9945FF]/20 text-[#9945FF] font-bold uppercase tracking-widest rounded-none text-[10px] h-8 w-full cursor-not-allowed"
 																	>
-																		Pending Review
+																		In Review
 																	</Button>
 																)}
 
