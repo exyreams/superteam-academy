@@ -1,53 +1,68 @@
-// Mock data for lesson view page
+/**
+ * @fileoverview Lesson and Challenge data models for the Superteam Academy.
+ * Defines the structure for in-depth lesson content, coding challenges, and navigation.
+ */
 
+import { SanityContent } from "./course-detail";
+
+/**
+ * Detailed representation of a single lesson, including content and challenge metadata.
+ */
 export interface Lesson {
-  id: string;
-  moduleId: string;
-  moduleNumber: number;
-  moduleTitle: string;
-  number: string;
-  title: string;
-  ref: string;
-  type: 'content' | 'challenge';
-  duration: string;
-  content: string; // Markdown
-  codeTemplate?: string;
-  hints?: string[];
-  solution?: string;
-  completed: boolean;
-  testCases?: {
-    name: string;
-    description: string;
-    status: 'pass' | 'fail' | 'pending';
-  }[];
-  consoleOutput?: string;
-  nextLessonId?: string;
-  prevLessonId?: string;
+	id: string;
+	moduleId: string;
+	moduleNumber: number;
+	moduleTitle: string;
+	number: string;
+	title: string;
+	ref: string;
+	type: "content" | "challenge";
+	duration: string;
+	content: SanityContent; // PortableText or Markdown
+	starterCode?: string;
+	solutionCode?: string;
+	hints?: string[];
+	solution?: string;
+	completed: boolean;
+	locked: boolean;
+	testCases?: {
+		name: string;
+		description: string;
+		status: "pass" | "fail" | "pending";
+	}[];
+	consoleOutput?: string;
+	nextLessonId?: string;
+	prevLessonId?: string;
 }
 
+/**
+ * Minimal lesson metadata used for sidebar navigation and module overviews.
+ */
 export interface ModuleLesson {
-  id: string;
-  number: string;
-  title: string;
-  completed: boolean;
-  locked: boolean;
-  active: boolean;
+	id: string;
+	number: string;
+	title: string;
+	duration?: string;
+	completed: boolean;
+	locked: boolean;
+	active: boolean;
 }
 
 export const mockLesson: Lesson = {
-  id: 'lesson-4-3',
-  moduleId: 'mod-4',
-  moduleNumber: 4,
-  moduleTitle: 'ACCOUNTS & PDAs',
-  number: '4.3',
-  title: 'PROGRAM DERIVED ADDRESSES',
-  ref: 'PDA-2210',
-  type: 'content',
-  duration: '25:00',
-  completed: false,
-  prevLessonId: 'lesson-4-2',
-  nextLessonId: 'lesson-4-5', // Updated to point to next lesson
-  content: `# PROGRAM DERIVED ADDRESSES
+	id: "lesson-4-3",
+	moduleId: "mod-4",
+	moduleNumber: 4,
+	moduleTitle: "ACCOUNTS & PDAs",
+	number: "4.3",
+	title: "PROGRAM DERIVED ADDRESSES",
+	ref: "PDA-2210",
+	type: "content",
+	duration: "25:00",
+	completed: false,
+	locked: false,
+	prevLessonId: "lesson-4-2",
+	nextLessonId: "lesson-4-5", // Updated to point to next lesson
+	content: `# PROGRAM DERIVED ADDRESSES
 
 Program Derived Addresses (PDAs) are home to the state of most Solana programs. Unlike regular Keypairs, PDAs do not have a private key. They are found using a combination of \`seeds\` and a \`program_id\`.
 
@@ -70,12 +85,12 @@ Update the code in the editor to correctly derive the address for a "user_stats"
 2. **Token accounts**: Create deterministic token account addresses
 3. **Program state**: Store global program configuration
 4. **Associated accounts**: Link related accounts together`,
-  hints: [
-    'Remember that seeds must be passed as an array of byte slices: `&[b"user_stats", user_pubkey.as_ref()]`',
-    'The `find_program_address` function returns both the PDA and the bump seed',
-    'You need to use the program ID from the context to derive the PDA'
-  ],
-  solution: `use anchor_lang::prelude::*;
+	hints: [
+		'Remember that seeds must be passed as an array of byte slices: `&[b"user_stats", user_pubkey.as_ref()]`',
+		"The `find_program_address` function returns both the PDA and the bump seed",
+		"You need to use the program ID from the context to derive the PDA",
+	],
+	solution: `use anchor_lang::prelude::*;
 
 declare_id!("Fg6PaF...7as");
 
@@ -110,7 +125,7 @@ pub struct UserStats {
     pub user: Pubkey,
     pub total_points: u64,
 }`,
-  codeTemplate: `use anchor_lang::prelude::*;
+	starterCode: `use anchor_lang::prelude::*;
 
 declare_id!("Fg6PaF...7as");
 
@@ -129,24 +144,26 @@ pub struct Initialize<'info> {
     pub user: Signer<'info>,
     // Add PDA account definition here
     pub system_program: Program<'info, System>,
-}`
+}`,
 };
 
 // Mock data for the challenge lesson
 export const mockLessonChallenge: Lesson = {
-  id: 'lesson-4-5',
-  moduleId: 'mod-4',
-  moduleNumber: 4,
-  moduleTitle: 'ACCOUNTS & PDAs',
-  number: '4.5',
-  title: 'PDA SEED DERIVATION',
-  ref: 'PDA-2210',
-  type: 'challenge',
-  duration: '60:00',
-  completed: false,
-  prevLessonId: 'lesson-4-4',
-  content: 'Complete the derive_pda_address function. It should return a program-derived address using the string literal "vault" and the provided user_key as seeds.',
-  codeTemplate: `use anchor_lang::prelude::*;
+	id: "lesson-4-5",
+	moduleId: "mod-4",
+	moduleNumber: 4,
+	moduleTitle: "ACCOUNTS & PDAs",
+	number: "4.5",
+	title: "PDA SEED DERIVATION",
+	ref: "PDA-2210",
+	type: "challenge",
+	duration: "60:00",
+	completed: false,
+	locked: false,
+	prevLessonId: "lesson-4-4",
+	content:
+		'Complete the derive_pda_address function. It should return a program-derived address using the string literal "vault" and the provided user_key as seeds.',
+	starterCode: `use anchor_lang::prelude::*;
 
 pub fn derive_pda_address(
     program_id: &Pubkey, 
@@ -162,77 +179,82 @@ pub fn derive_pda_address(
 
     Pubkey::find_program_address(seeds, program_id)
 }`,
-  testCases: [
-    {
-      name: 'Seed Alignment',
-      description: 'Seeds "vault" + key used correctly',
-      status: 'pass'
-    },
-    {
-      name: 'Bump Verification',
-      description: 'Canonical bump was not returned',
-      status: 'fail'
-    },
-    {
-      name: 'Program ID Context',
-      description: 'Address matches program owner',
-      status: 'pending'
-    }
-  ],
-  consoleOutput: `> cargo test-bpf...
+	testCases: [
+		{
+			name: "Seed Alignment",
+			description: 'Seeds "vault" + key used correctly',
+			status: "pass",
+		},
+		{
+			name: "Bump Verification",
+			description: "Canonical bump was not returned",
+			status: "fail",
+		},
+		{
+			name: "Program ID Context",
+			description: "Address matches program owner",
+			status: "pending",
+		},
+	],
+	consoleOutput: `> cargo test-bpf...
 > Compiling pda_module v0.1.0
 > Error: expected (Pubkey, u8), found ()
 > line 14: missing return expression
-> Process exited with code 1`
+> Process exited with code 1`,
 };
 
 export const mockModuleLessons: ModuleLesson[] = [
-  {
-    id: 'lesson-4-1',
-    number: '4.1',
-    title: 'INTRODUCTION',
-    completed: true,
-    locked: false,
-    active: false,
-  },
-  {
-    id: 'lesson-4-2',
-    number: '4.2',
-    title: 'ACCOUNT MODELS',
-    completed: true,
-    locked: false,
-    active: false,
-  },
-  {
-    id: 'lesson-4-3',
-    number: '4.3',
-    title: 'PDA FUNDAMENTALS',
-    completed: false,
-    locked: false,
-    active: true,
-  },
-  {
-    id: 'lesson-4-4',
-    number: '4.4',
-    title: 'SEEDS & NONCES',
-    completed: false,
-    locked: false,
-    active: false,
-  },
-  {
-    id: 'lesson-4-5',
-    number: '4.5',
-    title: 'FINAL CHALLENGE',
-    completed: false,
-    locked: true,
-    active: false,
-  },
+	{
+		id: "lesson-4-1",
+		number: "4.1",
+		title: "INTRODUCTION",
+		completed: true,
+		locked: false,
+		active: false,
+	},
+	{
+		id: "lesson-4-2",
+		number: "4.2",
+		title: "ACCOUNT MODELS",
+		completed: true,
+		locked: false,
+		active: false,
+	},
+	{
+		id: "lesson-4-3",
+		number: "4.3",
+		title: "PDA FUNDAMENTALS",
+		completed: false,
+		locked: false,
+		active: true,
+	},
+	{
+		id: "lesson-4-4",
+		number: "4.4",
+		title: "SEEDS & NONCES",
+		completed: false,
+		locked: false,
+		active: false,
+	},
+	{
+		id: "lesson-4-5",
+		number: "4.5",
+		title: "FINAL CHALLENGE",
+		completed: false,
+		locked: true,
+		active: false,
+	},
 ];
 
+/**
+ * Retrieves a lesson by its ID.
+ * @param id - The unique identifier for the lesson.
+ * @returns The Lesson object matching the ID.
+ */
 export function getLesson(id: string): Lesson {
-  if (id === 'lesson-4-5') {
-    return mockLessonChallenge;
-  }
-  // For demo, return the main content lesson for all other IDs (lesson-4-3 etc)
-  return mockLesson;
+	if (id === "lesson-4-5") {
+		return mockLessonChallenge;
+	}
+	// For demo, return the main content lesson for all other IDs (lesson-4-3 etc)
+	return mockLesson;
 }
