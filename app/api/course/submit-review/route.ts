@@ -5,6 +5,7 @@
 import { NextResponse } from "next/server";
 import { createClient } from "next-sanity";
 import { getSessionServer } from "@/lib/auth/server";
+import { getPostHogClient } from "@/lib/posthog-server";
 
 // We need a write-enabled client using a server-side token
 const writeClient = createClient({
@@ -54,6 +55,18 @@ export async function POST(request: Request) {
 				creatorWallet: creatorWallet,
 			})
 			.commit();
+
+		// Track course review submission server-side
+		const posthog = getPostHogClient();
+		posthog.capture({
+			distinctId: session.user.id,
+			event: "course_submitted_for_review",
+			properties: {
+				course_id: courseId,
+				creator_wallet: creatorWallet,
+			},
+		});
+		await posthog.shutdown();
 
 		return NextResponse.json({
 			success: true,

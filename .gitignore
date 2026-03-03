@@ -45,3 +45,4 @@ wallets/
 
 # drizzle migration snapshots (auto-generated, SQL files are tracked)
 lib/db/migrations/meta/
+.env.local

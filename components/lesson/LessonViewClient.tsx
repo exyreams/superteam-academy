@@ -18,6 +18,7 @@ import { useWallet } from "@solana/wallet-adapter-react";
 import { useQueryClient } from "@tanstack/react-query";
 import { notFound } from "next/navigation";
 import { useTranslations } from "next-intl";
+import posthog from "posthog-js";
 import { useEffect, useMemo, useState } from "react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
@@ -260,12 +261,19 @@ export function LessonViewClient({ slug, lessonId }: LessonViewClientProps) {
 			});
 
 			if (res.success) {
+				posthog.capture("challenge_completed", {
+					course_slug: slug,
+					lesson_index: lessonIndex,
+					lesson_title: currentLesson?.title,
+					lesson_type: currentLesson?.type,
+				});
 				toast.success("Challenge points awarded on-chain!");
 				queryClient.invalidateQueries({ queryKey: ["course", slug] });
 			} else {
 				throw new Error(res.error);
 			}
 		} catch (err) {
+			posthog.captureException(err);
 			console.error("Challenge completion failed:", err);
 			toast.error("Failed to save challenge progress");
 		}

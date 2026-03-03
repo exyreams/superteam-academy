@@ -10,6 +10,7 @@ import { useWallet } from "@solana/wallet-adapter-react";
 import { useMutation } from "@tanstack/react-query";
 import bs58 from "bs58";
 import { useLocale, useTranslations } from "next-intl";
+import posthog from "posthog-js";
 import { useState } from "react";
 import { toast } from "sonner";
 import { GitHubIcon, GoogleIcon } from "@/components/shared/Icons";
@@ -58,12 +59,23 @@ export function AuthWalletButton({
 			if (!res.ok) throw new Error(data.error || "Authentication failed");
 			return data;
 		},
-		onSuccess: async () => {
+		onSuccess: async (_, __, ___) => {
+			// Identify user and capture wallet auth event
+			if (publicKey) {
+				posthog.identify(publicKey.toBase58(), {
+					wallet_address: publicKey.toBase58(),
+				});
+				posthog.capture("wallet_authenticated", {
+					wallet_address: publicKey.toBase58(),
+					method: "solana_wallet",
+				});
+			}
 			toast.success("Wallet authenticated successfully");
 			await refetchSession();
 			// Redirection is handled in AuthView based on session state
 		},
 		onError: (error) => {
+			posthog.captureException(error);
 			console.error(error);
 			toast.error(
 				error instanceof Error
@@ -82,6 +94,7 @@ export function AuthWalletButton({
 			});
 		},
 		onError: (error, provider) => {
+			posthog.captureException(error);
 			toast.error(`Failed to sign in with ${provider}`);
 		},
 	});

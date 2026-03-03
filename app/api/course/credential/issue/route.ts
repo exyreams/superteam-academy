@@ -16,6 +16,7 @@ import {
 } from "@/lib/anchor/client";
 import { OnchainAcademy } from "@/lib/anchor/idl/onchain_academy";
 import IDL from "@/lib/anchor/idl/onchain_academy.json";
+import { getPostHogClient } from "@/lib/posthog-server";
 
 const connection = new Connection(CLUSTER_URL, "confirmed");
 
@@ -185,6 +186,20 @@ export async function POST(request: Request) {
 				.signers([backendSigner])
 				.rpc();
 		}
+
+		// Track credential issuance server-side
+		const posthog = getPostHogClient();
+		posthog.capture({
+			distinctId: learnerAddress,
+			event: "credential_issued",
+			properties: {
+				course_slug: courseSlug,
+				is_upgrade: isUpgrade,
+				track_id: trackId,
+				transaction_signature: tx,
+			},
+		});
+		await posthog.shutdown();
 
 		return NextResponse.json({
 			success: true,

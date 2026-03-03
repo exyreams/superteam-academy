@@ -11,6 +11,7 @@ import {
 } from "@phosphor-icons/react";
 import { motion } from "framer-motion";
 import { useLocale, useTranslations } from "next-intl";
+import posthog from "posthog-js";
 import { useState } from "react";
 import { toast } from "sonner";
 import { AuthWalletButton } from "@/components/auth/AuthWalletButton";
@@ -45,12 +46,22 @@ export function SignupView() {
 			if (res.error) {
 				toast.error(res.error.message || t("signup.error"));
 			} else {
+				// Identify user and capture signup event
+				posthog.identify(email, {
+					email,
+					name: email.split("@")[0],
+				});
+				posthog.capture("user_signed_up", {
+					method: "email",
+					email,
+				});
 				toast.success(
 					t("signup.success") || "Successfully initialized operator!",
 				);
 				window.location.href = `/${locale}`;
 			}
 		} catch (error) {
+			posthog.captureException(error);
 			toast.error(
 				(error as Error)?.message || "An error occurred during sign up",
 			);

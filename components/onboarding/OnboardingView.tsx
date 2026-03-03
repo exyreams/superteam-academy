@@ -26,6 +26,7 @@ import { useWallet } from "@solana/wallet-adapter-react";
 import bs58 from "bs58";
 import { AnimatePresence, motion } from "framer-motion";
 import { useLocale, useTranslations } from "next-intl";
+import posthog from "posthog-js";
 import { useEffect, useState, useTransition } from "react";
 import { toast } from "sonner";
 import { LanguageDropdown } from "@/components/LanguageDropdown";
@@ -168,11 +169,18 @@ export function OnboardingView() {
 	}, [session, hasRestored]);
 
 	const toggleTrack = (trackId: string) => {
-		setSelectedTracks((prev) =>
-			prev.includes(trackId)
-				? prev.filter((t) => t !== trackId)
-				: [...prev, trackId],
-		);
+		setSelectedTracks((prev) => {
+			const isAdding = !prev.includes(trackId);
+			const next = isAdding
+				? [...prev, trackId]
+				: prev.filter((t) => t !== trackId);
+			posthog.capture("learning_track_selected", {
+				track_id: trackId,
+				action: isAdding ? "added" : "removed",
+				selected_tracks: next,
+			});
+			return next;
+		});
 	};
 
 	const handleLinkSocial = async (provider: "github" | "google") => {
@@ -207,6 +215,9 @@ export function OnboardingView() {
 
 			if (error) throw error;
 			setIsLinked(true);
+			posthog.capture("wallet_linked", {
+				wallet_address: publicKey.toBase58(),
+			});
 			toast.success(t("step5.walletLinked") || "Wallet linked successfully");
 		} catch (error) {
 			console.error("Failed to link wallet:", error);
@@ -232,6 +243,21 @@ export function OnboardingView() {
 			if (result?.error) {
 				toast.error(result.error);
 			} else {
+				// Identify user with profile details and capture onboarding completion
+				if (session?.user) {
+					posthog.identify(session.user.id, {
+						name,
+						email: session.user.email,
+						preferred_tracks: selectedTracks,
+					});
+				}
+				posthog.capture("onboarding_completed", {
+					selected_tracks: selectedTracks,
+					has_bio: bio.length > 0,
+					has_location: location.length > 0,
+					has_github: github.length > 0,
+					has_twitter: twitter.length > 0,
+				});
 				toast.success("Welcome aboard, operator!");
 				// Force a session refresh and full-page navigation to avoid redirect loops
 				await authClient.getSession();
