@@ -25,7 +25,7 @@ const IDL = IDL_JSON as OnchainAcademy;
  * Handles database persistence via Drizzle and implements the Solana sign-in/link flow.
  */
 export const auth = betterAuth({
-	trustedOrigins: ["http://localhost:3000"],
+	trustedOrigins: (process.env.BETTER_AUTH_TRUSTED_ORIGINS || "").split(","),
 	database: drizzleAdapter(db, {
 		provider: "pg",
 	}),
