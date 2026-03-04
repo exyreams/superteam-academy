@@ -133,7 +133,10 @@
 		"buttons": {
 			"enroll": "अभी नामांकन करें",
 			"enrolling": "नामांकन हो रहा है...",
-			"continue": "पाठ्यक्रम जारी रखें"
+			"continue": "पाठ्यक्रम जारी रखें",
+			"claimCertificate": "CLAIM CERTIFICATE",
+			"viewCredential": "VIEW CREDENTIAL",
+			"issuing": "ISSUING..."
 		},
 		"curriculum": {
 			"title": "पाठ्यक्रम",
@@ -142,7 +145,11 @@
 		"reviews": {
 			"title": "छात्र प्रतिक्रिया",
 			"viewAll": "सभी समीक्षाएं देखें"
-		}
+		},
+		"loading": "प्रोटोकॉल डेटा लोड हो रहा है...",
+		"errorLoading": "कोर्स डेटा लोड करने में त्रुटि।",
+		"solveChallenge": "चुनौती हल करें",
+		"hint": "संकेत"
 	},
 	"Lesson": {
 		"reference": "संदर्भ",
@@ -154,7 +161,17 @@
 		"runTests": "टेस्ट चलाएं",
 		"module": "मॉड्यूल",
 		"previous": " पिछला",
-		"nextLesson": "अगला पाठ"
+		"nextLesson": "अगला पाठ",
+		"startChallenge": "START CHALLENGE",
+		"savingProgress": "SAVING PROGRESS...",
+		"markCourseComplete": "MARK COURSE COMPLETE",
+		"loadingProtocol": "SYNCING NEURAL LINK...",
+		"errorNotFound": "PROTOCOL ERROR: COURSE OR LESSON NOT FOUND",
+		"tests": "TESTS",
+		"viewContentOnly": "VIEW CONTENT ONLY",
+		"solveChallenge": "चुनौती हल करें",
+		"openSandbox": "OPEN SANDBOX",
+		"hint": "संकेत"
 	},
 	"Dashboard": {
 		"activeCourses": {

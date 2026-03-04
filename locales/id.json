@@ -142,7 +142,10 @@
 		"buttons": {
 			"enroll": "DAFTAR SEKARANG",
 			"enrolling": "MENDAFTARKAN...",
-			"continue": "LANJUTKAN KURSUS"
+			"continue": "LANJUTKAN KURSUS",
+			"claimCertificate": "CLAIM CERTIFICATE",
+			"viewCredential": "VIEW CREDENTIAL",
+			"issuing": "ISSUING..."
 		},
 		"curriculum": {
 			"title": "Kurikulum",
@@ -151,7 +154,11 @@
 		"reviews": {
 			"title": "Umpan Balik Siswa",
 			"viewAll": "LIHAT SEMUA ULASAN"
-		}
+		},
+		"loading": "Memuat data protokol...",
+		"errorLoading": "Terjadi kesalahan saat memuat data kursus.",
+		"solveChallenge": "SELESAIKAN TANTANGAN",
+		"hint": "PETUNJUK"
 	},
 	"Lesson": {
 		"reference": "REFERENSI",
@@ -163,7 +170,17 @@
 		"runTests": "JALANKAN TES",
 		"module": "MODUL",
 		"previous": "SEBELUMNYA",
-		"nextLesson": "PELAJARAN BERIKUTNYA"
+		"nextLesson": "PELAJARAN BERIKUTNYA",
+		"startChallenge": "START CHALLENGE",
+		"savingProgress": "SAVING PROGRESS...",
+		"markCourseComplete": "MARK COURSE COMPLETE",
+		"loadingProtocol": "SYNCING NEURAL LINK...",
+		"errorNotFound": "PROTOCOL ERROR: COURSE OR LESSON NOT FOUND",
+		"tests": "TESTS",
+		"viewContentOnly": "VIEW CONTENT ONLY",
+		"solveChallenge": "SELESAIKAN TANTANGAN",
+		"openSandbox": "OPEN SANDBOX",
+		"hint": "PETUNJUK"
 	},
 	"Dashboard": {
 		"activeCourses": {

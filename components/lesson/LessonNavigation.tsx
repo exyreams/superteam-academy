@@ -14,6 +14,7 @@ import {
 import { useWallet } from "@solana/wallet-adapter-react";
 import { useQueryClient } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
+import posthog from "posthog-js";
 import { useState } from "react";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
@@ -25,6 +26,7 @@ import { learningProgressService } from "@/lib/services/learning-progress";
  */
 interface LessonNavigationProps {
 	courseSlug: string;
+	lessonId: string;
 	prevLessonId?: string;
 	nextLessonId?: string;
 	/** Determines button labeling (e.g. "Start Challenge") */
@@ -40,6 +42,7 @@ interface LessonNavigationProps {
  */
 export function LessonNavigation({
 	courseSlug,
+	lessonId,
 	prevLessonId,
 	nextLessonId,
 	nextLessonType = "content",
@@ -108,17 +111,22 @@ export function LessonNavigation({
 				}
 			}
 
+			posthog.capture("lesson_completed", {
+				courseSlug,
+				lessonId,
+				lessonType: nextLessonType,
+			});
+
 			if (nextLessonId) {
 				router.push(`/courses/${courseSlug}/lessons/${nextLessonId}`);
 			} else {
 				// Final lesson completed - redirect to course overview or dashboard
+				toast.success(t("markCourseComplete"));
 				router.push(`/courses/${courseSlug}`);
 			}
 		} catch (error) {
 			console.error(error);
-			toast.error(
-				`Error saving progress: ${error instanceof Error ? error.message : "Unknown error"}`,
-			);
+			toast.error("Failed to save progress");
 		} finally {
 			setIsCompleting(false);
 		}
@@ -168,10 +176,10 @@ export function LessonNavigation({
 						disabled={isCompleting}
 					>
 						{isCompleting ? (
-							"Saving Progress..."
+							t("savingProgress")
 						) : nextLessonType === "challenge" ? (
 							<>
-								START CHALLENGE <CaretRightIcon size={12} weight="bold" />
+								{t("startChallenge")} <CaretRightIcon size={12} weight="bold" />
 							</>
 						) : (
 							<>

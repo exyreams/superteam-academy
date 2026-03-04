@@ -133,7 +133,10 @@
 		"buttons": {
 			"enroll": "立即注册",
 			"enrolling": "正在报名...",
-			"continue": "继续课程"
+			"continue": "继续课程",
+			"claimCertificate": "CLAIM CERTIFICATE",
+			"viewCredential": "VIEW CREDENTIAL",
+			"issuing": "ISSUING..."
 		},
 		"curriculum": {
 			"title": "课程",
@@ -142,7 +145,11 @@
 		"reviews": {
 			"title": "学生反馈",
 			"viewAll": "查看所有评论"
-		}
+		},
+		"loading": "正在加载协议数据...",
+		"errorLoading": "加载课程数据时出错。",
+		"solveChallenge": "解决挑战",
+		"hint": "提示"
 	},
 	"Lesson": {
 		"reference": "参考",
@@ -154,7 +161,17 @@
 		"runTests": "运行测试",
 		"module": "模块",
 		"previous": "上一个",
-		"nextLesson": "下一课"
+		"nextLesson": "下一课",
+		"startChallenge": "START CHALLENGE",
+		"savingProgress": "SAVING PROGRESS...",
+		"markCourseComplete": "MARK COURSE COMPLETE",
+		"loadingProtocol": "SYNCING NEURAL LINK...",
+		"errorNotFound": "PROTOCOL ERROR: COURSE OR LESSON NOT FOUND",
+		"tests": "TESTS",
+		"viewContentOnly": "VIEW CONTENT ONLY",
+		"solveChallenge": "解决挑战",
+		"openSandbox": "OPEN SANDBOX",
+		"hint": "提示"
 	},
 	"Dashboard": {
 		"activeCourses": {

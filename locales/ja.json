@@ -133,7 +133,10 @@
 		"buttons": {
 			"enroll": "今すぐ登録",
 			"enrolling": "登録中...",
-			"continue": "コースを続ける"
+			"continue": "コースを続ける",
+			"claimCertificate": "CLAIM CERTIFICATE",
+			"viewCredential": "VIEW CREDENTIAL",
+			"issuing": "ISSUING..."
 		},
 		"curriculum": {
 			"title": "カリキュラム",
@@ -142,7 +145,11 @@
 		"reviews": {
 			"title": "学生のフィードバック",
 			"viewAll": "すべてのレビューを表示"
-		}
+		},
+		"loading": "プロトコルデータを読み込み中...",
+		"errorLoading": "コースデータの読み込みエラー。",
+		"solveChallenge": "チャレンジを解く",
+		"hint": "ヒント"
 	},
 	"Lesson": {
 		"reference": "リファレンス",
@@ -154,7 +161,17 @@
 		"runTests": "テストを実行",
 		"module": "モジュール",
 		"previous": "前へ",
-		"nextLesson": "次のレッスン"
+		"nextLesson": "次のレッスン",
+		"startChallenge": "START CHALLENGE",
+		"savingProgress": "SAVING PROGRESS...",
+		"markCourseComplete": "MARK COURSE COMPLETE",
+		"loadingProtocol": "SYNCING NEURAL LINK...",
+		"errorNotFound": "PROTOCOL ERROR: COURSE OR LESSON NOT FOUND",
+		"tests": "TESTS",
+		"viewContentOnly": "VIEW CONTENT ONLY",
+		"solveChallenge": "チャレンジを解く",
+		"openSandbox": "OPEN SANDBOX",
+		"hint": "ヒント"
 	},
 	"Dashboard": {
 		"activeCourses": {

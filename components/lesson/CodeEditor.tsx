@@ -1,6 +1,6 @@
 /**
  * @fileoverview CodeEditor component providing an IDE-like experience using CodeMirror.
- * Supports Rust, JavaScript, and JSON with auto-save simulation and test execution.
+ * Supports Rust, JavaScript, and JSON with database-backed auto-save and localStorage fallback.
  */
 
 "use client";
@@ -22,6 +22,7 @@ import { useTheme } from "next-themes";
 import { useEffect, useMemo, useState } from "react";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
+import { useLessonCode } from "@/lib/hooks/use-lesson-code";
 
 /**
  * Represents a single test case for verification.
@@ -36,6 +37,8 @@ export interface TestCase {
  * Props for the CodeEditor component.
  */
 interface CodeEditorProps {
+	lessonId: string;
+	courseId: string;
 	initialCode?: string;
 	solution?: string;
 	testResults?: TestCase[];
@@ -45,8 +48,11 @@ interface CodeEditorProps {
 
 /**
  * Syntax-highlighted code editor for solving course challenges.
+ * Persists code to DB (via TanStack) with localStorage as an immediate fallback.
  */
 export function CodeEditor({
+	lessonId,
+	courseId,
 	initialCode = "",
 	solution,
 	testResults = [],
@@ -55,18 +61,30 @@ export function CodeEditor({
 }: CodeEditorProps) {
 	const t = useTranslations("Lesson");
 	const { resolvedTheme } = useTheme();
-	const [code, setCode] = useState(initialCode);
-	const [lastSaved, setLastSaved] = useState<Date>(new Date());
+	const [localCode, setLocalCode] = useState<string | null>(null);
 	const [isRunning, setIsRunning] = useState(false);
 	const [output, setOutput] = useState<string>("");
+	const [lastSaved, setLastSaved] = useState<Date>(new Date());
 
-	// Auto-save simulation
+	const { code: savedCode, save } = useLessonCode(
+		lessonId,
+		courseId,
+		initialCode,
+	);
+
+	// ‼️ Derive code from savedCode directly — avoid setting state in effects
+	const code = localCode !== null ? localCode : savedCode;
+
+	// Auto-save: debounce 2s then persist to DB
 	// biome-ignore lint/correctness/useExhaustiveDependencies: Reset timer on every code change
 	useEffect(() => {
+		if (code === savedCode) return; // No change from saved
 		const timer = setTimeout(() => {
+			save({ code });
 			setLastSaved(new Date());
 		}, 2000);
 		return () => clearTimeout(timer);
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [code]);
 
 	const getLanguageExtension = () => {
@@ -118,13 +136,13 @@ export function CodeEditor({
 
 	const handleShowSolution = () => {
 		if (solution) {
-			setCode(solution);
+			setLocalCode(solution);
 			toast.info("Solution loaded into editor");
 		}
 	};
 
 	const handleReset = () => {
-		setCode(initialCode);
+		setLocalCode(initialCode);
 		toast.info("Code reset to starter template");
 	};
 
@@ -147,6 +165,8 @@ export function CodeEditor({
 			if (onTestResultsChange) {
 				onTestResultsChange(testResults.map((r) => ({ ...r, status: "pass" })));
 			}
+			// Save completed state to DB
+			save({ code, completed: true });
 			toast.success("All tests passed! Challenge completed.");
 			if (onComplete) onComplete();
 		} else {
@@ -171,6 +191,11 @@ export function CodeEditor({
 		if (seconds < 60) return `${seconds}s ${t("ago")}`;
 		const minutes = Math.floor(seconds / 60);
 		return `${minutes}m ${t("ago")}`;
+	};
+
+	// Controlled handler: update local state instantly, auto-save via effect
+	const handleCodeChange = (value: string) => {
+		setLocalCode(value);
 	};
 
 	return (
@@ -215,7 +240,7 @@ export function CodeEditor({
 						height="100%"
 						theme={resolvedTheme === "dark" ? vscodeDark : xcodeLight}
 						extensions={[getLanguageExtension(), editorTheme]}
-						onChange={(value) => setCode(value)}
+						onChange={(value) => handleCodeChange(value)}
 						className="h-full text-[13px] font-mono leading-relaxed"
 						basicSetup={{
 							lineNumbers: true,

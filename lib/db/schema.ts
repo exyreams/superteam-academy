@@ -184,3 +184,31 @@ export const courseProgress = pgTable(
 		};
 	},
 );
+
+/**
+ * Stores per-lesson user progress, specifically for code challenges.
+ * Enables persistence across devices and sessions.
+ */
+export const lessonProgress = pgTable(
+	"lesson_progress",
+	{
+		id: text("id").primaryKey(),
+		userId: text("userId")
+			.notNull()
+			.references(() => user.id, { onDelete: "cascade" }),
+		courseId: text("courseId").notNull(),
+		lessonId: text("lessonId").notNull(),
+		code: text("code"),
+		completed: boolean("completed").default(false).notNull(),
+		createdAt: timestamp("createdAt").notNull().defaultNow(),
+		updatedAt: timestamp("updatedAt").notNull().defaultNow(),
+	},
+	(table) => {
+		return {
+			userLessonUnique: uniqueIndex("user_lesson_unique").on(
+				table.userId,
+				table.lessonId,
+			),
+		};
+	},
+);

@@ -13,6 +13,7 @@ import {
 	SquareIcon,
 } from "@phosphor-icons/react";
 import { useTranslations } from "next-intl";
+import posthog from "posthog-js";
 import { useState } from "react";
 import { Link } from "@/i18n/routing";
 import type { Module } from "@/lib/data/course-detail";
@@ -133,6 +134,14 @@ export function ModuleList({
 										<Link
 											key={lesson.id}
 											href={`/courses/${courseSlug}/lessons/${lesson.id}`}
+											onClick={() => {
+												posthog.capture("lesson_clicked", {
+													courseSlug,
+													lessonId: lesson.id,
+													lessonTitle: lesson.title,
+													lessonType: lesson.type,
+												});
+											}}
 											className={cn(
 												"flex items-center justify-between py-2 hover:bg-ink-secondary/5 transition-colors cursor-pointer",
 												index < module.lessons.length - 1 &&
@@ -154,11 +163,12 @@ export function ModuleList({
 													<div className="flex items-center gap-2">
 														<span className="flex items-center gap-1 bg-ink-primary/5 text-ink-primary px-1.5 py-0.5 text-[9px] font-bold uppercase tracking-widest border border-ink-primary/10">
 															<CodeIcon size={10} weight="bold" />
-															Challenge
+															{t("solveChallenge")}
 														</span>
 														{lesson.hints && lesson.hints.length > 0 && (
 															<span className="text-[9px] text-ink-secondary uppercase tracking-widest font-bold">
-																{lesson.hints.length} Hints
+																{lesson.hints.length} {t("hint")}
+																{lesson.hints.length > 1 ? "s" : ""}
 															</span>
 														)}
 													</div>

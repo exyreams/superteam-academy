@@ -142,7 +142,10 @@
 		"buttons": {
 			"enroll": "지금 등록하기",
 			"enrolling": "등록 중...",
-			"continue": "코스 계속하기"
+			"continue": "코스 계속하기",
+			"claimCertificate": "CLAIM CERTIFICATE",
+			"viewCredential": "VIEW CREDENTIAL",
+			"issuing": "ISSUING..."
 		},
 		"curriculum": {
 			"title": "커리큘럼",
@@ -151,7 +154,11 @@
 		"reviews": {
 			"title": "학생 피드백",
 			"viewAll": "모든 리뷰 보기"
-		}
+		},
+		"loading": "프로토콜 데이터를 불러오는 중...",
+		"errorLoading": "강좌 데이터를 불러오는 중 오류가 발생했습니다.",
+		"solveChallenge": "챌린지 해결",
+		"hint": "힌트"
 	},
 	"Lesson": {
 		"reference": "참조",
@@ -163,7 +170,17 @@
 		"runTests": "테스트 실행",
 		"module": "모듈",
 		"previous": "이전",
-		"nextLesson": "다음 레슨"
+		"nextLesson": "다음 레슨",
+		"startChallenge": "START CHALLENGE",
+		"savingProgress": "SAVING PROGRESS...",
+		"markCourseComplete": "MARK COURSE COMPLETE",
+		"loadingProtocol": "SYNCING NEURAL LINK...",
+		"errorNotFound": "PROTOCOL ERROR: COURSE OR LESSON NOT FOUND",
+		"tests": "TESTS",
+		"viewContentOnly": "VIEW CONTENT ONLY",
+		"solveChallenge": "챌린지 해결",
+		"openSandbox": "OPEN SANDBOX",
+		"hint": "힌트"
 	},
 	"Dashboard": {
 		"activeCourses": {

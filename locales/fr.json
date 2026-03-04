@@ -133,7 +133,10 @@
 		"buttons": {
 			"enroll": "S'INSCRIRE MAINTENANT",
 			"enrolling": "INSCRIPTION...",
-			"continue": "CONTINUER LE COURS"
+			"continue": "CONTINUER LE COURS",
+			"claimCertificate": "CLAIM CERTIFICATE",
+			"viewCredential": "VIEW CREDENTIAL",
+			"issuing": "ISSUING..."
 		},
 		"curriculum": {
 			"title": "Programme",
@@ -142,7 +145,11 @@
 		"reviews": {
 			"title": "Avis des étudiants",
 			"viewAll": "VOIR TOUS LES AVIS"
-		}
+		},
+		"loading": "Chargement des données du protocole...",
+		"errorLoading": "Erreur lors du chargement des données du cours.",
+		"solveChallenge": "RÉSOUDRE LE DÉFI",
+		"hint": "INDICE"
 	},
 	"Lesson": {
 		"reference": "RÉFÉRENCE",
@@ -154,7 +161,17 @@
 		"runTests": "LANCER LES TESTS",
 		"module": "MODULE",
 		"previous": "PRÉCÉDENT",
-		"nextLesson": "LEÇON SUIVANTE"
+		"nextLesson": "LEÇON SUIVANTE",
+		"startChallenge": "START CHALLENGE",
+		"savingProgress": "SAVING PROGRESS...",
+		"markCourseComplete": "MARK COURSE COMPLETE",
+		"loadingProtocol": "SYNCING NEURAL LINK...",
+		"errorNotFound": "PROTOCOL ERROR: COURSE OR LESSON NOT FOUND",
+		"tests": "TESTS",
+		"viewContentOnly": "VIEW CONTENT ONLY",
+		"solveChallenge": "RÉSOUDRE LE DÉFI",
+		"openSandbox": "OPEN SANDBOX",
+		"hint": "INDICE"
 	},
 	"Dashboard": {
 		"activeCourses": {

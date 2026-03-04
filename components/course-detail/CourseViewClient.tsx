@@ -6,6 +6,7 @@
 "use client";
 
 import { CaretRightIcon } from "@phosphor-icons/react";
+import { useTranslations } from "next-intl";
 import { NavRail } from "@/components/layout/NavRail";
 import { TopBar } from "@/components/layout/TopBar";
 import { Link } from "@/i18n/routing";
@@ -27,13 +28,14 @@ interface CourseViewClientProps {
  * course content, and reviews.
  */
 export function CourseViewClient({ slug }: CourseViewClientProps) {
+	const t = useTranslations("CourseDetail");
 	const { data: course, isLoading, error } = useCourseDetails(slug);
 
 	if (isLoading) {
 		return (
 			<div className="min-h-screen bg-bg-base flex items-center justify-center">
 				<div className="text-ink-secondary animate-pulse uppercase tracking-widest text-xs">
-					Loading Protocol Data...
+					{t("loading")}
 				</div>
 			</div>
 		);
@@ -43,7 +45,7 @@ export function CourseViewClient({ slug }: CourseViewClientProps) {
 		return (
 			<div className="min-h-screen bg-bg-base flex items-center justify-center">
 				<div className="text-red-500 uppercase tracking-widest text-xs">
-					Error loading course data.
+					{t("errorLoading")}
 				</div>
 			</div>
 		);

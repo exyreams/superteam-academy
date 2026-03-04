@@ -3,9 +3,7 @@
  * It handles layout (split-pane for challenges), content rendering (markdown/Sanity),
  * navigation between lessons, and on-chain progress tracking.
  */
-
 "use client";
-
 import {
 	CaretDownIcon,
 	CaretRightIcon,
@@ -23,6 +21,7 @@ import { useEffect, useMemo, useState } from "react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { toast } from "sonner";
+
 import { NavRail } from "@/components/layout/NavRail";
 import { TopBar } from "@/components/layout/TopBar";
 import { CodeEditor } from "@/components/lesson/CodeEditor";
@@ -38,6 +37,7 @@ import {
 import { Link } from "@/i18n/routing";
 import { Lesson } from "@/lib/data/lesson";
 import { useCourseDetails } from "@/lib/hooks/use-course";
+import { useMediaQuery } from "@/lib/hooks/use-media-query";
 import { learningProgressService } from "@/lib/services/learning-progress";
 
 /**
@@ -48,7 +48,6 @@ interface LessonViewClientProps {
 	slug: string;
 	lessonId: string;
 }
-
 /**
  * Extended Lesson interface for flat navigation across modules.
  */
@@ -68,12 +67,12 @@ interface FlatLesson extends Omit<Lesson, "testCases"> {
 		status: "pass" | "fail" | "pending";
 	}[];
 }
-
 /**
  * Orchestrates the lesson viewing experience.
  */
 export function LessonViewClient({ slug, lessonId }: LessonViewClientProps) {
 	const t = useTranslations("Lesson");
+	const isMobile = useMediaQuery("(max-width: 1024px)");
 	const wallet = useWallet();
 	const queryClient = useQueryClient();
 	const { data: course, isLoading, error } = useCourseDetails(slug);
@@ -84,10 +83,8 @@ export function LessonViewClient({ slug, lessonId }: LessonViewClientProps) {
 		{ name: string; description: string; status: "pass" | "fail" | "pending" }[]
 	>([]);
 	const [lastLessonId, setLastLessonId] = useState(lessonId);
-
 	const { flatLessons, cleanModules } = useMemo(() => {
 		if (!course) return { flatLessons: [], cleanModules: [] };
-
 		const flat: FlatLesson[] = [];
 		const cleaned = course.modules.map((mod) => {
 			// Deduplicate lessons by ID within each module
@@ -97,7 +94,6 @@ export function LessonViewClient({ slug, lessonId }: LessonViewClientProps) {
 				seenIds.add(l.id);
 				return true;
 			});
-
 			uniqueLessons.forEach((les, idx) => {
 				flat.push({
 					id: les.id,
@@ -120,26 +116,21 @@ export function LessonViewClient({ slug, lessonId }: LessonViewClientProps) {
 					testCases: les.testCases,
 				});
 			});
-
 			return {
 				...mod,
 				lessons: uniqueLessons,
 			};
 		});
-
 		return { flatLessons: flat, cleanModules: cleaned };
 	}, [course]);
-
 	const lessonIndex = useMemo(() => {
 		if (!flatLessons.length) return -1;
 		return flatLessons.findIndex((l) => l.id === lessonId);
 	}, [flatLessons, lessonId]);
-
 	const currentLesson = useMemo(() => {
 		if (lessonIndex === -1) return null;
 		return flatLessons[lessonIndex];
 	}, [flatLessons, lessonIndex]);
-
 	// Sync editor and test results when navigating
 	if (lessonId !== lastLessonId) {
 		setLastLessonId(lessonId);
@@ -151,20 +142,16 @@ export function LessonViewClient({ slug, lessonId }: LessonViewClientProps) {
 			setTestResults([]);
 		}
 	}
-
 	// Initial load sync
 	useEffect(() => {
 		if (testResults.length === 0 && currentLesson?.testCases) {
 			setTestResults(currentLesson.testCases);
 		}
 	}, [currentLesson, testResults.length]);
-
 	// Sanity content processing
 	const formattedContent = useMemo(() => {
 		if (!currentLesson || !currentLesson.content) return null;
-
 		let rawText = "";
-
 		if (typeof currentLesson.content === "string") {
 			rawText = currentLesson.content;
 		} else if (Array.isArray(currentLesson.content)) {
@@ -188,16 +175,12 @@ export function LessonViewClient({ slug, lessonId }: LessonViewClientProps) {
 				.filter(Boolean)
 				.join("\n\n");
 		}
-
 		if (!rawText) return null;
-
 		// Strip ALL leading H1/H2/H3 titles if present at the very beginning
 		rawText = rawText.replace(/^(#+\s+[^\n]+(?:\n|$))+/, "");
-
 		// Replace literal escaped newlines with actual newlines
 		return rawText.replace(/\\n/g, "\n").trim();
 	}, [currentLesson]);
-
 	const contentHasTitle = useMemo(() => {
 		if (!currentLesson || typeof formattedContent !== "string") return false;
 		// Check if content starts with an H1 that looks like our lesson title
@@ -209,32 +192,28 @@ export function LessonViewClient({ slug, lessonId }: LessonViewClientProps) {
 			currentLesson.title.toLowerCase().includes(h1Text)
 		);
 	}, [formattedContent, currentLesson]);
-
 	if (isLoading) {
 		return (
 			<div className="min-h-screen bg-bg-base flex items-center justify-center">
 				<div className="text-ink-secondary animate-pulse uppercase tracking-widest text-xs">
-					Syncing Neural Link...
+					{t("loadingProtocol")}
 				</div>
 			</div>
 		);
 	}
-
 	if (error || !course || !currentLesson) {
 		// If we finished loading but have no current lesson, it's a 404 condition
 		if (!isLoading && !error && course && lessonIndex === -1) {
 			notFound();
 		}
-
 		return (
 			<div className="min-h-screen bg-bg-base flex items-center justify-center">
 				<div className="text-red-500 uppercase tracking-widest text-xs">
-					Protocol Error: Course or Lesson Not Found
+					{t("errorNotFound")}
 				</div>
 			</div>
 		);
 	}
-
 	const prevLessonId =
 		lessonIndex > 0 ? flatLessons[lessonIndex - 1].id : undefined;
 	const nextLessonId =
@@ -245,21 +224,18 @@ export function LessonViewClient({ slug, lessonId }: LessonViewClientProps) {
 		lessonIndex < flatLessons.length - 1
 			? flatLessons[lessonIndex + 1].type
 			: undefined;
-
 	// Challenge completion handler
 	const handleChallengeComplete = async () => {
 		if (!wallet.publicKey) {
 			toast.error("Connect wallet to save challenge progress");
 			return;
 		}
-
 		try {
 			const res = await learningProgressService.completeLesson({
 				courseSlug: slug,
 				learnerAddress: wallet.publicKey.toBase58(),
 				lessonIndex,
 			});
-
 			if (res.success) {
 				posthog.capture("challenge_completed", {
 					course_slug: slug,
@@ -278,7 +254,6 @@ export function LessonViewClient({ slug, lessonId }: LessonViewClientProps) {
 			toast.error("Failed to save challenge progress");
 		}
 	};
-
 	return (
 		<div className="min-h-screen bg-bg-base">
 			<div
@@ -287,9 +262,7 @@ export function LessonViewClient({ slug, lessonId }: LessonViewClientProps) {
 				<div className="col-span-1 lg:col-span-3">
 					<TopBar />
 				</div>
-
 				<NavRail />
-
 				<div className="hidden lg:block h-full overflow-visible border-r border-ink-secondary/20 dark:border-border bg-bg-base transition-all duration-300">
 					<ModuleOverview
 						modules={cleanModules.map((m) => ({
@@ -312,13 +285,14 @@ export function LessonViewClient({ slug, lessonId }: LessonViewClientProps) {
 						collapsed={!sidebarOpen}
 					/>
 				</div>
-
 				<main className="flex-1 overflow-visible lg:overflow-hidden relative h-auto lg:h-full">
-					{/* @ts-expect-error - The shadcn UI types for react-resizable-panels are mismatched */}
-					<ResizablePanelGroup direction="horizontal" className="h-full w-full">
+					<ResizablePanelGroup
+						orientation={isMobile ? "vertical" : "horizontal"}
+						className="h-full w-full"
+					>
 						<ResizablePanel
-							defaultSize={showEditor ? 50 : 100}
-							minSize={30}
+							defaultSize={showEditor ? (isMobile ? 100 : 50) : 100}
+							minSize={isMobile ? 0 : 30}
 							className="flex flex-col h-full bg-bg-base relative"
 						>
 							<div className="flex-1 px-4 lg:px-12 py-8 overflow-y-auto">
@@ -352,7 +326,6 @@ export function LessonViewClient({ slug, lessonId }: LessonViewClientProps) {
 										{currentLesson.title}
 									</span>
 								</nav>
-
 								{/* Conditionally hide lesson title if it's already in the Markdown content as H1 */}
 								{!contentHasTitle && (
 									<div className="flex items-center justify-between mb-8">
@@ -363,25 +336,30 @@ export function LessonViewClient({ slug, lessonId }: LessonViewClientProps) {
 											variant="ghost"
 											size="sm"
 											className="text-ink-secondary hover:text-ink-primary font-bold uppercase text-[10px] tracking-widest gap-2"
-											onClick={() => setShowEditor(!showEditor)}
+											onClick={() => {
+												posthog.capture("editor_toggle_clicked", {
+													lessonId: currentLesson.id,
+													newState: !showEditor ? "open" : "closed",
+												});
+												setShowEditor(!showEditor);
+											}}
 										>
 											{showEditor ? (
 												<>
-													<TextColumnsIcon size={14} /> View Content Only
+													<TextColumnsIcon size={14} /> {t("viewContentOnly")}
 												</>
 											) : currentLesson.type === "challenge" ? (
 												<>
-													<CodeIcon size={14} /> Solve Challenge
+													<CodeIcon size={14} /> {t("solveChallenge")}
 												</>
 											) : (
 												<>
-													<CodeIcon size={14} /> Open Sandbox
+													<CodeIcon size={14} /> {t("openSandbox")}
 												</>
 											)}
 										</Button>
 									</div>
 								)}
-
 								<div className="prose prose-sm lg:prose-base max-w-none">
 									{formattedContent ? (
 										<ReactMarkdown
@@ -394,12 +372,19 @@ export function LessonViewClient({ slug, lessonId }: LessonViewClientProps) {
 										<p>No content provided for this lesson.</p>
 									)}
 								</div>
-
 								{/* Integrated Hints Section */}
 								{currentLesson.hints && currentLesson.hints.length > 0 && (
 									<div className="mt-10 border border-dashed border-ink-secondary/50 p-4 mb-8 bg-bg-surface/50">
 										<button
-											onClick={() => setShowHints(!showHints)}
+											onClick={() => {
+												if (!showHints) {
+													posthog.capture("lesson_hint_opened", {
+														lessonId,
+														courseSlug: slug,
+													});
+												}
+												setShowHints(!showHints);
+											}}
 											className="flex items-center gap-2 text-[10px] uppercase font-bold tracking-widest cursor-pointer w-full text-ink-primary"
 										>
 											<CaretDownIcon
@@ -440,12 +425,11 @@ export function LessonViewClient({ slug, lessonId }: LessonViewClientProps) {
 										)}
 									</div>
 								)}
-
 								{/* Verification Section - Compact Design */}
 								{testResults.length > 0 && (
 									<div className="mt-8 pt-6 border-t border-border/40 dark:border-white/10 bg-bg-surface/60 dark:bg-white/5 rounded-lg px-4 pb-6 shadow-sm dark:shadow-none">
 										<h4 className="text-[10px] font-bold uppercase tracking-[0.2em] text-ink-tertiary dark:text-white mb-5 flex items-center gap-2">
-											Tests
+											{t("tests")}
 										</h4>
 										<div className="space-y-4">
 											{testResults.map((test, i) => (
@@ -484,6 +468,7 @@ export function LessonViewClient({ slug, lessonId }: LessonViewClientProps) {
 							<div className="px-4 lg:px-12 py-3 border-t border-ink-secondary/20 dark:border-border bg-bg-base/50 backdrop-blur-sm shrink-0">
 								<LessonNavigation
 									courseSlug={slug}
+									lessonId={lessonId}
 									prevLessonId={prevLessonId}
 									nextLessonId={nextLessonId}
 									nextLessonType={nextLessonType}
@@ -494,7 +479,6 @@ export function LessonViewClient({ slug, lessonId }: LessonViewClientProps) {
 								/>
 							</div>
 						</ResizablePanel>
-
 						{showEditor && (
 							<>
 								<ResizableHandle
@@ -507,6 +491,8 @@ export function LessonViewClient({ slug, lessonId }: LessonViewClientProps) {
 									className="flex flex-col h-[500px] lg:h-full bg-border overflow-hidden lg:pl-px"
 								>
 									<CodeEditor
+										lessonId={currentLesson.id}
+										courseId={slug}
 										key={currentLesson.id}
 										initialCode={
 											currentLesson.type === "challenge"

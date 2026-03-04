@@ -142,7 +142,10 @@
 		"buttons": {
 			"enroll": "ŞİMDİ KAYDOL",
 			"enrolling": "KAYIT OLUNUYOR...",
-			"continue": "KURSA DEVAM ET"
+			"continue": "KURSA DEVAM ET",
+			"claimCertificate": "CLAIM CERTIFICATE",
+			"viewCredential": "VIEW CREDENTIAL",
+			"issuing": "ISSUING..."
 		},
 		"curriculum": {
 			"title": "Müfredat",
@@ -151,7 +154,11 @@
 		"reviews": {
 			"title": "Öğrenci Geri Bildirimi",
 			"viewAll": "TÜM YORUMLARI GÖRÜNTÜLE"
-		}
+		},
+		"loading": "Protokol verileri yükleniyor...",
+		"errorLoading": "Kurs verileri yüklenirken hata oluştu.",
+		"solveChallenge": "MEYDAN OKUMAYI ÇÖZ",
+		"hint": "İPUCU"
 	},
 	"Lesson": {
 		"reference": "REFERANS",
@@ -163,7 +170,17 @@
 		"runTests": "TESTLERİ ÇALIŞTIR",
 		"module": "MODÜL",
 		"previous": "ÖNCEKİ",
-		"nextLesson": "SONRAKİ DERS"
+		"nextLesson": "SONRAKİ DERS",
+		"startChallenge": "START CHALLENGE",
+		"savingProgress": "SAVING PROGRESS...",
+		"markCourseComplete": "MARK COURSE COMPLETE",
+		"loadingProtocol": "SYNCING NEURAL LINK...",
+		"errorNotFound": "PROTOCOL ERROR: COURSE OR LESSON NOT FOUND",
+		"tests": "TESTS",
+		"viewContentOnly": "VIEW CONTENT ONLY",
+		"solveChallenge": "MEYDAN OKUMAYI ÇÖZ",
+		"openSandbox": "OPEN SANDBOX",
+		"hint": "İPUCU"
 	},
 	"Dashboard": {
 		"activeCourses": {

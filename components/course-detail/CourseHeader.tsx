@@ -5,6 +5,7 @@
 
 "use client";
 
+import { sendGAEvent } from "@next/third-parties/google";
 import {
 	ChartBarIcon,
 	ClockIcon,
@@ -13,6 +14,7 @@ import {
 } from "@phosphor-icons/react";
 import { useWallet } from "@solana/wallet-adapter-react";
 import { useTranslations } from "next-intl";
+import posthog from "posthog-js";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "@/i18n/routing";
@@ -67,6 +69,17 @@ export function CourseHeader({
 			toast.error("Please connect your wallet first");
 			return;
 		}
+
+		posthog.capture("course_enrollment_started", {
+			courseSlug,
+			courseRef,
+			title,
+		});
+		sendGAEvent("event", "enroll", {
+			item_id: courseSlug,
+			item_name: title,
+		});
+
 		enrollMutation.mutate();
 	};
 
@@ -134,14 +147,21 @@ export function CourseHeader({
 							{progress === 100 && !credentialAsset ? (
 								<Button
 									className="bg-green-600 text-white hover:bg-green-700 font-bold uppercase tracking-widest h-12 px-8 flex items-center gap-2"
-									onClick={() => claimMutation.mutate()}
+									onClick={() => {
+										posthog.capture("certificate_claim_started", {
+											courseSlug,
+											title,
+										});
+										claimMutation.mutate();
+									}}
 									disabled={claimMutation.isPending}
 								>
 									{claimMutation.isPending ? (
-										"Issuing..."
+										t("buttons.issuing")
 									) : (
 										<>
-											CLAIM CERTIFICATE <TrophyIcon size={18} weight="bold" />
+											{t("buttons.claimCertificate")}{" "}
+											<TrophyIcon size={18} weight="bold" />
 										</>
 									)}
 								</Button>
@@ -150,6 +170,10 @@ export function CourseHeader({
 									className="bg-ink-primary text-bg-base hover:bg-ink-primary/90 font-bold uppercase tracking-widest h-12 px-8"
 									onClick={() => {
 										if (credentialAsset) {
+											posthog.capture("view_credential_clicked", {
+												courseSlug,
+												title,
+											});
 											router.push("/profile");
 										} else if (nextLessonId) {
 											router.push(
@@ -160,7 +184,9 @@ export function CourseHeader({
 										}
 									}}
 								>
-									{credentialAsset ? "VIEW CREDENTIAL" : t("buttons.continue")}
+									{credentialAsset
+										? t("buttons.viewCredential")
+										: t("buttons.continue")}
 								</Button>
 							)}
 						</>

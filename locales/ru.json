@@ -133,7 +133,10 @@
 		"buttons": {
 			"enroll": "ЗАПИСАТЬСЯ",
 			"enrolling": "РЕГИСТРАЦИЯ...",
-			"continue": "ПРОДОЛЖИТЬ КУРС"
+			"continue": "ПРОДОЛЖИТЬ КУРС",
+			"claimCertificate": "CLAIM CERTIFICATE",
+			"viewCredential": "VIEW CREDENTIAL",
+			"issuing": "ISSUING..."
 		},
 		"curriculum": {
 			"title": "Учебный план",
@@ -142,7 +145,11 @@
 		"reviews": {
 			"title": "Отзывы студентов",
 			"viewAll": "СМОТРЕТЬ ВСЕ ОТЗЫВЫ"
-		}
+		},
+		"loading": "Загрузка данных протокола...",
+		"errorLoading": "Ошибка загрузки данных курса.",
+		"solveChallenge": "РЕШИТЬ ЗАДАЧУ",
+		"hint": "ПОДСКАЗКА"
 	},
 	"Lesson": {
 		"reference": "СПРАВКА",
@@ -154,7 +161,17 @@
 		"runTests": "ЗАПУСТИТЬ ТЕСТЫ",
 		"module": "МОДУЛЬ",
 		"previous": "ПРЕДЫДУЩИЙ",
-		"nextLesson": "СЛЕДУЮЩИЙ УРОК"
+		"nextLesson": "СЛЕДУЮЩИЙ УРОК",
+		"startChallenge": "START CHALLENGE",
+		"savingProgress": "SAVING PROGRESS...",
+		"markCourseComplete": "MARK COURSE COMPLETE",
+		"loadingProtocol": "SYNCING NEURAL LINK...",
+		"errorNotFound": "PROTOCOL ERROR: COURSE OR LESSON NOT FOUND",
+		"tests": "TESTS",
+		"viewContentOnly": "VIEW CONTENT ONLY",
+		"solveChallenge": "РЕШИТЬ ЗАДАЧУ",
+		"openSandbox": "OPEN SANDBOX",
+		"hint": "ПОДСКАЗКА"
 	},
 	"Dashboard": {
 		"activeCourses": {

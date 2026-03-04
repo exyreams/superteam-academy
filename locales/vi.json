@@ -142,7 +142,10 @@
 		"buttons": {
 			"enroll": "ĐĂNG KÝ NGAY",
 			"enrolling": "ĐANG ĐĂNG KÝ...",
-			"continue": "TIẾP TỤC KHÓA HỌC"
+			"continue": "TIẾP TỤC KHÓA HỌC",
+			"claimCertificate": "CLAIM CERTIFICATE",
+			"viewCredential": "VIEW CREDENTIAL",
+			"issuing": "ISSUING..."
 		},
 		"curriculum": {
 			"title": "Chương Trình Giảng Dạy",
@@ -151,7 +154,11 @@
 		"reviews": {
 			"title": "Phản Hồi Từ Học Viên",
 			"viewAll": "XEM TẤT CẢ ĐÁNH GIÁ"
-		}
+		},
+		"loading": "Đang tải dữ liệu giao thức...",
+		"errorLoading": "Lỗi khi tải dữ liệu khóa học.",
+		"solveChallenge": "GIẢI QUYẾT THỬ THÁCH",
+		"hint": "GỢI Ý"
 	},
 	"Lesson": {
 		"reference": "TÀI LIỆU THAM KHẢO",
@@ -163,7 +170,17 @@
 		"runTests": "CHẠY THỬ NGHIỆM",
 		"module": "MÔ-ĐUN",
 		"previous": "TRƯỚC",
-		"nextLesson": "BÀI HỌC TIẾP THEO"
+		"nextLesson": "BÀI HỌC TIẾP THEO",
+		"startChallenge": "START CHALLENGE",
+		"savingProgress": "SAVING PROGRESS...",
+		"markCourseComplete": "MARK COURSE COMPLETE",
+		"loadingProtocol": "SYNCING NEURAL LINK...",
+		"errorNotFound": "PROTOCOL ERROR: COURSE OR LESSON NOT FOUND",
+		"tests": "TESTS",
+		"viewContentOnly": "VIEW CONTENT ONLY",
+		"solveChallenge": "GIẢI QUYẾT THỬ THÁCH",
+		"openSandbox": "OPEN SANDBOX",
+		"hint": "GỢI Ý"
 	},
 	"Dashboard": {
 		"activeCourses": {

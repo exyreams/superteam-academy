@@ -142,7 +142,10 @@
 		"buttons": {
 			"enroll": "JETZT EINSCHREIBEN",
 			"enrolling": "WIRD EINGESCHRIEBEN...",
-			"continue": "KURS FORTSETZEN"
+			"continue": "KURS FORTSETZEN",
+			"claimCertificate": "CLAIM CERTIFICATE",
+			"viewCredential": "VIEW CREDENTIAL",
+			"issuing": "ISSUING..."
 		},
 		"curriculum": {
 			"title": "Lehrplan",
@@ -151,7 +154,11 @@
 		"reviews": {
 			"title": "Studenten-Feedback",
 			"viewAll": "ALLE BEWERTUNGEN ANSEHEN"
-		}
+		},
+		"loading": "Protokolldaten werden geladen...",
+		"errorLoading": "Fehler beim Laden der Kursdaten.",
+		"solveChallenge": "HERAUSFORDERUNG LÖSEN",
+		"hint": "HINWEIS"
 	},
 	"Lesson": {
 		"reference": "REFERENZ",
@@ -163,7 +170,17 @@
 		"runTests": "TESTS AUSFÜHREN",
 		"module": "MODUL",
 		"previous": "ZURÜCK",
-		"nextLesson": "NÄCHSTE LEKTION"
+		"nextLesson": "NÄCHSTE LEKTION",
+		"startChallenge": "START CHALLENGE",
+		"savingProgress": "SAVING PROGRESS...",
+		"markCourseComplete": "MARK COURSE COMPLETE",
+		"loadingProtocol": "SYNCING NEURAL LINK...",
+		"errorNotFound": "PROTOCOL ERROR: COURSE OR LESSON NOT FOUND",
+		"tests": "TESTS",
+		"viewContentOnly": "VIEW CONTENT ONLY",
+		"solveChallenge": "HERAUSFORDERUNG LÖSEN",
+		"openSandbox": "OPEN SANDBOX",
+		"hint": "HINWEIS"
 	},
 	"Dashboard": {
 		"activeCourses": {
