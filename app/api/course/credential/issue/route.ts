@@ -5,9 +5,8 @@
 
 import { AnchorProvider, BN, Program } from "@coral-xyz/anchor";
 import { Connection, Keypair, PublicKey, SystemProgram } from "@solana/web3.js";
-import fs from "fs";
 import { NextResponse } from "next/server";
-import path from "path";
+import { getBackendSigner } from "@/lib/utils/backend-signer";
 import { v4 as uuidv4 } from "uuid";
 import {
 	CLUSTER_URL,
@@ -47,15 +46,20 @@ export async function POST(request: Request) {
 		const learnerPublicKey = new PublicKey(learnerAddress);
 
 		// 1. Load Backend Signer
-		const keypairPath = path.resolve(process.cwd(), "wallets", "signer.json");
-		if (!fs.existsSync(keypairPath)) {
+		let backendSigner: Keypair;
+		try {
+			backendSigner = getBackendSigner();
+		} catch (error) {
 			return NextResponse.json(
-				{ error: "Backend signer not found" },
+				{
+					error:
+						error instanceof Error
+							? error.message
+							: "Failed to load backend signer.",
+				},
 				{ status: 500 },
 			);
 		}
-		const secretKeyArray = JSON.parse(fs.readFileSync(keypairPath, "utf-8"));
-		const backendSigner = Keypair.fromSecretKey(new Uint8Array(secretKeyArray));
 
 		// 2. Setup Program
 		const anchorWallet = {

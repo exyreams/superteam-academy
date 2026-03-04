@@ -10,9 +10,8 @@ import {
 } from "@solana/spl-token";
 import { Connection, Keypair, PublicKey, SystemProgram } from "@solana/web3.js";
 import { and, eq, gte, sql } from "drizzle-orm";
-import fs from "fs";
 import { NextResponse } from "next/server";
-import path from "path";
+import { getBackendSigner } from "@/lib/utils/backend-signer";
 import { v4 as uuidv4 } from "uuid";
 import {
 	CLUSTER_URL,
@@ -129,20 +128,20 @@ export async function POST(request: Request) {
 		const learnerPublicKey = new PublicKey(learnerAddress);
 
 		// 1. Load Backend Signer (Authority keypair)
-		const keypairPath = path.resolve(process.cwd(), "wallets", "signer.json");
-		if (!fs.existsSync(keypairPath)) {
+		let backendSigner: Keypair;
+		try {
+			backendSigner = getBackendSigner();
+		} catch (error) {
 			return NextResponse.json(
 				{
 					error:
-						"Backend signer keypair not found. Ensure wallets/signer.json exists.",
+						error instanceof Error
+							? error.message
+							: "Failed to load backend signer.",
 				},
 				{ status: 500 },
 			);
 		}
-
-		const raw = fs.readFileSync(keypairPath, "utf-8");
-		const secretKeyArray = JSON.parse(raw);
-		const backendSigner = Keypair.fromSecretKey(new Uint8Array(secretKeyArray));
 
 		// 2. Initialize Program Instance Server-Side
 		const anchorWallet = {

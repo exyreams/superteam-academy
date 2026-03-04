@@ -6,10 +6,9 @@
 import { AnchorProvider, Program } from "@coral-xyz/anchor";
 import { Connection, Keypair, PublicKey, SystemProgram } from "@solana/web3.js";
 import crypto from "crypto";
-import fs from "fs";
 import { NextResponse } from "next/server";
 import { createClient } from "next-sanity";
-import path from "path";
+import { getBackendSigner } from "@/lib/utils/backend-signer";
 import { CLUSTER_URL, getConfigPda, getCoursePda } from "@/lib/anchor/client";
 import type { OnchainAcademy } from "@/lib/anchor/idl/onchain_academy";
 import IDL from "@/lib/anchor/idl/onchain_academy.json";
@@ -54,17 +53,20 @@ export async function POST(request: Request) {
 		const creatorPublicKey = new PublicKey(creatorAddress);
 
 		// 1. Load Backend Signer (Authority keypair)
-		const keypairPath = path.resolve(process.cwd(), "wallets", "signer.json");
-		if (!fs.existsSync(keypairPath)) {
+		let backendSigner: Keypair;
+		try {
+			backendSigner = getBackendSigner();
+		} catch (error) {
 			return NextResponse.json(
-				{ error: "Backend signer keypair not found." },
+				{
+					error:
+						error instanceof Error
+							? error.message
+							: "Failed to load backend signer.",
+				},
 				{ status: 500 },
 			);
 		}
-
-		const raw = fs.readFileSync(keypairPath, "utf-8");
-		const secretKeyArray = JSON.parse(raw);
-		const backendSigner = Keypair.fromSecretKey(new Uint8Array(secretKeyArray));
 
 		// 2. Fetch course from Sanity
 		const course = await client.fetch(

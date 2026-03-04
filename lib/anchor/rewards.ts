@@ -10,13 +10,11 @@ import {
 } from "@solana/spl-token";
 import {
 	Connection,
-	Keypair,
 	PublicKey,
 	type Transaction,
 	type VersionedTransaction,
 } from "@solana/web3.js";
-import fs from "fs";
-import path from "path";
+import { getBackendSigner } from "../utils/backend-signer";
 import {
 	CLUSTER_URL,
 	getConfigPda,
@@ -42,12 +40,7 @@ export async function mintXp(
 		if (amount <= 0) return { success: true, message: "No XP to award" };
 
 		// 1. Load Backend Signer
-		const keypairPath = path.resolve(process.cwd(), "wallets", "signer.json");
-		if (!fs.existsSync(keypairPath)) {
-			throw new Error("Backend signer keypair not found");
-		}
-		const secretKey = JSON.parse(fs.readFileSync(keypairPath, "utf-8"));
-		const backendSigner = Keypair.fromSecretKey(new Uint8Array(secretKey));
+		const backendSigner = getBackendSigner();
 
 		// 2. Initialize Program
 		const provider = new AnchorProvider(
