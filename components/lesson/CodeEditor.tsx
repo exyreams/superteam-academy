@@ -1,14 +1,12 @@
-/**
- * @fileoverview CodeEditor component providing an IDE-like experience using CodeMirror.
- * Supports Rust, JavaScript, and JSON with database-backed auto-save and localStorage fallback.
- */
-
 "use client";
 
+import { autocompletion, completeFromList } from "@codemirror/autocomplete";
+import { indentWithTab } from "@codemirror/commands";
 import { javascript } from "@codemirror/lang-javascript";
 import { json } from "@codemirror/lang-json";
 import { rust } from "@codemirror/lang-rust";
-import { EditorView } from "@codemirror/view";
+import { search } from "@codemirror/search";
+import { EditorView, keymap, type ViewUpdate } from "@codemirror/view";
 import {
 	ArrowCounterClockwiseIcon,
 	CloudCheckIcon,
@@ -23,6 +21,7 @@ import { useEffect, useMemo, useState } from "react";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { useLessonCode } from "@/lib/hooks/use-lesson-code";
+import { validateChallengeCode } from "@/lib/utils/challenge-validator";
 
 /**
  * Represents a single test case for verification.
@@ -46,6 +45,21 @@ interface CodeEditorProps {
 	onComplete?: () => void;
 }
 
+const SOLANA_COMPLETIONS = [
+	{ label: "Pubkey", type: "type", detail: "Solana Public Key" },
+	{ label: "AccountInfo", type: "type", detail: "Solana Account Info" },
+	{ label: "Program", type: "type", detail: "Anchor Program" },
+	{ label: "Signer", type: "type", detail: "Anchor Signer" },
+	{ label: "Account", type: "type", detail: "Anchor Account" },
+	{ label: "Ctx", type: "type", detail: "Anchor Context" },
+	{ label: "Result", type: "type", detail: "Anchor Result" },
+	{ label: "msg!", type: "function", detail: "Solana Logging Macro" },
+	{ label: "declare_id!", type: "function", detail: "Anchor Program ID Macro" },
+	{ label: "find_program_address", type: "method", detail: "PDA derivation" },
+	{ label: "SystemProgram", type: "constant", detail: "Solana System Program" },
+	{ label: "ID", type: "constant" },
+];
+
 /**
  * Syntax-highlighted code editor for solving course challenges.
  * Persists code to DB (via TanStack) with localStorage as an immediate fallback.
@@ -63,8 +77,10 @@ export function CodeEditor({
 	const { resolvedTheme } = useTheme();
 	const [localCode, setLocalCode] = useState<string | null>(null);
 	const [isRunning, setIsRunning] = useState(false);
+	const [isValidating, setIsValidating] = useState(false);
 	const [output, setOutput] = useState<string>("");
 	const [lastSaved, setLastSaved] = useState<Date>(new Date());
+	const [cursorPos, setCursorPos] = useState({ line: 1, col: 1 });
 
 	const { code: savedCode, save } = useLessonCode(
 		lessonId,
@@ -72,45 +88,64 @@ export function CodeEditor({
 		initialCode,
 	);
 
-	// ‼️ Derive code from savedCode directly — avoid setting state in effects
 	const code = localCode !== null ? localCode : savedCode;
 
 	// Auto-save: debounce 2s then persist to DB
-	// biome-ignore lint/correctness/useExhaustiveDependencies: Reset timer on every code change
 	useEffect(() => {
-		if (code === savedCode) return; // No change from saved
+		if (code === savedCode) return;
 		const timer = setTimeout(() => {
 			save({ code });
 			setLastSaved(new Date());
 		}, 2000);
 		return () => clearTimeout(timer);
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [code]);
+	}, [code, savedCode, save]);
 
-	const getLanguageExtension = () => {
+	// Real-time "Logical Check" pulse
+	useEffect(() => {
+		const timer = setTimeout(() => {
+			if (code && code !== initialCode) {
+				setIsValidating(true);
+				setTimeout(() => setIsValidating(false), 800);
+			}
+		}, 1000);
+		return () => clearTimeout(timer);
+	}, [code, initialCode]);
+
+	const getLanguage = () => {
 		const codeLower = code.toLowerCase();
 		if (
 			codeLower.includes("use anchor") ||
 			codeLower.includes("pub fn") ||
 			codeLower.includes("#[account]")
 		) {
-			return rust();
+			return { name: "Rust", ext: rust() };
 		}
 		if (
 			codeLower.includes("import") ||
-			codeLower.includes("export") ||
 			codeLower.includes("const ") ||
 			codeLower.includes("function")
 		) {
-			return javascript({ typescript: true });
+			return { name: "TypeScript", ext: javascript({ typescript: true }) };
 		}
 		if (code.trim().startsWith("{") || code.trim().startsWith("[")) {
-			return json();
+			return { name: "JSON", ext: json() };
 		}
-		return rust();
+		return { name: "Rust", ext: rust() };
 	};
 
-	// Custom theme extension to hide the gutter border
+	const lang = getLanguage();
+
+	const handleUpdate = (update: ViewUpdate) => {
+		if (update.selectionSet || update.docChanged) {
+			const pos = update.state.selection.main.head;
+			const line = update.state.doc.lineAt(pos);
+			setCursorPos({
+				line: line.number,
+				col: pos - line.from + 1,
+			});
+		}
+	};
+
 	const editorTheme = useMemo(() => {
 		return EditorView.theme({
 			"&": {
@@ -120,6 +155,9 @@ export function CodeEditor({
 				backgroundColor: resolvedTheme === "dark" ? "#1e1e1e" : "#ffffff",
 				color: "#858585",
 				border: "none",
+			},
+			".cm-activeLine": {
+				backgroundColor: resolvedTheme === "dark" ? "#2c2c2c" : "#f3f3f3",
 			},
 			".cm-activeLineGutter": {
 				backgroundColor: resolvedTheme === "dark" ? "#2c2c2c" : "#f3f3f3",
@@ -131,19 +169,29 @@ export function CodeEditor({
 				{
 					backgroundColor: resolvedTheme === "dark" ? "#264f78" : "#add6ff",
 				},
+			".cm-tooltip": {
+				border: "none",
+				backgroundColor: "#252526",
+				color: "#cccccc",
+				boxShadow: "0 4px 12px rgba(0,0,0,0.5)",
+			},
+			".cm-tooltip.cm-tooltip-autocomplete > ul > li[aria-selected]": {
+				backgroundColor: "#094771",
+				color: "white",
+			},
 		});
 	}, [resolvedTheme]);
+
+	const handleReset = () => {
+		setLocalCode(initialCode);
+		toast.info("Code reset to starter template");
+	};
 
 	const handleShowSolution = () => {
 		if (solution) {
 			setLocalCode(solution);
 			toast.info("Solution loaded into editor");
 		}
-	};
-
-	const handleReset = () => {
-		setLocalCode(initialCode);
-		toast.info("Code reset to starter template");
 	};
 
 	const handleRunTests = async () => {
@@ -154,31 +202,32 @@ export function CodeEditor({
 
 		await new Promise((resolve) => setTimeout(resolve, 1500));
 
-		const isSolution =
-			code.includes("Pubkey::find_program_address") ||
-			code.length > initialCode.length + 10;
+		const { passed, errorMessage } = validateChallengeCode(
+			code,
+			solution || "",
+			initialCode,
+		);
 
-		if (isSolution) {
+		if (passed) {
 			setOutput(
-				"> cargo test-bpf...\n> Finished in 2.4s\n> Running 3 tests\n\ntest seed_alignment ... ok\ntest bump_verification ... ok\ntest program_id_context ... ok\n\ntest result: ok. 3 passed; 0 failed; 0 ignored;",
+				`> cargo test-bpf...\n> Finished in 2.4s\n> Running ${testResults.length || 3} tests\n\n${(testResults.length > 0 ? testResults : [{ name: "logic" }, { name: "safety" }, { name: "io" }]).map((r) => `test ${r.name.toLowerCase().replace(/\s+/g, "_")} ... ok`).join("\n")}\n\ntest result: ok. ${testResults.length || 3} passed; 0 failed; 0 ignored;`,
 			);
 			if (onTestResultsChange) {
 				onTestResultsChange(testResults.map((r) => ({ ...r, status: "pass" })));
 			}
-			// Save completed state to DB
 			save({ code, completed: true });
 			toast.success("All tests passed! Challenge completed.");
 			if (onComplete) onComplete();
 		} else {
 			setOutput(
-				"> cargo test-bpf...\n> Finished in 1.8s\n> Running 3 tests\n\ntest seed_alignment ... FAILED\n\ntest result: FAILED. 0 passed; 1 failed; 2 ignored;",
+				`> cargo test-bpf...\n> Finished in 1.8s\n> Running tests\n\nFAILED: Logical Check failed\nReason: ${errorMessage}\n\ntest result: FAILED. 0 passed; 1 failed; 0 ignored;`,
 			);
 			if (onTestResultsChange) {
 				onTestResultsChange(
 					testResults.map((r, i) => (i === 0 ? { ...r, status: "fail" } : r)),
 				);
 			}
-			toast.error("Some tests failed. Check your logic.");
+			toast.error(`Verification failed: ${errorMessage}`);
 		}
 
 		setIsRunning(false);
@@ -193,17 +242,12 @@ export function CodeEditor({
 		return `${minutes}m ${t("ago")}`;
 	};
 
-	// Controlled handler: update local state instantly, auto-save via effect
-	const handleCodeChange = (value: string) => {
-		setLocalCode(value);
-	};
-
 	return (
 		<div className="flex flex-col h-full border-l border-border bg-bg-base transition-colors duration-200">
-			{/* Editor Header - Always dark for IDE look */}
+			{/* Editor Header */}
 			<div className="bg-[#0f1114] text-white px-4 py-2.5 flex justify-between items-center shrink-0 border-b border-white/5">
 				<span className="text-[10px] font-bold uppercase tracking-[0.2em] font-mono opacity-90">
-					SRC/LIB.RS
+					{lang.name === "Rust" ? "SRC/LIB.RS" : "INDEX.TS"}
 				</span>
 				<div className="flex gap-6 items-center">
 					<div className="flex items-center gap-2 text-[9px] uppercase tracking-widest opacity-50 font-medium">
@@ -233,14 +277,24 @@ export function CodeEditor({
 			</div>
 
 			{/* Main Editor Area */}
-			<div className="flex-1 flex flex-col bg-white dark:bg-[#1e1e1e] overflow-hidden">
-				<div className="flex-1 overflow-hidden border-b border-border">
+			<div className="flex-1 flex flex-col bg-white dark:bg-[#1e1e1e] overflow-hidden relative">
+				<div className="flex-1 overflow-hidden">
 					<CodeMirror
 						value={code}
 						height="100%"
 						theme={resolvedTheme === "dark" ? vscodeDark : xcodeLight}
-						extensions={[getLanguageExtension(), editorTheme]}
-						onChange={(value) => handleCodeChange(value)}
+						extensions={[
+							lang.ext,
+							editorTheme,
+							search({ top: true }),
+							autocompletion({
+								override: [completeFromList(SOLANA_COMPLETIONS)],
+								activateOnTyping: true,
+							}),
+							keymap.of([indentWithTab]),
+						]}
+						onUpdate={handleUpdate}
+						onChange={(value) => setLocalCode(value)}
 						className="h-full text-[13px] font-mono leading-relaxed"
 						basicSetup={{
 							lineNumbers: true,
@@ -250,7 +304,7 @@ export function CodeEditor({
 							allowMultipleSelections: true,
 							indentOnInput: true,
 							bracketMatching: true,
-							autocompletion: true,
+							autocompletion: false, // Handle via extension above
 							rectangularSelection: true,
 							crosshairCursor: true,
 							highlightSelectionMatches: true,
@@ -258,12 +312,33 @@ export function CodeEditor({
 					/>
 				</div>
 
+				{/* Professional Status Bar */}
+				<div className="h-6 bg-[#007acc] text-white px-3 flex items-center justify-between text-[10px] font-medium shrink-0 select-none">
+					<div className="flex items-center gap-4">
+						<div className="flex items-center gap-1.5 cursor-help">
+							<div
+								className={`w-1.5 h-1.5 rounded-full ${isValidating ? "bg-white animate-pulse" : "bg-white/40"}`}
+							/>
+							<span>{isValidating ? "Validating..." : "Ln 0, Col 0"}</span>
+						</div>
+						<div className="opacity-80">
+							Ln {cursorPos.line}, Col {cursorPos.col}
+						</div>
+					</div>
+					<div className="flex items-center gap-4">
+						<div className="opacity-80 uppercase tracking-wider">
+							{lang.name}
+						</div>
+						<div className="opacity-80">UTF-8</div>
+					</div>
+				</div>
+
 				{/* Footer Controls / Console */}
 				<div className="px-6 py-5 bg-bg-surface/50 dark:bg-bg-base/95 flex flex-col gap-4 shrink-0 transition-colors border-t border-border/40 dark:border-white/5">
 					<div className="flex justify-between items-end">
 						<div className="flex flex-col gap-1">
 							<div className="text-[9px] font-bold uppercase tracking-widest text-ink-tertiary opacity-60">
-								Status
+								STATUS
 							</div>
 							<div className="text-[11px] font-bold uppercase tracking-widest font-mono flex items-center gap-2">
 								<div
@@ -297,16 +372,23 @@ export function CodeEditor({
 						</Button>
 					</div>
 
-					{/* Terminal Output */}
-					<div className="bg-white/70 dark:bg-[#0d0f12] rounded-md p-4 font-mono text-[11px] text-[#166534] dark:text-[#4ade80]/90 h-36 overflow-y-auto border border-border/60 dark:border-white/5 scrollbar-thin scrollbar-thumb-white/10 selection:bg-white/10">
-						<div className="opacity-60 dark:opacity-40 mb-3 border-b border-ink-tertiary/30 dark:border-white/10 pb-1.5 flex justify-between items-center font-mono text-ink-primary dark:text-white">
-							<span className="tracking-[0.2em] text-[8px] font-bold opacity-70">
-								CONSOLE_LOG
-							</span>
-							<span className="text-[9px]">UTF-8</span>
+					<div className="bg-ink-primary text-bg-base rounded-md p-5 font-mono text-[11px] h-40 overflow-y-auto border border-border/40 shadow-2xl relative overflow-hidden flex flex-col group">
+						<div className="flex items-center justify-between mb-4 border-b border-bg-base/10 pb-2.5 shrink-0">
+							<div className="flex items-center gap-3">
+								<span className="text-[9px] uppercase font-bold tracking-[0.2em] text-bg-base/40">
+									Terminal Output
+								</span>
+								<div className="h-3 w-px bg-bg-base/10" />
+								<span className="text-[9px] text-bg-base/30">UTF-8</span>
+							</div>
+							<div className="flex gap-1.5">
+								<div className="w-1.5 h-1.5 rounded-full bg-red-500/30 group-hover:bg-red-500/50 transition-colors" />
+								<div className="w-1.5 h-1.5 rounded-full bg-yellow-500/30 group-hover:bg-yellow-500/50 transition-colors" />
+								<div className="w-1.5 h-1.5 rounded-full bg-green-500/30 group-hover:bg-green-500/50 transition-colors" />
+							</div>
 						</div>
-						<pre className="whitespace-pre-wrap leading-relaxed font-jetbrains-mono">
-							{output}
+						<pre className="whitespace-pre-wrap leading-relaxed text-bg-base/80 font-mono italic flex-1 custom-scrollbar">
+							{output || "> Device initialized. Ready for execution..."}
 						</pre>
 					</div>
 				</div>

@@ -8,6 +8,7 @@ import {
 	CaretDownIcon,
 	CaretRightIcon,
 	CheckCircleIcon,
+	CircleIcon,
 	CodeIcon,
 	TextColumnsIcon,
 	XCircleIcon,
@@ -425,40 +426,43 @@ export function LessonViewClient({ slug, lessonId }: LessonViewClientProps) {
 										)}
 									</div>
 								)}
-								{/* Verification Section - Compact Design */}
+								{/* Verification Section - Professional Design */}
 								{testResults.length > 0 && (
-									<div className="mt-8 pt-6 border-t border-border/40 dark:border-white/10 bg-bg-surface/60 dark:bg-white/5 rounded-lg px-4 pb-6 shadow-sm dark:shadow-none">
-										<h4 className="text-[10px] font-bold uppercase tracking-[0.2em] text-ink-tertiary dark:text-white mb-5 flex items-center gap-2">
+									<div className="mt-10 pt-8 border-t border-border/40 dark:border-white/10">
+										<span className="block text-[10px] uppercase font-bold tracking-[0.2em] mb-6 text-ink-secondary/60">
 											{t("tests")}
-										</h4>
+										</span>
 										<div className="space-y-4">
 											{testResults.map((test, i) => (
-												<div key={i} className="flex flex-col gap-1.5">
-													<div className="flex items-center gap-3">
-														<div className="shrink-0">
-															{test.status === "pass" ? (
-																<CheckCircleIcon
-																	size={16}
-																	className="text-green-600 dark:text-green-400"
-																	weight="fill"
-																/>
-															) : test.status === "fail" ? (
-																<XCircleIcon
-																	size={16}
-																	className="text-red-600 dark:text-red-400"
-																	weight="fill"
-																/>
-															) : (
-																<div className="w-3.5 h-3.5 rounded-full border border-ink-tertiary/30 dark:border-white/30" />
-															)}
-														</div>
-														<span className="text-[11px] font-bold uppercase tracking-wider text-ink-primary dark:text-white/90">
-															{test.name}
-														</span>
+												<div key={i} className="flex items-start gap-3 group">
+													<div className="shrink-0 mt-0.5">
+														{test.status === "pass" ? (
+															<CheckCircleIcon
+																size={18}
+																weight="fill"
+																className="text-green-500 drop-shadow-[0_0_8px_rgba(34,197,94,0.3)]"
+															/>
+														) : test.status === "fail" ? (
+															<XCircleIcon
+																size={18}
+																weight="fill"
+																className="text-red-500"
+															/>
+														) : (
+															<CircleIcon
+																size={18}
+																className="text-ink-tertiary/40"
+															/>
+														)}
 													</div>
-													<p className="text-[10px] leading-relaxed text-ink-tertiary dark:text-white/60 pl-7 italic font-medium">
-														{test.description}
-													</p>
+													<div className="flex-1 min-w-0">
+														<div className="text-[12px] font-bold uppercase tracking-tight text-ink-primary dark:text-white mb-1 leading-none">
+															{test.name}
+														</div>
+														<div className="text-[11px] text-ink-secondary italic leading-relaxed">
+															{test.description}
+														</div>
+													</div>
 												</div>
 											))}
 										</div>

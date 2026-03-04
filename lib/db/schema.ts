@@ -212,3 +212,50 @@ export const lessonProgress = pgTable(
 		};
 	},
 );
+
+/**
+ * Standalone Daily Challenges — NOT tied to any course.
+ * Mirrors Sanity dailyChallenge docs for fast DB queries and submission tracking.
+ */
+export const dailyChallenge = pgTable("daily_challenge", {
+	id: text("id").primaryKey(),
+	sanityId: text("sanityId").unique(),
+	slug: text("slug").notNull().unique(),
+	title: text("title").notNull(),
+	difficulty: integer("difficulty").default(1).notNull(),
+	category: text("category"),
+	xpReward: integer("xpReward").default(50).notNull(),
+	scheduledDate: text("scheduledDate"), // ISO date string (null = regular/always-available challenge)
+	isActive: boolean("isActive").default(true).notNull(),
+	createdAt: timestamp("createdAt").notNull().defaultNow(),
+	updatedAt: timestamp("updatedAt").notNull().defaultNow(),
+});
+
+/**
+ * Tracks per-user challenge submissions.
+ * Unique constraint on (userId, challengeId) prevents double XP awards.
+ */
+export const challengeSubmission = pgTable(
+	"challenge_submission",
+	{
+		id: text("id").primaryKey(),
+		userId: text("userId")
+			.notNull()
+			.references(() => user.id, { onDelete: "cascade" }),
+		challengeId: text("challengeId")
+			.notNull()
+			.references(() => dailyChallenge.id, { onDelete: "cascade" }),
+		code: text("code"),
+		passed: boolean("passed").default(false).notNull(),
+		xpEarned: integer("xpEarned").default(0).notNull(),
+		submittedAt: timestamp("submittedAt").notNull().defaultNow(),
+	},
+	(table) => {
+		return {
+			userChallengeUnique: uniqueIndex("user_challenge_unique").on(
+				table.userId,
+				table.challengeId,
+			),
+		};
+	},
+);

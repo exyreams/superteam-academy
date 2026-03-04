@@ -20,6 +20,7 @@ interface LessonContentProps {
 	title: string;
 	content: string;
 	hints?: string[];
+	variant?: "default" | "sidebar";
 }
 
 /**
@@ -83,17 +84,30 @@ export function LessonContent({
 	title,
 	content,
 	hints,
+	variant = "default",
 }: LessonContentProps) {
 	const t = useTranslations("Lesson");
 	const [showHints, setShowHints] = useState(false);
 
+	const isSidebar = variant === "sidebar";
+
 	return (
-		<div className="px-4 lg:px-12 pt-12 text-ink-primary">
+		<div
+			className={`${isSidebar ? "px-0 pt-0" : "px-4 lg:px-12 pt-12"} text-ink-primary`}
+		>
 			{/* Header */}
-			<div className="mb-2 text-[10px] uppercase tracking-widest text-ink-secondary">
-				{t("reference")}: {reference}
-			</div>
-			<h1 className="font-display font-bold text-[48px] leading-[0.9] -tracking-[0.02em] mb-6">
+			{!isSidebar && (
+				<div className="mb-2 text-[10px] uppercase tracking-widest text-ink-secondary">
+					{t("reference")}: {reference}
+				</div>
+			)}
+			<h1
+				className={`font-display font-bold ${
+					isSidebar
+						? "text-[20px] leading-tight mb-4 mt-2"
+						: "text-[48px] leading-[0.9] -tracking-[0.02em] mb-6"
+				}`}
+			>
 				{title}
 			</h1>
 
@@ -102,8 +116,8 @@ export function LessonContent({
 				<ReactMarkdown components={markdownComponents}>{content}</ReactMarkdown>
 			</div>
 
-			{/* Hints Section */}
-			{hints && hints.length > 0 && (
+			{/* Hints Section - Only show if not in sidebar or explicitly needed */}
+			{!isSidebar && hints && hints.length > 0 && (
 				<div className="mt-10 border border-dashed border-ink-secondary/50 p-4">
 					<button
 						onClick={() => setShowHints(!showHints)}

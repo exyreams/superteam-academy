@@ -11,6 +11,7 @@ import {
 	ShieldCheckIcon,
 	SignInIcon,
 	SquaresFourIcon,
+	SwordIcon,
 	TrophyIcon,
 	UserIcon,
 	UserPlusIcon,
@@ -36,6 +37,12 @@ export function NavRail() {
 			label: "Courses",
 			href: "/courses",
 			active: pathname?.includes("/courses"),
+		},
+		{
+			icon: SwordIcon,
+			label: "Challenges",
+			href: "/challenges",
+			active: pathname?.includes("/challenges"),
 		},
 		{
 			icon: TrophyIcon,
