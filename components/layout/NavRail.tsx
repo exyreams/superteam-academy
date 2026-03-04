@@ -4,17 +4,17 @@
  */
 "use client";
 
+import { useState } from "react";
 import {
 	BookIcon,
+	CaretLeft,
+	CaretRight,
 	ChalkboardTeacherIcon,
-	GearIcon,
 	ShieldCheckIcon,
-	SignInIcon,
 	SquaresFourIcon,
 	SwordIcon,
 	TrophyIcon,
 	UserIcon,
-	UserPlusIcon,
 	UsersIcon,
 } from "@phosphor-icons/react";
 import { Link, usePathname } from "@/i18n/routing";
@@ -24,6 +24,10 @@ import { cn } from "@/lib/utils";
 export function NavRail() {
 	const pathname = usePathname();
 	const { data: session, isPending } = useSession();
+	const [isPinned, setIsPinned] = useState(false);
+	const [isHovered, setIsHovered] = useState(false);
+
+	const expanded = isPinned || isHovered;
 
 	const navItems = [
 		{
@@ -59,7 +63,16 @@ export function NavRail() {
 	];
 
 	return (
-		<aside className="border-r border-ink-secondary/20 dark:border-border hidden lg:flex flex-col items-center pt-6 bg-bg-struct gap-5 sticky top-12 h-[calc(100vh-48px)]">
+		<aside
+			onMouseEnter={() => setIsHovered(true)}
+			onMouseLeave={() => setIsHovered(false)}
+			className={cn(
+				"border-r border-ink-secondary/20 dark:border-border hidden lg:flex flex-col pt-6 bg-bg-struct gap-5 sticky top-12 h-[calc(100vh-48px)] transition-all duration-300 z-30",
+				expanded
+					? "w-56 px-4 items-stretch"
+					: "w-[72px] items-center px-0 overflow-hidden",
+			)}
+		>
 			{/* Navigation Items */}
 			<div className="flex flex-col gap-5">
 				{navItems.map((item) => {
@@ -69,134 +82,154 @@ export function NavRail() {
 							key={item.label}
 							href={item.href}
 							className={cn(
-								"w-8 h-8 flex items-center justify-center relative transition-all border border-transparent hover:bg-ink-primary/5",
+								"flex items-center relative transition-colors border border-transparent hover:bg-ink-primary/5",
+								expanded
+									? "h-10 px-3 w-full justify-start gap-4"
+									: "w-8 h-8 justify-center rounded-none",
 								item.active && "border-ink-secondary/20 bg-ink-primary/5",
 							)}
-							title={item.label}
+							title={expanded ? undefined : item.label}
 						>
 							<Icon
 								size={18}
-								className="text-ink-primary"
+								className="text-ink-primary shrink-0"
 								weight={item.active ? "duotone" : "regular"}
 							/>
+							{expanded && (
+								<span className="font-bold uppercase tracking-widest text-xs text-ink-primary whitespace-nowrap overflow-hidden">
+									{item.label}
+								</span>
+							)}
 						</Link>
 					);
 				})}
 			</div>
 
 			{/* Authenticated Links (Profile, Creator, Admin) */}
-			{isPending ? (
-				<div className="flex flex-col gap-5 mt-auto mb-2">
-					<div className="w-8 h-8 bg-ink-primary/5 animate-pulse border border-ink-secondary/10" />
-					<div className="w-8 h-8 bg-ink-primary/5 animate-pulse border border-ink-secondary/10" />
-					<div className="w-8 h-8 bg-ink-primary/5 animate-pulse border border-ink-secondary/10" />
-				</div>
-			) : session ? (
-				<>
-					<Link
-						href="/profile"
-						className={cn(
-							"w-8 h-8 flex items-center justify-center relative transition-all border border-transparent hover:bg-ink-primary/5 mt-auto",
-							pathname?.includes("/profile") &&
-								"border-ink-secondary/20 bg-ink-primary/5",
-						)}
-						title="Profile"
-					>
-						<UserIcon
-							size={18}
-							className="text-ink-primary"
-							weight={pathname?.includes("/profile") ? "duotone" : "regular"}
-						/>
-					</Link>
-
-					<Link
-						href="/creator"
-						className={cn(
-							"w-8 h-8 flex items-center justify-center relative transition-all border border-transparent hover:bg-ink-primary/5 mb-2",
-							pathname === "/creator" &&
-								"border-ink-secondary/20 bg-ink-primary/5",
-						)}
-						title="Creator Studio"
-					>
-						<ChalkboardTeacherIcon
-							size={18}
-							className="text-ink-primary"
-							weight={pathname === "/creator" ? "duotone" : "regular"}
-						/>
-					</Link>
-
-					{/* Admin Dashboard (Admins Only) */}
-					{(session.user as { role?: string }).role === "admin" && (
-						<Link
-							href="/admin"
+			<div className="mt-auto flex flex-col gap-5 mb-2">
+				{isPending ? (
+					<>
+						<div
 							className={cn(
-								"w-8 h-8 flex items-center justify-center relative transition-all border border-transparent hover:bg-ink-primary/5 mb-2",
-								pathname === "/admin" &&
+								"bg-ink-primary/5 animate-pulse border border-ink-secondary/10",
+								expanded ? "h-10 w-full" : "w-8 h-8",
+							)}
+						/>
+						<div
+							className={cn(
+								"bg-ink-primary/5 animate-pulse border border-ink-secondary/10",
+								expanded ? "h-10 w-full" : "w-8 h-8",
+							)}
+						/>
+						<div
+							className={cn(
+								"bg-ink-primary/5 animate-pulse border border-ink-secondary/10",
+								expanded ? "h-10 w-full" : "w-8 h-8",
+							)}
+						/>
+					</>
+				) : session ? (
+					<>
+						<Link
+							href="/profile"
+							className={cn(
+								"flex items-center relative transition-colors border border-transparent hover:bg-ink-primary/5",
+								expanded
+									? "h-10 px-3 w-full justify-start gap-4"
+									: "w-8 h-8 justify-center rounded-none",
+								pathname?.includes("/profile") &&
 									"border-ink-secondary/20 bg-ink-primary/5",
 							)}
-							title="Admin Dashboard"
+							title={expanded ? undefined : "Profile"}
 						>
-							<ShieldCheckIcon
+							<UserIcon
 								size={18}
-								className="text-ink-primary"
-								weight={pathname === "/admin" ? "duotone" : "regular"}
+								className="text-ink-primary shrink-0"
+								weight={pathname?.includes("/profile") ? "duotone" : "regular"}
 							/>
+							{expanded && (
+								<span className="font-bold uppercase tracking-widest text-xs text-ink-primary whitespace-nowrap overflow-hidden">
+									Profile
+								</span>
+							)}
 						</Link>
+
+						<Link
+							href="/creator"
+							className={cn(
+								"flex items-center relative transition-colors border border-transparent hover:bg-ink-primary/5",
+								expanded
+									? "h-10 px-3 w-full justify-start gap-4"
+									: "w-8 h-8 justify-center rounded-none",
+								pathname === "/creator" &&
+									"border-ink-secondary/20 bg-ink-primary/5",
+							)}
+							title={expanded ? undefined : "Creator Studio"}
+						>
+							<ChalkboardTeacherIcon
+								size={18}
+								className="text-ink-primary shrink-0"
+								weight={pathname === "/creator" ? "duotone" : "regular"}
+							/>
+							{expanded && (
+								<span className="font-bold uppercase tracking-widest text-xs text-ink-primary whitespace-nowrap overflow-hidden">
+									Creator Studio
+								</span>
+							)}
+						</Link>
+
+						{/* Admin Dashboard (Admins Only) */}
+						{(session.user as { role?: string }).role === "admin" && (
+							<Link
+								href="/admin"
+								className={cn(
+									"flex items-center relative transition-colors border border-transparent hover:bg-ink-primary/5",
+									expanded
+										? "h-10 px-3 w-full justify-start gap-4"
+										: "w-8 h-8 justify-center rounded-none",
+									pathname === "/admin" &&
+										"border-ink-secondary/20 bg-ink-primary/5",
+								)}
+								title={expanded ? undefined : "Admin Dashboard"}
+							>
+								<ShieldCheckIcon
+									size={18}
+									className="text-ink-primary shrink-0"
+									weight={pathname === "/admin" ? "duotone" : "regular"}
+								/>
+								{expanded && (
+									<span className="font-bold uppercase tracking-widest text-xs text-ink-primary whitespace-nowrap overflow-hidden">
+										Admin Dashboard
+									</span>
+								)}
+							</Link>
+						)}
+					</>
+				) : null}
+
+				{/* Toggle Expand/Collapse */}
+				<button
+					onClick={() => setIsPinned(!isPinned)}
+					className={cn(
+						"flex items-center relative transition-colors border border-transparent hover:bg-ink-primary/5 text-ink-secondary hover:text-ink-primary mt-2",
+						expanded
+							? "h-10 px-3 w-full justify-start gap-4"
+							: "w-8 h-8 justify-center rounded-none",
 					)}
-				</>
-			) : (
-				/* Unauthenticated Links (Login, Signup) */
-				<>
-					<Link
-						href="/login"
-						className={cn(
-							"w-8 h-8 flex items-center justify-center relative transition-all border border-transparent hover:bg-ink-primary/5 mt-auto mb-2",
-							pathname === "/login" &&
-								"border-ink-secondary/20 bg-ink-primary/5",
-						)}
-						title="Login"
-					>
-						<SignInIcon
-							size={18}
-							className="text-ink-primary"
-							weight={pathname === "/login" ? "duotone" : "regular"}
-						/>
-					</Link>
-
-					<Link
-						href="/signup"
-						className={cn(
-							"w-8 h-8 flex items-center justify-center relative transition-all border border-transparent hover:bg-ink-primary/5 mb-2",
-							pathname === "/signup" &&
-								"border-ink-secondary/20 bg-ink-primary/5",
-						)}
-						title="Initialize Operator"
-					>
-						<UserPlusIcon
-							size={18}
-							className="text-ink-primary"
-							weight={pathname === "/signup" ? "duotone" : "regular"}
-						/>
-					</Link>
-				</>
-			)}
-
-			{/* Settings at bottom (always visible) */}
-			<Link
-				href="/settings"
-				className={cn(
-					"w-8 h-8 flex items-center justify-center relative transition-all border border-transparent hover:bg-ink-primary/5 mb-6",
-					pathname === "/settings" &&
-						"border-ink-secondary/20 bg-ink-primary/5",
-				)}
-				title="Settings"
-			>
-				<GearIcon
-					size={18}
-					className="text-ink-primary"
-					weight={pathname === "/settings" ? "duotone" : "regular"}
-				/>
-			</Link>
+					title={isPinned ? "Unpin Nav" : "Pin Nav"}
+				>
+					{isPinned ? (
+						<CaretLeft size={18} className="shrink-0" />
+					) : (
+						<CaretRight size={18} className="shrink-0" />
+					)}
+					{expanded && (
+						<span className="font-bold uppercase tracking-widest text-[10px] whitespace-nowrap overflow-hidden">
+							{isPinned ? "Unpin" : "Pin Open"}
+						</span>
+					)}
+				</button>
+			</div>
 		</aside>
 	);
 }

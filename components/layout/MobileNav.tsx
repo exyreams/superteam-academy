@@ -7,7 +7,6 @@
 import {
 	BookIcon,
 	ChalkboardTeacherIcon,
-	GearIcon,
 	ListIcon,
 	ShieldCheckIcon,
 	SquaresFourIcon,
@@ -31,39 +30,40 @@ import {
 	SheetTitle,
 	SheetTrigger,
 } from "@/components/ui/sheet";
+import { useTranslations } from "next-intl";
 import { Link, usePathname } from "@/i18n/routing";
 import { useSession } from "@/lib/auth/client";
 import { cn } from "@/lib/utils";
 
 export function MobileNav() {
+	const t = useTranslations("Navbar");
 	const pathname = usePathname();
 	const [open, setOpen] = useState(false);
 	const { data: session } = useSession();
 	const user = session?.user;
 
 	const navItems = [
-		// ... (rest of navItems)
 		{
 			icon: SquaresFourIcon,
-			label: "Dashboard",
+			label: t("cta.dashboard"),
 			href: "/dashboard",
 			active: pathname === "/dashboard",
 		},
 		{
 			icon: BookIcon,
-			label: "Courses",
+			label: t("links.catalog"),
 			href: "/courses",
 			active: pathname?.includes("/courses"),
 		},
 		{
 			icon: TrophyIcon,
-			label: "Leaderboard",
+			label: t("links.leaderboard"),
 			href: "/leaderboard",
 			active: pathname === "/leaderboard",
 		},
 		{
 			icon: UsersIcon,
-			label: "Community",
+			label: t("links.community"),
 			href: "/community",
 			active: pathname === "/community",
 		},
@@ -87,12 +87,6 @@ export function MobileNav() {
 			label: "Admin",
 			href: "/admin",
 			active: pathname === "/admin",
-		},
-		{
-			icon: GearIcon,
-			label: "Settings",
-			href: "/settings",
-			active: pathname === "/settings",
 		},
 	];
 

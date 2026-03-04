@@ -7,11 +7,11 @@
 import {
 	ArrowRightIcon,
 	BookIcon,
-	GiftIcon,
 	HouseIcon,
 	ListIcon,
 	SquaresFourIcon,
 	TrophyIcon,
+	UsersIcon,
 } from "@phosphor-icons/react";
 import { useTranslations } from "next-intl";
 import { useEffect, useState } from "react";
@@ -59,7 +59,7 @@ export function Navbar() {
 				{[
 					{ label: t("links.catalog"), href: "/courses" },
 					{ label: t("links.leaderboard"), href: "/leaderboard" },
-					{ label: t("links.rewards"), href: "/rewards" },
+					{ label: t("links.community"), href: "/community" },
 				].map((item) => (
 					<Link
 						key={item.label}
@@ -154,9 +154,9 @@ export function Navbar() {
 										icon: TrophyIcon,
 									},
 									{
-										label: t("links.rewards"),
-										href: "/rewards",
-										icon: GiftIcon,
+										label: t("links.community"),
+										href: "/community",
+										icon: UsersIcon,
 									},
 								].map((item) => {
 									const isActive =

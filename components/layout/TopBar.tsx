@@ -4,8 +4,8 @@
  */
 "use client";
 
+import { useQuery } from "@tanstack/react-query";
 import { useWallet } from "@solana/wallet-adapter-react";
-import { useEffect, useState } from "react";
 import { LanguageDropdown } from "@/components/LanguageDropdown";
 import { MobileNav } from "@/components/layout/MobileNav";
 import { UserMenu } from "@/components/layout/UserMenu";
@@ -20,32 +20,14 @@ export function TopBar() {
 	const wallet = useWallet();
 	const { data: session, isPending } = useSession();
 
-	const [xp, setXp] = useState<number>(0);
-	const [level, setLevel] = useState<number>(1);
+	const { data: xp = 0 } = useQuery({
+		queryKey: ["xpBalance", wallet.publicKey?.toBase58()],
+		queryFn: () => getXpBalance(wallet.publicKey!),
+		enabled: !!wallet.publicKey && !!session,
+		staleTime: 60 * 1000, // 1 minute
+	});
 
-	useEffect(() => {
-		let mounted = true;
-
-		if (wallet.publicKey) {
-			getXpBalance(wallet.publicKey).then((balance) => {
-				if (mounted) {
-					setXp(balance);
-					setLevel(calculateLevel(balance));
-				}
-			});
-		} else {
-			setTimeout(() => {
-				if (mounted) {
-					setXp(0);
-					setLevel(1);
-				}
-			}, 0);
-		}
-
-		return () => {
-			mounted = false;
-		};
-	}, [wallet.publicKey]);
+	const level = calculateLevel(xp);
 
 	return (
 		<header className="border-b border-ink-secondary/20 dark:border-border flex items-center justify-between px-6 bg-bg-struct h-12 sticky top-0 z-40">
@@ -62,10 +44,15 @@ export function TopBar() {
 				</Link>
 			</div>
 
-			{/* Right: User and Mobile Nav */}
+			{/* Center/Right: Always visible toggles + Auth/User Area */}
 			<div className="flex gap-2 sm:gap-4 items-center">
+				<div className="hidden lg:flex items-center gap-2 mx-1 pr-2 border-r border-ink-secondary/20 dark:border-border">
+					<LanguageDropdown variant="detailed" />
+					<ModeToggle />
+				</div>
+
 				<div className="flex items-center gap-2 text-ink-primary">
-					{wallet.publicKey && (
+					{wallet.publicKey && session && (
 						<div className="hidden md:flex flex-col items-end mr-2">
 							<span className="text-[10px] font-bold uppercase tracking-widest text-[#0E9F6E] dark:text-[#14F195] leading-none">
 								LVL {level}
@@ -80,10 +67,6 @@ export function TopBar() {
 						<div className="h-9 w-24 bg-ink-secondary/20 animate-pulse rounded-md" />
 					) : session ? (
 						<div className="flex items-center gap-2 sm:gap-3">
-							<div className="hidden lg:flex items-center gap-2 mx-1 pr-2">
-								<LanguageDropdown variant="detailed" />
-								<ModeToggle />
-							</div>
 							<UserMenu session={session} />
 						</div>
 					) : (
