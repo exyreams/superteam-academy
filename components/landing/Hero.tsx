@@ -4,12 +4,14 @@
  */
 "use client";
 
+import { sendGAEvent } from "@next/third-parties/google";
 import { ArrowRightIcon } from "@phosphor-icons/react";
-import { Button } from "@/components/ui/button";
 import { useTranslations } from "next-intl";
-import { Link } from "@/i18n/routing";
-import { TypingAnimation } from "@/components/shared/TypingAnimation";
+import posthog from "posthog-js";
 import { DotGrid } from "@/components/shared/DotGrid";
+import { TypingAnimation } from "@/components/shared/TypingAnimation";
+import { Button } from "@/components/ui/button";
+import { Link } from "@/i18n/routing";
 
 // Hero Section
 // Displays the primary value proposition with a large typographic title,
@@ -17,6 +19,16 @@ import { DotGrid } from "@/components/shared/DotGrid";
 // Also includes a technical typing animation of a Solana program.
 export function Hero() {
 	const t = useTranslations("Hero");
+
+	const handleExploreClick = () => {
+		posthog.capture("hero_explore_clicked");
+		sendGAEvent("event", "hero_cta_click", { type: "explore" });
+	};
+
+	const handleDiscordClick = () => {
+		posthog.capture("hero_discord_clicked");
+		sendGAEvent("event", "hero_cta_click", { type: "discord" });
+	};
 
 	return (
 		<header className="px-6 lg:px-12 py-16 lg:py-[120px] border-b border-ink-secondary/20 dark:border-border grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 relative overflow-hidden">
@@ -43,6 +55,7 @@ export function Hero() {
 						<Button
 							asChild
 							variant="landingPrimary"
+							onClick={handleExploreClick}
 							className="rounded-none uppercase text-xs font-bold px-8 py-4 h-auto font-mono gap-3 w-full sm:w-auto justify-center"
 						>
 							<Link href="/courses">
@@ -55,6 +68,7 @@ export function Hero() {
 						<Button
 							asChild
 							variant="landingSecondary"
+							onClick={handleDiscordClick}
 							className="rounded-none uppercase text-xs font-bold px-8 py-4 h-auto font-mono gap-3 w-full sm:w-auto justify-center"
 						>
 							<Link

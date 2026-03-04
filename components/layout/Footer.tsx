@@ -4,7 +4,9 @@
  */
 "use client";
 
+import { sendGAEvent } from "@next/third-parties/google";
 import { useLocale, useTranslations } from "next-intl";
+import posthog from "posthog-js";
 import { Logo } from "@/components/shared/logo";
 import {
 	Select,
@@ -22,7 +24,18 @@ export function Footer() {
 	const pathname = usePathname();
 
 	const handleLanguageChange = (value: string) => {
+		posthog.capture("language_changed", { locale: value });
 		router.replace(pathname, { locale: value });
+	};
+
+	const handleFooterLinkClick = (label: string) => {
+		posthog.capture("footer_link_clicked", { link: label });
+		sendGAEvent("event", "footer_interaction", { label });
+	};
+
+	const handleSocialLinkClick = (label: string) => {
+		posthog.capture("social_link_clicked", { platform: label });
+		sendGAEvent("event", "social_interaction", { platform: label });
 	};
 
 	return (
@@ -82,6 +95,7 @@ export function Footer() {
 							<li key={item.label}>
 								<Link
 									href={item.href}
+									onClick={() => handleFooterLinkClick(item.label)}
 									className="text-ink-secondary text-[11px] hover:text-ink-primary transition-colors"
 								>
 									{item.label}
@@ -100,6 +114,7 @@ export function Footer() {
 							<li key={item}>
 								<Link
 									href="#"
+									onClick={() => handleSocialLinkClick(item)}
 									className="text-ink-secondary text-[11px] hover:text-ink-primary transition-colors"
 								>
 									{item}

@@ -4,11 +4,13 @@
  */
 "use client";
 
-import { cn } from "@/lib/utils";
-import { useTranslations } from "next-intl";
-import { Link } from "@/i18n/routing";
+import { sendGAEvent } from "@next/third-parties/google";
 import { CaretRightIcon } from "@phosphor-icons/react";
+import { useTranslations } from "next-intl";
+import posthog from "posthog-js";
 import { Card } from "@/components/ui/card";
+import { Link } from "@/i18n/routing";
+import { cn } from "@/lib/utils";
 
 // Learning Paths Section
 // Displays curated tracks (Beginner, Intermediate, Advanced) with progress visualization.
@@ -20,6 +22,16 @@ export function LearningPaths() {
 		{ key: "intermediate", progress: 2 },
 		{ key: "advanced", progress: 3 },
 	];
+
+	const handleTrackClick = (trackKey: string) => {
+		posthog.capture("landing_track_clicked", { track: trackKey });
+		sendGAEvent("event", "track_selection", { track_id: trackKey });
+	};
+
+	const handleViewAllClick = () => {
+		posthog.capture("landing_view_all_tracks_clicked");
+		sendGAEvent("event", "navigation", { destination: "catalog_from_landing" });
+	};
 
 	return (
 		<section className="px-6 lg:px-12 py-16 lg:py-20 border-b border-ink-secondary/20 dark:border-border bg-bg-base relative z-10">
@@ -35,6 +47,7 @@ export function LearningPaths() {
 				</div>
 				<Link
 					href="/courses"
+					onClick={handleViewAllClick}
 					className="text-ink-primary text-[11px] font-bold uppercase tracking-widest hover:opacity-60 transition-opacity flex items-center gap-1"
 				>
 					{t("viewAll")} <CaretRightIcon size={14} />
@@ -44,8 +57,11 @@ export function LearningPaths() {
 			{/* Grid of Learning Path Cards */}
 			<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
 				{tracks.map((track) => (
-					<div key={track.key}>
-						<Card variant="landing" className="p-8 h-full">
+					<div key={track.key} onClick={() => handleTrackClick(track.key)}>
+						<Card
+							variant="landing"
+							className="p-8 h-full cursor-pointer transition-colors hover:border-ink-primary/40 group"
+						>
 							{/* Corner Accent for Digital Aesthetic */}
 							<div className="absolute -top-px -left-px w-3 h-3 border-t-2 border-l-2 border-ink-primary" />
 

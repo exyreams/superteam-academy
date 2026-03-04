@@ -73,6 +73,18 @@ export function Navbar() {
 
 			{/* Desktop Actions */}
 			<div className="hidden lg:flex items-center gap-4">
+				{mounted && session && (
+					<Button
+						asChild
+						variant="outline"
+						className="rounded-none uppercase text-[11px] font-bold px-4 py-2 h-9 border-ink-secondary/20 hover:bg-ink-primary/5 text-ink-primary gap-2"
+					>
+						<Link href="/dashboard">
+							<SquaresFourIcon size={16} weight="duotone" />
+							{t("cta.dashboard")}
+						</Link>
+					</Button>
+				)}
 				<ModeToggle />
 				{mounted && session ? (
 					<UserMenu session={session} />
