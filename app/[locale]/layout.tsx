@@ -4,6 +4,7 @@
  */
 import type { Metadata } from "next";
 import { Barlow_Condensed, JetBrains_Mono } from "next/font/google";
+import { GoogleAnalytics } from "@next/third-parties/google";
 import "../globals.css";
 
 const jetbrainsMono = JetBrains_Mono({
@@ -18,6 +19,7 @@ const barlowCondensed = Barlow_Condensed({
 });
 
 export const metadata: Metadata = {
+	metadataBase: new URL("https://superteam-academy.vercel.app"),
 	title: "Superteam Academy",
 	description:
 		"The premier technical training ground for the next generation of Solana architects.",
@@ -36,15 +38,17 @@ export const metadata: Metadata = {
 		],
 	},
 	alternates: {
+		canonical: "/",
 		languages: {
 			en: "/en",
 			es: "/es",
-			"pt-br": "/pt-br",
+			"pt-BR": "/pt-br",
 			hi: "/hi",
 			zh: "/zh",
 			fr: "/fr",
 			ru: "/ru",
 			ja: "/ja",
+			"x-default": "/en",
 		},
 	},
 };
@@ -77,6 +81,8 @@ export default async function RootLayout({
 	// side is the easiest way to get started
 	const messages = await getMessages();
 
+	const gaId = process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS_ID;
+
 	return (
 		<html lang={locale} suppressHydrationWarning>
 			<body
@@ -99,6 +105,7 @@ export default async function RootLayout({
 					</ThemeProvider>
 				</NextIntlClientProvider>
 			</body>
+			{gaId && <GoogleAnalytics gaId={gaId} />}
 		</html>
 	);
 }

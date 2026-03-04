@@ -90,7 +90,7 @@ export function Navbar() {
 							variant="outline"
 							className="rounded-none uppercase text-xs font-bold px-4 py-2 h-auto gap-3 border-ink-secondary/20 hover:bg-ink-primary/5 text-ink-primary"
 						>
-							<Link href="/auth">Login / Sign up</Link>
+							<Link href="/auth">{t("cta.login")}</Link>
 						</Button>
 					</div>
 				)}
@@ -100,7 +100,12 @@ export function Navbar() {
 			<div className="lg:hidden flex items-center gap-4">
 				<Sheet>
 					<SheetTrigger asChild>
-						<Button variant="ghost" size="icon" className="text-ink-primary">
+						<Button
+							variant="ghost"
+							size="icon"
+							className="text-ink-primary"
+							aria-label="Open navigation menu"
+						>
 							<ListIcon size={24} />
 						</Button>
 					</SheetTrigger>
@@ -202,7 +207,7 @@ export function Navbar() {
 												variant="outline"
 												className="w-full rounded-none uppercase text-xs font-bold h-[42px] justify-center gap-2 border-ink-secondary/20 hover:bg-ink-primary/5 text-ink-primary"
 											>
-												<Link href="/auth">Login / Sign up</Link>
+												<Link href="/auth">{t("cta.login")}</Link>
 											</Button>
 										</>
 									)}

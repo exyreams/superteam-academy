@@ -6,6 +6,15 @@
 		"explore": "Explore Courses",
 		"discord": "Join Discord"
 	},
+	"StatsStrip": {
+		"activeStudents": "Active Students",
+		"nodesValidated": "Nodes Validated",
+		"bountiesWon": "Bounties Won",
+		"jobPlacements": "Job Placements"
+	},
+	"Testimonials": {
+		"sectionLabel": "Student Intelligence Report"
+	},
 	"Navbar": {
 		"brand": "SUPERTEAM ACADEMY",
 		"links": {
@@ -15,7 +24,8 @@
 		},
 		"cta": {
 			"dashboard": "Dashboard",
-			"start": "Start Learning"
+			"start": "Start Learning",
+			"login": "Login / Sign Up"
 		}
 	},
 	"Footer": {
@@ -359,12 +369,18 @@
 					"label": "Anchor",
 					"desc": "Solana smart contract framework"
 				},
-				"defi": { "label": "DeFi", "desc": "Decentralized finance protocols" },
+				"defi": {
+					"label": "DeFi",
+					"desc": "Decentralized finance protocols"
+				},
 				"security": {
 					"label": "Security",
 					"desc": "Audit & vulnerability research"
 				},
-				"frontend": { "label": "Frontend", "desc": "Web3 dApp development" }
+				"frontend": {
+					"label": "Frontend",
+					"desc": "Web3 dApp development"
+				}
 			}
 		},
 		"step5": {

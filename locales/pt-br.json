@@ -19,7 +19,8 @@
 		},
 		"cta": {
 			"dashboard": "Painel",
-			"start": "Começar a Aprender"
+			"start": "Começar a Aprender",
+			"login": "Entrar"
 		}
 	},
 	"Footer": {
@@ -464,5 +465,14 @@
 			"saved": "Configurações de privacidade salvas.",
 			"exported": "Dados exportados com sucesso."
 		}
+	},
+	"StatsStrip": {
+		"activeStudents": "Active Students",
+		"nodesValidated": "Nodes Validated",
+		"bountiesWon": "Bounties Won",
+		"jobPlacements": "Job Placements"
+	},
+	"Testimonials": {
+		"sectionLabel": "Student Intelligence Report"
 	}
 }

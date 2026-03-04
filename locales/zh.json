@@ -15,7 +15,8 @@
 		},
 		"cta": {
 			"dashboard": "仪表板",
-			"start": "开始学习"
+			"start": "开始学习",
+			"login": "登录"
 		}
 	},
 	"Footer": {
@@ -464,5 +465,14 @@
 			"saved": "隐私设置已保存。",
 			"exported": "数据导出成功。"
 		}
+	},
+	"StatsStrip": {
+		"activeStudents": "Active Students",
+		"nodesValidated": "Nodes Validated",
+		"bountiesWon": "Bounties Won",
+		"jobPlacements": "Job Placements"
+	},
+	"Testimonials": {
+		"sectionLabel": "Student Intelligence Report"
 	}
 }

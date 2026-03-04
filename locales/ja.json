@@ -15,7 +15,8 @@
 		},
 		"cta": {
 			"dashboard": "ダッシュボード",
-			"start": "学習を開始"
+			"start": "学習を開始",
+			"login": "ログイン"
 		}
 	},
 	"Footer": {
@@ -464,5 +465,14 @@
 			"saved": "プライバシー設定が保存されました。",
 			"exported": "データが正常にエクスポートされました。"
 		}
+	},
+	"StatsStrip": {
+		"activeStudents": "Active Students",
+		"nodesValidated": "Nodes Validated",
+		"bountiesWon": "Bounties Won",
+		"jobPlacements": "Job Placements"
+	},
+	"Testimonials": {
+		"sectionLabel": "Student Intelligence Report"
 	}
 }

@@ -15,7 +15,8 @@
 		},
 		"cta": {
 			"dashboard": "Панель",
-			"start": "Начать"
+			"start": "Начать",
+			"login": "Войти"
 		}
 	},
 	"Footer": {
@@ -464,5 +465,14 @@
 			"saved": "Настройки конфиденциальности сохранены.",
 			"exported": "Данные успешно экспортированы."
 		}
+	},
+	"StatsStrip": {
+		"activeStudents": "Active Students",
+		"nodesValidated": "Nodes Validated",
+		"bountiesWon": "Bounties Won",
+		"jobPlacements": "Job Placements"
+	},
+	"Testimonials": {
+		"sectionLabel": "Student Intelligence Report"
 	}
 }

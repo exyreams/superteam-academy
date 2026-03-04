@@ -15,7 +15,8 @@
 		},
 		"cta": {
 			"dashboard": "Tableau de bord",
-			"start": "Commencer"
+			"start": "Commencer",
+			"login": "Connexion"
 		}
 	},
 	"Footer": {
@@ -464,5 +465,14 @@
 			"saved": "Paramètres de confidentialité enregistrés.",
 			"exported": "Données exportées avec succès."
 		}
+	},
+	"StatsStrip": {
+		"activeStudents": "Active Students",
+		"nodesValidated": "Nodes Validated",
+		"bountiesWon": "Bounties Won",
+		"jobPlacements": "Job Placements"
+	},
+	"Testimonials": {
+		"sectionLabel": "Student Intelligence Report"
 	}
 }

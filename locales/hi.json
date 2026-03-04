@@ -15,7 +15,8 @@
 		},
 		"cta": {
 			"dashboard": "डैशबोर्ड",
-			"start": "सीखना शुरू करें"
+			"start": "सीखना शुरू करें",
+			"login": "लॉगिन"
 		}
 	},
 	"Footer": {
@@ -464,5 +465,14 @@
 			"saved": "गोपनीयता सेटिंग्स सहेजी गई।",
 			"exported": "डेटा सफलतापूर्वक निर्यात किया गया।"
 		}
+	},
+	"StatsStrip": {
+		"activeStudents": "Active Students",
+		"nodesValidated": "Nodes Validated",
+		"bountiesWon": "Bounties Won",
+		"jobPlacements": "Job Placements"
+	},
+	"Testimonials": {
+		"sectionLabel": "Student Intelligence Report"
 	}
 }

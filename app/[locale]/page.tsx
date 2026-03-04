@@ -1,46 +1,66 @@
+/**
+ * @fileoverview Landing page layout.
+ * Composes the primary marketing sections in a single-column stack.
+ * Below-the-fold sections use dynamic imports to reduce initial JS bundle.
+ */
+import dynamic from "next/dynamic";
 import { Navbar } from "@/components/layout/Navbar";
 import { Hero } from "@/components/landing/Hero";
 import { StatsStrip } from "@/components/landing/StatsStrip";
-import { LearningPaths } from "@/components/landing/LearningPaths";
 import { Partners } from "@/components/landing/Partners";
-import { Features } from "@/components/landing/Features";
-import { Testimonials } from "@/components/landing/Testimonials";
-import { Newsletter } from "@/components/landing/Newsletter";
 import { Footer } from "@/components/layout/Footer";
 
-// Landing Page Layout
-// Composes the primary marketing sections in a single-column stack.
-// Uses theme variables (bg-bg-base, text-ink-primary) for consistent styling.
+// Dynamic imports for below-the-fold sections to reduce initial JS bundle
+const LearningPaths = dynamic(
+	() =>
+		import("@/components/landing/LearningPaths").then(
+			(mod) => mod.LearningPaths,
+		),
+	{ ssr: true },
+);
+const Features = dynamic(
+	() => import("@/components/landing/Features").then((mod) => mod.Features),
+	{ ssr: true },
+);
+const Testimonials = dynamic(
+	() =>
+		import("@/components/landing/Testimonials").then((mod) => mod.Testimonials),
+	{ ssr: true },
+);
+const Newsletter = dynamic(
+	() => import("@/components/landing/Newsletter").then((mod) => mod.Newsletter),
+	{ ssr: true },
+);
 
 export default function Home() {
-  return (
-    <main className="min-h-screen bg-bg-base text-ink-primary font-mono selection:bg-ink-primary selection:text-bg-base">
-      {/* Navigation Bar - Sticky Global Header */}
-      <Navbar />
+	return (
+		<main className="min-h-screen bg-bg-base text-ink-primary font-mono selection:bg-ink-primary selection:text-bg-base">
+			{/* Navigation Bar - Sticky Global Header */}
+			<Navbar />
 
-      {/* Hero Section - Main Value Proposition */}
-      <Hero />
+			{/* Hero Section - Main Value Proposition */}
+			<Hero />
 
-      {/* Stats Strip - Social Proof / Key Metrics */}
-      <StatsStrip />
+			{/* Stats Strip - Social Proof / Key Metrics */}
+			<StatsStrip />
 
-      {/* Learning Paths - Course Categories */}
-      <LearningPaths />
+			{/* Learning Paths - Course Categories */}
+			<LearningPaths />
 
-      {/* Institutional Partners */}
-      <Partners />
+			{/* Institutional Partners */}
+			<Partners />
 
-      {/* Key Features / Benefits */}
-      <Features />
+			{/* Key Features / Benefits */}
+			<Features />
 
-      {/* Student Testimonials */}
-      <Testimonials />
+			{/* Student Testimonials */}
+			<Testimonials />
 
-      {/* Newsletter Signup */}
-      <Newsletter />
+			{/* Newsletter Signup */}
+			<Newsletter />
 
-      {/* Global Footer */}
-      <Footer />
-    </main>
-  );
+			{/* Global Footer */}
+			<Footer />
+		</main>
+	);
 }
