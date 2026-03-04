@@ -3,17 +3,17 @@
  * Includes XP balance retrieval, level calculation, and progress tracking logic.
  */
 
-import { PublicKey } from "@solana/web3.js";
+import { BN, Program } from "@coral-xyz/anchor";
 import { getAssociatedTokenAddressSync } from "@solana/spl-token";
-import { Program, BN } from "@coral-xyz/anchor";
-import { OnchainAcademy } from "./idl/onchain_academy";
+import { PublicKey } from "@solana/web3.js";
 import {
 	connection,
-	TOKEN_2022_PROGRAM_ID,
 	getConfigPda,
 	getCoursePda,
 	getEnrollmentPda,
+	TOKEN_2022_PROGRAM_ID,
 } from "./client";
+import { OnchainAcademy } from "./idl/onchain_academy";
 
 /**
  * Get XP balance for a wallet
@@ -193,7 +193,11 @@ export async function getUserEnrollments(
 			const enrollment =
 				await program.account.enrollment.fetchNullable(enrollmentPda);
 			if (enrollment) {
-				enrollments.push({ publicKey: enrollmentPda, account: enrollment });
+				enrollments.push({
+					publicKey: enrollmentPda,
+					account: enrollment,
+					courseId: course.account.courseId,
+				});
 			}
 		}
 		return enrollments;

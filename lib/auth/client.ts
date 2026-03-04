@@ -15,6 +15,11 @@ import type { auth } from "./index";
  * Configured with multi-session support and custom Solana wallet linking logic.
  */
 export const authClient = createAuthClient({
+	session: {
+		refetchOnWindowFocus: false,
+		refetchInterval: 0,
+		refetchOnMount: false, // Disable aggressive mount refetching
+	},
 	plugins: [
 		inferAdditionalFields<typeof auth>(),
 		multiSessionClient(),

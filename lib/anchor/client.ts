@@ -7,9 +7,10 @@
  * @fileoverview Anchor client for Onchain Academy program.
  * Provides specialized functions for deriving PDAs and interacting with the Solana program.
  */
-import { Connection, PublicKey } from "@solana/web3.js";
-import { Program, AnchorProvider } from "@coral-xyz/anchor";
+
+import { AnchorProvider, Program } from "@coral-xyz/anchor";
 import type { WalletContextState } from "@solana/wallet-adapter-react";
+import { Connection, PublicKey } from "@solana/web3.js";
 import { OnchainAcademy } from "./idl/onchain_academy";
 import IDL from "./idl/onchain_academy.json";
 
@@ -34,18 +35,30 @@ export const connection = new Connection(CLUSTER_URL, "confirmed");
 
 /**
  * Get the Anchor Program instance
- * @param wallet The wallet from useWallet()
+ * @param wallet The wallet from useWallet() (optional for read-only)
  */
 export function getProgram(
-	wallet: WalletContextState,
-): Program<OnchainAcademy> | null {
-	if (!wallet || !wallet.publicKey) return null;
+	wallet?: WalletContextState | null,
+): Program<OnchainAcademy> {
+	const provider = wallet?.publicKey
+		? new AnchorProvider(
+				connection,
+				wallet as unknown as import("@coral-xyz/anchor").Wallet,
+				AnchorProvider.defaultOptions(),
+			)
+		: new AnchorProvider(
+				connection,
+				{
+					publicKey: PublicKey.default,
+					signTransaction: async (tx: import("@solana/web3.js").Transaction) =>
+						tx,
+					signAllTransactions: async (
+						txs: import("@solana/web3.js").Transaction[],
+					) => txs,
+				} as unknown as import("@coral-xyz/anchor").Wallet,
+				AnchorProvider.defaultOptions(),
+			);
 
-	const provider = new AnchorProvider(
-		connection,
-		wallet as unknown as import("@coral-xyz/anchor").Wallet,
-		AnchorProvider.defaultOptions(),
-	);
 	return new Program<OnchainAcademy>(IDL as OnchainAcademy, provider);
 }
 
