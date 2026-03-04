@@ -9,17 +9,22 @@ import {
 	getAssociatedTokenAddressSync,
 } from "@solana/spl-token";
 import { Connection, Keypair, PublicKey } from "@solana/web3.js";
+import { eq } from "drizzle-orm";
 import fs from "fs";
 import { NextResponse } from "next/server";
 import path from "path";
+import { v4 as uuidv4 } from "uuid";
 import {
 	CLUSTER_URL,
 	getConfigPda,
 	getCoursePda,
 	getEnrollmentPda,
+	TOKEN_2022_PROGRAM_ID,
 } from "@/lib/anchor/client";
 import { OnchainAcademy } from "@/lib/anchor/idl/onchain_academy";
 import IDL from "@/lib/anchor/idl/onchain_academy.json";
+import { db } from "@/lib/db";
+import { streak as streakTable, userActivity } from "@/lib/db/schema";
 import { getPostHogClient } from "@/lib/posthog-server";
 
 const connection = new Connection(CLUSTER_URL, "confirmed");
@@ -111,9 +116,6 @@ export async function POST(request: Request) {
 
 		// 4. Token Accounts
 		const XP_MINT = new PublicKey(process.env.NEXT_PUBLIC_XP_MINT!);
-		const TOKEN_2022_PROGRAM_ID = new PublicKey(
-			"TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb",
-		);
 
 		const learnerTokenAccount = getAssociatedTokenAddressSync(
 			XP_MINT,
@@ -190,6 +192,68 @@ export async function POST(request: Request) {
 			},
 		});
 		await posthog.shutdown();
+
+		// 7. DB Updates (Streaks & Activity)
+		try {
+			const now = new Date();
+			const [existingStreak] = await db
+				.select()
+				.from(streakTable)
+				.where(eq(streakTable.userId, learnerAddress));
+
+			if (!existingStreak) {
+				await db.insert(streakTable).values({
+					id: uuidv4(),
+					userId: learnerAddress,
+					currentStreak: 1,
+					longestStreak: 1,
+					lastActiveDate: now,
+					updatedAt: now,
+				});
+			} else {
+				const lastActive = existingStreak.lastActiveDate;
+				let newCurrent = existingStreak.currentStreak;
+				const isSameDay =
+					lastActive && lastActive.toDateString() === now.toDateString();
+				const isNextDay =
+					lastActive &&
+					new Date(lastActive.getTime() + 86400000).toDateString() ===
+						now.toDateString();
+
+				if (!isSameDay) {
+					if (isNextDay) {
+						newCurrent += 1;
+					} else {
+						newCurrent = 1;
+					}
+					await db
+						.update(streakTable)
+						.set({
+							currentStreak: newCurrent,
+							longestStreak: Math.max(newCurrent, existingStreak.longestStreak),
+							lastActiveDate: now,
+							updatedAt: now,
+						})
+						.where(eq(streakTable.userId, learnerAddress));
+				}
+			}
+
+			// Add Activity record
+			await db.insert(userActivity).values({
+				id: uuidv4(),
+				userId: learnerAddress,
+				type: "course_completed",
+				title: `COURSE COMPLETED: ${courseSlug.toUpperCase()}`,
+				description: "Mastered the track and earned a completion bonus!",
+				xpEarned: Math.floor(
+					(courseAccount.lessonCount * courseAccount.xpPerLesson) / 2,
+				),
+				metadata: { courseSlug, signature: tx },
+				createdAt: now,
+			});
+		} catch (dbError) {
+			console.error("Failed to update DB gamification stats:", dbError);
+		}
 
 		return NextResponse.json({
 			success: true,

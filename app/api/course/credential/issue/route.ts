@@ -8,14 +8,18 @@ import { Connection, Keypair, PublicKey, SystemProgram } from "@solana/web3.js";
 import fs from "fs";
 import { NextResponse } from "next/server";
 import path from "path";
+import { v4 as uuidv4 } from "uuid";
 import {
 	CLUSTER_URL,
 	getConfigPda,
 	getCoursePda,
 	getEnrollmentPda,
+	MPL_CORE_PROGRAM_ID,
 } from "@/lib/anchor/client";
 import { OnchainAcademy } from "@/lib/anchor/idl/onchain_academy";
 import IDL from "@/lib/anchor/idl/onchain_academy.json";
+import { db } from "@/lib/db";
+import { userActivity } from "@/lib/db/schema";
 import { getPostHogClient } from "@/lib/posthog-server";
 
 const connection = new Connection(CLUSTER_URL, "confirmed");
@@ -24,7 +28,11 @@ const connection = new Connection(CLUSTER_URL, "confirmed");
  * Mapping of track IDs to their corresponding MPL Core collection addresses.
  */
 const TRACK_COLLECTIONS: Record<number, string> = {
-	1: "HgbTmCi4wUWAWLx4LD6zJ2AQdayaCe7mVfhJpGwXfeVX",
+	1: "Dzi3c2vDiGkQPXcFzna5WuT6o3XbmetSuMLspxMYN7hJ", // Rust
+	2: "FJ78Whis39a1sjo89q3ufTn5pVctGqiLM59uL3kzX8Hh", // Anchor
+	3: "Diu7bircshMJWXsKEk3snYdfxNXB8QCtHbEif8473ojh", // DeFi
+	4: "4dmgjeUWUojnLPnafoQ4wdiqqBoe6DqpEBcb2vEK3jvC", // Security
+	5: "9WNJe2sLmtTB3SQ8jV4bptTixYHvnTj3C511W2RBtyZF", // Frontend
 };
 
 /**
@@ -126,9 +134,6 @@ export async function POST(request: Request) {
 		}
 
 		const trackCollection = new PublicKey(trackCollectionAddress);
-		const MPL_CORE_PROGRAM_ID = new PublicKey(
-			"CoREENxT6tW1HoK8ypY1SxRMZTcVPm7R94rH4PZNhX7d",
-		);
 
 		// Calculate stats for metadata
 		const totalLessons = courseAccount.lessonCount;
@@ -200,6 +205,25 @@ export async function POST(request: Request) {
 			},
 		});
 		await posthog.shutdown();
+
+		// Add Activity record
+		try {
+			await db.insert(userActivity).values({
+				id: uuidv4(),
+				userId: learnerAddress,
+				type: "achievement",
+				title: isUpgrade
+					? `CREDENTIAL UPGRADED: ${courseAccount.courseId}`
+					: `CREDENTIAL ISSUED: ${courseAccount.courseId}`,
+				description: isUpgrade
+					? "Your on-chain learning track has reached a new milestone!"
+					: "Successfully issued your first soulbound course credential!",
+				metadata: { courseSlug, isUpgrade, signature: tx },
+				createdAt: new Date(),
+			});
+		} catch (dbError) {
+			console.error("Failed to update DB activity for credential:", dbError);
+		}
 
 		return NextResponse.json({
 			success: true,
