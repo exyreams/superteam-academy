@@ -5,28 +5,14 @@
 "use client";
 
 import { sendGAEvent } from "@next/third-parties/google";
-import { useLocale, useTranslations } from "next-intl";
+import { useTranslations } from "next-intl";
 import posthog from "posthog-js";
+import { LanguageDropdown } from "@/components/LanguageDropdown";
 import { Logo } from "@/components/shared/logo";
-import {
-	Select,
-	SelectContent,
-	SelectItem,
-	SelectTrigger,
-	SelectValue,
-} from "@/components/ui/select";
-import { Link, usePathname, useRouter } from "@/i18n/routing";
+import { Link } from "@/i18n/routing";
 
 export function Footer() {
 	const t = useTranslations("Footer");
-	const locale = useLocale();
-	const router = useRouter();
-	const pathname = usePathname();
-
-	const handleLanguageChange = (value: string) => {
-		posthog.capture("language_changed", { locale: value });
-		router.replace(pathname, { locale: value });
-	};
 
 	const handleFooterLinkClick = (label: string) => {
 		posthog.capture("footer_link_clicked", { link: label });
@@ -54,24 +40,7 @@ export function Footer() {
 						</p>
 
 						<div className="mt-8">
-							<Select value={locale} onValueChange={handleLanguageChange}>
-								<SelectTrigger className="w-auto border border-ink-secondary/20 dark:border-border px-3 py-1 h-auto bg-bg-base text-ink-secondary hover:text-ink-primary font-mono text-[11px] uppercase ring-offset-0 focus:ring-0 flex justify-start gap-2 shadow-sm rounded-none data-placeholder:text-ink-secondary">
-									<span className="font-bold text-ink-primary">
-										{t("language")}
-									</span>{" "}
-									<SelectValue />
-								</SelectTrigger>
-								<SelectContent>
-									<SelectItem value="en">English (EN)</SelectItem>
-									<SelectItem value="es">Español (ES)</SelectItem>
-									<SelectItem value="pt-br">Português (PT-BR)</SelectItem>
-									<SelectItem value="hi">हिंदी (HI)</SelectItem>
-									<SelectItem value="zh">中文 (ZH)</SelectItem>
-									<SelectItem value="fr">Français (FR)</SelectItem>
-									<SelectItem value="ru">Русский (RU)</SelectItem>
-									<SelectItem value="ja">日本語 (JA)</SelectItem>
-								</SelectContent>
-							</Select>
+							<LanguageDropdown variant="detailed" />
 						</div>
 					</div>
 					<div className="mt-8 text-[11px] text-ink-secondary uppercase tracking-widest">
