@@ -170,16 +170,21 @@
 			"label": "현재 진행 작업",
 			"title": "활성 코스",
 			"progress": "진행률",
-			"resume": "계속하기"
+			"resume": "계속하기",
+			"lesson": "LESSON",
+			"completed": "COMPLETED",
+			"review": "REVIEW COURSE"
 		},
 		"recommendedTracks": {
 			"label": "다음 목표",
 			"title": "추천 트랙",
-			"enroll": "등록하기"
+			"enroll": "등록하기",
+			"initialize": "INITIALIZE SEQUENCE"
 		},
 		"recentActivity": {
 			"label": "로그 내역",
-			"title": "최근 활동"
+			"title": "최근 활동",
+			"viewAllLogs": "VIEW ALL LOGS"
 		},
 		"userHUD": {
 			"title": "오퍼레이터 프로필",
@@ -193,9 +198,21 @@
 			"days": "일"
 		},
 		"achievements": {
-			"title": "최근 달성 업적"
+			"title": "최근 달성 업적",
+			"missionMilestones": "MISSION MILESTONES",
+			"locked": "Locked Milestone"
 		},
-		"terminal": "터미널 열기[F1]"
+		"logs": {
+			"button": "OPEN LOGS [F1]",
+			"title": "ACTIVITY_LOG.EXE",
+			"version": "SUPERTEAM OS v1.0.0",
+			"tabs": {
+				"all": "ALL",
+				"lessons": "LESSONS",
+				"achievements": "ACHIEVEMENTS"
+			},
+			"emptyState": "No items found matching filter."
+		}
 	},
 	"Profile": {
 		"operatorId": "오퍼레이터_ID",

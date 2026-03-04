@@ -161,16 +161,21 @@
 			"label": "Текущие операции",
 			"title": "АКТИВНЫЕ КУРСЫ",
 			"progress": "ПРОГРЕСС",
-			"resume": "Продолжить"
+			"resume": "Продолжить",
+			"lesson": "LESSON",
+			"completed": "COMPLETED",
+			"review": "REVIEW COURSE"
 		},
 		"recommendedTracks": {
 			"label": "Следующие цели",
 			"title": "РЕКОМЕНДУЕМЫЕ ПУТИ",
-			"enroll": "ЗАПИСАТЬСЯ"
+			"enroll": "ЗАПИСАТЬСЯ",
+			"initialize": "INITIALIZE SEQUENCE"
 		},
 		"recentActivity": {
 			"label": "История логов",
-			"title": "НЕДАВНЯЯ АКТИВНОСТЬ"
+			"title": "НЕДАВНЯЯ АКТИВНОСТЬ",
+			"viewAllLogs": "VIEW ALL LOGS"
 		},
 		"userHUD": {
 			"title": "ПРОФИЛЬ ОПЕРАТОРА",
@@ -184,9 +189,21 @@
 			"days": "Д"
 		},
 		"achievements": {
-			"title": "Последние достижения"
+			"title": "Последние достижения",
+			"missionMilestones": "MISSION MILESTONES",
+			"locked": "Locked Milestone"
 		},
-		"terminal": "ОТКРЫТЬ ТЕРМИНАЛ [F1]"
+		"logs": {
+			"button": "OPEN LOGS [F1]",
+			"title": "ACTIVITY_LOG.EXE",
+			"version": "SUPERTEAM OS v1.0.0",
+			"tabs": {
+				"all": "ALL",
+				"lessons": "LESSONS",
+				"achievements": "ACHIEVEMENTS"
+			},
+			"emptyState": "No items found matching filter."
+		}
 	},
 	"Profile": {
 		"operatorId": "ID ОПЕРАТОРА",

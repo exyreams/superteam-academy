@@ -161,16 +161,21 @@
 			"label": "現在の操作",
 			"title": "アクティブなコース",
 			"progress": "進捗",
-			"resume": "再開"
+			"resume": "再開",
+			"lesson": "LESSON",
+			"completed": "COMPLETED",
+			"review": "REVIEW COURSE"
 		},
 		"recommendedTracks": {
 			"label": "次のターゲット",
 			"title": "推奨トラック",
-			"enroll": "登録"
+			"enroll": "登録",
+			"initialize": "INITIALIZE SEQUENCE"
 		},
 		"recentActivity": {
 			"label": "ログ履歴",
-			"title": "最近のアクティビティ"
+			"title": "最近のアクティビティ",
+			"viewAllLogs": "VIEW ALL LOGS"
 		},
 		"userHUD": {
 			"title": "オペレータープロフィール",
@@ -184,9 +189,21 @@
 			"days": "日"
 		},
 		"achievements": {
-			"title": "最新の実績"
+			"title": "最新の実績",
+			"missionMilestones": "MISSION MILESTONES",
+			"locked": "Locked Milestone"
 		},
-		"terminal": "ターミナルを開く [F1]"
+		"logs": {
+			"button": "OPEN LOGS [F1]",
+			"title": "ACTIVITY_LOG.EXE",
+			"version": "SUPERTEAM OS v1.0.0",
+			"tabs": {
+				"all": "ALL",
+				"lessons": "LESSONS",
+				"achievements": "ACHIEVEMENTS"
+			},
+			"emptyState": "No items found matching filter."
+		}
 	},
 	"Profile": {
 		"operatorId": "オペレーターID",

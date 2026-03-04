@@ -170,16 +170,21 @@
 			"label": "Operasi Saat Ini",
 			"title": "KURSUS AKTIF",
 			"progress": "PROGRES",
-			"resume": "Lanjutkan"
+			"resume": "Lanjutkan",
+			"lesson": "LESSON",
+			"completed": "COMPLETED",
+			"review": "REVIEW COURSE"
 		},
 		"recommendedTracks": {
 			"label": "Target Berikutnya",
 			"title": "JALUR REKOMENDASI",
-			"enroll": "DAFTAR"
+			"enroll": "DAFTAR",
+			"initialize": "INITIALIZE SEQUENCE"
 		},
 		"recentActivity": {
 			"label": "Riwayat Log",
-			"title": "AKTIVITAS TERBARU"
+			"title": "AKTIVITAS TERBARU",
+			"viewAllLogs": "VIEW ALL LOGS"
 		},
 		"userHUD": {
 			"title": "PROFIL OPERATOR",
@@ -193,9 +198,21 @@
 			"days": "H"
 		},
 		"achievements": {
-			"title": "Pencapaian Terbaru"
+			"title": "Pencapaian Terbaru",
+			"missionMilestones": "MISSION MILESTONES",
+			"locked": "Locked Milestone"
 		},
-		"terminal": "BUKA TERMINAL [F1]"
+		"logs": {
+			"button": "OPEN LOGS [F1]",
+			"title": "ACTIVITY_LOG.EXE",
+			"version": "SUPERTEAM OS v1.0.0",
+			"tabs": {
+				"all": "ALL",
+				"lessons": "LESSONS",
+				"achievements": "ACHIEVEMENTS"
+			},
+			"emptyState": "No items found matching filter."
+		}
 	},
 	"Profile": {
 		"operatorId": "ID_OPERATOR",

@@ -1,164 +1,60 @@
-// Achievement definitions and mock data
+/**
+ * @fileoverview Data access layer for user achievements.
+ * Connects earned achievement metadata in userActivity with static definitions.
+ */
 
-export interface Achievement {
-  id: string;
-  name: string;
-  description: string;
-  icon: string; // Bootstrap icon name
-  unlockedAt?: string;
-  category: 'progress' | 'streak' | 'skill' | 'community' | 'special';
+import { and, desc, eq, sql } from "drizzle-orm";
+import { db } from "@/lib/db";
+import { userActivity } from "@/lib/db/schema";
+
+import { Achievement, achievementDefinitions } from "./achievement-definitions";
+
+export type { Achievement };
+export { achievementDefinitions };
+
+/**
+ * Fetches earned achievements for a user from the database and merges with definitions.
+ */
+export async function getUserAchievements(
+	userId: string,
+): Promise<Achievement[]> {
+	if (!userId) return [];
+
+	const earned = await db
+		.select({
+			id: sql<string>`${userActivity.metadata}->>'achievementId'`,
+			unlockedAt: userActivity.createdAt,
+		})
+		.from(userActivity)
+		.where(
+			and(
+				eq(userActivity.userId, userId),
+				eq(userActivity.type, "achievement"),
+			),
+		)
+		.orderBy(desc(userActivity.createdAt));
+
+	const achievements = earned
+		.map((e) => {
+			const def = achievementDefinitions.find((a) => a.id === e.id);
+			if (!def) return null;
+			return {
+				...def,
+				unlockedAt: e.unlockedAt.toISOString(),
+			} as Achievement;
+		})
+		.filter((a): a is Achievement => a !== null);
+
+	return achievements;
 }
 
-export const achievementDefinitions: Achievement[] = [
-  // Progress achievements
-  {
-    id: 'first-steps',
-    name: 'First Steps',
-    description: 'Complete your first lesson',
-    icon: 'bi-footprints',
-    category: 'progress',
-  },
-  {
-    id: 'course-completer',
-    name: 'Course Completer',
-    description: 'Complete your first course',
-    icon: 'bi-trophy',
-    category: 'progress',
-  },
-  {
-    id: 'speed-runner',
-    name: 'Speed Runner',
-    description: 'Complete 5 lessons in one day',
-    icon: 'bi-lightning',
-    category: 'progress',
-  },
-  
-  // Streak achievements
-  {
-    id: 'week-warrior',
-    name: 'Week Warrior',
-    description: 'Maintain a 7-day streak',
-    icon: 'bi-calendar-week',
-    category: 'streak',
-  },
-  {
-    id: 'monthly-master',
-    name: 'Monthly Master',
-    description: 'Maintain a 30-day streak',
-    icon: 'bi-calendar-month',
-    category: 'streak',
-  },
-  {
-    id: 'streak-master',
-    name: 'Streak Master',
-    description: 'Maintain a 100-day streak',
-    icon: 'bi-fire',
-    category: 'streak',
-  },
-  
-  // Skill achievements
-  {
-    id: 'rust-rookie',
-    name: 'Rust Rookie',
-    description: 'Complete Rust Fundamentals',
-    icon: 'bi-cpu-fill',
-    category: 'skill',
-  },
-  {
-    id: 'anchor-expert',
-    name: 'Anchor Expert',
-    description: 'Master the Anchor Framework',
-    icon: 'bi-shield-lock',
-    category: 'skill',
-  },
-  {
-    id: 'full-stack-solana',
-    name: 'Full Stack Solana',
-    description: 'Complete both frontend and backend tracks',
-    icon: 'bi-layers',
-    category: 'skill',
-  },
-  
-  // Community achievements
-  {
-    id: 'helper',
-    name: 'Helper',
-    description: 'Help 10 other learners',
-    icon: 'bi-people-fill',
-    category: 'community',
-  },
-  {
-    id: 'first-comment',
-    name: 'First Comment',
-    description: 'Leave your first comment',
-    icon: 'bi-chat',
-    category: 'community',
-  },
-  {
-    id: 'top-contributor',
-    name: 'Top Contributor',
-    description: 'Be in top 100 contributors',
-    icon: 'bi-star-fill',
-    category: 'community',
-  },
-  
-  // Special achievements
-  {
-    id: 'early-adopter',
-    name: 'Early Adopter',
-    description: 'Join in the first month',
-    icon: 'bi-patch-check',
-    category: 'special',
-  },
-  {
-    id: 'bug-hunter',
-    name: 'Bug Hunter',
-    description: 'Report a valid bug',
-    icon: 'bi-bug-fill',
-    category: 'special',
-  },
-  {
-    id: 'perfect-score',
-    name: 'Perfect Score',
-    description: 'Get 100% on a challenge',
-    icon: 'bi-award',
-    category: 'special',
-  },
-  {
-    id: 'first-deploy',
-    name: 'First Deploy',
-    description: 'Deploy your first program',
-    icon: 'bi-rocket-takeoff-fill',
-    category: 'special',
-  },
-];
-
-// Mock unlocked achievements for user
-export const mockUserAchievements: Achievement[] = [
-  {
-    ...achievementDefinitions.find(a => a.id === 'early-adopter')!,
-    unlockedAt: '2023-10-15T10:30:00Z',
-  },
-  {
-    ...achievementDefinitions.find(a => a.id === 'bug-hunter')!,
-    unlockedAt: '2023-10-18T14:22:00Z',
-  },
-  {
-    ...achievementDefinitions.find(a => a.id === 'streak-master')!,
-    unlockedAt: '2023-10-20T09:15:00Z',
-  },
-  {
-    ...achievementDefinitions.find(a => a.id === 'first-deploy')!,
-    unlockedAt: '2023-10-22T16:45:00Z',
-  },
-];
-
-// Helper functions
-export function getUserAchievements(userId?: string): Achievement[] {
-  // In real app, fetch by userId
-  return mockUserAchievements;
-}
-
-export function getLatestAchievements(userId?: string, count: number = 4): Achievement[] {
-  return mockUserAchievements.slice(0, count);
+/**
+ * Fetches the latest earned achievements for a user.
+ */
+export async function getLatestAchievements(
+	userId: string,
+	count: number = 4,
+): Promise<Achievement[]> {
+	const all = await getUserAchievements(userId);
+	return all.slice(0, count);
 }

@@ -170,16 +170,21 @@
 			"label": "Hoạt Động Hiện Tại",
 			"title": "KHÓA HỌC ĐANG HOẠT ĐỘNG",
 			"progress": "TIẾN ĐỘ",
-			"resume": "Tiếp tục"
+			"resume": "Tiếp tục",
+			"lesson": "LESSON",
+			"completed": "COMPLETED",
+			"review": "REVIEW COURSE"
 		},
 		"recommendedTracks": {
 			"label": "Mục Tiêu Tiếp Theo",
 			"title": "LỘ TRÌNH ĐƯỢC ĐỀ XUẤT",
-			"enroll": "ĐĂNG KÝ"
+			"enroll": "ĐĂNG KÝ",
+			"initialize": "INITIALIZE SEQUENCE"
 		},
 		"recentActivity": {
 			"label": "Lịch Sử Nhật Ký",
-			"title": "HOẠT ĐỘNG GẦN ĐÂY"
+			"title": "HOẠT ĐỘNG GẦN ĐÂY",
+			"viewAllLogs": "VIEW ALL LOGS"
 		},
 		"userHUD": {
 			"title": "HỒ SƠ NGƯỜI ĐIỀU HÀNH",
@@ -193,9 +198,21 @@
 			"days": "N"
 		},
 		"achievements": {
-			"title": "Thành Tích Mới Nhất"
+			"title": "Thành Tích Mới Nhất",
+			"missionMilestones": "MISSION MILESTONES",
+			"locked": "Locked Milestone"
 		},
-		"terminal": "MỞ TERMINAL [F1]"
+		"logs": {
+			"button": "OPEN LOGS [F1]",
+			"title": "ACTIVITY_LOG.EXE",
+			"version": "SUPERTEAM OS v1.0.0",
+			"tabs": {
+				"all": "ALL",
+				"lessons": "LESSONS",
+				"achievements": "ACHIEVEMENTS"
+			},
+			"emptyState": "No items found matching filter."
+		}
 	},
 	"Profile": {
 		"operatorId": "ID_NGƯỜI_ĐIỀU_HÀNH",

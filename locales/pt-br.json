@@ -165,16 +165,21 @@
 			"label": "Operações Atuais",
 			"title": "CURSOS ATIVOS",
 			"progress": "PROGRESSO",
-			"resume": "Continuar"
+			"resume": "Continuar",
+			"lesson": "LESSON",
+			"completed": "COMPLETED",
+			"review": "REVIEW COURSE"
 		},
 		"recommendedTracks": {
 			"label": "Próximos Alvos",
 			"title": "TRILHAS RECOMENDADAS",
-			"enroll": "INSCREVER"
+			"enroll": "INSCREVER",
+			"initialize": "INITIALIZE SEQUENCE"
 		},
 		"recentActivity": {
 			"label": "Histórico de Registro",
-			"title": "ATIVIDADE RECENTE"
+			"title": "ATIVIDADE RECENTE",
+			"viewAllLogs": "VIEW ALL LOGS"
 		},
 		"userHUD": {
 			"title": "PERFIL DO OPERADOR",
@@ -188,9 +193,21 @@
 			"days": "D"
 		},
 		"achievements": {
-			"title": "Últimas Conquistas"
+			"title": "Últimas Conquistas",
+			"missionMilestones": "MISSION MILESTONES",
+			"locked": "Locked Milestone"
 		},
-		"terminal": "ABRIR TERMINAL [F1]"
+		"logs": {
+			"button": "OPEN LOGS [F1]",
+			"title": "ACTIVITY_LOG.EXE",
+			"version": "SUPERTEAM OS v1.0.0",
+			"tabs": {
+				"all": "ALL",
+				"lessons": "LESSONS",
+				"achievements": "ACHIEVEMENTS"
+			},
+			"emptyState": "No items found matching filter."
+		}
 	},
 	"Profile": {
 		"operatorId": "ID_OPERADOR",

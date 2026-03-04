@@ -8,17 +8,20 @@ import {
 	createAssociatedTokenAccountInstruction,
 	getAssociatedTokenAddressSync,
 } from "@solana/spl-token";
-import { Connection, Keypair, PublicKey } from "@solana/web3.js";
-import { eq, sql } from "drizzle-orm";
+import { Connection, Keypair, PublicKey, SystemProgram } from "@solana/web3.js";
+import { and, eq, gte, sql } from "drizzle-orm";
 import fs from "fs";
 import { NextResponse } from "next/server";
 import path from "path";
 import { v4 as uuidv4 } from "uuid";
 import {
 	CLUSTER_URL,
+	getAchievementReceiptPda,
+	getAchievementTypePda,
 	getConfigPda,
 	getCoursePda,
 	getEnrollmentPda,
+	getMinterRolePda,
 	TOKEN_2022_PROGRAM_ID,
 } from "@/lib/anchor/client";
 import { OnchainAcademy } from "@/lib/anchor/idl/onchain_academy";
@@ -34,6 +37,68 @@ import { getPostHogClient } from "@/lib/posthog-server";
 
 // Recreate connection instance for the server-side
 const connection = new Connection(CLUSTER_URL, "confirmed");
+
+/**
+ * Award an achievement on-chain via the Anchor program.
+ */
+async function awardOnchainAchievement(
+	program: Program<OnchainAcademy>,
+	backendSigner: Keypair,
+	recipient: PublicKey,
+	achievementId: string,
+) {
+	try {
+		const [configPda] = getConfigPda();
+		const [achievementTypePda] = getAchievementTypePda(achievementId);
+		const [receiptPda] = getAchievementReceiptPda(achievementId, recipient);
+		const [minterRolePda] = getMinterRolePda(backendSigner.publicKey);
+
+		// Fetch achievement type to get collection and check active status
+		const achTypeAccount =
+			await program.account.achievementType.fetch(achievementTypePda);
+
+		const asset = Keypair.generate();
+		const XP_MINT = new PublicKey(process.env.NEXT_PUBLIC_XP_MINT!);
+		const recipientTokenAccount = getAssociatedTokenAddressSync(
+			XP_MINT,
+			recipient,
+			false,
+			TOKEN_2022_PROGRAM_ID,
+		);
+
+		await program.methods
+			.awardAchievement()
+			.accountsPartial({
+				config: configPda,
+				achievementType: achievementTypePda,
+				achievementReceipt: receiptPda,
+				minterRole: minterRolePda,
+				asset: asset.publicKey,
+				collection: achTypeAccount.collection,
+				recipient: recipient,
+				recipientTokenAccount: recipientTokenAccount,
+				xpMint: XP_MINT,
+				payer: backendSigner.publicKey,
+				minter: backendSigner.publicKey,
+				mplCoreProgram: new PublicKey(
+					"CoREENxT6tW1HoK8ypY1SxRMZTcVPm7R94rH4PZNhX7d",
+				),
+				tokenProgram: TOKEN_2022_PROGRAM_ID,
+				systemProgram: SystemProgram.programId,
+			})
+			.signers([backendSigner, asset])
+			.rpc();
+
+		console.log(`Successfully awarded on-chain achievement: ${achievementId}`);
+		return true;
+	} catch (error) {
+		console.error(
+			`Failed to award on-chain achievement ${achievementId}:`,
+			error,
+		);
+		return false;
+	}
+}
 
 /**
  * Handles the completion of a lesson for a learner.
@@ -80,7 +145,6 @@ export async function POST(request: Request) {
 		const backendSigner = Keypair.fromSecretKey(new Uint8Array(secretKeyArray));
 
 		// 2. Initialize Program Instance Server-Side
-		// We wrap the backend signer in an Anchor Wallet object
 		const anchorWallet = {
 			publicKey: backendSigner.publicKey,
 			signTransaction: async <
@@ -119,7 +183,6 @@ export async function POST(request: Request) {
 			anchorWallet,
 			AnchorProvider.defaultOptions(),
 		);
-
 		const program = new Program<OnchainAcademy>(
 			IDL as OnchainAcademy,
 			provider,
@@ -132,9 +195,7 @@ export async function POST(request: Request) {
 
 		// Fetch course account to get XP rewards
 		const courseAccount = await program.account.course.fetch(coursePda);
-
 		const XP_MINT = new PublicKey(process.env.NEXT_PUBLIC_XP_MINT!);
-
 		const learnerTokenAccount = getAssociatedTokenAddressSync(
 			XP_MINT,
 			learnerPublicKey,
@@ -145,12 +206,10 @@ export async function POST(request: Request) {
 		// 4. Check if ATA exists, if not, create it
 		const ataInfo = await connection.getAccountInfo(learnerTokenAccount);
 		const instructions = [];
-
 		if (!ataInfo) {
-			console.log("ATA does not exist, adding creation instruction...");
 			instructions.push(
 				createAssociatedTokenAccountInstruction(
-					backendSigner.publicKey, // Payer
+					backendSigner.publicKey,
 					learnerTokenAccount,
 					learnerPublicKey,
 					XP_MINT,
@@ -191,12 +250,39 @@ export async function POST(request: Request) {
 
 		// 6. DB Updates (Streaks & Activity)
 		try {
+			let bonusXp = 0;
+			let isFirstCompletion = false;
 			const now = new Date();
+			const startOfDay = new Date(
+				now.getFullYear(),
+				now.getMonth(),
+				now.getDate(),
+			);
+
+			// Check for first completion of the day
+			const [todayActivity] = await db
+				.select()
+				.from(userActivity)
+				.where(
+					and(
+						eq(userActivity.userId, learnerAddress),
+						eq(userActivity.type, "lesson_completed"),
+						gte(userActivity.createdAt, startOfDay),
+					),
+				)
+				.limit(1);
+
+			if (!todayActivity) {
+				isFirstCompletion = true;
+				bonusXp += 25;
+			}
+
 			const [existingStreak] = await db
 				.select()
 				.from(streakTable)
 				.where(eq(streakTable.userId, learnerAddress));
 
+			let currentStreakCount = 1;
 			if (!existingStreak) {
 				await db.insert(streakTable).values({
 					id: uuidv4(),
@@ -208,7 +294,7 @@ export async function POST(request: Request) {
 				});
 			} else {
 				const lastActive = existingStreak.lastActiveDate;
-				let newCurrent = existingStreak.currentStreak;
+				currentStreakCount = existingStreak.currentStreak;
 				const isSameDay =
 					lastActive && lastActive.toDateString() === now.toDateString();
 				const isNextDay =
@@ -218,52 +304,178 @@ export async function POST(request: Request) {
 
 				if (!isSameDay) {
 					if (isNextDay) {
-						newCurrent += 1;
+						currentStreakCount += 1;
 					} else {
-						newCurrent = 1;
+						currentStreakCount = 1;
 					}
 					await db
 						.update(streakTable)
 						.set({
-							currentStreak: newCurrent,
-							longestStreak: Math.max(newCurrent, existingStreak.longestStreak),
+							currentStreak: currentStreakCount,
+							longestStreak: Math.max(
+								currentStreakCount,
+								existingStreak.longestStreak,
+							),
 							lastActiveDate: now,
 							updatedAt: now,
 						})
 						.where(eq(streakTable.userId, learnerAddress));
 				}
+				bonusXp += 10;
 			}
 
-			// Add Activity record
+			// Milestone Rewards (Streak-based)
+			const milestones = [
+				{ days: 7, id: "week-warrior" },
+				{ days: 30, id: "monthly-master" },
+				{ days: 100, id: "consistency-king" },
+			];
+
+			for (const m of milestones) {
+				if (currentStreakCount === m.days) {
+					const [hasAchievement] = await db
+						.select()
+						.from(userActivity)
+						.where(
+							and(
+								eq(userActivity.userId, learnerAddress),
+								eq(userActivity.type, "achievement"),
+								sql`${userActivity.metadata}->>'achievementId' = ${m.id}`,
+							),
+						);
+
+					if (!hasAchievement) {
+						// Record in DB
+						await db.insert(userActivity).values({
+							id: uuidv4(),
+							userId: learnerAddress,
+							type: "achievement",
+							title: `MILESTONE: ${m.days} DAY STREAK`,
+							description: `You've maintained a streak for ${m.days} days!`,
+							metadata: { achievementId: m.id },
+							createdAt: now,
+						});
+
+						// Award On-chain
+						await awardOnchainAchievement(
+							program,
+							backendSigner,
+							learnerPublicKey,
+							m.id,
+						);
+					}
+				}
+			}
+
+			// Progress Rewards: First Steps
+			const [allCompletions] = await db
+				.select({ count: sql<number>`count(*)` })
+				.from(userActivity)
+				.where(
+					and(
+						eq(userActivity.userId, learnerAddress),
+						eq(userActivity.type, "lesson_completed"),
+					),
+				);
+
+			if (Number(allCompletions?.count) === 0) {
+				// This is the first one being added now
+				await db.insert(userActivity).values({
+					id: uuidv4(),
+					userId: learnerAddress,
+					type: "achievement",
+					title: "ACHIEVEMENT: FIRST STEPS",
+					description: "You've completed your very first lesson!",
+					metadata: { achievementId: "first-steps" },
+					createdAt: now,
+				});
+				await awardOnchainAchievement(
+					program,
+					backendSigner,
+					learnerPublicKey,
+					"first-steps",
+				);
+			}
+
+			// Progress Rewards: Speed Runner
+			const [todayCompletions] = await db
+				.select({ count: sql<number>`count(*)` })
+				.from(userActivity)
+				.where(
+					and(
+						eq(userActivity.userId, learnerAddress),
+						eq(userActivity.type, "lesson_completed"),
+						gte(userActivity.createdAt, startOfDay),
+					),
+				);
+
+			if (Number(todayCompletions?.count) === 4) {
+				// Will be 5 after this insert
+				const [hasSpeedRunner] = await db
+					.select()
+					.from(userActivity)
+					.where(
+						and(
+							eq(userActivity.userId, learnerAddress),
+							eq(userActivity.type, "achievement"),
+							sql`${userActivity.metadata}->>'achievementId' = 'speed-runner'`,
+						),
+					);
+
+				if (!hasSpeedRunner) {
+					await db.insert(userActivity).values({
+						id: uuidv4(),
+						userId: learnerAddress,
+						type: "achievement",
+						title: "ACHIEVEMENT: SPEED RUNNER",
+						description: "Completed 5 lessons in a single day!",
+						metadata: { achievementId: "speed-runner" },
+						createdAt: now,
+					});
+					await awardOnchainAchievement(
+						program,
+						backendSigner,
+						learnerPublicKey,
+						"speed-runner",
+					);
+				}
+			}
+
 			const trackAddress =
 				TRACK_COLLECTIONS[courseAccount.trackId as TrackId] || "general";
+			const baseXp = courseAccount.xpPerLesson || 0;
+			const totalEarnedXp = baseXp + bonusXp;
 
 			await db.insert(userActivity).values({
 				id: uuidv4(),
 				userId: learnerAddress,
 				type: "lesson_completed",
 				title: `Completed Lesson: ${courseSlug.toUpperCase()} #${lessonIndex}`,
-				description: "Successfully completed on-chain lesson tasks.",
-				xpEarned: courseAccount.xpPerLesson,
+				description: isFirstCompletion
+					? "First of day bonus (+25)!"
+					: "Daily streak bonus (+10)!",
+				xpEarned: totalEarnedXp,
 				courseId: courseSlug,
 				track: trackAddress,
-				metadata: { courseSlug, lessonIndex, signature: tx },
+				metadata: {
+					courseSlug,
+					lessonIndex,
+					signature: tx,
+					isFirstCompletion,
+					bonusXp,
+				},
 				createdAt: now,
 			});
 
-			// 7. Update User totalXp and level
-			const xpEarned = courseAccount.xpPerLesson || 0;
 			await db
 				.update(userTable)
 				.set({
-					totalXp: sql`${userTable.totalXp} + ${xpEarned}`,
-					// Recalculate level: floor(sqrt((totalXp + earned) / 100))
-					level: sql`floor(sqrt((${userTable.totalXp} + ${xpEarned}) / 100))`,
+					totalXp: sql`${userTable.totalXp} + ${totalEarnedXp}`,
+					level: sql`floor(sqrt((${userTable.totalXp} + ${totalEarnedXp}) / 100))`,
 				})
 				.where(eq(userTable.id, learnerAddress));
 		} catch (dbError) {
 			console.error("Failed to update DB gamification stats:", dbError);
-			// Don't fail the request if DB update fails, since on-chain succeeded
 		}
 
 		return NextResponse.json({
@@ -273,21 +485,13 @@ export async function POST(request: Request) {
 		});
 	} catch (error: unknown) {
 		console.error("Error completing lesson:", error);
-
-		// Handle LessonAlreadyCompleted gracefully
 		const errorMessage = error instanceof Error ? error.message : String(error);
 		if (errorMessage.includes("LessonAlreadyCompleted")) {
 			return NextResponse.json({
 				success: true,
-				message: `Lesson ${lessonIndex} was already completed on-chain.`,
+				message: `Lesson ${lessonIndex} already complete.`,
 			});
 		}
-
-		return NextResponse.json(
-			{
-				error: errorMessage,
-			},
-			{ status: 500 },
-		);
+		return NextResponse.json({ error: errorMessage }, { status: 500 });
 	}
 }

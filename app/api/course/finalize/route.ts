@@ -9,17 +9,20 @@ import {
 	createAssociatedTokenAccountInstruction,
 	getAssociatedTokenAddressSync,
 } from "@solana/spl-token";
-import { Connection, Keypair, PublicKey } from "@solana/web3.js";
-import { eq } from "drizzle-orm";
+import { Connection, Keypair, PublicKey, SystemProgram } from "@solana/web3.js";
+import { and, eq, sql } from "drizzle-orm";
 import fs from "fs";
 import { NextResponse } from "next/server";
 import path from "path";
 import { v4 as uuidv4 } from "uuid";
 import {
 	CLUSTER_URL,
+	getAchievementReceiptPda,
+	getAchievementTypePda,
 	getConfigPda,
 	getCoursePda,
 	getEnrollmentPda,
+	getMinterRolePda,
 	TOKEN_2022_PROGRAM_ID,
 } from "@/lib/anchor/client";
 import { OnchainAcademy } from "@/lib/anchor/idl/onchain_academy";
@@ -34,6 +37,68 @@ import {
 import { getPostHogClient } from "@/lib/posthog-server";
 
 const connection = new Connection(CLUSTER_URL, "confirmed");
+
+/**
+ * Award an achievement on-chain via the Anchor program.
+ */
+async function awardOnchainAchievement(
+	program: Program<OnchainAcademy>,
+	backendSigner: Keypair,
+	recipient: PublicKey,
+	achievementId: string,
+) {
+	try {
+		const [configPda] = getConfigPda();
+		const [achievementTypePda] = getAchievementTypePda(achievementId);
+		const [receiptPda] = getAchievementReceiptPda(achievementId, recipient);
+		const [minterRolePda] = getMinterRolePda(backendSigner.publicKey);
+
+		// Fetch achievement type to get collection and check active status
+		const achTypeAccount =
+			await program.account.achievementType.fetch(achievementTypePda);
+
+		const asset = Keypair.generate();
+		const XP_MINT = new PublicKey(process.env.NEXT_PUBLIC_XP_MINT!);
+		const recipientTokenAccount = getAssociatedTokenAddressSync(
+			XP_MINT,
+			recipient,
+			false,
+			TOKEN_2022_PROGRAM_ID,
+		);
+
+		await program.methods
+			.awardAchievement()
+			.accountsPartial({
+				config: configPda,
+				achievementType: achievementTypePda,
+				achievementReceipt: receiptPda,
+				minterRole: minterRolePda,
+				asset: asset.publicKey,
+				collection: achTypeAccount.collection,
+				recipient: recipient,
+				recipientTokenAccount: recipientTokenAccount,
+				xpMint: XP_MINT,
+				payer: backendSigner.publicKey,
+				minter: backendSigner.publicKey,
+				mplCoreProgram: new PublicKey(
+					"CoREENxT6tW1HoK8ypY1SxRMZTcVPm7R94rH4PZNhX7d",
+				),
+				tokenProgram: TOKEN_2022_PROGRAM_ID,
+				systemProgram: SystemProgram.programId,
+			})
+			.signers([backendSigner, asset])
+			.rpc();
+
+		console.log(`Successfully awarded on-chain achievement: ${achievementId}`);
+		return true;
+	} catch (error) {
+		console.error(
+			`Failed to award on-chain achievement ${achievementId}:`,
+			error,
+		);
+		return false;
+	}
+}
 
 /**
  * Handles the finalization of a course for a learner.
@@ -299,6 +364,116 @@ export async function POST(request: Request) {
 					lastAccessedAt: now,
 					updatedAt: now,
 				});
+			}
+
+			// Achievements: Course Completer (First Course)
+			const [totalCompleted] = await db
+				.select({ count: sql<number>`count(*)` })
+				.from(courseProgress)
+				.where(
+					andOp(
+						eqOp(courseProgress.userId, learnerAddress),
+						eqOp(courseProgress.progress, 100),
+					),
+				);
+
+			if (Number(totalCompleted?.count) === 1) {
+				await db.insert(userActivity).values({
+					id: uuidv4(),
+					userId: learnerAddress,
+					type: "achievement",
+					title: "ACHIEVEMENT: COURSE COMPLETER",
+					description: "You've successfully finished your first full course!",
+					metadata: { achievementId: "course-completer" },
+					createdAt: now,
+				});
+				await awardOnchainAchievement(
+					program,
+					backendSigner,
+					learnerPublicKey,
+					"course-completer",
+				);
+			}
+
+			// Achievements: Track Specifics
+			if (courseSlug.includes("rust")) {
+				await db.insert(userActivity).values({
+					id: uuidv4(),
+					userId: learnerAddress,
+					type: "achievement",
+					title: "ACHIEVEMENT: RUST ROOKIE",
+					description: "Completed the Rust Fundamentals track!",
+					metadata: { achievementId: "rust-rookie" },
+					createdAt: now,
+				});
+				await awardOnchainAchievement(
+					program,
+					backendSigner,
+					learnerPublicKey,
+					"rust-rookie",
+				);
+			} else if (courseSlug.includes("anchor")) {
+				await db.insert(userActivity).values({
+					id: uuidv4(),
+					userId: learnerAddress,
+					type: "achievement",
+					title: "ACHIEVEMENT: ANCHOR EXPERT",
+					description: "Mastered the Anchor Framework!",
+					metadata: { achievementId: "anchor-expert" },
+					createdAt: now,
+				});
+				await awardOnchainAchievement(
+					program,
+					backendSigner,
+					learnerPublicKey,
+					"anchor-expert",
+				);
+			}
+
+			// Achievements: Full Stack Solana (Both major tracks)
+			const rustCompleted = await db.query.courseProgress.findFirst({
+				where: andOp(
+					eqOp(courseProgress.userId, learnerAddress),
+					sql`${courseProgress.courseId} LIKE '%rust%'`,
+					eqOp(courseProgress.progress, 100),
+				),
+			});
+			const anchorCompleted = await db.query.courseProgress.findFirst({
+				where: andOp(
+					eqOp(courseProgress.userId, learnerAddress),
+					sql`${courseProgress.courseId} LIKE '%anchor%'`,
+					eqOp(courseProgress.progress, 100),
+				),
+			});
+
+			if (rustCompleted && anchorCompleted) {
+				const [hasFullStack] = await db
+					.select()
+					.from(userActivity)
+					.where(
+						andOp(
+							eqOp(userActivity.userId, learnerAddress),
+							eqOp(userActivity.type, "achievement"),
+							sql`${userActivity.metadata}->>'achievementId' = 'full-stack-solana'`,
+						),
+					);
+				if (!hasFullStack) {
+					await db.insert(userActivity).values({
+						id: uuidv4(),
+						userId: learnerAddress,
+						type: "achievement",
+						title: "ACHIEVEMENT: FULL STACK SOLANA",
+						description: "Completed both Rust and Anchor tracks!",
+						metadata: { achievementId: "full-stack-solana" },
+						createdAt: now,
+					});
+					await awardOnchainAchievement(
+						program,
+						backendSigner,
+						learnerPublicKey,
+						"full-stack-solana",
+					);
+				}
 			}
 		} catch (dbError) {
 			console.error("Failed to update DB gamification stats:", dbError);

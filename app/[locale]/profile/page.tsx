@@ -13,6 +13,7 @@ import {
 } from "@/lib/actions/gamification";
 import { getUserProfileData } from "@/lib/actions/updateProfile";
 import { getCurrentUserRank, syncUserXp } from "@/lib/data/leaderboard";
+import { getUserStreakHistory } from "@/lib/data/user";
 
 /**
  * ProfilePage Component
@@ -71,12 +72,14 @@ export default async function ProfilePage() {
 	}
 
 	// Parallel fetch real gamification data
-	const [achievements, skillRadar, courses, globalRank] = await Promise.all([
-		getUserRealAchievements(),
-		calculateRealSkillRadar(),
-		getEnrolledCoursesProgress(),
-		getCurrentUserRank(dbUser.id),
-	]);
+	const [achievements, skillRadar, courses, globalRank, streakHistory] =
+		await Promise.all([
+			getUserRealAchievements(),
+			calculateRealSkillRadar(),
+			getEnrolledCoursesProgress(),
+			getCurrentUserRank(dbUser.id),
+			getUserStreakHistory(dbUser.id, 365), // Fetch 1 year of history
+		]);
 
 	return (
 		<ProfileView
@@ -85,6 +88,7 @@ export default async function ProfilePage() {
 			skillRadar={skillRadar}
 			courses={courses}
 			globalRank={globalRank}
+			streakHistory={streakHistory}
 			isOwner={true}
 		/>
 	);

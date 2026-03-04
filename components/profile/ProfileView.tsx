@@ -11,13 +11,14 @@ import { CourseLedger } from "@/components/profile/CourseLedger";
 import { CredentialCard } from "@/components/profile/CredentialCard";
 import { ProfileHero } from "@/components/profile/ProfileHero";
 import { SkillRadar } from "@/components/profile/SkillRadar";
+import { StreakGraph } from "@/components/profile/StreakGraph";
 import { StatCard } from "@/components/shared/StatCard";
 import { Achievement } from "@/lib/data/achievements";
 import {
 	Credential,
 	SkillRadar as SkillRadarType,
 } from "@/lib/data/credentials";
-import { CourseProgress, UserProfile } from "@/lib/data/user";
+import { CourseProgress, StreakDay, UserProfile } from "@/lib/data/user";
 import { useCredentials } from "@/lib/hooks/use-course";
 import { useOnchainStats } from "@/lib/hooks/use-onchain-stats";
 
@@ -31,6 +32,7 @@ interface ProfileViewProps {
 	skillRadar: SkillRadarType;
 	courses: CourseProgress[];
 	globalRank: number;
+	streakHistory: StreakDay[];
 	isOwner?: boolean;
 }
 
@@ -44,6 +46,7 @@ export function ProfileView({
 	skillRadar,
 	courses,
 	globalRank,
+	streakHistory,
 	isOwner = false,
 }: Omit<ProfileViewProps, "credentials">) {
 	const { publicKey } = useWallet();
@@ -144,6 +147,9 @@ export function ProfileView({
 						<SkillRadar skills={skillRadar} />
 						<BadgeShowcase achievements={achievements} />
 					</div>
+
+					{/* Streak Graph */}
+					<StreakGraph history={streakHistory} />
 
 					{/* Credentials */}
 					<div>

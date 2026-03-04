@@ -161,16 +161,21 @@
 			"label": "当前操作",
 			"title": "活跃课程",
 			"progress": "进度",
-			"resume": "恢复"
+			"resume": "恢复",
+			"lesson": "LESSON",
+			"completed": "COMPLETED",
+			"review": "REVIEW COURSE"
 		},
 		"recommendedTracks": {
 			"label": "下一个目标",
 			"title": "推荐轨道",
-			"enroll": "注册"
+			"enroll": "注册",
+			"initialize": "INITIALIZE SEQUENCE"
 		},
 		"recentActivity": {
 			"label": "日志历史",
-			"title": "最近活动"
+			"title": "最近活动",
+			"viewAllLogs": "VIEW ALL LOGS"
 		},
 		"userHUD": {
 			"title": "操作员资料",
@@ -184,9 +189,21 @@
 			"days": "天"
 		},
 		"achievements": {
-			"title": "最新成就"
+			"title": "最新成就",
+			"missionMilestones": "MISSION MILESTONES",
+			"locked": "Locked Milestone"
 		},
-		"terminal": "打开终端 [F1]"
+		"logs": {
+			"button": "OPEN LOGS [F1]",
+			"title": "ACTIVITY_LOG.EXE",
+			"version": "SUPERTEAM OS v1.0.0",
+			"tabs": {
+				"all": "ALL",
+				"lessons": "LESSONS",
+				"achievements": "ACHIEVEMENTS"
+			},
+			"emptyState": "No items found matching filter."
+		}
 	},
 	"Profile": {
 		"operatorId": "操作员 ID",

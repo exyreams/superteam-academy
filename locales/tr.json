@@ -170,16 +170,21 @@
 			"label": "Mevcut Operasyonlar",
 			"title": "AKTİF KURSLAR",
 			"progress": "İLERLEME",
-			"resume": "Devam Et"
+			"resume": "Devam Et",
+			"lesson": "LESSON",
+			"completed": "COMPLETED",
+			"review": "REVIEW COURSE"
 		},
 		"recommendedTracks": {
 			"label": "Sonraki Hedefler",
 			"title": "ÖNERİLEN PROGRAMLAR",
-			"enroll": "KAYIT OL"
+			"enroll": "KAYIT OL",
+			"initialize": "INITIALIZE SEQUENCE"
 		},
 		"recentActivity": {
 			"label": "Log Geçmişi",
-			"title": "SON AKTİVİTE"
+			"title": "SON AKTİVİTE",
+			"viewAllLogs": "VIEW ALL LOGS"
 		},
 		"userHUD": {
 			"title": "OPERATÖR PROFİLİ",
@@ -193,9 +198,21 @@
 			"days": "G"
 		},
 		"achievements": {
-			"title": "Son Başarılar"
+			"title": "Son Başarılar",
+			"missionMilestones": "MISSION MILESTONES",
+			"locked": "Locked Milestone"
 		},
-		"terminal": "TERMİNALİ AÇ[F1]"
+		"logs": {
+			"button": "OPEN LOGS [F1]",
+			"title": "ACTIVITY_LOG.EXE",
+			"version": "SUPERTEAM OS v1.0.0",
+			"tabs": {
+				"all": "ALL",
+				"lessons": "LESSONS",
+				"achievements": "ACHIEVEMENTS"
+			},
+			"emptyState": "No items found matching filter."
+		}
 	},
 	"Profile": {
 		"operatorId": "OPERATÖR_ID",

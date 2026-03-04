@@ -170,16 +170,21 @@
 			"label": "हालका सञ्चालनहरू",
 			"title": "सक्रिय पाठ्यक्रमहरू",
 			"progress": "प्रगति",
-			"resume": "सुचारु गर्नुहोस्"
+			"resume": "सुचारु गर्नुहोस्",
+			"lesson": "LESSON",
+			"completed": "COMPLETED",
+			"review": "REVIEW COURSE"
 		},
 		"recommendedTracks": {
 			"label": "अर्को लक्ष्यहरू",
 			"title": "सिफारिस गरिएका ट्र्याकहरू",
-			"enroll": "दर्ता गर्नुहोस्"
+			"enroll": "दर्ता गर्नुहोस्",
+			"initialize": "INITIALIZE SEQUENCE"
 		},
 		"recentActivity": {
 			"label": "लग इतिहास",
-			"title": "भर्खरका गतिविधिहरू"
+			"title": "भर्खरका गतिविधिहरू",
+			"viewAllLogs": "VIEW ALL LOGS"
 		},
 		"userHUD": {
 			"title": "अपरेटर प्रोफाइल",
@@ -193,9 +198,21 @@
 			"days": "D"
 		},
 		"achievements": {
-			"title": "पछिल्ला उपलब्धिहरू"
+			"title": "पछिल्ला उपलब्धिहरू",
+			"missionMilestones": "MISSION MILESTONES",
+			"locked": "Locked Milestone"
 		},
-		"terminal": "टर्मिनल खोल्नुहोस्[F1]"
+		"logs": {
+			"button": "OPEN LOGS [F1]",
+			"title": "ACTIVITY_LOG.EXE",
+			"version": "SUPERTEAM OS v1.0.0",
+			"tabs": {
+				"all": "ALL",
+				"lessons": "LESSONS",
+				"achievements": "ACHIEVEMENTS"
+			},
+			"emptyState": "No items found matching filter."
+		}
 	},
 	"Profile": {
 		"operatorId": "अपरेटर_ID",
