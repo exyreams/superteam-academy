@@ -18,9 +18,9 @@
 	"Navbar": {
 		"brand": "슈퍼팀 아카데미",
 		"links": {
-			"catalog": "카탈로그",
+			"catalog": "강좌 카탈로그",
 			"leaderboard": "리더보드",
-			"rewards": "보상"
+			"community": "커뮤니티"
 		},
 		"cta": {
 			"dashboard": "대시보드",

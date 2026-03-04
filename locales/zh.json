@@ -9,9 +9,9 @@
 	"Navbar": {
 		"brand": "SUPERTEAM ACADEMY",
 		"links": {
-			"catalog": "目录",
+			"catalog": "课程目录",
 			"leaderboard": "排行榜",
-			"rewards": "奖励"
+			"community": "社区"
 		},
 		"cta": {
 			"dashboard": "仪表板",

@@ -18,9 +18,9 @@
 	"Navbar": {
 		"brand": "सुपरटिम एकेडेमी",
 		"links": {
-			"catalog": "क्याटलग",
+			"catalog": "पाठ्यक्रम क्याटलग",
 			"leaderboard": "लिडरबोर्ड",
-			"rewards": "पुरस्कारहरू"
+			"community": "समुदाय"
 		},
 		"cta": {
 			"dashboard": "ड्यासबोर्ड",

@@ -18,9 +18,9 @@
 	"Navbar": {
 		"brand": "SUPERTEAM AKADEMİSİ",
 		"links": {
-			"catalog": "Katalog",
-			"leaderboard": "Liderlik Tablosu",
-			"rewards": "Ödüller"
+			"catalog": "Kurs Kataloğu",
+			"leaderboard": "Sıralama Cetveli",
+			"community": "Topluluk"
 		},
 		"cta": {
 			"dashboard": "Kontrol Paneli",

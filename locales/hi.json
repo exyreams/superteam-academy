@@ -9,9 +9,9 @@
 	"Navbar": {
 		"brand": "सुपरटीम अकादमी",
 		"links": {
-			"catalog": "कैटलॉग",
+			"catalog": "पाठ्यक्रम सूची",
 			"leaderboard": "लीडरबोर्ड",
-			"rewards": "इनाम"
+			"community": "समुदाय"
 		},
 		"cta": {
 			"dashboard": "डैशबोर्ड",

@@ -9,9 +9,9 @@
 	"Navbar": {
 		"brand": "SUPERTEAM ACADEMY",
 		"links": {
-			"catalog": "カタログ",
+			"catalog": "コースカタログ",
 			"leaderboard": "リーダーボード",
-			"rewards": "報酬"
+			"community": "コミュニティ"
 		},
 		"cta": {
 			"dashboard": "ダッシュボード",

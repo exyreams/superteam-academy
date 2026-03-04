@@ -18,9 +18,9 @@
 	"Navbar": {
 		"brand": "HỌC VIỆN SUPERTEAM",
 		"links": {
-			"catalog": "Danh Mục",
+			"catalog": "Danh mục khóa học",
 			"leaderboard": "Bảng Xếp Hạng",
-			"rewards": "Phần Thưởng"
+			"community": "Cộng đồng"
 		},
 		"cta": {
 			"dashboard": "Bảng Điều Khiển",

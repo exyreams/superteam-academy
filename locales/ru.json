@@ -9,9 +9,9 @@
 	"Navbar": {
 		"brand": "АКАДЕМИЯ SUPERTEAM",
 		"links": {
-			"catalog": "Каталог",
-			"leaderboard": "Рейтинг",
-			"rewards": "Награды"
+			"catalog": "Каталог курсов",
+			"leaderboard": "Таблица лидеров",
+			"community": "Сообщество"
 		},
 		"cta": {
 			"dashboard": "Панель",

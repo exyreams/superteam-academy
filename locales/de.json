@@ -18,9 +18,9 @@
 	"Navbar": {
 		"brand": "SUPERTEAM AKADEMIE",
 		"links": {
-			"catalog": "Katalog",
+			"catalog": "Kurskatalog",
 			"leaderboard": "Bestenliste",
-			"rewards": "Belohnungen"
+			"community": "Community"
 		},
 		"cta": {
 			"dashboard": "Dashboard",

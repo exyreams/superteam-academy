@@ -18,8 +18,9 @@
 	"Navbar": {
 		"brand": "ACCADEMIA SUPERTEAM",
 		"links": {
-			"catalog": "Catalogo",
+			"catalog": "Catalogo Corsi",
 			"leaderboard": "Classifica",
+			"community": "Comunità",
 			"rewards": "Ricompense"
 		},
 		"cta": {

@@ -18,9 +18,9 @@
 	"Navbar": {
 		"brand": "AKADEMI SUPERTEAM",
 		"links": {
-			"catalog": "Katalog",
+			"catalog": "Katalog Kursus",
 			"leaderboard": "Papan Peringkat",
-			"rewards": "Hadiah"
+			"community": "Komunitas"
 		},
 		"cta": {
 			"dashboard": "Dasbor",
