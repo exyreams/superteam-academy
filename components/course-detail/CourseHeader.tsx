@@ -15,15 +15,13 @@ import { useWallet } from "@solana/wallet-adapter-react";
 import { useTranslations } from "next-intl";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
-import { useEnroll } from "@/lib/hooks/use-course";
+import { useRouter } from "@/i18n/routing";
+import { useClaimCredential, useEnroll } from "@/lib/hooks/use-course";
 
-/**
- * Props for the CourseHeader component.
- */
+/** Course information and enrollment state for the header section. */
 interface CourseHeaderProps {
 	courseSlug: string;
 	title: string;
-	/** Reference code (e.g., RUST-101) */
 	courseRef: string;
 	category: string;
 	description: string;
@@ -35,6 +33,9 @@ interface CourseHeaderProps {
 	difficulty: string;
 	xpBounty: number;
 	enrolled: boolean;
+	progress: number;
+	credentialAsset?: string | null;
+	nextLessonId?: string;
 }
 
 /**
@@ -51,10 +52,15 @@ export function CourseHeader({
 	difficulty,
 	xpBounty,
 	enrolled,
+	progress,
+	credentialAsset,
+	nextLessonId,
 }: CourseHeaderProps) {
 	const t = useTranslations("CourseDetail");
 	const wallet = useWallet();
+	const router = useRouter();
 	const enrollMutation = useEnroll(courseSlug);
+	const claimMutation = useClaimCredential(courseSlug);
 
 	const handleEnroll = async () => {
 		if (!wallet.connected || !wallet.publicKey) {
@@ -124,14 +130,40 @@ export function CourseHeader({
 				{/* Action Button */}
 				<div className="flex items-center gap-2">
 					{enrolled ? (
-						<Button
-							className="bg-ink-primary text-bg-base hover:bg-ink-primary/90 font-bold uppercase tracking-widest h-12 px-8"
-							onClick={() => {
-								// Navigate to first lesson or continue
-							}}
-						>
-							{t("buttons.continue")}
-						</Button>
+						<>
+							{progress === 100 && !credentialAsset ? (
+								<Button
+									className="bg-green-600 text-white hover:bg-green-700 font-bold uppercase tracking-widest h-12 px-8 flex items-center gap-2"
+									onClick={() => claimMutation.mutate()}
+									disabled={claimMutation.isPending}
+								>
+									{claimMutation.isPending ? (
+										"Issuing..."
+									) : (
+										<>
+											CLAIM CERTIFICATE <TrophyIcon size={18} weight="bold" />
+										</>
+									)}
+								</Button>
+							) : (
+								<Button
+									className="bg-ink-primary text-bg-base hover:bg-ink-primary/90 font-bold uppercase tracking-widest h-12 px-8"
+									onClick={() => {
+										if (credentialAsset) {
+											router.push("/profile");
+										} else if (nextLessonId) {
+											router.push(
+												`/courses/${courseSlug}/lessons/${nextLessonId}`,
+											);
+										} else {
+											router.push(`/courses/${courseSlug}/lessons`);
+										}
+									}}
+								>
+									{credentialAsset ? "VIEW CREDENTIAL" : t("buttons.continue")}
+								</Button>
+							)}
+						</>
 					) : (
 						<Button
 							className="bg-ink-primary text-bg-base hover:bg-ink-primary/90 font-bold uppercase tracking-widest h-12 px-8"

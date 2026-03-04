@@ -93,6 +93,12 @@ export function CourseViewClient({ slug }: CourseViewClientProps) {
 						difficulty={course.difficulty}
 						xpBounty={course.xpBounty}
 						enrolled={course.enrolled}
+						progress={course.progress}
+						credentialAsset={course.credentialAsset}
+						nextLessonId={
+							course.modules.flatMap((m) => m.lessons).find((l) => !l.completed)
+								?.id
+						}
 					/>
 
 					<ModuleList

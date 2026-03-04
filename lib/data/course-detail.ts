@@ -78,6 +78,8 @@ export interface CourseDetail {
 	completedLessons: number;
 	progress: number;
 	enrolled: boolean;
+	completedAt?: number | null;
+	credentialAsset?: string | null;
 	prerequisiteSlug?: string;
 	reviews: Review[];
 }

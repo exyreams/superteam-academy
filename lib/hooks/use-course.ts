@@ -8,6 +8,7 @@ import { useWallet } from "@solana/wallet-adapter-react";
 import { SystemProgram } from "@solana/web3.js";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
+import { recordEnrollment } from "@/lib/actions/gamification";
 import {
 	getCoursePda,
 	getEnrollmentPda,
@@ -50,6 +51,8 @@ interface SanityCourse {
 
 interface EnrollmentAccount {
 	lessonFlags: BN[];
+	completedAt: BN | null;
+	credentialAsset: import("@solana/web3.js").PublicKey | null;
 }
 
 /**
@@ -200,6 +203,8 @@ export function useCourseDetails(slug: string) {
 						? Math.round((totalCompleted / totalLessons) * 100)
 						: 0,
 				enrolled: !!enrollment,
+				completedAt: enrollment?.completedAt?.toNumber() || null,
+				credentialAsset: enrollment?.credentialAsset?.toBase58() || null,
 				prerequisiteSlug: sanityCourse.prerequisite_course?.slug,
 				reviews: [],
 				modules,
@@ -260,6 +265,13 @@ export function useEnroll(slug: string, prerequisiteSlug?: string) {
 				.remainingAccounts(remainingAccounts)
 				.rpc();
 
+			// Sync with database activity feed
+			try {
+				await recordEnrollment(slug);
+			} catch (e) {
+				console.error("Failed to record enrollment in DB:", e);
+			}
+
 			return tx;
 		},
 		onSuccess: () => {
@@ -288,33 +300,76 @@ export function useCredentials() {
 			// Helius DAS API is only available on mainnet or specific Helius endpoints.
 			// For devnet, we might need a fallback or a specific Helius devnet URL.
 			if (!rpcUrl.includes("helius")) {
-				console.warn(
-					"Helius DAS API not configured. Achievements may not be visible.",
+				console.info(
+					"Helius DAS API not detected. Falling back to direct Metaplex Core scan for achievements.",
 				);
-				return [];
 			}
 
 			try {
-				const response = await fetch(rpcUrl, {
-					method: "POST",
-					headers: { "Content-Type": "application/json" },
-					body: JSON.stringify({
-						jsonrpc: "2.0",
-						id: "get-credentials",
-						method: "getAssetsByOwner",
-						params: {
-							ownerAddress: wallet.publicKey.toBase58(),
-							page: 1,
-							limit: 100,
-							displayOptions: { showCollectionMetadata: true },
-						},
-					}),
-				});
+				// 1. Try Helius DAS API (Best for metadata)
+				if (rpcUrl.includes("helius")) {
+					const response = await fetch(rpcUrl, {
+						method: "POST",
+						headers: { "Content-Type": "application/json" },
+						body: JSON.stringify({
+							jsonrpc: "2.0",
+							id: "get-credentials",
+							method: "getAssetsByOwner",
+							params: {
+								ownerAddress: wallet.publicKey.toBase58(),
+								page: 1,
+								limit: 100,
+								displayOptions: { showCollectionMetadata: true },
+							},
+						}),
+					});
 
-				const { result } = await response.json();
-				return result?.items || [];
+					const { result } = await response.json();
+					if (result?.items) return result.items;
+				}
+
+				// 2. Fallback: Direct Metaplex Core Scan (No DAS required)
+				const { connection, MPL_CORE_PROGRAM_ID } = await import(
+					"@/lib/anchor/client"
+				);
+				const assets = await connection.getProgramAccounts(
+					MPL_CORE_PROGRAM_ID,
+					{
+						filters: [
+							{
+								memcmp: {
+									offset: 1, // Owner starts at offset 1
+									bytes: wallet.publicKey.toBase58(),
+								},
+							},
+						],
+					},
+				);
+
+				// Map to a structure similar to Helius for compatibility
+				return assets.map((a) => {
+					const data = a.account.data;
+					// Basic parsing of name from Core Asset layout (Offset 66: length (4) + data)
+					let name = "On-Chain Certificate";
+					try {
+						const nameLen = data.readUInt32LE(66);
+						name = data.slice(70, 70 + nameLen).toString("utf-8");
+					} catch {
+						/* ignore parsing error */
+					}
+
+					return {
+						id: a.pubkey.toBase58(),
+						content: {
+							metadata: {
+								name: name,
+								attributes: [], // Attributes aren't easily parsed from raw buffer without full PDA logic
+							},
+						},
+					};
+				});
 			} catch (error) {
-				console.error("Error fetching credentials via Helius:", error);
+				console.error("Error fetching credentials:", error);
 				return [];
 			}
 		},
@@ -356,5 +411,38 @@ export function useCourseProgress(slug: string, totalLessons?: number) {
 		},
 		enabled: !!wallet.publicKey,
 		staleTime: 1000 * 60, // 1 minute
+	});
+}
+/**
+ * Hook to claim a course credential (NFT) on-chain.
+ */
+export function useClaimCredential(slug: string) {
+	const wallet = useWallet();
+	const queryClient = useQueryClient();
+
+	return useMutation({
+		mutationFn: async () => {
+			if (!wallet.publicKey) throw new Error("Wallet not connected");
+
+			const res = await fetch("/api/course/credential/issue", {
+				method: "POST",
+				headers: { "Content-Type": "application/json" },
+				body: JSON.stringify({
+					courseSlug: slug,
+					learnerAddress: wallet.publicKey.toBase58(),
+				}),
+			});
+
+			const data = await res.json();
+			if (!res.ok) throw new Error(data.error || "Failed to issue credential");
+			return data;
+		},
+		onSuccess: () => {
+			queryClient.invalidateQueries({ queryKey: ["course", slug] });
+			toast.success("Credential Issued! Check your wallet for your NFT.");
+		},
+		onError: (error: Error) => {
+			toast.error(`Claim failed: ${error.message}`);
+		},
 	});
 }
