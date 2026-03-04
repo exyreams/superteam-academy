@@ -11,12 +11,6 @@ export default defineConfig({
 	dbCredentials: {
 		url: process.env.DATABASE_URL!,
 	},
-	// Required for RLS / pgPolicy support
-	entities: {
-		roles: {
-			provider: "supabase",
-		},
-	},
 	verbose: true,
 	strict: true,
 });

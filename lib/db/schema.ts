@@ -1,8 +1,7 @@
-import { sql } from "drizzle-orm";
 import {
 	boolean,
+	integer,
 	jsonb,
-	pgPolicy,
 	pgTable,
 	text,
 	timestamp,
@@ -11,7 +10,6 @@ import {
 /**
  * @fileoverview PostgreSQL database schema using Drizzle ORM.
  * Follows Better Auth requirements with custom extensions for Superteam Academy.
- * All tables implement Row Level Security (RLS) with full access granted to the `postgres` role.
  */
 
 /**
@@ -49,14 +47,9 @@ export const user = pgTable("user", {
 	preferredTracks: text("preferredTracks"),
 	avatarSeed: text("avatarSeed"),
 	walletAddress: text("walletAddress"),
-}).enableRLS();
-
-export const userBackendPolicy = pgPolicy("backend_full_access", {
-	for: "all",
-	to: "postgres",
-	using: sql`true`,
-	withCheck: sql`true`,
-}).link(user);
+	totalXp: integer("totalXp").default(0).notNull(),
+	level: integer("level").default(1).notNull(),
+});
 
 /**
  * Active user authentication sessions.
@@ -73,14 +66,7 @@ export const session = pgTable("session", {
 	userId: text("userId")
 		.notNull()
 		.references(() => user.id, { onDelete: "cascade" }),
-}).enableRLS();
-
-export const sessionBackendPolicy = pgPolicy("backend_full_access", {
-	for: "all",
-	to: "postgres",
-	using: sql`true`,
-	withCheck: sql`true`,
-}).link(session);
+});
 
 /**
  * Links users to authentication providers (e.g. Solana, GitHub).
@@ -102,14 +88,7 @@ export const account = pgTable("account", {
 	password: text("password"),
 	createdAt: timestamp("createdAt").notNull(),
 	updatedAt: timestamp("updatedAt").notNull(),
-}).enableRLS();
-
-export const accountBackendPolicy = pgPolicy("backend_full_access", {
-	for: "all",
-	to: "postgres",
-	using: sql`true`,
-	withCheck: sql`true`,
-}).link(account);
+});
 
 /**
  * Verification tokens for email verification and password reset.
@@ -122,14 +101,7 @@ export const verification = pgTable("verification", {
 	expiresAt: timestamp("expiresAt").notNull(),
 	createdAt: timestamp("createdAt"),
 	updatedAt: timestamp("updatedAt"),
-}).enableRLS();
-
-export const verificationBackendPolicy = pgPolicy("backend_full_access", {
-	for: "all",
-	to: "postgres",
-	using: sql`true`,
-	withCheck: sql`true`,
-}).link(verification);
+});
 
 /**
  * Dedicated storage for connected wallets.
@@ -145,11 +117,40 @@ export const wallet = pgTable("wallet", {
 	isPrimary: boolean("isPrimary").default(false).notNull(),
 	createdAt: timestamp("createdAt").notNull(),
 	updatedAt: timestamp("updatedAt").notNull(),
-}).enableRLS();
+});
 
-export const walletBackendPolicy = pgPolicy("backend_full_access", {
-	for: "all",
-	to: "postgres",
-	using: sql`true`,
-	withCheck: sql`true`,
-}).link(wallet);
+/**
+ * Gamification: User Streak Tracking
+ * Tracks consecutive days of activity for each user.
+ */
+export const streak = pgTable("streak", {
+	id: text("id").primaryKey(),
+	userId: text("userId")
+		.notNull()
+		.unique()
+		.references(() => user.id, { onDelete: "cascade" }),
+	currentStreak: integer("currentStreak").default(0).notNull(),
+	longestStreak: integer("longestStreak").default(0).notNull(),
+	lastActiveDate: timestamp("lastActiveDate"),
+	createdAt: timestamp("createdAt").notNull().defaultNow(),
+	updatedAt: timestamp("updatedAt").notNull().defaultNow(),
+});
+
+/**
+ * Gamification: User Activity Feed
+ * Tracks recent actions like lesson completions and level-ups.
+ */
+export const userActivity = pgTable("user_activity", {
+	id: text("id").primaryKey(),
+	userId: text("userId")
+		.notNull()
+		.references(() => user.id, { onDelete: "cascade" }),
+	type: text("type").notNull(), // 'lesson_completed', 'level_up', 'achievement', 'course_completed'
+	title: text("title").notNull(),
+	description: text("description"),
+	xpEarned: integer("xpEarned"),
+	courseId: text("courseId"),
+	track: text("track"),
+	metadata: jsonb("metadata"),
+	createdAt: timestamp("createdAt").notNull().defaultNow(),
+});
