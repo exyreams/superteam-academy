@@ -29,7 +29,7 @@ export default function StudioPage() {
 			{/* Absolute Back Button */}
 			<Link
 				href="/creator"
-				className="fixed bottom-8 right-8 z-100 bg-ink-primary text-bg-base px-6 py-3 font-display font-bold uppercase tracking-widest hover:bg-ink-primary/90 transition-all shadow-xl flex items-center gap-2"
+				className="fixed bottom-8 left-8 z-100 bg-ink-primary text-bg-base px-6 py-3 font-display font-bold uppercase tracking-widest hover:bg-ink-primary/90 transition-all shadow-xl flex items-center gap-2"
 			>
 				<ArrowLeftIcon size={16} weight="bold" />
 				Dashboard
