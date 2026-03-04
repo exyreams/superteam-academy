@@ -585,5 +585,38 @@
 				}
 			}
 		}
+	},
+	"Challenges": {
+		"title": "HERAUSFORDERUNGEN",
+		"subtitle": "Eigenständige Coding-Herausforderungen zur Verfeinerung deiner Solana-Fähigkeiten.",
+		"badge": "HERAUSFORDERUNGS-ARENA",
+		"hero": {
+			"liveLabel": "LIVE-HERAUSFORDERUNG",
+			"startBtn": "HERAUSFORDERUNG STARTEN →",
+			"completed": "✓ ABGESCHLOSSEN",
+			"unknownDifficulty": "UNBEKANNT"
+		},
+		"sections": {
+			"updatingMissions": "MISSIONEN WERDEN AKTUALISIERT",
+			"allMissions": "ALLE MISSIONEN"
+		},
+		"card": {
+			"startBtn": "HERAUSFORDERUNG STARTEN →",
+			"completed": "✓ ABGESCHLOSSEN",
+			"releases": "VERÖFFENTLICHUNGEN:"
+		},
+		"filters": {
+			"all": "Alle",
+			"fundamentals": "Grundlagen",
+			"rustAnchor": "Rust/Anchor",
+			"defi": "DeFi",
+			"frontend": "Frontend",
+			"security": "Sicherheit",
+			"tokenExtensions": "Token-Erweiterungen",
+			"beginner": "ANFÄNGER",
+			"intermediate": "FORTGESCHRITTEN",
+			"advanced": "PROFI"
+		},
+		"emptyState": "Keine Missionen mit den aktuellen Filtern gefunden."
 	}
 }

@@ -585,5 +585,38 @@
 				}
 			}
 		}
+	},
+	"Challenges": {
+		"title": "MÜSABAKALAR",
+		"subtitle": "Solana becerilerinizi geliştirmek için bağımsız kodlama müsabakaları.",
+		"badge": "MÜSABAKA ARENASI",
+		"hero": {
+			"liveLabel": "CANLI MÜSABAKA",
+			"startBtn": "MÜSABAKAYI BAŞLAT →",
+			"completed": "✓ TAMAMLANDI",
+			"unknownDifficulty": "BİLİNMİYOR"
+		},
+		"sections": {
+			"updatingMissions": "GÖREVLER GÜNCELLENİYOR",
+			"allMissions": "TÜM GÖREVLER"
+		},
+		"card": {
+			"startBtn": "MÜSABAKAYI BAŞLAT →",
+			"completed": "✓ TAMAMLANDI",
+			"releases": "YAYINLANMA:"
+		},
+		"filters": {
+			"all": "Hepsi",
+			"fundamentals": "Temeller",
+			"rustAnchor": "Rust/Anchor",
+			"defi": "DeFi",
+			"frontend": "Ön Yüz",
+			"security": "Güvenlik",
+			"tokenExtensions": "Token Uzantıları",
+			"beginner": "BAŞLANGIÇ",
+			"intermediate": "ORTA",
+			"advanced": "İLERİ"
+		},
+		"emptyState": "Mevcut filtrelerle görev bulunamadı."
 	}
 }

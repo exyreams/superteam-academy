@@ -582,5 +582,38 @@
 				}
 			}
 		}
+	},
+	"Challenges": {
+		"title": "DÉFIS",
+		"subtitle": "Défis de codage autonomes pour perfectionner vos compétences sur Solana.",
+		"badge": "ARÈNE DE DÉFIS",
+		"hero": {
+			"liveLabel": "DÉFI EN DIRECT",
+			"startBtn": "COMMENCER LE DÉFI →",
+			"completed": "✓ TERMINÉ",
+			"unknownDifficulty": "INCONNU"
+		},
+		"sections": {
+			"updatingMissions": "MISSIONS EN MISE À JOUR",
+			"allMissions": "TOUTES LES MISSIONS"
+		},
+		"card": {
+			"startBtn": "COMMENCER LE DÉFI →",
+			"completed": "✓ TERMINÉ",
+			"releases": "SORTIES :"
+		},
+		"filters": {
+			"all": "Tout",
+			"fundamentals": "Fondamentaux",
+			"rustAnchor": "Rust/Anchor",
+			"defi": "DeFi",
+			"frontend": "Frontend",
+			"security": "Sécurité",
+			"tokenExtensions": "Extensions de Token",
+			"beginner": "DÉBUTANT",
+			"intermediate": "INTERMÉDIAIRE",
+			"advanced": "AVANCÉ"
+		},
+		"emptyState": "Aucune mission trouvée avec les filtres actuels."
 	}
 }

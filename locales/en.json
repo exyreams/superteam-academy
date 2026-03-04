@@ -585,5 +585,38 @@
 				}
 			}
 		}
+	},
+	"Challenges": {
+		"title": "CHALLENGES",
+		"subtitle": "Standalone coding challenges to sharpen your Solana skills.",
+		"badge": "CHALLENGE ARENA",
+		"hero": {
+			"liveLabel": "LIVE CHALLENGE",
+			"startBtn": "START CHALLENGE →",
+			"completed": "✓ COMPLETED",
+			"unknownDifficulty": "UNKNOWN"
+		},
+		"sections": {
+			"updatingMissions": "UPDATING MISSIONS",
+			"allMissions": "ALL MISSIONS"
+		},
+		"card": {
+			"startBtn": "START CHALLENGE →",
+			"completed": "✓ COMPLETED",
+			"releases": "RELEASES:"
+		},
+		"filters": {
+			"all": "All",
+			"fundamentals": "Fundamentals",
+			"rustAnchor": "Rust/Anchor",
+			"defi": "DeFi",
+			"frontend": "Frontend",
+			"security": "Security",
+			"tokenExtensions": "Token Extensions",
+			"beginner": "BEGINNER",
+			"intermediate": "INTERMEDIATE",
+			"advanced": "ADVANCED"
+		},
+		"emptyState": "No missions found with current filters."
 	}
 }

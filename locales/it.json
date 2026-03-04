@@ -585,5 +585,38 @@
 				}
 			}
 		}
+	},
+	"Challenges": {
+		"title": "SFIDE",
+		"subtitle": "Sfide di codifica indipendenti per affinare le tue abilità in Solana.",
+		"badge": "ARENA DELLE SFIDE",
+		"hero": {
+			"liveLabel": "SFIDA DAL VIVO",
+			"startBtn": "INIZIA SFIDA →",
+			"completed": "✓ COMPLETATA",
+			"unknownDifficulty": "SCONOSCIUTO"
+		},
+		"sections": {
+			"updatingMissions": "AGGIORNAMENTO MISSIONI",
+			"allMissions": "TUTTE LE MISSIONI"
+		},
+		"card": {
+			"startBtn": "INIZIA SFIDA →",
+			"completed": "✓ COMPLETATA",
+			"releases": "USCITE:"
+		},
+		"filters": {
+			"all": "Tutte",
+			"fundamentals": "Fondamentali",
+			"rustAnchor": "Rust/Anchor",
+			"defi": "DeFi",
+			"frontend": "Frontend",
+			"security": "Sicurezza",
+			"tokenExtensions": "Estensioni Token",
+			"beginner": "PRINCIPIANTE",
+			"intermediate": "INTERMEDIO",
+			"advanced": "AVANZADO"
+		},
+		"emptyState": "Nessuna missione trovata con i filtri attuali."
 	}
 }

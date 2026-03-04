@@ -582,5 +582,38 @@
 				}
 			}
 		}
+	},
+	"Challenges": {
+		"title": "挑战",
+		"subtitle": "磨练 Solana 技能的独立编码挑战。",
+		"badge": "挑战竞技场",
+		"hero": {
+			"liveLabel": "现场挑战",
+			"startBtn": "开始挑战 →",
+			"completed": "✓ 已完成",
+			"unknownDifficulty": "未知"
+		},
+		"sections": {
+			"updatingMissions": "任务更新中",
+			"allMissions": "所有任务"
+		},
+		"card": {
+			"startBtn": "开始挑战 →",
+			"completed": "✓ 已完成",
+			"releases": "发布日期:"
+		},
+		"filters": {
+			"all": "全部",
+			"fundamentals": "基础",
+			"rustAnchor": "Rust/Anchor",
+			"defi": "DeFi",
+			"frontend": "前端",
+			"security": "安全",
+			"tokenExtensions": "代币扩展",
+			"beginner": "初级",
+			"intermediate": "中级",
+			"advanced": "高级"
+		},
+		"emptyState": "未找到符合当前过滤条件的任务。"
 	}
 }

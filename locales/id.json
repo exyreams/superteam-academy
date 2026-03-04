@@ -585,5 +585,38 @@
 				}
 			}
 		}
+	},
+	"Challenges": {
+		"title": "TANTANGAN",
+		"subtitle": "Tantangan coding mandiri untuk mengasah keterampilan Solana Anda.",
+		"badge": "ARENA TANTANGAN",
+		"hero": {
+			"liveLabel": "TANTANGAN LANGSUNG",
+			"startBtn": "MULAI TANTANGAN →",
+			"completed": "✓ SELESAI",
+			"unknownDifficulty": "TIDAK DIKETAHUI"
+		},
+		"sections": {
+			"updatingMissions": "MEMPERBARUI MISI",
+			"allMissions": "SEMUA MISI"
+		},
+		"card": {
+			"startBtn": "MULAI TANTANGAN →",
+			"completed": "✓ SELESAI",
+			"releases": "RILIS:"
+		},
+		"filters": {
+			"all": "Semua",
+			"fundamentals": "Dasar-dasar",
+			"rustAnchor": "Rust/Anchor",
+			"defi": "DeFi",
+			"frontend": "Frontend",
+			"security": "Keamanan",
+			"tokenExtensions": "Ekstensi Token",
+			"beginner": "PEMULA",
+			"intermediate": "MENENGAH",
+			"advanced": "MAHIR"
+		},
+		"emptyState": "Tidak ada misi yang ditemukan dengan filter saat ini."
 	}
 }

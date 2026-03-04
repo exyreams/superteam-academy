@@ -585,5 +585,38 @@
 				}
 			}
 		}
+	},
+	"Challenges": {
+		"title": "THỬ THÁCH",
+		"subtitle": "Thử thách lập trình độc lập để nâng cao kỹ năng Solana của bạn.",
+		"badge": "ĐẤU TRƯỜNG THỬ THÁCH",
+		"hero": {
+			"liveLabel": "THỬ THÁCH TRỰC TIẾP",
+			"startBtn": "BẮT ĐẦU THỬ THÁCH →",
+			"completed": "✓ ĐÃ HOÀN THÀNH",
+			"unknownDifficulty": "KHÔNG XÁC ĐỊNH"
+		},
+		"sections": {
+			"updatingMissions": "CẬP NHẬT NHIỆM VỤ",
+			"allMissions": "TẤT CẢ NHIỆM VỤ"
+		},
+		"card": {
+			"startBtn": "BẮT ĐẦU THỬ THÁCH →",
+			"completed": "✓ ĐÃ HOÀN THÀNH",
+			"releases": "PHÁT HÀNH:"
+		},
+		"filters": {
+			"all": "Tất cả",
+			"fundamentals": "Cơ bản",
+			"rustAnchor": "Rust/Anchor",
+			"defi": "DeFi",
+			"frontend": "Frontend",
+			"security": "Bảo mật",
+			"tokenExtensions": "Tiện ích mở rộng Token",
+			"beginner": "NGƯỜI BẮT ĐẦU",
+			"intermediate": "TRUNG CẤP",
+			"advanced": "CAO CẤP"
+		},
+		"emptyState": "Không tìm thấy nhiệm vụ nào với bộ lọc hiện tại."
 	}
 }

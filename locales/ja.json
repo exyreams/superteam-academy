@@ -582,5 +582,38 @@
 				}
 			}
 		}
+	},
+	"Challenges": {
+		"title": "チャレンジ",
+		"subtitle": "Solanaスキルを磨くための独立したコーディングチャレンジ。",
+		"badge": "チャレンジアリーナ",
+		"hero": {
+			"liveLabel": "ライブチャレンジ",
+			"startBtn": "チャレンジを開始 →",
+			"completed": "✓ 完了",
+			"unknownDifficulty": "不明"
+		},
+		"sections": {
+			"updatingMissions": "ミッション更新中",
+			"allMissions": "すべてのミッション"
+		},
+		"card": {
+			"startBtn": "チャレンジを開始 →",
+			"completed": "✓ 完了",
+			"releases": "リリース:"
+		},
+		"filters": {
+			"all": "すべて",
+			"fundamentals": "基礎",
+			"rustAnchor": "Rust/Anchor",
+			"defi": "DeFi",
+			"frontend": "フロントエンド",
+			"security": "セキュリティ",
+			"tokenExtensions": "トークン拡張",
+			"beginner": "初級",
+			"intermediate": "中級",
+			"advanced": "上級"
+		},
+		"emptyState": "現在のフィルターに一致するミッションは見つかりませんでした。"
 	}
 }

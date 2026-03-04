@@ -585,5 +585,38 @@
 				}
 			}
 		}
+	},
+	"Challenges": {
+		"title": "챌린지",
+		"subtitle": "Solana 기술을 연마하기 위한 독립형 코딩 챌린지.",
+		"badge": "챌린지 아레나",
+		"hero": {
+			"liveLabel": "라이브 챌린지",
+			"startBtn": "챌린지 시작 →",
+			"completed": "✓ 완료",
+			"unknownDifficulty": "알 수 없음"
+		},
+		"sections": {
+			"updatingMissions": "미션 업데이트 중",
+			"allMissions": "모든 미션"
+		},
+		"card": {
+			"startBtn": "챌린지 시작 →",
+			"completed": "✓ 완료",
+			"releases": "출시일:"
+		},
+		"filters": {
+			"all": "전체",
+			"fundamentals": "기초",
+			"rustAnchor": "Rust/Anchor",
+			"defi": "DeFi",
+			"frontend": "프론트엔드",
+			"security": "보안",
+			"tokenExtensions": "토큰 확장",
+			"beginner": "초급",
+			"intermediate": "중급",
+			"advanced": "고급"
+		},
+		"emptyState": "현재 필터와 일치하는 미션이 없습니다."
 	}
 }

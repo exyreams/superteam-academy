@@ -582,5 +582,38 @@
 				}
 			}
 		}
+	},
+	"Challenges": {
+		"title": "ИСПЫТАНИЯ",
+		"subtitle": "Автономные задачи по программированию для оттачивания навыков в Solana.",
+		"badge": "АРЕНА ИСПЫТАНИЙ",
+		"hero": {
+			"liveLabel": "ПРЯМОЕ ИСПЫТАНИЕ",
+			"startBtn": "НАЧАТЬ ИСПЫТАНИЕ →",
+			"completed": "✓ ЗАВЕРШЕНО",
+			"unknownDifficulty": "НЕИЗВЕСТНО"
+		},
+		"sections": {
+			"updatingMissions": "ОБНОВЛЕНИЕ МИССИЙ",
+			"allMissions": "ВСЕ МИССИИ"
+		},
+		"card": {
+			"startBtn": "НАЧАТЬ ИСПЫТАНИЕ →",
+			"completed": "✓ ЗАВЕРШЕНО",
+			"releases": "ВЫПУСКИ:"
+		},
+		"filters": {
+			"all": "Все",
+			"fundamentals": "Основы",
+			"rustAnchor": "Rust/Anchor",
+			"defi": "DeFi",
+			"frontend": "Frontend",
+			"security": "Безопасность",
+			"tokenExtensions": "Расширения токенов",
+			"beginner": "НОВИЧОК",
+			"intermediate": "СРЕДНИЙ",
+			"advanced": "ПРОФИ"
+		},
+		"emptyState": "Миссий с текущими фильтрами не найдено."
 	}
 }

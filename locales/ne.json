@@ -585,5 +585,38 @@
 				}
 			}
 		}
+	},
+	"Challenges": {
+		"title": "चुनौतीहरू",
+		"subtitle": "सोलाना सीपहरू तिखार्न स्वतन्त्र कोडिङ चुनौतीहरू।",
+		"badge": "चुनौती अखडा",
+		"hero": {
+			"liveLabel": "लाइभ चुनौती",
+			"startBtn": "चुनौती सुरु गर्नुहोस् →",
+			"completed": "✓ पूरा भयो",
+			"unknownDifficulty": "अज्ञात"
+		},
+		"sections": {
+			"updatingMissions": "मिशनहरू अपडेट हुँदैछन्",
+			"allMissions": "सबै मिशनहरू"
+		},
+		"card": {
+			"startBtn": "चुनौती सुरु गर्नुहोस् →",
+			"completed": "✓ पूरा भयो",
+			"releases": "रिलिजहरू:"
+		},
+		"filters": {
+			"all": "सबै",
+			"fundamentals": "आधारभूत",
+			"rustAnchor": "रस्ट/एङ्कर",
+			"defi": "डफी",
+			"frontend": "फ्रन्टइन्ड",
+			"security": "सुरक्षा",
+			"tokenExtensions": "टोकन एक्स्टेन्सनहरू",
+			"beginner": "सुरुवाती",
+			"intermediate": "मध्यम",
+			"advanced": "उन्नत"
+		},
+		"emptyState": "हालका फिल्टरहरूमा कुनै पनि मिशनहरू फेला परेनन्।"
 	}
 }

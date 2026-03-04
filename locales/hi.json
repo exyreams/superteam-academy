@@ -582,5 +582,38 @@
 				}
 			}
 		}
+	},
+	"Challenges": {
+		"title": "चुनौतियां",
+		"subtitle": "सोलाना कौशल को निखारने के लिए स्वतंत्र कोडिंग चुनौतियाँ।",
+		"badge": "चुनौती अखाड़ा",
+		"hero": {
+			"liveLabel": "लाइव चुनौती",
+			"startBtn": "चुनौती शुरू करें →",
+			"completed": "✓ पूर्ण",
+			"unknownDifficulty": "अज्ञात"
+		},
+		"sections": {
+			"updatingMissions": "मिशन अपडेट किए जा रहे हैं",
+			"allMissions": "सभी मिशन"
+		},
+		"card": {
+			"startBtn": "चुनौती शुरू करें →",
+			"completed": "✓ पूर्ण",
+			"releases": "रिलीज:"
+		},
+		"filters": {
+			"all": "सभी",
+			"fundamentals": "बुनियादी",
+			"rustAnchor": "रस्ट/एंकर",
+			"defi": "डफी",
+			"frontend": "फ्रंटएंड",
+			"security": "सुरक्षा",
+			"tokenExtensions": "टोकन एक्सटेंशन",
+			"beginner": "शुरुआती",
+			"intermediate": "मध्यम",
+			"advanced": "उन्नत"
+		},
+		"emptyState": "वर्तमान फिल्टर के साथ कोई मिशन नहीं मिला।"
 	}
 }

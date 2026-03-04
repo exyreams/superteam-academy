@@ -582,5 +582,38 @@
 				}
 			}
 		}
+	},
+	"Challenges": {
+		"title": "DESAFIOS",
+		"subtitle": "Desafios de codificação independentes para aprimorar suas habilidades em Solana.",
+		"badge": "ARENA DE DESAFIOS",
+		"hero": {
+			"liveLabel": "DESAFIO AO VIVO",
+			"startBtn": "INICIAR DESAFIO →",
+			"completed": "✓ CONCLUÍDO",
+			"unknownDifficulty": "DESCONHECIDO"
+		},
+		"sections": {
+			"updatingMissions": "ATUALIZANDO MISSÕES",
+			"allMissions": "TODAS AS MISSÕES"
+		},
+		"card": {
+			"startBtn": "INICIAR DESAFIO →",
+			"completed": "✓ CONCLUÍDO",
+			"releases": "LANÇAMENTOS:"
+		},
+		"filters": {
+			"all": "Todos",
+			"fundamentals": "Fundamentos",
+			"rustAnchor": "Rust/Anchor",
+			"defi": "DeFi",
+			"frontend": "Frontend",
+			"security": "Segurança",
+			"tokenExtensions": "Extensões de Token",
+			"beginner": "INICIANTE",
+			"intermediate": "INTERMEDIÁRIO",
+			"advanced": "AVANÇADO"
+		},
+		"emptyState": "Nenhuma missão encontrada com os filtros atuais."
 	}
 }
