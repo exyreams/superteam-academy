@@ -1,72 +1,142 @@
-'use client';
+"use client";
 
-import { Logo } from '@/components/shared/logo';
-import { Certificate } from '@/lib/data/certificates';
+import { Logo } from "@/components/shared/logo";
+import { Certificate } from "@/lib/data/certificates";
 
 interface CertificateDisplayProps {
-  certificate: Certificate;
+	certificate: Certificate;
 }
 
 export function CertificateDisplay({ certificate }: CertificateDisplayProps) {
-  return (
-    <div className="relative aspect-video bg-white border border-zinc-950 p-4 md:p-12 flex flex-col justify-between shadow-[5px_5px_0_rgba(13,20,18,0.1)] md:shadow-[10px_10px_0_rgba(13,20,18,0.1)] dark:shadow-[5px_5px_0_rgba(255,255,255,0.1)] dark:md:shadow-[10px_10px_0_rgba(255,255,255,0.1)]"
-      style={{
-        backgroundImage: `linear-gradient(45deg, rgba(13,20,18,0.02) 25%, transparent 25%, transparent 75%, rgba(13,20,18,0.02) 75%, rgba(13,20,18,0.02)),
-                         linear-gradient(45deg, rgba(13,20,18,0.02) 25%, transparent 25%, transparent 75%, rgba(13,20,18,0.02) 75%, rgba(13,20,18,0.02))`,
-        backgroundSize: '4px 4px',
-        backgroundPosition: '0 0, 2px 2px',
-      }}
-    >
-      {/* Inner Border */}
-      <div className="absolute top-2 left-2 right-2 bottom-2 md:top-3 md:left-3 md:right-3 md:bottom-3 border border-zinc-300 pointer-events-none"></div>
+	return (
+		<div
+			id="certificate-capture"
+			className="relative aspect-video p-3 md:p-12 flex flex-col justify-between overflow-hidden shadow-sm"
+			style={{
+				backgroundColor: "#ffffff",
+				border: "1px solid #09090b",
+				boxShadow: "0 10px 40px -15px rgba(13,20,18,0.2)",
+				backgroundImage: `linear-gradient(45deg, rgba(13,20,18,0.01) 25%, transparent 25%, transparent 75%, rgba(13,20,18,0.01) 75%, rgba(13,20,18,0.01)),
+                         linear-gradient(45deg, rgba(13,20,18,0.01) 25%, transparent 25%, transparent 75%, rgba(13,20,18,0.01) 75%, rgba(13,20,18,0.01))`,
+				backgroundSize: "4px 4px",
+				backgroundPosition: "0 0, 2px 2px",
+			}}
+		>
+			{/* Inner Border */}
+			<div
+				className="absolute top-2 left-2 right-2 bottom-2 md:top-4 md:left-4 md:right-4 md:bottom-4 border pointer-events-none"
+				style={{ borderColor: "#e4e4e7" }}
+			></div>
 
-      {/* Header */}
-      <div className="flex justify-between items-start">
-        <div className="flex items-center gap-2 md:gap-3">
-          <Logo className="text-zinc-950 w-5 h-5 md:w-8 md:h-8" />
-          <div className="font-display font-bold text-xs md:text-2xl text-zinc-950">
-            SUPERTEAM ACADEMY
-          </div>
-        </div>
-        <div className="text-[7px] md:text-[10px] text-right text-zinc-500">
-          CERTIFICATE NO.<br />
-          <span className="font-bold text-zinc-950">{certificate.certificateNo}</span>
-        </div>
-      </div>
+			{/* Header */}
+			<div className="flex justify-between items-start relative z-10">
+				<div className="flex items-center gap-1.5 md:gap-3">
+					<Logo
+						className="w-4 h-4 md:w-8 md:h-8"
+						style={{ color: "#09090b" }}
+					/>
+					<div
+						className="font-display font-black text-[9px] md:text-2xl tracking-tight"
+						style={{ color: "#09090b" }}
+					>
+						SUPERTEAM ACADEMY
+					</div>
+				</div>
+				<div
+					className="text-[6px] md:text-[10px] text-right font-mono leading-tight"
+					style={{ color: "#a1a1aa" }}
+				>
+					CERTIFICATE NO.
+					<br />
+					<span className="font-bold uppercase" style={{ color: "#09090b" }}>
+						{certificate.certificateNo.split("-").pop()}
+					</span>
+				</div>
+			</div>
 
-      {/* Body */}
-      <div className="text-center">
-        <div className="text-[7px] md:text-[10px] uppercase tracking-widest text-zinc-500 mb-1 md:mb-4">
-          This is to certify that
-        </div>
-        <div className="font-mono text-sm md:text-xl border-b border-zinc-950 inline-block px-4 md:px-8 pb-0.5 md:pb-1 mb-2 md:mb-4 text-zinc-950">
-          {certificate.recipient}
-        </div>
-        <div className="text-[7px] md:text-[10px] uppercase tracking-widest text-zinc-500 mt-2 md:mt-4 mb-1 md:mb-2">
-          Has successfully mastered
-        </div>
-        <div className="font-display text-2xl md:text-6xl font-bold uppercase leading-none mb-1 md:mb-2 text-zinc-950">
-          {certificate.courseName}
-        </div>
-        <div className="text-zinc-500 text-[8px] md:text-[12px]">
-          {certificate.courseDescription}
-        </div>
-      </div>
+			{/* Body */}
+			<div className="text-center relative z-10 py-1 md:py-0">
+				<div
+					className="text-[6px] md:text-xs uppercase tracking-[0.2em] mb-1 md:mb-6 font-medium"
+					style={{ color: "#a1a1aa" }}
+				>
+					This is to certify that
+				</div>
+				<div
+					className="font-mono text-[10px] md:text-[1.75rem] border-b md:border-b-2 inline-block px-3 md:px-12 pb-0.5 md:pb-2 mb-2 md:mb-8 font-bold tracking-widest leading-none"
+					style={{ color: "#09090b", borderColor: "#09090b" }}
+				>
+					{certificate.recipient}
+				</div>
+				<div
+					className="text-[6px] md:text-xs uppercase tracking-[0.2em] mt-1 md:mt-4 mb-1 md:mb-4 font-medium"
+					style={{ color: "#a1a1aa" }}
+				>
+					Has successfully mastered
+				</div>
+				<div
+					className="font-display text-xs md:text-5xl font-black uppercase leading-[1.1] mb-1 md:mb-3 tracking-tighter px-4"
+					style={{ color: "#09090b" }}
+				>
+					{certificate.courseName}
+				</div>
+				<div
+					className="text-[6px] md:text-sm max-w-[85%] md:max-w-2xl mx-auto leading-tight md:leading-relaxed italic line-clamp-2 md:line-clamp-none"
+					style={{ color: "#71717a" }}
+				>
+					&quot;{certificate.courseDescription}&quot;
+				</div>
+			</div>
 
-      {/* Footer */}
-      <div className="flex justify-between items-end">
-        <div className="text-[7px] md:text-[10px] text-zinc-500">
-          DATE OF ISSUE<br />
-          <span className="font-bold text-zinc-950">{certificate.issueDate}</span>
-        </div>
-        <div className="w-12 h-12 md:w-20 md:h-20 border md:border-2 border-dashed border-zinc-950 rounded-full flex items-center justify-center text-[6px] md:text-[10px] font-bold text-center -rotate-15 text-zinc-950">
-          OFFICIAL<br />ACADEMY<br />SEAL
-        </div>
-        <div className="text-[7px] md:text-[10px] text-zinc-500 text-right">
-          VALIDATED BY<br />
-          <span className="font-bold text-zinc-950">{certificate.validator}</span>
-        </div>
-      </div>
-    </div>
-  );
+			{/* Footer */}
+			<div className="flex justify-between items-end relative z-10">
+				<div
+					className="text-[6px] md:text-[10px] font-mono leading-tight"
+					style={{ color: "#a1a1aa" }}
+				>
+					DATE OF ISSUE
+					<br />
+					<span className="font-bold" style={{ color: "#09090b" }}>
+						{certificate.issueDate}
+					</span>
+				</div>
+
+				{/* Authentic Seal - Ink Stamp Style */}
+				<div className="relative transform scale-[0.5] md:scale-100 origin-bottom">
+					<div
+						className="w-16 h-16 md:w-24 md:h-24 rounded-full flex flex-col items-center justify-center p-1.5 transform -rotate-12"
+						style={{
+							backgroundColor: "rgba(27, 35, 29, 0.04)",
+							border: "1.5px dashed #1b231d",
+							opacity: 0.8,
+						}}
+					>
+						<Logo
+							className="w-5 h-5 md:w-8 md:h-8 mb-0.5"
+							style={{ color: "#1b231d" }}
+						/>
+						<div
+							className="text-[4px] md:text-[7px] font-black text-center leading-none tracking-tighter uppercase"
+							style={{ color: "#1b231d" }}
+						>
+							Official
+							<br />
+							Academy Seal
+						</div>
+					</div>
+				</div>
+
+				<div
+					className="text-[6px] md:text-[10px] text-right font-mono leading-tight"
+					style={{ color: "#a1a1aa" }}
+				>
+					VALIDATED BY
+					<br />
+					<span className="font-bold" style={{ color: "#09090b" }}>
+						{certificate.validator}
+					</span>
+				</div>
+			</div>
+		</div>
+	);
 }

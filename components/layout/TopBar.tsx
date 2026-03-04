@@ -49,9 +49,8 @@ export function TopBar() {
 
 	return (
 		<header className="border-b border-ink-secondary/20 dark:border-border flex items-center justify-between px-6 bg-bg-struct h-12 sticky top-0 z-40">
-			{/* Left: Logo and Brand */}
-			<div className="flex gap-6 items-center">
-				<MobileNav />
+			{/* Left: Brand */}
+			<div className="flex items-center">
 				<Link
 					href="/"
 					className="flex items-center gap-3 hover:opacity-80 transition-opacity"
@@ -63,11 +62,11 @@ export function TopBar() {
 				</Link>
 			</div>
 
-			{/* Right: User */}
-			<div className="flex gap-4 items-center">
+			{/* Right: User and Mobile Nav */}
+			<div className="flex gap-2 sm:gap-4 items-center">
 				<div className="flex items-center gap-2 text-ink-primary">
 					{wallet.publicKey && (
-						<div className="hidden sm:flex flex-col items-end mr-2">
+						<div className="hidden md:flex flex-col items-end mr-2">
 							<span className="text-[10px] font-bold uppercase tracking-widest text-[#0E9F6E] dark:text-[#14F195] leading-none">
 								LVL {level}
 							</span>
@@ -76,11 +75,11 @@ export function TopBar() {
 							</span>
 						</div>
 					)}
-					<div className="hidden sm:block h-6 w-px bg-ink-secondary/20 dark:bg-border mx-2" />
+					<div className="hidden md:block h-6 w-px bg-ink-secondary/20 dark:bg-border mx-2" />
 					{isPending ? (
 						<div className="h-9 w-24 bg-ink-secondary/20 animate-pulse rounded-md" />
 					) : session ? (
-						<div className="flex items-center gap-3">
+						<div className="flex items-center gap-2 sm:gap-3">
 							<div className="hidden lg:flex items-center gap-2 mx-1 pr-2">
 								<LanguageDropdown variant="detailed" />
 								<ModeToggle />
@@ -97,6 +96,7 @@ export function TopBar() {
 						</Button>
 					)}
 				</div>
+				<MobileNav />
 			</div>
 		</header>
 	);

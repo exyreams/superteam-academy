@@ -287,14 +287,17 @@ export function useEnroll(slug: string, prerequisiteSlug?: string) {
 
 /**
  * Hook to fetch on-chain credentials (NFTs) using Helius DAS API.
+ * @param ownerAddress - Optional wallet address to fetch credentials for. Defaults to connected wallet.
  */
-export function useCredentials() {
+export function useCredentials(ownerAddress?: string) {
 	const wallet = useWallet();
 
+	const targetAddress = ownerAddress || wallet.publicKey?.toBase58();
+
 	return useQuery({
-		queryKey: ["credentials", wallet.publicKey?.toBase58()],
+		queryKey: ["credentials", targetAddress],
 		queryFn: async () => {
-			if (!wallet.publicKey) return [];
+			if (!targetAddress) return [];
 
 			const rpcUrl = process.env.NEXT_PUBLIC_CLUSTER_URL || "";
 			// Helius DAS API is only available on mainnet or specific Helius endpoints.
@@ -316,7 +319,7 @@ export function useCredentials() {
 							id: "get-credentials",
 							method: "getAssetsByOwner",
 							params: {
-								ownerAddress: wallet.publicKey.toBase58(),
+								ownerAddress: targetAddress,
 								page: 1,
 								limit: 100,
 								displayOptions: { showCollectionMetadata: true },
@@ -339,7 +342,7 @@ export function useCredentials() {
 							{
 								memcmp: {
 									offset: 1, // Owner starts at offset 1
-									bytes: wallet.publicKey.toBase58(),
+									bytes: targetAddress,
 								},
 							},
 						],
@@ -373,7 +376,7 @@ export function useCredentials() {
 				return [];
 			}
 		},
-		enabled: !!wallet.publicKey,
+		enabled: !!targetAddress,
 		staleTime: 1000 * 60 * 5, // 5 minutes
 	});
 }

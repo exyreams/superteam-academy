@@ -124,15 +124,104 @@ export async function getCertificateById(
 			const asset = await onchainQueryService.getCoreAsset(id);
 
 			if (asset) {
+				// 1. Resolve Recipient Name from DB
+				let recipient = `OPERATOR_${asset.owner.slice(0, 6)}...`;
+				try {
+					const { db } = await import("@/lib/db");
+					const { user } = await import("@/lib/db/schema");
+					const { eq } = await import("drizzle-orm");
+
+					const dbUser = await db.query.user.findFirst({
+						where: eq(user.walletAddress, asset.owner),
+					});
+
+					if (dbUser?.name) {
+						recipient = dbUser.name.toUpperCase();
+					}
+				} catch (e) {
+					console.warn("Failed to resolve recipient name from DB:", e);
+				}
+
+				// 2. Resolve Issue Date from On-Chain
+				const issueDate = await onchainQueryService.getAssetIssueDate(id);
+
+				// 3. Resolve XP and Description
+				let xpEarned = 1000;
+				let courseDescription = `Verified achievement for ${asset.name} completed by the operator on-chain.`;
+
+				try {
+					const { client } = await import("@/sanity/client");
+					const sanityCourses = await client.fetch(`
+						*[_type == "course"] {
+							title,
+							xp,
+							xp_per_lesson,
+							"totalLessons": count(modules[].lessons[])
+						}
+					`);
+
+					const normalize = (str: string) =>
+						str.toLowerCase().replace(/[^a-z0-9]/g, "");
+					const assetNameNorm = normalize(asset.name);
+
+					const match = sanityCourses.find(
+						(c: {
+							title: string;
+							xp?: number;
+							xp_per_lesson?: number;
+							totalLessons?: number;
+						}) => {
+							const titleNorm = normalize(c.title);
+							return (
+								assetNameNorm.includes(titleNorm) ||
+								titleNorm.includes(assetNameNorm)
+							);
+						},
+					);
+
+					if (match) {
+						xpEarned =
+							match.xp ||
+							(match.xp_per_lesson || 0) * (match.totalLessons || 0) ||
+							1000;
+					}
+				} catch (e) {
+					console.warn("Failed to fetch XP from Sanity:", e);
+				}
+
+				// Professional Fallback Descriptions if Sanity match not found or for specific known courses
+				if (asset.name.toLowerCase().includes("rust")) {
+					courseDescription =
+						"Awarded for demonstrating mastery of Rust Syntax, Memory Management, and PDAs on Solana.";
+				} else if (asset.name.toLowerCase().includes("anchor")) {
+					courseDescription =
+						"Awarded for demonstrating mastery of the Anchor Framework and secure program development.";
+				} else if (
+					asset.name.toLowerCase().includes("solana") ||
+					asset.name.toLowerCase().includes("basics")
+				) {
+					courseDescription =
+						"Awarded for demonstrating proficiency in Solana Accounts, Transactions, and Architecture.";
+				} else if (
+					asset.name.toLowerCase().includes("token-22") ||
+					asset.name.toLowerCase().includes("extension")
+				) {
+					courseDescription =
+						"Awarded for demonstrating mastery of Token-22 Extensions and advanced mint capabilities.";
+				}
+
+				// Calculate rank/level (mimicking the mock data's level range)
+				const rankAchieved = Math.floor(Math.sqrt(xpEarned / 20)) + 2;
+
 				// Synthesize a certificate from on-chain asset
 				return {
 					id: asset.pubkey,
 					certificateNo: `STA-ONCHAIN-${asset.pubkey.slice(0, 8).toUpperCase()}`,
 					courseName: asset.name.toUpperCase(),
-					courseDescription: `Verified achievement for ${asset.name} completed by the operator.`,
-					recipient: `OPERATOR_${asset.owner.slice(0, 6)}...`,
+					courseDescription,
+					recipient,
 					walletAddress: asset.owner,
-					issueDate: "REAL-TIME PROOF", // We don't have exact timestamp in raw buffer usually without more parsing
+					issueDate,
 					validator: "SUPERTEAM ACADEMY",
 					onChain: {
 						assetType: "Metaplex Core",
@@ -140,13 +229,13 @@ export async function getCertificateById(
 						owner: asset.owner,
 						metadataUri: asset.uri,
 						status: "verified",
-						signature: "ON-CHAIN_VERIFIED", // Signature would need tx indexing
+						signature: "ON-CHAIN_VERIFIED",
 					},
 					mastery: {
-						finalScore: 100, // Fallback
+						finalScore: 100,
 						maxScore: 100,
-						xpEarned: 0, // Would need course mapping
-						rankAchieved: 0,
+						xpEarned,
+						rankAchieved: rankAchieved,
 					},
 				};
 			}

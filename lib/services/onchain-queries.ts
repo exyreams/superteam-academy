@@ -84,6 +84,37 @@ export const onchainQueryService = {
 	},
 
 	/**
+	 * Fetches the creation date (block time) of an on-chain asset.
+	 */
+	async getAssetIssueDate(assetAddress: string): Promise<string> {
+		try {
+			const pubkey = new PublicKey(assetAddress);
+			const signatures = await connection.getSignaturesForAddress(pubkey, {
+				limit: 10,
+			});
+
+			if (signatures.length === 0) return "ON-CHAIN PROOF";
+
+			// The last signature in the list (or first found chronologically)
+			// usually represents the mint/create transaction if limit is small enough
+			const earliest = signatures[signatures.length - 1];
+			if (!earliest.blockTime) return "ON-CHAIN PROOF";
+
+			const date = new Date(earliest.blockTime * 1000);
+			return date
+				.toLocaleDateString("en-US", {
+					month: "long",
+					day: "numeric",
+					year: "numeric",
+				})
+				.toUpperCase();
+		} catch (error) {
+			console.error("Error fetching asset issue date:", error);
+			return "ON-CHAIN PROOF";
+		}
+	},
+
+	/**
 	 * Fetches a Metaplex Core asset and parses basic info.
 	 */
 	async getCoreAsset(assetAddress: string) {

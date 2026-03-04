@@ -67,7 +67,7 @@ export function UserMenu({ session }: UserMenuProps) {
 							/>
 						)}
 					</div>
-					<span className="text-xs font-bold leading-none">
+					<span className="text-xs font-bold leading-none hidden sm:block">
 						{user.name || "Operator"}
 					</span>
 				</button>

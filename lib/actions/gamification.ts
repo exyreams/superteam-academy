@@ -19,18 +19,24 @@ import { db } from "@/lib/db";
 import { userActivity } from "@/lib/db/schema";
 
 /**
- * Fetches real achievements unlocked by the user from the activity feed.
+ * Fetches real achievements unlocked by a user from the activity feed.
+ * @param userId - Optional ID of the user to fetch achievements for. Falls back to current session.
  */
-export async function getUserRealAchievements() {
-	const session = await auth.api.getSession({
-		headers: await headers(),
-	});
+export async function getUserRealAchievements(userId?: string) {
+	let targetUserId = userId;
 
-	if (!session?.user?.id) return [];
+	if (!targetUserId) {
+		const session = await auth.api.getSession({
+			headers: await headers(),
+		});
+		targetUserId = session?.user?.id;
+	}
+
+	if (!targetUserId) return [];
 
 	const activities = await db.query.userActivity.findMany({
 		where: and(
-			eq(userActivity.userId, session.user.id),
+			eq(userActivity.userId, targetUserId),
 			eq(userActivity.type, "achievement"),
 		),
 		orderBy: [desc(userActivity.createdAt)],
@@ -56,11 +62,19 @@ export async function getUserRealAchievements() {
 
 /**
  * Calculates real Skill Radar scores based on XP earned in different course categories.
+ * @param userId - Optional ID of the user to calculate radar for.
  */
-export async function calculateRealSkillRadar(): Promise<SkillRadar> {
-	const session = await auth.api.getSession({
-		headers: await headers(),
-	});
+export async function calculateRealSkillRadar(
+	userId?: string,
+): Promise<SkillRadar> {
+	let targetUserId = userId;
+
+	if (!targetUserId) {
+		const session = await auth.api.getSession({
+			headers: await headers(),
+		});
+		targetUserId = session?.user?.id;
+	}
 
 	const skills: SkillRadar = {
 		rust: 0,
@@ -70,11 +84,11 @@ export async function calculateRealSkillRadar(): Promise<SkillRadar> {
 		governance: 0,
 	};
 
-	if (!session?.user?.id) return skills;
+	if (!targetUserId) return skills;
 
 	const activities = await db.query.userActivity.findMany({
 		where: and(
-			eq(userActivity.userId, session.user.id),
+			eq(userActivity.userId, targetUserId),
 			eq(userActivity.type, "lesson_completed"),
 		),
 	});
@@ -121,16 +135,24 @@ export async function calculateRealSkillRadar(): Promise<SkillRadar> {
 
 /**
  * Fetches real course progress from the database.
+ * @param userId - Optional ID of the user to fetch progress for.
  */
-export async function getEnrolledCoursesProgress(): Promise<CourseProgress[]> {
-	const session = await auth.api.getSession({
-		headers: await headers(),
-	});
+export async function getEnrolledCoursesProgress(
+	userId?: string,
+): Promise<CourseProgress[]> {
+	let targetUserId = userId;
 
-	if (!session?.user?.id) return [];
+	if (!targetUserId) {
+		const session = await auth.api.getSession({
+			headers: await headers(),
+		});
+		targetUserId = session?.user?.id;
+	}
+
+	if (!targetUserId) return [];
 
 	const activities = await db.query.userActivity.findMany({
-		where: eq(userActivity.userId, session.user.id),
+		where: eq(userActivity.userId, targetUserId),
 	});
 
 	// Group by course and count lessons

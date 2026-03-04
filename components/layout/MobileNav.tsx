@@ -15,8 +15,10 @@ import {
 	UserIcon,
 	UsersIcon,
 } from "@phosphor-icons/react";
+import Image from "next/image";
 import { useState } from "react";
 import { LanguageDropdown } from "@/components/LanguageDropdown";
+import { CustomAvatar } from "@/components/shared/CustomAvatar";
 import { Logo } from "@/components/shared/logo";
 import { WalletButton } from "@/components/shared/WalletButton";
 import { ModeToggle } from "@/components/theme-toggle";
@@ -30,13 +32,17 @@ import {
 	SheetTrigger,
 } from "@/components/ui/sheet";
 import { Link, usePathname } from "@/i18n/routing";
+import { useSession } from "@/lib/auth/client";
 import { cn } from "@/lib/utils";
 
 export function MobileNav() {
 	const pathname = usePathname();
 	const [open, setOpen] = useState(false);
+	const { data: session } = useSession();
+	const user = session?.user;
 
 	const navItems = [
+		// ... (rest of navItems)
 		{
 			icon: SquaresFourIcon,
 			label: "Dashboard",
@@ -96,27 +102,57 @@ export function MobileNav() {
 				<Button
 					variant="ghost"
 					size="icon"
-					className="lg:hidden text-ink-primary -ml-2 mr-2"
+					className="lg:hidden text-ink-primary ml-2"
 				>
 					<ListIcon size={24} />
 					<span className="sr-only">Menu</span>
 				</Button>
 			</SheetTrigger>
 			<SheetContent
-				side="left"
-				className="bg-bg-surface border-r border-ink-secondary/20 dark:border-border w-[300px] p-0 flex flex-col"
+				side="right"
+				className="bg-bg-surface border-l border-ink-secondary/20 dark:border-border w-[300px] p-0 flex flex-col"
 			>
-				<SheetHeader className="p-6 border-b border-ink-secondary/20 dark:border-border">
+				<SheetHeader className="p-6 border-b border-ink-secondary/20 dark:border-border text-left">
 					<SheetTitle className="sr-only">Navigation Menu</SheetTitle>
 					<SheetDescription className="sr-only">
 						Mobile navigation for the application
 					</SheetDescription>
-					<div className="flex items-center gap-3">
-						<Logo className="h-5 w-auto text-ink-primary" />
-						<span className="font-bold uppercase tracking-widest text-[11px] text-ink-primary">
-							SUPERTEAM ACADEMY
-						</span>
-					</div>
+
+					{user ? (
+						<div className="flex items-center gap-4">
+							<div className="w-10 h-10 shrink-0 overflow-hidden relative border border-ink-primary/20 bg-ink-secondary/5">
+								{user.image ? (
+									<Image
+										src={user.image}
+										alt="Avatar"
+										fill
+										className="object-cover"
+									/>
+								) : (
+									<CustomAvatar
+										seed={user.id}
+										size={40}
+										className="border-none"
+									/>
+								)}
+							</div>
+							<div className="flex flex-col">
+								<span className="font-bold uppercase tracking-widest text-xs text-ink-primary leading-tight">
+									{user.name || "Operator"}
+								</span>
+								<span className="text-[10px] text-ink-secondary font-mono truncate max-w-[150px]">
+									{user.email || "Academy Member"}
+								</span>
+							</div>
+						</div>
+					) : (
+						<div className="flex items-center gap-3">
+							<Logo className="h-5 w-auto text-ink-primary" />
+							<span className="font-bold uppercase tracking-widest text-[11px] text-ink-primary">
+								SUPERTEAM ACADEMY
+							</span>
+						</div>
+					)}
 				</SheetHeader>
 
 				<div className="flex-1 overflow-y-auto py-6 flex flex-col gap-2 px-4">
