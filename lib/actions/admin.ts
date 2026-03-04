@@ -1,8 +1,8 @@
 "use server";
 
 import { db } from "@/lib/db";
-import { user } from "@/lib/db/schema";
-import { sql } from "drizzle-orm";
+import { user, userActivity } from "@/lib/db/schema";
+import { desc, eq, sql } from "drizzle-orm";
 import { client } from "@/sanity/client";
 
 export async function getAdminDashboardStats() {
@@ -47,5 +47,37 @@ export async function getAdminDashboardStats() {
 			activeEnrollments: 0,
 			completionRate: 0,
 		};
+	}
+}
+
+export async function getSystemLogs() {
+	try {
+		const logs = await db
+			.select({
+				id: userActivity.id,
+				action: userActivity.title,
+				type: userActivity.type,
+				userId: userActivity.userId,
+				wallet: user.walletAddress,
+				timestamp: userActivity.createdAt,
+				details: userActivity.description,
+			})
+			.from(userActivity)
+			.leftJoin(user, eq(userActivity.userId, user.id))
+			.orderBy(desc(userActivity.createdAt))
+			.limit(20);
+
+		return logs.map((log) => ({
+			id: log.id,
+			action: log.action,
+			type: log.type,
+			wallet: log.wallet || log.userId, // Fallback to userId if walletAddress is null
+			timestamp: log.timestamp.toLocaleString(),
+			details: log.details,
+			status: "SUCCESS" as const, // For now, all recorded activities are successes
+		}));
+	} catch (error) {
+		console.error("Failed to fetch system logs:", error);
+		return [];
 	}
 }

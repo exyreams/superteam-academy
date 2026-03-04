@@ -96,6 +96,7 @@ export function CourseViewClient({ slug }: CourseViewClientProps) {
 						xpBounty={course.xpBounty}
 						enrolled={course.enrolled}
 						progress={course.progress}
+						onChainStatus={course.onChainStatus}
 						credentialAsset={course.credentialAsset}
 						nextLessonId={
 							course.modules.flatMap((m) => m.lessons).find((l) => !l.completed)

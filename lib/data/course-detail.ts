@@ -78,6 +78,7 @@ export interface CourseDetail {
 	completedLessons: number;
 	progress: number;
 	enrolled: boolean;
+	onChainStatus?: string;
 	completedAt?: number | null;
 	credentialAsset?: string | null;
 	prerequisiteSlug?: string;

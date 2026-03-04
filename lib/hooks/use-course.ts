@@ -44,6 +44,7 @@ interface SanityCourse {
 	difficulty: number;
 	track_id: number;
 	xp_per_lesson: number;
+	onChainStatus?: string;
 	prerequisite_course?: { slug: string };
 	duration?: string;
 	modules: SanityModule[];
@@ -203,6 +204,7 @@ export function useCourseDetails(slug: string) {
 						? Math.round((totalCompleted / totalLessons) * 100)
 						: 0,
 				enrolled: !!enrollment,
+				onChainStatus: sanityCourse.onChainStatus,
 				completedAt: enrollment?.completedAt?.toNumber() || null,
 				credentialAsset: enrollment?.credentialAsset?.toBase58() || null,
 				prerequisiteSlug: sanityCourse.prerequisite_course?.slug,

@@ -73,6 +73,7 @@ export const COURSE_BY_SLUG_QUERY = `
     min_completions_for_reward,
     duration,
     tag,
+    onChainStatus,
     icon,
     prerequisite_course-> { "slug": slug.current },
     modules[]-> {

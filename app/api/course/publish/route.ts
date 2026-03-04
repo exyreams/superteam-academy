@@ -14,6 +14,9 @@ import type { OnchainAcademy } from "@/lib/anchor/idl/onchain_academy";
 import IDL from "@/lib/anchor/idl/onchain_academy.json";
 import { getSessionServer } from "@/lib/auth/server";
 import { client } from "@/sanity/client";
+import { db } from "@/lib/db";
+import { userActivity } from "@/lib/db/schema";
+import { v4 as uuidv4 } from "uuid";
 
 // Write-enabled client
 const writeClient = createClient({
@@ -176,7 +179,6 @@ export async function POST(request: Request) {
 				: course.difficulty || 1;
 
 		// Generate a unique 32-byte hash for contentTxId based on course metadata
-		// This acts as a version fingerprint
 		const hashInput = `${courseSlug}-${course._id}-${totalLessons}-${course.xp_per_lesson}`;
 		const contentHash = crypto.createHash("sha256").update(hashInput).digest();
 
@@ -211,7 +213,7 @@ export async function POST(request: Request) {
 			.signers([backendSigner])
 			.rpc();
 
-		// 6. Update Sanity Document
+		// 6. Update Sanity Document & Record System Activity
 		if (process.env.SANITY_API_TOKEN) {
 			await writeClient
 				.patch(courseId)
@@ -222,6 +224,20 @@ export async function POST(request: Request) {
 					publishedAt: new Date().toISOString(),
 				})
 				.commit();
+
+			await db.insert(userActivity).values({
+				id: uuidv4(),
+				userId: session.user.id,
+				type: "course_published",
+				title: `COURSE PUBLISHED: ${course.title}`,
+				description: `Admin published course '${course.slug}' to the blockchain.`,
+				courseId: course.slug,
+				metadata: {
+					courseSlug: course.slug,
+					coursePda: coursePda.toBase58(),
+					txSignature: tx,
+				},
+			});
 		} else {
 			console.warn(
 				"SANITY_API_TOKEN missing: Course published on-chain but status not updated in Sanity.",

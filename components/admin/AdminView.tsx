@@ -8,7 +8,6 @@
 import {
 	BookOpenIcon,
 	CheckCircleIcon,
-	ClockIcon,
 	CoinsIcon,
 	KeyIcon,
 	PaperPlaneRightIcon,
@@ -34,8 +33,8 @@ import {
 	getProgram,
 	XP_MINT,
 } from "@/lib/anchor/client";
-import { getAdminDashboardStats } from "@/lib/actions/admin";
-import { mockActionLogs, mockMinters } from "@/lib/data/admin";
+import { getAdminDashboardStats, getSystemLogs } from "@/lib/actions/admin";
+import { mockMinters } from "@/lib/data/admin";
 import { cn } from "@/lib/utils";
 import { client, PENDING_REVIEW_COURSES_QUERY } from "@/sanity/client";
 
@@ -53,11 +52,22 @@ interface PendingCourse {
 	_updatedAt: string;
 }
 
+interface ActionLog {
+	id: string;
+	action: string;
+	type: string;
+	wallet: string;
+	timestamp: string;
+	details?: string | null;
+	status: "SUCCESS" | "FAILED" | "PENDING";
+}
+
 /**
  * Main administrative dashboard component.
  */
 export function AdminView() {
 	const [pendingCourses, setPendingCourses] = useState<PendingCourse[]>([]);
+	const [actionLogs, setActionLogs] = useState<ActionLog[]>([]);
 	const [loading, setLoading] = useState(true);
 	const [publishing, setPublishing] = useState<string | null>(null);
 	const [isInitialized, setIsInitialized] = useState<boolean | null>(null);
@@ -110,9 +120,19 @@ export function AdminView() {
 			}
 		}
 
+		async function fetchLogs() {
+			try {
+				const logs = await getSystemLogs();
+				setActionLogs(logs as ActionLog[]);
+			} catch (e) {
+				console.error("Error fetching logs", e);
+			}
+		}
+
 		checkInit();
 		fetchPending();
 		fetchStats();
+		fetchLogs();
 	}, [wallet]);
 
 	// Handle Initializing the program
@@ -199,7 +219,11 @@ export function AdminView() {
 				toast.success("Course published and registered on-chain!", {
 					id: toastId,
 				});
-				console.log("Publish result:", data);
+				// Refresh stats and logs
+				const statsData = await getAdminDashboardStats();
+				setAdminStats(statsData);
+				const logs = await getSystemLogs();
+				setActionLogs(logs as ActionLog[]);
 			} else {
 				toast.error(data.error || "Failed to publish course", { id: toastId });
 			}
@@ -375,58 +399,62 @@ export function AdminView() {
 									System Logs
 								</h2>
 
-								<div className="border border-border bg-surface/50 divide-y divide-border font-mono text-sm shadow-sm backdrop-blur-sm">
-									{mockActionLogs.map((log) => (
-										<div
-											key={log.id}
-											className="p-3 flex items-start gap-4 hover:bg-fg-base/5 transition-colors"
-										>
-											<div className="pt-1">
-												{log.status === "SUCCESS" && (
-													<CheckCircleIcon className="w-4 h-4 text-[#14F195]" />
-												)}
-												{log.status === "FAILED" && (
-													<ShieldWarningIcon className="w-4 h-4 text-[#F92424]" />
-												)}
-												{log.status === "PENDING" && (
-													<ClockIcon className="w-4 h-4 text-[#FFB020]" />
-												)}
-											</div>
-											<div className="flex-1">
-												<div className="flex justify-between items-center mb-1">
-													<span
-														className={cn(
-															"font-bold uppercase text-xs tracking-wider",
-															log.status === "FAILED"
-																? "text-[#F92424]"
-																: "text-ink-primary",
-														)}
-													>
-														{log.action}
-													</span>
-													<span className="text-[10px] text-ink-tertiary">
-														{log.timestamp}
-													</span>
-												</div>
-												<div className="text-ink-secondary text-xs">
-													Wallet: {log.wallet}
-												</div>
-												{log.details && (
-													<div className="text-ink-tertiary text-xs mt-1 border-l border-border pl-2 border-l-ink-secondary/50">
-														{log.details}
-													</div>
-												)}
-											</div>
+								<div className="border border-border bg-surface/50 divide-y divide-border font-mono text-sm shadow-sm backdrop-blur-sm h-[600px] overflow-y-auto">
+									{actionLogs.length === 0 ? (
+										<div className="p-8 text-center text-ink-tertiary italic text-xs">
+											-- NO SYSTEM ACTIVITY RECORDED --
 										</div>
-									))}
-									<div className="p-2 text-center border-t border-border">
-										<Button
-											variant="ghost"
-											className="text-xs uppercase hover:text-ink-primary h-auto py-1"
-										>
-											View Full Log
-										</Button>
-									</div>
+									) : (
+										actionLogs.map((log) => (
+											<div
+												key={log.id}
+												className="p-3 flex items-start gap-4 hover:bg-fg-base/5 transition-colors"
+											>
+												<div className="pt-1">
+													{log.type === "course_published" && (
+														<PaperPlaneRightIcon className="w-4 h-4 text-[#9945FF]" />
+													)}
+													{log.type === "enrolled" && (
+														<UsersIcon className="w-4 h-4 text-[#00C2FF]" />
+													)}
+													{(log.type === "course_completed" ||
+														log.type === "lesson_completed") && (
+														<CheckCircleIcon className="w-4 h-4 text-[#14F195]" />
+													)}
+													{log.type === "achievement" && (
+														<RocketLaunchIcon className="w-4 h-4 text-[#FFB020]" />
+													)}
+													{![
+														"course_published",
+														"enrolled",
+														"course_completed",
+														"lesson_completed",
+														"achievement",
+													].includes(log.type) && (
+														<ShieldIcon className="w-4 h-4 text-ink-tertiary" />
+													)}
+												</div>
+												<div className="flex-1">
+													<div className="flex justify-between items-center mb-1">
+														<span className="font-bold uppercase text-xs tracking-wider text-ink-primary">
+															{log.action}
+														</span>
+														<span className="text-[10px] text-ink-tertiary whitespace-nowrap ml-2">
+															{log.timestamp}
+														</span>
+													</div>
+													<div className="text-ink-secondary text-[10px] truncate max-w-[200px] md:max-w-md">
+														ID: {log.wallet}
+													</div>
+													{log.details && (
+														<div className="text-ink-tertiary text-[10px] mt-1 border-l border-border pl-2 border-l-ink-secondary/50">
+															{log.details}
+														</div>
+													)}
+												</div>
+											</div>
+										))
+									)}
 								</div>
 							</div>
 						</div>

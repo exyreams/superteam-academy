@@ -19,6 +19,7 @@ import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "@/i18n/routing";
 import { useClaimCredential, useEnroll } from "@/lib/hooks/use-course";
+import { cn } from "@/lib/utils";
 
 /** Course information and enrollment state for the header section. */
 interface CourseHeaderProps {
@@ -36,6 +37,7 @@ interface CourseHeaderProps {
 	xpBounty: number;
 	enrolled: boolean;
 	progress: number;
+	onChainStatus?: string;
 	credentialAsset?: string | null;
 	nextLessonId?: string;
 }
@@ -55,6 +57,7 @@ export function CourseHeader({
 	xpBounty,
 	enrolled,
 	progress,
+	onChainStatus,
 	credentialAsset,
 	nextLessonId,
 }: CourseHeaderProps) {
@@ -192,13 +195,18 @@ export function CourseHeader({
 						</>
 					) : (
 						<Button
-							className="bg-ink-primary text-bg-base hover:bg-ink-primary/90 font-bold uppercase tracking-widest h-12 px-8"
+							className={cn(
+								"bg-ink-primary text-bg-base hover:bg-ink-primary/90 font-bold uppercase tracking-widest h-12 px-8",
+								onChainStatus !== "published" && "opacity-50 cursor-not-allowed",
+							)}
 							onClick={handleEnroll}
-							disabled={enrollMutation.isPending}
+							disabled={enrollMutation.isPending || onChainStatus !== "published"}
 						>
 							{enrollMutation.isPending
 								? t("buttons.enrolling")
-								: t("buttons.enroll")}
+								: onChainStatus !== "published"
+									? "NOT YET PUBLISHED"
+									: t("buttons.enroll")}
 						</Button>
 					)}
 					<Button
