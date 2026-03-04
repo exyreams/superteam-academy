@@ -18,10 +18,15 @@ export interface UserProfile {
 	enrolledSince: string;
 	socialLinks: {
 		github?: string;
+		githubHandle?: string;
 		twitter?: string;
+		twitterHandle?: string;
 		portfolio?: string;
+		portfolioDisplay?: string;
 	};
 	isPublic: boolean;
+	reputation?: number;
+	level?: number;
 }
 
 /**
@@ -193,32 +198,17 @@ export const mockRecommendedCourses: RecommendedCourse[] = [
 ];
 
 // Helper functions
-/**
- * Retrieves the profile for a specific user.
- * @param _userId - Optional ID of the user to fetch.
- * @returns The UserProfile object.
- */
-export function getUserProfile(_userId?: string): UserProfile {
+export function getUserProfile(): UserProfile {
 	// In real app, fetch by userId
 	return mockUserProfile;
 }
 
-/**
- * Retrieves statistics for a specific user.
- * @param _userId - Optional ID of the user to fetch stats for.
- * @returns The UserStats object.
- */
-export function getUserStats(_userId?: string): UserStats {
+export function getUserStats(): UserStats {
 	// In real app, fetch by userId
 	return mockUserStats;
 }
 
-/**
- * Retrieves course progress for a specific user.
- * @param _userId - Optional ID of the user to fetch progress for.
- * @returns An array of CourseProgress objects.
- */
-export function getCourseProgress(_userId?: string): CourseProgress[] {
+export function getCourseProgress(): CourseProgress[] {
 	// In real app, fetch by userId
 	return mockCourseProgress;
 }

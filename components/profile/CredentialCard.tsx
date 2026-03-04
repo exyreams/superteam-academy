@@ -19,13 +19,19 @@ const trackToCertificateId: Record<string, string> = {
 	RUST_FUNDAMENTALS: "rust-fundamentals",
 };
 
+/**
+ * CredentialCard Component
+ * Renders an evolving cNFT or certificate as a premium card with track info and Solscan link.
+ */
 export function CredentialCard({ credential }: CredentialCardProps) {
 	const locale = useLocale();
 
-	// Get the certificate ID from the mapping, or create a fallback
+	// Get the certificate ID from the mapping, or use mintAddress for on-chain assets
 	const certificateId =
-		trackToCertificateId[credential.track] ||
-		credential.track.toLowerCase().replace(/[_\s]+/g, "-");
+		credential.verified && credential.mintAddress
+			? credential.mintAddress
+			: trackToCertificateId[credential.track] ||
+				credential.track.toLowerCase().replace(/[_\s]+/g, "-");
 
 	return (
 		<div className="border border-border p-3 bg-bg-surface group hover:border-ink-primary transition-colors">
