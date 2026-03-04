@@ -18,22 +18,12 @@ import {
 } from "@/lib/anchor/client";
 import { OnchainAcademy } from "@/lib/anchor/idl/onchain_academy";
 import IDL from "@/lib/anchor/idl/onchain_academy.json";
+import { TRACK_COLLECTIONS, TrackId } from "@/lib/constants/leaderboard";
 import { db } from "@/lib/db";
 import { userActivity } from "@/lib/db/schema";
 import { getPostHogClient } from "@/lib/posthog-server";
 
 const connection = new Connection(CLUSTER_URL, "confirmed");
-
-/**
- * Mapping of track IDs to their corresponding MPL Core collection addresses.
- */
-const TRACK_COLLECTIONS: Record<number, string> = {
-	1: "Dzi3c2vDiGkQPXcFzna5WuT6o3XbmetSuMLspxMYN7hJ", // Rust
-	2: "FJ78Whis39a1sjo89q3ufTn5pVctGqiLM59uL3kzX8Hh", // Anchor
-	3: "Diu7bircshMJWXsKEk3snYdfxNXB8QCtHbEif8473ojh", // DeFi
-	4: "4dmgjeUWUojnLPnafoQ4wdiqqBoe6DqpEBcb2vEK3jvC", // Security
-	5: "9WNJe2sLmtTB3SQ8jV4bptTixYHvnTj3C511W2RBtyZF", // Frontend
-};
 
 /**
  * Handles the issuance or upgrade of a course credential.
@@ -122,9 +112,10 @@ export async function POST(request: Request) {
 
 		// Determine if this is an issue or upgrade
 		const isUpgrade = !!enrollmentAccount.credentialAsset;
-
+		// Determine which collection and track this belongs to
 		const trackId = courseAccount.trackId;
-		const trackCollectionAddress = TRACK_COLLECTIONS[trackId];
+		const trackCollectionAddress =
+			TRACK_COLLECTIONS[trackId as TrackId] || "general";
 
 		if (!trackCollectionAddress) {
 			return NextResponse.json(

@@ -23,6 +23,7 @@ import {
 } from "@/lib/anchor/client";
 import { OnchainAcademy } from "@/lib/anchor/idl/onchain_academy";
 import IDL from "@/lib/anchor/idl/onchain_academy.json";
+import { TRACK_COLLECTIONS, TrackId } from "@/lib/constants/leaderboard";
 import { db } from "@/lib/db";
 import { streak as streakTable, userActivity } from "@/lib/db/schema";
 import { getPostHogClient } from "@/lib/posthog-server";
@@ -239,6 +240,9 @@ export async function POST(request: Request) {
 			}
 
 			// Add Activity record
+			const trackAddress =
+				TRACK_COLLECTIONS[courseAccount.trackId as TrackId] || "general";
+
 			await db.insert(userActivity).values({
 				id: uuidv4(),
 				userId: learnerAddress,
@@ -248,6 +252,8 @@ export async function POST(request: Request) {
 				xpEarned: Math.floor(
 					(courseAccount.lessonCount * courseAccount.xpPerLesson) / 2,
 				),
+				courseId: courseSlug,
+				track: trackAddress,
 				metadata: { courseSlug, signature: tx },
 				createdAt: now,
 			});

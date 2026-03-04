@@ -23,6 +23,7 @@ import {
 } from "@/lib/anchor/client";
 import { OnchainAcademy } from "@/lib/anchor/idl/onchain_academy";
 import IDL from "@/lib/anchor/idl/onchain_academy.json";
+import { TRACK_COLLECTIONS, TrackId } from "@/lib/constants/leaderboard";
 import { db } from "@/lib/db";
 import {
 	streak as streakTable,
@@ -234,15 +235,18 @@ export async function POST(request: Request) {
 			}
 
 			// Add Activity record
+			const trackAddress =
+				TRACK_COLLECTIONS[courseAccount.trackId as TrackId] || "general";
+
 			await db.insert(userActivity).values({
 				id: uuidv4(),
 				userId: learnerAddress,
 				type: "lesson_completed",
 				title: `Completed Lesson: ${courseSlug.toUpperCase()} #${lessonIndex}`,
-				description: `Successfully completed on-chain lesson tasks.`,
+				description: "Successfully completed on-chain lesson tasks.",
 				xpEarned: courseAccount.xpPerLesson,
 				courseId: courseSlug,
-				track: (courseAccount as { category?: string }).category || "general",
+				track: trackAddress,
 				metadata: { courseSlug, lessonIndex, signature: tx },
 				createdAt: now,
 			});
