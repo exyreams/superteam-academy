@@ -259,3 +259,40 @@ export const challengeSubmission = pgTable(
 		};
 	},
 );
+
+/**
+ * Community Discussion Threads
+ */
+export const thread = pgTable("thread", {
+	id: text("id").primaryKey(),
+	slug: text("slug").notNull().unique(),
+	title: text("title").notNull(),
+	authorId: text("authorId")
+		.notNull()
+		.references(() => user.id, { onDelete: "cascade" }),
+	category: text("category").notNull(), // 'Architecture', 'Discussion', 'Networking', etc.
+	content: text("content").notNull(),
+	views: integer("views").default(0).notNull(),
+	replies: integer("replies").default(0).notNull(),
+	likes: integer("likes").default(0).notNull(),
+	lastActiveAt: timestamp("lastActiveAt").notNull().defaultNow(),
+	createdAt: timestamp("createdAt").notNull().defaultNow(),
+	updatedAt: timestamp("updatedAt").notNull().defaultNow(),
+});
+
+/**
+ * Community Discussion Comments / Replies
+ */
+export const threadComment = pgTable("thread_comment", {
+	id: text("id").primaryKey(),
+	threadId: text("threadId")
+		.notNull()
+		.references(() => thread.id, { onDelete: "cascade" }),
+	authorId: text("authorId")
+		.notNull()
+		.references(() => user.id, { onDelete: "cascade" }),
+	content: text("content").notNull(),
+	likes: integer("likes").default(0).notNull(),
+	createdAt: timestamp("createdAt").notNull().defaultNow(),
+	updatedAt: timestamp("updatedAt").notNull().defaultNow(),
+});

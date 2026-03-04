@@ -7,7 +7,6 @@
 
 import {
 	BookOpenIcon,
-	ChartBarIcon,
 	CheckCircleIcon,
 	ClockIcon,
 	CoinsIcon,
@@ -25,6 +24,7 @@ import { Keypair, PublicKey, SystemProgram } from "@solana/web3.js";
 import React, { useEffect, useState } from "react";
 import { toast } from "sonner";
 import { NavRail } from "@/components/layout/NavRail";
+import { StatCard } from "@/components/shared/StatCard";
 import { TopBar } from "@/components/layout/TopBar";
 import { DotGrid } from "@/components/shared/DotGrid";
 import { Button } from "@/components/ui/button";
@@ -34,7 +34,8 @@ import {
 	getProgram,
 	XP_MINT,
 } from "@/lib/anchor/client";
-import { mockActionLogs, mockAdminStats, mockMinters } from "@/lib/data/admin";
+import { getAdminDashboardStats } from "@/lib/actions/admin";
+import { mockActionLogs, mockMinters } from "@/lib/data/admin";
 import { cn } from "@/lib/utils";
 import { client, PENDING_REVIEW_COURSES_QUERY } from "@/sanity/client";
 
@@ -62,6 +63,14 @@ export function AdminView() {
 	const [isInitialized, setIsInitialized] = useState<boolean | null>(null);
 	const [isInitializing, setIsInitializing] = useState(false);
 	const [onChainAuthority, setOnChainAuthority] = useState<string | null>(null);
+	const [adminStats, setAdminStats] = useState({
+		totalLearners: 0,
+		xpMinted: 0,
+		activeCourses: 0,
+		pendingReviews: 0,
+		activeEnrollments: 0,
+		completionRate: 0,
+	});
 	const wallet = useWallet();
 
 	useEffect(() => {
@@ -92,8 +101,18 @@ export function AdminView() {
 			}
 		}
 
+		async function fetchStats() {
+			try {
+				const statsData = await getAdminDashboardStats();
+				setAdminStats(statsData);
+			} catch (e) {
+				console.error("Error fetching admin stats", e);
+			}
+		}
+
 		checkInit();
 		fetchPending();
+		fetchStats();
 	}, [wallet]);
 
 	// Handle Initializing the program
@@ -196,14 +215,14 @@ export function AdminView() {
 		<div className="min-h-screen bg-bg-base relative">
 			<DotGrid opacity={0.3} />
 
-			<div className="grid grid-cols-1 lg:grid-cols-[60px_1fr] lg:grid-rows-[48px_1fr] min-h-screen relative z-10">
+			<div className="grid grid-cols-1 lg:grid-cols-[60px_1fr] lg:grid-rows-[48px_1fr] min-h-screen lg:h-screen lg:overflow-hidden max-w-full relative z-10">
 				<div className="col-span-1 lg:col-span-2">
 					<TopBar />
 				</div>
 
 				<NavRail />
 
-				<main className="p-4 lg:p-8 flex flex-col gap-10 max-w-7xl mx-auto w-full">
+				<main className="px-4 py-6 lg:px-8 lg:py-8 flex flex-col gap-10 overflow-visible lg:overflow-y-auto relative z-10 h-full w-full">
 					{/* Header */}
 					<div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-6 border-b border-ink-secondary/20 dark:border-border pb-6">
 						<div>
@@ -265,33 +284,25 @@ export function AdminView() {
 
 					{/* Stat Cards */}
 					<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-						<StatBox label="TOTAL LEARNERS" value="1,280" icon={UsersIcon} />
-						<StatBox label="ON-CHAIN XP MINTED" value="450K" icon={CoinsIcon} />
-						<StatBox label="ACTIVE COURSES" value="24" icon={BookOpenIcon} />
-						<StatBox label="PENDING REVIEWS" value="7" icon={ShieldCheckIcon} />
-					</div>
-
-					{/* Stats Row */}
-					<div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-						<StatBox
-							icon={UsersIcon}
-							label="Total Operatives"
-							value={mockAdminStats.totalUsers.toLocaleString()}
+						<StatCard
+							label="TOTAL LEARNERS"
+							value={adminStats.totalLearners.toLocaleString()}
+							icon={<UsersIcon className="w-5 h-5" weight="duotone" />}
 						/>
-						<StatBox
-							icon={ChartBarIcon}
-							label="Active Enrollments"
-							value={mockAdminStats.activeEnrollments.toLocaleString()}
+						<StatCard
+							label="ON-CHAIN XP MINTED"
+							value={adminStats.xpMinted.toLocaleString()}
+							icon={<CoinsIcon className="w-5 h-5" weight="duotone" />}
 						/>
-						<StatBox
-							icon={CoinsIcon}
-							label="XP Minted"
-							value={mockAdminStats.xpMinted.toLocaleString()}
+						<StatCard
+							label="ACTIVE COURSES"
+							value={adminStats.activeCourses.toString()}
+							icon={<BookOpenIcon className="w-5 h-5" weight="duotone" />}
 						/>
-						<StatBox
-							icon={CheckCircleIcon}
-							label="Completion Rate"
-							value={`${mockAdminStats.completionRate}%`}
+						<StatCard
+							label="PENDING REVIEWS"
+							value={adminStats.pendingReviews.toString()}
+							icon={<ShieldCheckIcon className="w-5 h-5" weight="duotone" />}
 						/>
 					</div>
 
@@ -306,14 +317,14 @@ export function AdminView() {
 								</h2>
 
 								{loading ? (
-									<div className="p-8 text-center border border-border bg-surface/50">
-										<p className="text-ink-secondary text-sm">
+									<div className="p-8 text-center border border-dashed border-ink-secondary/30 bg-bg-surface">
+										<p className="text-ink-secondary text-sm uppercase tracking-widest text-[10px] font-bold">
 											Loading pending courses...
 										</p>
 									</div>
 								) : pendingCourses.length === 0 ? (
-									<div className="p-8 text-center border border-border bg-surface/50">
-										<p className="text-ink-secondary text-sm">
+									<div className="p-8 text-center border border-dashed border-ink-secondary/30 bg-bg-surface">
+										<p className="text-ink-secondary uppercase tracking-widest text-[10px] font-bold">
 											No courses currently pending review.
 										</p>
 									</div>
@@ -322,9 +333,14 @@ export function AdminView() {
 										{pendingCourses.map((course) => (
 											<div
 												key={course._id}
-												className="border border-border bg-surface/80 p-5 flex flex-col md:flex-row justify-between items-start md:items-center gap-4 hover:border-ink-secondary/30 transition-colors"
+												className="border border-border bg-bg-surface relative p-5 flex flex-col md:flex-row justify-between items-start md:items-center gap-4 group hover:border-ink-primary transition-colors cursor-default"
 											>
-												<div>
+												<div className="absolute top-0 left-0 w-1.5 h-1.5 border-t border-l border-ink-primary opacity-0 group-hover:opacity-100 transition-opacity"></div>
+												<div className="absolute top-0 right-0 w-1.5 h-1.5 border-t border-r border-ink-primary opacity-0 group-hover:opacity-100 transition-opacity"></div>
+												<div className="absolute bottom-0 left-0 w-1.5 h-1.5 border-b border-l border-ink-primary opacity-0 group-hover:opacity-100 transition-opacity"></div>
+												<div className="absolute bottom-0 right-0 w-1.5 h-1.5 border-b border-r border-ink-primary opacity-0 group-hover:opacity-100 transition-opacity"></div>
+
+												<div className="relative z-10">
 													<h3 className="font-bold text-lg text-ink-primary">
 														{course.title}
 													</h3>
@@ -340,7 +356,7 @@ export function AdminView() {
 												<Button
 													onClick={() => handleApprove(course)}
 													disabled={publishing === course._id}
-													className="shrink-0 bg-[#9945FF] hover:bg-[#9945FF]/90 text-white border-none rounded-none w-full md:w-auto font-bold uppercase tracking-widest text-xs h-10 px-6 flex items-center gap-2"
+													className="shrink-0 bg-[#9945FF] hover:bg-[#9945FF]/90 text-white border-none rounded-none w-full md:w-auto font-bold uppercase tracking-widest text-xs h-10 px-6 flex items-center gap-2 relative z-10"
 												>
 													{publishing === course._id
 														? "Publishing..."
@@ -493,33 +509,6 @@ export function AdminView() {
 						</div>
 					</div>
 				</main>
-			</div>
-		</div>
-	);
-}
-
-/**
- * Visual box for displaying platform-wide statistics.
- */
-function StatBox({
-	icon: Icon,
-	label,
-	value,
-}: {
-	icon: React.ElementType;
-	label: string;
-	value: string;
-}) {
-	return (
-		<div className="border border-border bg-surface/50 p-4 transition-all hover:border-ink-secondary/30">
-			<div className="flex items-center gap-2 mb-2 text-ink-secondary">
-				<Icon className="w-4 h-4" weight="duotone" />
-				<span className="text-[10px] uppercase tracking-widest font-bold">
-					{label}
-				</span>
-			</div>
-			<div className="font-display text-2xl lg:text-3xl text-ink-primary">
-				{value}
 			</div>
 		</div>
 	);

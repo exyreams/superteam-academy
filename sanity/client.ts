@@ -19,7 +19,7 @@ export const client = createClient({
  * GROQ query to fetch all published courses with minimal metadata for the catalog.
  */
 export const ALL_COURSES_QUERY = `
-  *[_type == "course" && status == "published"] {
+  *[_type == "course" && status == "published" && onChainStatus == "published"] {
     _id,
     title,
     "slug": slug.current,

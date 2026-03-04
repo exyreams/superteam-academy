@@ -7,26 +7,55 @@ import {
 	WarningIcon,
 } from "@phosphor-icons/react";
 import posthog from "posthog-js";
-import { useState } from "react";
+import { useState, useTransition } from "react";
 import { CommunitySidebar } from "@/components/community/CommunitySidebar";
 import { NavRail } from "@/components/layout/NavRail";
 import { TopBar } from "@/components/layout/TopBar";
 import { DotGrid } from "@/components/shared/DotGrid";
 import { Button } from "@/components/ui/button";
-import { Link } from "@/i18n/routing";
+import { Link, useRouter } from "@/i18n/routing";
+import { createThread } from "@/lib/actions/community";
+import { toast } from "sonner";
+import {
+	Select,
+	SelectContent,
+	SelectItem,
+	SelectTrigger,
+	SelectValue,
+} from "@/components/ui/select";
 
 export function NewTopicView() {
 	const [title, setTitle] = useState("");
 	const [category, setCategory] = useState("architecture");
 	const [body, setBody] = useState("");
+	const [isPending, startTransition] = useTransition();
+	const router = useRouter();
 
 	const handleSubmit = (e: React.FormEvent) => {
 		e.preventDefault();
-		if (!title.trim()) return;
-		posthog.capture("community_post_submitted", {
-			category,
-			title_length: title.length,
-			body_length: body.length,
+		if (!title.trim() || !body.trim()) {
+			toast.error("Title and body are required");
+			return;
+		}
+
+		startTransition(async () => {
+			try {
+				const newThread = await createThread({
+					title,
+					category,
+					content: body,
+				});
+				posthog.capture("community_post_submitted", {
+					category,
+					title_length: title.length,
+					body_length: body.length,
+				});
+				toast.success("Transmission deployed successfully");
+				router.push(`/community/${newThread.slug}`);
+			} catch (error) {
+				console.error(error);
+				toast.error("Failed to deploy transmission");
+			}
 		});
 	};
 
@@ -63,17 +92,11 @@ export function NewTopicView() {
 
 					<div className="max-w-4xl mx-auto w-full flex flex-col gap-6">
 						{/* Form Section */}
-						<div className="border border-ink-primary bg-surface/50 p-6 md:p-8 relative">
-							{/* Corner Accents */}
-							<div className="absolute top-0 right-0 w-2 h-2 border-t border-r border-ink-primary"></div>
-							<div className="absolute bottom-0 right-0 w-2 h-2 border-b border-r border-ink-primary"></div>
-							<div className="absolute top-0 left-0 w-2 h-2 border-t border-l border-ink-primary"></div>
-							<div className="absolute bottom-0 left-0 w-2 h-2 border-b border-l border-ink-primary"></div>
-
-							<form className="space-y-8 relative z-10" onSubmit={handleSubmit}>
+						<div className="p-2 md:p-4">
+							<form className="space-y-10" onSubmit={handleSubmit}>
 								{/* Title Input */}
 								<div>
-									<label className="block text-[10px] uppercase tracking-widest font-bold text-ink-primary mb-2">
+									<label className="block text-[10px] uppercase tracking-widest font-bold text-ink-primary mb-3">
 										Subject Header
 									</label>
 									<div className="relative">
@@ -85,68 +108,70 @@ export function NewTopicView() {
 											placeholder="e.g. Protocol analysis requested..."
 											value={title}
 											onChange={(e) => setTitle(e.target.value)}
-											className="w-full bg-bg-base border border-ink-secondary/50 p-3 pl-8 font-mono text-sm text-ink-primary focus:border-ink-primary focus:outline-none transition-colors placeholder:text-ink-tertiary"
+											className="w-full bg-transparent border border-ink-secondary/30 p-3 pl-10 font-mono text-sm text-ink-primary focus:border-ink-primary outline-none transition-colors placeholder:text-ink-secondary/50"
 										/>
 									</div>
 								</div>
 
 								{/* Category Select */}
 								<div>
-									<label className="block text-[10px] uppercase tracking-widest font-bold text-ink-primary mb-2">
+									<label className="block text-[10px] uppercase tracking-widest font-bold text-ink-primary mb-3">
 										Transmission Category
 									</label>
-									<select
-										value={category}
-										onChange={(e) => setCategory(e.target.value)}
-										className="w-full bg-bg-base border border-ink-secondary/50 p-3 font-mono text-sm text-ink-primary focus:border-ink-primary focus:outline-none transition-colors appearance-none cursor-pointer"
-									>
-										<option value="architecture">ARCHITECTURE</option>
-										<option value="discussion">DISCUSSION</option>
-										<option value="networking">NETWORKING</option>
-										<option value="support">SYSTEM_SUPPORT</option>
-									</select>
+									<Select value={category} onValueChange={setCategory}>
+										<SelectTrigger className="w-full bg-transparent border border-ink-secondary/30 p-3 h-auto font-mono text-sm text-ink-primary rounded-none focus:ring-0 focus:border-ink-primary cursor-pointer uppercase hover:bg-transparent">
+											<SelectValue placeholder="Select Category" />
+										</SelectTrigger>
+										<SelectContent className="bg-bg-base border-ink-secondary/30 rounded-none font-mono">
+											<SelectItem value="architecture">ARCHITECTURE</SelectItem>
+											<SelectItem value="discussion">DISCUSSION</SelectItem>
+											<SelectItem value="networking">NETWORKING</SelectItem>
+											<SelectItem value="support">SYSTEM_SUPPORT</SelectItem>
+										</SelectContent>
+									</Select>
 								</div>
 
 								{/* Markdown Body */}
 								<div>
-									<div className="flex justify-between items-end mb-2">
+									<div className="flex justify-between items-end mb-3">
 										<label className="block text-[10px] uppercase tracking-widest font-bold text-ink-primary">
 											Payload Buffer
 										</label>
-										<span className="text-[10px] uppercase tracking-widest text-ink-secondary flex items-center gap-1">
-											<CodeIcon weight="bold" /> Markdown Supported
+										<span className="text-[10px] uppercase tracking-widest text-ink-secondary flex items-center gap-1.5">
+											<CodeIcon weight="bold" /> MARKDOWN SUPPORTED
 										</span>
 									</div>
 									<textarea
-										rows={12}
+										rows={10}
 										placeholder="// Enter execution sequences or raw thoughts here..."
 										value={body}
 										onChange={(e) => setBody(e.target.value)}
-										className="w-full bg-bg-base border border-ink-secondary/50 p-4 font-mono text-sm text-ink-primary focus:border-ink-primary focus:outline-none transition-colors placeholder:text-ink-tertiary resize-y"
+										className="w-full bg-transparent border border-ink-secondary/30 p-3 font-mono text-sm text-ink-primary focus:border-ink-primary outline-none transition-colors placeholder:text-ink-secondary/50 resize-y"
 									/>
 								</div>
 
 								{/* Actions */}
-								<div className="flex items-center justify-between pt-6 border-t border-ink-secondary/20">
-									<div className="flex items-center gap-2 text-[#FFB020] text-[10px] uppercase tracking-widest bg-[#FFB020]/10 px-2 py-1 font-bold">
-										<WarningIcon />
-										Public Broadcast
+								<div className="flex flex-col sm:flex-row items-start sm:items-center justify-between pt-6 mt-8 gap-6">
+									<div className="flex items-center gap-2 text-ink-secondary text-[10px] uppercase tracking-widest font-bold">
+										<WarningIcon weight="fill" className="text-[#FFB020]" />
+										<span className="text-[#FFB020]">Public Broadcast</span>
 									</div>
 
-									<div className="flex items-center gap-4">
+									<div className="flex items-center gap-4 w-full sm:w-auto">
 										<Button
 											variant="ghost"
-											className="rounded-none text-ink-secondary hover:text-ink-primary uppercase text-xs tracking-widest font-bold"
+											className="rounded-none text-ink-secondary hover:text-ink-primary hover:bg-transparent uppercase text-xs tracking-widest font-bold px-6 border border-transparent hover:border-ink-secondary/50 transition-colors"
 											asChild
 										>
 											<Link href="/community">Cancel</Link>
 										</Button>
 										<Button
 											type="submit"
-											className="bg-ink-primary hover:bg-ink-primary/90 text-bg-base rounded-none uppercase text-xs font-bold px-8 tracking-widest flex items-center gap-2"
+											disabled={isPending}
+											className="bg-bg-base text-ink-primary border border-ink-secondary/50 hover:bg-ink-primary hover:text-bg-base rounded-none uppercase text-xs font-bold px-8 tracking-widest flex items-center gap-2 transition-colors"
 										>
 											<PaperPlaneRightIcon weight="fill" />
-											DEPLOY POST
+											{isPending ? "Deploying..." : "Deploy Post"}
 										</Button>
 									</div>
 								</div>

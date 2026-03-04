@@ -1,14 +1,20 @@
-import { TopicView } from '@/components/community/TopicView';
-import { mockDiscussions } from '@/lib/data/community';
-import { notFound } from 'next/navigation';
+import { TopicView } from "@/components/community/TopicView";
+import { getThreadBySlug } from "@/lib/actions/community";
+import { notFound } from "next/navigation";
 
-export default async function TopicPage({ params }: { params: Promise<{ slug: string, locale: string }> }) {
-  const resolvedParams = await params;
-  const topic = mockDiscussions.find((d) => d.slug === resolvedParams.slug);
+export const dynamic = "force-dynamic";
 
-  if (!topic) {
-    notFound();
-  }
+export default async function TopicPage({
+	params,
+}: {
+	params: Promise<{ slug: string; locale: string }>;
+}) {
+	const resolvedParams = await params;
+	const topic = await getThreadBySlug(resolvedParams.slug);
 
-  return <TopicView topic={topic} />;
+	if (!topic) {
+		notFound();
+	}
+
+	return <TopicView topic={topic} />;
 }

@@ -1,5 +1,9 @@
-import { CommunityView } from '@/components/community/CommunityView';
+import { CommunityView } from "@/components/community/CommunityView";
+import { getThreads } from "@/lib/actions/community";
 
-export default function CommunityPage() {
-  return <CommunityView />;
+export const dynamic = "force-dynamic";
+
+export default async function CommunityPage() {
+	const threads = await getThreads();
+	return <CommunityView threads={threads || []} />;
 }
