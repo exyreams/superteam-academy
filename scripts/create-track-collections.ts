@@ -16,7 +16,7 @@ import * as path from "path";
 
 // YOUR DEPLOYMENT DETAILS
 const PROGRAM_ID = new PublicKey(
-	"6L2qzqitpE3BkaboLiuN6Rr5QsXyjsCpwA8uwhrP5L4K",
+	"C4EbR5juamTow9GfSuX9F2UiEikspEpwqi9KwNpWoPcU",
 );
 
 // Derive Config PDA

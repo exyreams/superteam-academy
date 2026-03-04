@@ -13,11 +13,11 @@ export type LeaderboardPeriod = "weekly" | "monthly" | "all-time";
  * Maps numeric track IDs from the Solana program to their on-chain collection mints.
  */
 export const TRACK_COLLECTIONS = {
-	1: "Dzi3c2vDiGkQPXcFzna5WuT6o3XbmetSuMLspxMYN7hJ", // Rust
-	2: "FJ78Whis39a1sjo89q3ufTn5pVctGqiLM59uL3kzX8Hh", // Anchor
-	3: "Diu7bircshMJWXsKEk3snYdfxNXB8QCtHbEif8473ojh", // DeFi
-	4: "4dmgjeUWUojnLPnafoQ4wdiqqBoe6DqpEBcb2vEK3jvC", // Security
-	5: "9WNJe2sLmtTB3SQ8jV4bptTixYHvnTj3C511W2RBtyZF", // Frontend
+	1: "GxHJGC7rW6s3giJPSNh7DMnGutyrEZi4T4drjgTJwzFe", // Rust
+	2: "4f6JCjJryBoqF5EFBASZmnqwBqaf4YyDPNZsayCdC1mJ", // Anchor
+	3: "HevRVfHWYeiUKaeZ9sGhxjtA93nCp4MKuvV1wU6odFzE", // DeFi
+	4: "3JkhKemGbEZireyyvjAZmyzfBJoP2fZTrprdugwGp54e", // Security
+	5: "484TktXzNhKpWjSLy6U5cYd5aUouic2k6mQjL1t1gPgr", // Frontend
 } as const;
 
 export type TrackId = keyof typeof TRACK_COLLECTIONS;
