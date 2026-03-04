@@ -7,18 +7,23 @@ import { EyeSlashIcon } from "@phosphor-icons/react";
 import { useTranslations } from "next-intl";
 import { useState, useTransition } from "react";
 import { toast } from "sonner";
+import { useSettings } from "@/components/settings/SettingsContext";
 import { updateUserProfile } from "@/lib/actions/updateProfile";
 import { useSession } from "@/lib/auth/client";
 
 export function PrivacySettings() {
 	const t = useTranslations("Settings.privacy");
 	const { data: session, refetch } = useSession();
-	const userAny = session?.user as { publicVisibility?: boolean };
+	const userAny = session?.user as {
+		publicVisibility?: boolean;
+		walletAddress?: string;
+	};
 	const [isPending, startTransition] = useTransition();
 
 	const [publicVisibility, setPublicVisibility] = useState(
 		userAny?.publicVisibility ?? true,
 	);
+	const { addLog } = useSettings();
 
 	const handleSave = () => {
 		startTransition(async () => {
@@ -27,6 +32,7 @@ export function PrivacySettings() {
 				toast.error(result.error);
 			} else {
 				toast.success(t("saved"));
+				addLog("Privacy preferences updated successfully.");
 				refetch();
 			}
 		});
@@ -34,21 +40,53 @@ export function PrivacySettings() {
 
 	const handleExportData = async () => {
 		if (!session?.user) return;
-		const data = {
-			user: session.user,
-			exportedAt: new Date().toISOString(),
-			note: "This is your personal data from Superteam Academy.",
-		};
-		const blob = new Blob([JSON.stringify(data, null, 2)], {
-			type: "application/json",
-		});
-		const url = URL.createObjectURL(blob);
-		const a = document.createElement("a");
-		a.href = url;
-		a.download = `superteam-academy-data-${session.user.id?.slice(0, 8)}.json`;
-		a.click();
-		URL.revokeObjectURL(url);
-		toast.success(t("exported"));
+
+		toast.promise(
+			(async () => {
+				const { getEnrolledCoursesProgress } = await import(
+					"@/lib/actions/gamification"
+				);
+				const { syncUserXpAction: syncUserXp } = await import(
+					"@/lib/actions/leaderboard"
+				);
+
+				const [courses, xpBalance] = await Promise.all([
+					getEnrolledCoursesProgress(session.user.id),
+					syncUserXp(
+						session.user.id,
+						userAny.walletAddress || session.user.id,
+					) as Promise<number | undefined>,
+				]);
+
+				const data = {
+					user: {
+						...session.user,
+						walletAddress: userAny.walletAddress,
+					},
+					achievements: [], // Would need action to fetch these too
+					courses: courses,
+					reputation: typeof xpBalance === "number" ? xpBalance : 0,
+					exportedAt: new Date().toISOString(),
+					platform: "Superteam Academy",
+					note: "This is your personal machine-readable data export.",
+				};
+
+				const blob = new Blob([JSON.stringify(data, null, 2)], {
+					type: "application/json",
+				});
+				const url = URL.createObjectURL(blob);
+				const a = document.createElement("a");
+				a.href = url;
+				a.download = `academy-data-${session.user.id?.slice(0, 8)}.json`;
+				a.click();
+				URL.revokeObjectURL(url);
+			})(),
+			{
+				loading: "Compiling record...",
+				success: t("exported"),
+				error: "Export failed",
+			},
+		);
 	};
 
 	return (

@@ -9,6 +9,7 @@ import { useTheme } from "next-themes";
 import { useState, useTransition } from "react";
 import { toast } from "sonner";
 import { LanguageDropdown } from "@/components/LanguageDropdown";
+import { useSettings } from "@/components/settings/SettingsContext";
 import { updateUserProfile } from "@/lib/actions/updateProfile";
 import { useSession } from "@/lib/auth/client";
 
@@ -54,6 +55,7 @@ export function InterfaceSettings() {
 			directMessages: true,
 		},
 	);
+	const { addLog } = useSettings();
 
 	const toggleNotification = (key: keyof NotificationPrefs) => {
 		setNotifications((prev) => ({ ...prev, [key]: !prev[key] }));
@@ -66,6 +68,7 @@ export function InterfaceSettings() {
 				toast.error(result.error);
 			} else {
 				toast.success(t("saved"));
+				addLog("Notification preferences updated.");
 				refetch();
 			}
 		});

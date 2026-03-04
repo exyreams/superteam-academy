@@ -1,5 +1,6 @@
 import { notFound } from "next/navigation";
 import { ProfileView } from "@/components/profile/ProfileView";
+import { RestrictedProfile } from "@/components/profile/RestrictedProfile";
 import {
 	calculateRealSkillRadar,
 	getEnrolledCoursesProgress,
@@ -27,7 +28,12 @@ export default async function PublicProfilePage({
 
 	const isOwner = session?.user?.id === dbUser.id;
 
-	// 2. Fetch associated gamification data
+	// 3. Handle Private Profile
+	if (!dbUser.publicVisibility && !isOwner) {
+		return <RestrictedProfile />;
+	}
+
+	// 4. Fetch associated gamification data
 	const [achievements, skillRadar, courses, globalRank, streakHistory] =
 		await Promise.all([
 			getUserRealAchievements(dbUser.id),

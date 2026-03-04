@@ -64,7 +64,15 @@ export function LanguageDropdown({
 	const router = useRouter();
 	const pathname = usePathname();
 
-	const handleLanguageChange = (newLocale: string) => {
+	const handleLanguageChange = async (newLocale: string) => {
+		// Persist to DB if authenticated
+		try {
+			const { updateUserProfile } = await import("@/lib/actions/updateProfile");
+			await updateUserProfile({ language: newLocale });
+		} catch (e) {
+			console.error("Failed to persist language preference:", e);
+		}
+
 		router.replace(pathname, { locale: newLocale as SupportedLocale });
 	};
 

@@ -108,9 +108,8 @@ export async function getUserProfileData() {
 
 /**
  * Fetches profile data for any user by their unique ID or wallet address.
- * Only returns data if the user has enabled public visibility.
  * @param handle - The user's ID or wallet address.
- * @returns The public user data or null.
+ * @returns The user data or null.
  */
 export async function getPublicProfileData(handle: string) {
 	if (!handle) return null;
@@ -119,11 +118,12 @@ export async function getPublicProfileData(handle: string) {
 		where: eq(user.id, handle),
 	});
 
-	if (!dbUser) return null;
-
-	// Respect user privacy settings
-	if (!dbUser.publicVisibility) {
-		return null;
+	if (!dbUser) {
+		// Try by wallet address if ID doesn't match
+		const byWallet = await db.query.user.findFirst({
+			where: eq(user.walletAddress, handle),
+		});
+		return byWallet ?? null;
 	}
 
 	return dbUser;

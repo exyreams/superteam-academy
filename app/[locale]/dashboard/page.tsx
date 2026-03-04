@@ -24,6 +24,22 @@ export default async function DashboardPage() {
 		redirect("/");
 	}
 
+	// Track dashboard view
+	try {
+		const { getPostHogClient } = await import("@/lib/posthog-server");
+		const posthog = getPostHogClient();
+		posthog.capture({
+			distinctId: session.user.id,
+			event: "dashboard_viewed",
+			properties: {
+				user_email: session.user.email,
+			},
+		});
+		await posthog.shutdown();
+	} catch (e) {
+		console.error("PostHog dashboard tracking failed:", e);
+	}
+
 	const userId = session.user.id;
 
 	const [

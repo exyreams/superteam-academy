@@ -21,6 +21,24 @@ export default async function LeaderboardPage() {
 		headers: await headers(),
 	});
 
+	// Track leaderboard view
+	if (session) {
+		try {
+			const { getPostHogClient } = await import("@/lib/posthog-server");
+			const posthog = getPostHogClient();
+			posthog.capture({
+				distinctId: session.user.id,
+				event: "leaderboard_viewed",
+				properties: {
+					user_email: session.user.email,
+				},
+			});
+			await posthog.shutdown();
+		} catch (e) {
+			console.error("PostHog leaderboard tracking failed:", e);
+		}
+	}
+
 	const entries = await getLeaderboard();
 
 	if (session?.user?.id && session.user.walletAddress) {
