@@ -76,6 +76,8 @@ export function Footer() {
 							{ label: t("links.leaderboard"), href: "/leaderboard" },
 							{ label: t("links.dashboard"), href: "/dashboard" },
 							{ label: t("links.profile"), href: "/profile" },
+							{ label: t("links.terms"), href: "/terms" },
+							{ label: t("links.privacy"), href: "/privacy" },
 						].map((item) => (
 							<li key={item.label}>
 								<Link

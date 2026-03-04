@@ -41,7 +41,9 @@
 			"catalog": "Katalog",
 			"leaderboard": "Bestenliste",
 			"dashboard": "Dashboard",
-			"profile": "Profil"
+			"profile": "Profil",
+			"terms": "Nutzungsbedingungen",
+			"privacy": "Datenschutz"
 		}
 	},
 	"Features": {
@@ -478,6 +480,76 @@
 			"saving": "Speichern...",
 			"saved": "Datenschutzeinstellungen gespeichert.",
 			"exported": "Daten erfolgreich exportiert."
+		}
+	},
+	"Legal": {
+		"terms": {
+			"title": "NUTZUNGSBEDINGUNGEN",
+			"lastUpdated": "ZULETZT AKTUALISIERT: 04. MÄRZ 2026",
+			"sections": {
+				"01": {
+					"title": "01 // PROTOKOLL-AKZEPTANZ",
+					"content": "Durch den Zugriff auf das Superteam Academy-Terminal erklären Sie sich mit diesen Nutzungsbedingungen einverstanden. Diese Bedingungen stellen eine rechtsverbindliche Vereinbarung zwischen Ihnen ('dem Operator') und Superteam Academy hinsichtlich Ihres Zugriffs auf das Protokoll und dessen Nutzung dar."
+				},
+				"02": {
+					"title": "02 // OPERATOR-BERECHTIGUNG",
+					"content": "Der Zugriff auf dieses Terminal ist Personen vorbehalten, die nach geltendem Recht rechtsverbindliche Verträge abschließen können. Durch die Nutzung des Protokolls erklären und garantieren Sie, dass Sie alle Berechtigungsanforderungen erfüllen."
+				},
+				"03": {
+					"title": "03 // NEURALE SIGNATUR & SICHERHEIT",
+					"content": "Superteam Academy verwendet kryptographische Signaturen für das Sitzungsmanagement. Sie sind allein für die Wahrung der Vertraulichkeit und Sicherheit Ihrer privaten Schlüssel und des verbundenen Wallets verantwortlich. Alle über Ihre Signatur ausgeführten Operationen gelten als von Ihnen autorisiert."
+				},
+				"04": {
+					"title": "04 // GEISTIGES EIGENTUM",
+					"content": "Alle Lehrpläne, Code-Vorlagen und proprietären Protokolle innerhalb der Akademie sind durch Gesetze zum geistigen Eigentum geschützt. Den Benutzern wird eine begrenzte, nicht exklusive Lizenz zur Nutzung dieser Materialien ausschließlich für Bildungszwecke gewährt."
+				},
+				"05": {
+					"title": "05 // UNZULÄSSIGE OPERATIONEN",
+					"content": "Die böswillige Ausnutzung des Protokolls, automatisiertes Scraping oder jeglicher Versuch, Gamification-Schutzvorrichtungen zu umgehen, ist strengstens untersagt. Ein Verstoß gegen diese Regeln kann zur dauerhaften Kündigung Ihrer Operator-ID führen."
+				},
+				"06": {
+					"title": "06 // ON-CHAIN-FINALITÄT",
+					"content": "Operationen, die die Solana-Blockchain betreffen, unterliegen einer Finalität im Sub-Sekunden-Bereich. Superteam Academy kann On-Chain-Transaktionen, Gasgebühren (SOL) oder dauerhafte Zertifikatsausstellungen nicht rückgängig machen."
+				},
+				"07": {
+					"title": "07 // HAFTUNGSBESCHRÄNKUNG",
+					"content": "Superteam Academy wird ohne Mängelgewähr bereitgestellt. Wir haften nicht für Verluste, die durch Softwarefehler, Netzwerküberlastung oder Wallet-Fehlkonfigurationen entstehen."
+				},
+				"08": {
+					"title": "08 // KÜNDIGUNG DES ZUGRIFFS",
+					"content": "Wir behalten uns das Recht vor, den Zugriff auf das Terminal nach eigenem Ermessen und ohne Vorankündigung auszusetzen oder zu kündigen, wenn ein Verhalten vorliegt, von dem wir glauben, dass es gegen diese Bedingungen verstößt oder anderen Operatoren schadet."
+				}
+			}
+		},
+		"privacy": {
+			"title": "DATENSCHUTZERKLÄRUNG",
+			"lastUpdated": "ZULETZT AKTUALISIERT: 04. MÄRZ 2026",
+			"sections": {
+				"01": {
+					"title": "01 // DATEN-KATEGORISIERUNG",
+					"content": "Wir erfassen zwei Kategorien von Daten: (A) Öffentliche On-Chain-Daten, die mit Ihrer Wallet-Adresse verknüpft sind, und (B) operative Metadaten, einschließlich Sitzungsprotokollen und Level-Fortschritten, um die Gamification-Engine zu unterstützen."
+				},
+				"02": {
+					"title": "02 // NUTZUNGSPROTOKOLLE",
+					"content": "Erfasste Daten werden verarbeitet, um Ihr globales Ranking zu erstellen, den Fortschritt im Lehrplan zu verfolgen und verifizierte Nachweise auszustellen. Wir verkaufen keine Operator-Daten an Dritte."
+				},
+				"03": {
+					"title": "03 // KRYPTOGRAPHISCHE SPEICHERUNG",
+					"content": "Sensible Profildaten werden unter Verwendung branchenüblicher Verschlüsselung gespeichert. Die Authentifizierung erfolgt über Better Auth, um sicherzustellen, dass Ihre neurale Signatur sicher und dezentral bleibt."
+				},
+				"04": {
+					"title": "04 // ANALYTICS & ÜBERWACHUNG",
+					"content": "Zur Verbesserung der UX nutzen wir PostHog für das Event-Tracking und Sentry für das Error-Logging. Diese Dienste sammeln anonymisierte operative Daten, um uns bei der Optimierung der Terminal-Umgebung zu helfen."
+				},
+				"05": {
+					"title": "05 // OPERATOR-RECHTE",
+					"content": "Sie behalten das Recht, Ihr Operator-Datenpaket (.json) jederzeit über die Systemeinstellungen zu exportieren. Sie können auch die Löschung Ihrer Off-Chain-Profil-Metadaten verlangen."
+				},
+				"06": {
+					"title": "06 // ENTWICKLUNG DER RICHTLINIEN",
+					"content": "Während das Protokoll skaliert, kann sich diese Datenschutzerklärung weiterentwickeln. Wesentliche Änderungen werden über das globale Broadcast-System des Terminals bekannt gegeben."
+				}
+			}
 		}
 	}
 }

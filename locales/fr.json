@@ -32,7 +32,9 @@
 			"catalog": "Catalogue",
 			"leaderboard": "Classement",
 			"dashboard": "Tableau de bord",
-			"profile": "Profil"
+			"profile": "Profil",
+			"terms": "Conditions d'utilisation",
+			"privacy": "Confidentialité"
 		}
 	},
 	"Features": {
@@ -476,5 +478,75 @@
 	},
 	"Testimonials": {
 		"sectionLabel": "Student Intelligence Report"
+	},
+	"Legal": {
+		"terms": {
+			"title": "CONDITIONS D'UTILISATION",
+			"lastUpdated": "DERNIÈRE MISE À JOUR : 04 MARS 2026",
+			"sections": {
+				"01": {
+					"title": "01 // ACCEPTATION DU PROTOCOLE",
+					"content": "En accédant au terminal de Superteam Academy, vous acceptez d'être lié par ces Conditions d'utilisation. Ces conditions constituent un accord juridiquement contraignant entre vous ('l'Opérateur') et Superteam Academy concernant votre accès et votre utilisation du protocole."
+				},
+				"02": {
+					"title": "02 // ÉLIGIBILITÉ DE L'OPÉRATEUR",
+					"content": "L'accès à ce terminal est limité aux personnes pouvant conclure des contrats juridiquement contraignants en vertu de la loi applicable. En utilisant le protocole, vous déclarez et garantissez que vous remplissez toutes les conditions d'éligibilité."
+				},
+				"03": {
+					"title": "03 // SIGNATURE NEURALE ET SÉCURITÉ",
+					"content": "Superteam Academy utilise des signatures cryptographiques pour la gestion des sessions. Vous êtes seul responsable du maintien de la confidentialité et de la sécurité de vos clés privées et de votre portefeuille connecté. Toute opération effectuée via votre signature est réputée être autorisée par vous."
+				},
+				"04": {
+					"title": "04 // PROPRIÉTÉ INTELLECTUELLE",
+					"content": "Tous les programmes, modèles de code et protocoles propriétaires au sein de l'Académie sont protégés par les lois sur la propriété intellectuelle. Les utilisateurs bénéficient d'une licence limitée et non exclusive pour utiliser ces documents à des fins éducatives uniquement."
+				},
+				"05": {
+					"title": "05 // OPÉRATIONS INTERDITES",
+					"content": "L'exploitation malveillante du protocole, le grattage automatisé ou toute tentative de contourner les protections de gamification sont strictement interdits. La violation de ces règles peut entraîner la résiliation permanente de votre identifiant d'opérateur."
+				},
+				"06": {
+					"title": "06 // FINALITÉ SUR LA CHAÎNE",
+					"content": "Les opérations impliquant la blockchain Solana sont soumises à une finalité inférieure à la seconde. Superteam Academy ne peut pas annuler les transactions sur la chaîne, les frais de gaz (SOL) ou les délivrances de titres permanents."
+				},
+				"07": {
+					"title": "07 // LIMITATION DE RESPONSABILITÉ",
+					"content": "Superteam Academy est fourni 'en l'état' sans garantie d'aucune sorte. Nous ne sommes pas responsables des pertes résultant de bogues logiciels, de la congestion du réseau ou de mauvaises configurations de portefeuille."
+				},
+				"08": {
+					"title": "08 // RÉSILIATION DE L'ACCÈS",
+					"content": "Nous nous réservons le droit de suspendre ou de résilier l'accès au terminal à notre seule discrétion, sans préavis, pour un comportement que nous estimons violer ces Conditions ou être préjudiciable aux autres Opérateurs."
+				}
+			}
+		},
+		"privacy": {
+			"title": "POLITIQUE DE CONFIDENTIALITÉ",
+			"lastUpdated": "DERNIÈRE MISE À JOUR : 04 MARS 2026",
+			"sections": {
+				"01": {
+					"title": "01 // CATÉGORISATION DES DONNÉES",
+					"content": "Nous collectons deux catégories de données : (A) Les données publiques sur la chaîne associées à l'adresse de votre portefeuille, et (B) les métadonnées opérationnelles comprenant les journaux de session et la progression des niveaux pour faciliter le moteur de gamification."
+				},
+				"02": {
+					"title": "02 // PROTOCOLES D'UTILISATION",
+					"content": "Les données collectées sont traitées pour générer votre classement mondial, suivre la progression du programme et délivrer des titres vérifiés. Nous ne vendons pas les données des opérateurs à des tiers."
+				},
+				"03": {
+					"title": "03 // STOCKAGE CRYPTOGRAPHIQUE",
+					"content": "Les données de profil sensibles sont stockées en utilisant un cryptage standard de l'industrie. L'authentification est gérée via Better Auth, garantissant que votre signature neurale reste sécurisée et décentralisée."
+				},
+				"04": {
+					"title": "04 // ANALYTIQUE ET SURVEILLANCE",
+					"content": "Pour améliorer l'expérience utilisateur (UX), nous utilisons PostHog pour le suivi des événements et Sentry pour la consignation des erreurs. Ces services recueillent des données opérationnelles anonymisées pour nous aider à optimiser l'environnement du terminal."
+				},
+				"05": {
+					"title": "05 // DROITS DE L'OPÉRATEUR",
+					"content": "Vous conservez le droit d'exporter votre paquet de données d'opérateur (.json) à tout moment via les paramètres du système. Vous pouvez également demander la suppression des métadonnées de votre profil hors chaîne."
+				},
+				"06": {
+					"title": "06 // ÉVOLUTION DE LA POLITIQUE",
+					"content": "À mesure que le protocole évolue, cette Politique de confidentialité peut changer. Les modifications importantes seront annoncées via le système de diffusion mondial du terminal."
+				}
+			}
+		}
 	}
 }

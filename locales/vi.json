@@ -41,7 +41,9 @@
 			"catalog": "Danh Mục",
 			"leaderboard": "Bảng Xếp Hạng",
 			"dashboard": "Bảng Điều Khiển",
-			"profile": "Hồ Sơ"
+			"profile": "Hồ Sơ",
+			"terms": "Điều Khoản Dịch Vụ",
+			"privacy": "Chính Sách Bảo Mật"
 		}
 	},
 	"Features": {
@@ -478,6 +480,76 @@
 			"saving": "Đang lưu...",
 			"saved": "Đã lưu cài đặt quyền riêng tư.",
 			"exported": "Xuất dữ liệu thành công."
+		}
+	},
+	"Legal": {
+		"terms": {
+			"title": "ĐIỀU KHOẢN DỊCH VỤ",
+			"lastUpdated": "CẬP NHẬT LẦN CUỐI: NGÀY 04 THÁNG 03 NĂM 2026",
+			"sections": {
+				"01": {
+					"title": "01 // CHẤP NHẬN GIAO THỨC",
+					"content": "Bằng cách truy cập terminal Superteam Academy, bạn đồng ý tuân thủ các Điều khoản Dịch vụ này. Các điều khoản này tạo thành một thỏa thuận có tính ràng buộc pháp lý giữa bạn ('Nhà vận hành') và Superteam Academy liên quan đến việc bạn truy cập và sử dụng giao thức."
+				},
+				"02": {
+					"title": "02 // ĐIỀU KIỆN ĐỐI VỚI NHÀ VẬN HÀNH",
+					"content": "Việc truy cập vào terminal này bị giới hạn đối với các cá nhân có thể ký kết các hợp đồng có tính ràng buộc pháp lý theo luật pháp hiện hành. Bằng cách sử dụng giao thức, bạn cam đoan và đảm bảo rằng bạn đáp ứng tất cả các yêu cầu về điều kiện."
+				},
+				"03": {
+					"title": "03 // CHỮ KÝ THẦN KINH & BẢO MẬT",
+					"content": "Superteam Academy sử dụng chữ ký mật mã để quản lý phiên. Bạn hoàn toàn chịu trách nhiệm về việc duy trì tính bảo mật của các khóa riêng tư và ví đã kết nối của mình. Mọi hoạt động được thực hiện thông qua chữ ký của bạn sẽ được coi là do bạn ủy quyền."
+				},
+				"04": {
+					"title": "04 // SỞ HỮU TRÍ TUỆ",
+					"content": "Tất cả chương trình giảng dạy, mẫu mã và các giao thức độc quyền trong Học viện đều được bảo vệ bởi luật sở hữu trí tuệ. Người dùng được cấp một giấy phép hạn chế, không độc quyền để sử dụng các tài liệu này chỉ cho mục đích giáo dục."
+				},
+				"05": {
+					"title": "05 // CÁC HOẠT ĐỘNG BỊ CẤM",
+					"content": "Nghiêm cấm việc khai thác độc hại giao thức, trích xuất dữ liệu tự động hoặc bất kỳ nỗ lực nào nhằm vượt qua các biện pháp bảo vệ trò chơi hóa. Việc vi phạm các quy tắc này có thể dẫn đến việc hủy bỏ vĩnh viễn ID Nhà vận hành của bạn."
+				},
+				"06": {
+					"title": "06 // TÍNH CUỐI CÙNG TRÊN CHUỖI",
+					"content": "Các hoạt động liên quan đến blockchain Solana phải tuân theo tính cuối cùng dưới một giây. Superteam Academy không thể hoàn tác các giao dịch trên chuỗi, phí gas (SOL) hoặc việc cấp các chứng chỉ vĩnh viễn."
+				},
+				"07": {
+					"title": "07 // GIỚI HẠN TRÁCH NHIỆM",
+					"content": "Superteam Academy được cung cấp trên cơ sở 'nguyên trạng' mà không có bất kỳ sự đảm bảo nào. Chúng tôi không chịu trách nhiệm cho bất kỳ tổn thất nào phát sinh từ các lỗi phần mềm, tắc nghẽn mạng hoặc cấu hình ví sai."
+				},
+				"08": {
+					"title": "08 // CHẤM DỨT TRUY CẬP",
+					"content": "Chúng tôi có quyền tạm dừng hoặc chấm dứt quyền truy cập vào terminal theo quyết định riêng của mình mà không cần thông báo trước đối với các hành vi mà chúng tôi tin rằng vi phạm các Điều khoản này hoặc gây hại cho các Nhà vận hành khác."
+				}
+			}
+		},
+		"privacy": {
+			"title": "CHÍNH SÁCH BẢO MẬT",
+			"lastUpdated": "CẬP NHẬT LẦN CUỐI: NGÀY 04 THÁNG 03 NĂM 2026",
+			"sections": {
+				"01": {
+					"title": "01 // PHÂN LOẠI DỮ LIỆU",
+					"content": "Chúng tôi thu thập hai danh mục dữ liệu: (A) Dữ liệu công khai trên chuỗi liên quan đến địa chỉ ví của bạn và (B) siêu dữ liệu hoạt động bao gồm nhật ký phiên và tiến trình cấp độ để hỗ trợ công cụ trò chơi hóa."
+				},
+				"02": {
+					"title": "02 // GIAO THỨC SỬ DỤNG",
+					"content": "Dữ liệu được thu thập được xử lý để tạo bảng xếp hạng toàn cầu của bạn, theo dõi tiến độ học tập và cấp các chứng chỉ đã được xác minh. Chúng tôi không bán dữ liệu của Nhà vận hành cho bên thứ ba."
+				},
+				"03": {
+					"title": "03 // LƯU TRỮ MẬT MÃ",
+					"content": "Dữ liệu hồ sơ nhạy cảm được lưu trữ bằng cách sử dụng mã hóa tiêu chuẩn ngành. Việc xác thực được quản lý thông qua Better Auth, đảm bảo chữ ký thần kinh của bạn luôn an toàn và phi tập trung."
+				},
+				"04": {
+					"title": "04 // PHÂN TÍCH & GIÁM SÁT",
+					"content": "Để cải thiện trải nghiệm người dùng (UX), chúng tôi sử dụng PostHog để theo dõi sự kiện và Sentry để ghi lại lỗi. Các dịch vụ này thu thập dữ liệu hoạt động ẩn danh để giúp chúng tôi tối ưu hóa môi trường terminal."
+				},
+				"05": {
+					"title": "05 // QUYỀN CỦA NHÀ VẬN HÀNH",
+					"content": "Bạn giữ quyền xuất gói dữ liệu Nhà vận hành của mình (.json) bất kỳ lúc nào thông qua cài đặt hệ thống. Bạn cũng có thể yêu cầu xóa siêu dữ liệu hồ sơ ngoài chuỗi của mình."
+				},
+				"06": {
+					"title": "06 // SỰ TIẾN HÓA CỦA CHÍNH SÁCH",
+					"content": "Khi giao thức mở rộng, Chính sách Bảo mật này có thể thay đổi. Các thay đổi quan trọng sẽ được thông báo qua hệ thống phát thanh toàn cầu của terminal."
+				}
+			}
 		}
 	}
 }

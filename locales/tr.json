@@ -41,7 +41,9 @@
 			"catalog": "Katalog",
 			"leaderboard": "Liderlik Tablosu",
 			"dashboard": "Kontrol Paneli",
-			"profile": "Profil"
+			"profile": "Profil",
+			"terms": "Kullanım Koşulları",
+			"privacy": "Gizlilik"
 		}
 	},
 	"Features": {
@@ -478,6 +480,76 @@
 			"saving": "Kaydediliyor...",
 			"saved": "Gizlilik ayarları kaydedildi.",
 			"exported": "Veriler başarıyla dışa aktarıldı."
+		}
+	},
+	"Legal": {
+		"terms": {
+			"title": "KULLANIM KOŞULLARI",
+			"lastUpdated": "SON GÜNCELLEME: 04 MART 2026",
+			"sections": {
+				"01": {
+					"title": "01 // PROTOKOL KABULÜ",
+					"content": "Superteam Academy terminaline erişerek bu Kullanım Koşullarına bağlı kalmayı kabul etmiş olursunuz. Bu koşullar, terminale erişiminiz ve protokolü kullanımınızla ilgili olarak siz ('Operatör') ve Superteam Academy arasında yasal olarak bağlayıcı bir anlaşma oluşturur."
+				},
+				"02": {
+					"title": "02 // OPERATÖR UYGUNLUĞU",
+					"content": "Bu terminale erişim, yürürlükteki yasalar uyarınca yasal olarak bağlayıcı sözleşmeler yapabilen bireylerle sınırlıdır. Protokolü kullanarak, tüm uygunluk gereksinimlerini karşıladığınızı beyan ve taahhüt edersiniz."
+				},
+				"03": {
+					"title": "03 // NÖRAL İMZA VE GÜVENLİK",
+					"content": "Superteam Academy, oturum yönetimi için kriptografik imzalar kullanır. Özel anahtarlarınızın ve bağlı cüzdanınızın gizliliğini ve güvenliğini korumaktan yalnızca siz sorumlusunuz. İmzanız aracılığıyla gerçekleştirilen her türlü işlem, sizin tarafınızdan yetkilendirilmiş sayılacaktır."
+				},
+				"04": {
+					"title": "04 // FİKRİ MÜLKİYET",
+					"content": "Akademi bünyesindeki tüm müfredatlar, kod şablonları ve tescilli protokoller fikri mülkiyet yasalarıyla korunmaktadır. Kullanıcılara, bu materyalleri yalnızca eğitim amaçlı kullanmaları için sınırlı, münhasır olmayan bir lisans verilir."
+				},
+				"05": {
+					"title": "05 // YASAKLI İŞLEMLER",
+					"content": "Protokolün kötü niyetli istismarı, otomatik veri kazıma veya oyunlaştırma korumalarını atlatmaya yönelik herhangi bir girişim kesinlikle yasaktır. Bu kuralların ihlali, Operatör Kimliğinizin kalıcı olarak iptal edilmesine neden olabilir."
+				},
+				"06": {
+					"title": "06 // ZİNCİR ÜZERİ KESİNLİK",
+					"content": "Solana blok zincirini içeren işlemler saniyenin altında kesinliğe tabidir. Superteam Academy zincir içi işlemleri, gas ücretlerini (SOL) veya kalıcı sertifika düzenlemelerini geri alamaz."
+				},
+				"07": {
+					"title": "07 // SORUMLULUK SINIRLAMASI",
+					"content": "Superteam Academy 'olduğu gibi' sunulmaktadır. Yazılım hataları, ağ tıkanıklığı veya cüzdan yanlış yapılandırmalarından kaynaklanan hiçbir kayıptan sorumlu değiliz."
+				},
+				"08": {
+					"title": "08 // ERİŞİMİN SONLANDIRILMASI",
+					"content": "Bu Koşulları ihlal ettiğine veya diğer Operatörlere zarar verdiğine inandığımız davranışlar için, tamamen kendi takdirimize bağlı olarak, önceden bildirimde bulunmaksızın terminale erişimi askıya alma veya sonlandırma hakkını saklı tutarız."
+				}
+			}
+		},
+		"privacy": {
+			"title": "GİZLİLİK POLİTİKASI",
+			"lastUpdated": "SON GÜNCELLEME: 04 MART 2026",
+			"sections": {
+				"01": {
+					"title": "01 // VERİ KATEGORİZASYONU",
+					"content": "İki kategori veri topluyoruz: (A) Cüzdan adresinizle ilişkili herkese açık zincir içi veriler ve (B) oyunlaştırma motorunu kolaylaştırmak için oturum günlükleri ve seviye ilerlemesini içeren operasyonel meta veriler."
+				},
+				"02": {
+					"title": "02 // KULLANIM PROTOKOLLERİ",
+					"content": "Toplanan veriler, küresel sıralamanızı oluşturmak, müfredat ilerlemesini izlemek ve doğrulanmış kimlik bilgileri düzenlemek için işlenir. Operatör verilerini Android şahıslara satmıyoruz."
+				},
+				"03": {
+					"title": "03 // KRİPTOGRAFİK DEPOLAMA",
+					"content": "Hassas profil verileri endüstri standardı şifreleme kullanılarak saklanır. Kimlik doğrulama, Better Auth aracılığıyla gerçekleştirilir ve nöral imzanızın güvenli ve merkeziyetsiz kalmasını sağlar."
+				},
+				"04": {
+					"title": "04 // ANALİZ VE İZLEME",
+					"content": "Kullanıcı deneyimini (UX) iyileştirmek için etkinlik izleme için PostHog'u ve hata günlüğü için Sentry'yi kullanıyoruz. Bu hizmetler, terminal ortamını optimize etmemize yardımcı olmak için anonimleştirilmiş operasyonel veriler toplar."
+				},
+				"05": {
+					"title": "05 // OPERATÖR HAKLARI",
+					"content": "Operatör veri paketinizi (.json) sistem ayarları aracılığıyla istediğiniz zaman dışa aktarma hakkınız saklıdır. Ayrıca zincir dışı profil meta verilerinizin silinmesini talep edebilirsiniz."
+				},
+				"06": {
+					"title": "06 // POLİTİKA EVRİMİ",
+					"content": "Protokol ölçeklendikçe bu Gizlilik Politikası gelişebilir. Önemli değişiklikler terminalin küresel yayın sistemi aracılığıyla duyurulacaktır."
+				}
+			}
 		}
 	}
 }

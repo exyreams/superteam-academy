@@ -41,7 +41,9 @@
 			"catalog": "Katalog",
 			"leaderboard": "Papan Peringkat",
 			"dashboard": "Dasbor",
-			"profile": "Profil"
+			"profile": "Profil",
+			"terms": "Ketentuan Layanan",
+			"privacy": "Kebijakan Privasi"
 		}
 	},
 	"Features": {
@@ -478,6 +480,76 @@
 			"saving": "Menyimpan...",
 			"saved": "Pengaturan privasi disimpan.",
 			"exported": "Data berhasil diekspor."
+		}
+	},
+	"Legal": {
+		"terms": {
+			"title": "KETENTUAN LAYANAN",
+			"lastUpdated": "TERAKHIR DIPERBARUI: 04 MARET 2026",
+			"sections": {
+				"01": {
+					"title": "01 // PENERIMAAN PROTOKOL",
+					"content": "Dengan mengakses terminal Superteam Academy, Anda setuju untuk mematuhi Ketentuan Layanan ini. Ketentuan ini merupakan perjanjian yang mengikat secara hukum antara Anda ('Operator') dan Superteam Academy terkait akses dan penggunaan protokol oleh Anda."
+				},
+				"02": {
+					"title": "02 // KELAYAKAN OPERATOR",
+					"content": "Akses ke terminal ini dibatasi bagi individu yang dapat membentuk kontrak yang mengikat secara hukum berdasarkan hukum yang berlaku. Dengan menggunakan protokol, Anda menyatakan dan menjamin bahwa Anda memenuhi semua persyaratan kelayakan."
+				},
+				"03": {
+					"title": "03 // TANDA TANGAN NEURAL & KEAMANAN",
+					"content": "Superteam Academy menggunakan tanda tangan kriptografis untuk manajemen sesi. Anda sepenuhnya bertanggung jawab untuk menjaga kerahasiaan dan keamanan kunci pribadi serta dompet yang terhubung. Setiap operasi yang dilakukan melalui tanda tangan Anda akan dianggap sah oleh Anda."
+				},
+				"04": {
+					"title": "04 // KEKAYAAN INTELEKTUAL",
+					"content": "Semua kurikulum, templat kode, dan protokol eksklusif di dalam Akademi dilindungi oleh undang-undang kekayaan intelektual. Pengguna diberikan lisensi terbatas dan non-eksklusif untuk menggunakan materi ini hanya untuk tujuan pendidikan."
+				},
+				"05": {
+					"title": "05 // OPERASI TERLARANG",
+					"content": "Eksploitasi protokol yang jahat, pengikisan otomatis, atau upaya apa pun untuk melewati perlindungan gamifikasi sangat dilarang. Pelanggaran terhadap aturan ini dapat mengakibatkan pencabutan permanen ID Operator Anda."
+				},
+				"06": {
+					"title": "06 // FINALITAS ON-CHAIN",
+					"content": "Operasi yang melibatkan blockchain Solana tunduk pada finalitas sub-detik. Superteam Academy tidak dapat membatalkan transaksi on-chain, biaya gas (SOL), atau penerbitan kredensial permanen."
+				},
+				"07": {
+					"title": "07 // BATASAN TANGGUNG JAWAB",
+					"content": "Superteam Academy disediakan 'apa adanya' tanpa jaminan apa pun. Kami tidak bertanggung jawab atas kerugian yang diakibatkan oleh bug perangkat lunak, kemacetan jaringan, atau kesalahan konfigurasi dompet."
+				},
+				"08": {
+					"title": "08 // PEMUTUSAN AKSES",
+					"content": "Kami berhak untuk menangguhkan atau menghentikan akses ke terminal atas kebijakan kami sendiri tanpa pemberitahuan sebelumnya atas perilaku yang kami yakini melanggar Ketentuan ini atau merugikan Operator lain."
+				}
+			}
+		},
+		"privacy": {
+			"title": "KEBIJAKAN PRIVASI",
+			"lastUpdated": "TERAKHIR DIPERBARUI: 04 MARET 2026",
+			"sections": {
+				"01": {
+					"title": "01 // KATEGORISASI DATA",
+					"content": "Kami mengumpulkan dua kategori data: (A) Data publik on-chain yang terkait dengan alamat dompet Anda dan (B) metadata operasional termasuk log sesi dan kemajuan level untuk memfasilitasi mesin gamifikasi."
+				},
+				"02": {
+					"title": "02 // PROTOKOL PENGGUNAAN",
+					"content": "Data yang dikumpulkan diproses untuk menghasilkan peringkat global Anda, melacak kemajuan kurikulum, dan menerbitkan kredensial terverifikasi. Kami tidak menjual data operator kepada pihak ketiga."
+				},
+				"03": {
+					"title": "03 // PENYIMPANAN KRIPTOGRAFIS",
+					"content": "Data profil yang sensitif disimpan menggunakan enkripsi standar industri. Autentikasi dikelola melalui Better Auth, memastikan tanda tangan neural Anda tetap aman dan terdesentralisasi."
+				},
+				"04": {
+					"title": "04 // ANALITIK & PEMANTAUAN",
+					"content": "Untuk meningkatkan pengalaman pengguna (UX), kami menggunakan PostHog untuk pelacakan peristiwa dan Sentry untuk pencatatan kesalahan. Layanan ini mengumpulkan data operasional anonim untuk membantu kami mengoptimalkan lingkungan terminal."
+				},
+				"05": {
+					"title": "05 // HAK OPERATOR",
+					"content": "Anda tetap memiliki hak untuk mengekspor paket data operator Anda (.json) kapan saja melalui pengaturan sistem. Anda juga dapat meminta penghapusan metadata profil off-chain Anda."
+				},
+				"06": {
+					"title": "06 // EVOLUSI KEBIJAKAN",
+					"content": "Seiring dengan skala protokol, Kebijakan Privasi ini dapat berkembang. Perubahan signifikan akan diumumkan melalui sistem siaran global terminal."
+				}
+			}
 		}
 	}
 }

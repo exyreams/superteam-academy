@@ -41,7 +41,9 @@
 			"catalog": "Catalog",
 			"leaderboard": "Leaderboard",
 			"dashboard": "Dashboard",
-			"profile": "Profile"
+			"profile": "Profile",
+			"terms": "Terms",
+			"privacy": "Privacy"
 		}
 	},
 	"Features": {
@@ -478,6 +480,76 @@
 			"saving": "Saving...",
 			"saved": "Privacy settings saved.",
 			"exported": "Data exported successfully."
+		}
+	},
+	"Legal": {
+		"terms": {
+			"title": "TERMS OF SERVICE",
+			"lastUpdated": "LAST UPDATED: MARCH 04, 2026",
+			"sections": {
+				"01": {
+					"title": "01 // PROTOCOL ACCEPTANCE",
+					"content": "By accessing the Superteam Academy terminal, you agree to be bound by these Terms of Service. These terms constitute a legally binding agreement between you ('the Operator') and Superteam Academy regarding your access to and use of the protocol."
+				},
+				"02": {
+					"title": "02 // OPERATOR ELIGIBILITY",
+					"content": "Access to this terminal is restricted to individuals who can form legally binding contracts under applicable law. By using the protocol, you represent and warrant that you meet all eligibility requirements."
+				},
+				"03": {
+					"title": "03 // NEURAL SIGNATURE & SECURITY",
+					"content": "Superteam Academy utilizes cryptographic signatures for session management. You are solely responsible for maintaining the confidentiality and security of your private keys and connected wallet. Any operations performed via your signature are deemed to be authorized by you."
+				},
+				"04": {
+					"title": "04 // INTELLECTUAL PROPERTY",
+					"content": "All curricula, code templates, and proprietary protocols within the Academy are protected by intellectual property laws. Users are granted a limited, non-exclusive license to use these materials for educational purposes only."
+				},
+				"05": {
+					"title": "05 // PROHIBITED OPERATIONS",
+					"content": "Malicious exploitation of the protocol, automated scraping, or any attempt to circumvent gamification guards is strictly prohibited. Violation of these rules may result in permanent termination of your Operator ID."
+				},
+				"06": {
+					"title": "06 // ON-CHAIN FINALITY",
+					"content": "Operations involving the Solana blockchain are subject to sub-second finality. Superteam Academy cannot reverse on-chain transactions, gas fees (SOL), or permanent credential issuances."
+				},
+				"07": {
+					"title": "07 // LIMITATION OF LIABILITY",
+					"content": "Superteam Academy is provided 'as is' without warranties of any kind. We are not liable for any losses resulting from software bugs, network congestion, or wallet misconfigurations."
+				},
+				"08": {
+					"title": "08 // TERMINATION OF ACCESS",
+					"content": "We reserve the right to suspend or terminate access to the terminal at our sole discretion, without notice, for conduct that we believe violates these Terms or is harmful to other Operators."
+				}
+			}
+		},
+		"privacy": {
+			"title": "PRIVACY POLICY",
+			"lastUpdated": "LAST UPDATED: MARCH 04, 2026",
+			"sections": {
+				"01": {
+					"title": "01 // DATA CATEGORIZATION",
+					"content": "We collect two categories of data: (A) Public on-chain data associated with your wallet address, and (B) Operational metadata including session logs and level progression to facilitate the gamification engine."
+				},
+				"02": {
+					"title": "02 // USAGE PROTOCOLS",
+					"content": "Collected data is processed to generate your global ranking, track curriculum progress, and issue verified credentials. We do not sell operator data to third-party entities."
+				},
+				"03": {
+					"title": "03 // CRYPTOGRAPHIC STORAGE",
+					"content": "Sensitive profile data is stored using industry-standard encryption. Authentication is handled via Better Auth, ensuring your neural signature remains secure and decentralized."
+				},
+				"04": {
+					"title": "04 // ANALYTICS & MONITORING",
+					"content": "To improve the UX, we utilize PostHog for event tracking and Sentry for error logging. These services gather anonymized operational data to help us optimize the terminal environment."
+				},
+				"05": {
+					"title": "05 // OPERATOR RIGHTS",
+					"content": "You retain the right to export your operator data packet (.json) at any time via the system settings. You may also request the deletion of your off-chain profile metadata."
+				},
+				"06": {
+					"title": "06 // POLICY EVOLUTION",
+					"content": "As the protocol scales, this Privacy Policy may evolve. Significant changes will be announced via the terminal's global broadcast system."
+				}
+			}
 		}
 	}
 }
