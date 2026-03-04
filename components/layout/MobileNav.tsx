@@ -16,8 +16,10 @@ import {
 	UsersIcon,
 } from "@phosphor-icons/react";
 import { useState } from "react";
+import { LanguageDropdown } from "@/components/LanguageDropdown";
 import { Logo } from "@/components/shared/logo";
 import { WalletButton } from "@/components/shared/WalletButton";
+import { ModeToggle } from "@/components/theme-toggle";
 import { Button } from "@/components/ui/button";
 import {
 	Sheet,
@@ -193,6 +195,20 @@ export function MobileNav() {
 								</Link>
 							);
 						})}
+						<div className="px-4 py-4 flex flex-col gap-4 border-t border-ink-secondary/10">
+							<div className="flex flex-col gap-2">
+								<span className="text-[10px] uppercase tracking-widest text-ink-secondary font-bold">
+									Language
+								</span>
+								<LanguageDropdown variant="detailed" />
+							</div>
+							<div className="flex flex-col gap-2">
+								<span className="text-[10px] uppercase tracking-widest text-ink-secondary font-bold">
+									Appearance
+								</span>
+								<ModeToggle />
+							</div>
+						</div>
 					</div>
 				</div>
 			</SheetContent>

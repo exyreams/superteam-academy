@@ -6,9 +6,11 @@
 
 import { useWallet } from "@solana/wallet-adapter-react";
 import { useEffect, useState } from "react";
+import { LanguageDropdown } from "@/components/LanguageDropdown";
 import { MobileNav } from "@/components/layout/MobileNav";
 import { UserMenu } from "@/components/layout/UserMenu";
 import { Logo } from "@/components/shared/logo";
+import { ModeToggle } from "@/components/theme-toggle";
 import { Button } from "@/components/ui/button";
 import { Link } from "@/i18n/routing";
 import { calculateLevel, getXpBalance } from "@/lib/anchor/services";
@@ -63,9 +65,9 @@ export function TopBar() {
 
 			{/* Right: User */}
 			<div className="flex gap-4 items-center">
-				<div className="hidden lg:flex items-center gap-4 text-ink-primary">
+				<div className="flex items-center gap-2 text-ink-primary">
 					{wallet.publicKey && (
-						<div className="flex flex-col items-end mr-2">
+						<div className="hidden sm:flex flex-col items-end mr-2">
 							<span className="text-[10px] font-bold uppercase tracking-widest text-[#0E9F6E] dark:text-[#14F195] leading-none">
 								LVL {level}
 							</span>
@@ -74,11 +76,17 @@ export function TopBar() {
 							</span>
 						</div>
 					)}
-					<div className="h-6 w-px bg-ink-secondary/20 dark:bg-border mx-2" />
+					<div className="hidden sm:block h-6 w-px bg-ink-secondary/20 dark:bg-border mx-2" />
 					{isPending ? (
 						<div className="h-9 w-24 bg-ink-secondary/20 animate-pulse rounded-md" />
 					) : session ? (
-						<UserMenu session={session} />
+						<div className="flex items-center gap-3">
+							<div className="hidden lg:flex items-center gap-2 mx-1 pr-2">
+								<LanguageDropdown variant="detailed" />
+								<ModeToggle />
+							</div>
+							<UserMenu session={session} />
+						</div>
 					) : (
 						<Button
 							asChild

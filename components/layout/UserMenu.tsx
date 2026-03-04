@@ -4,21 +4,14 @@
  */
 "use client";
 
-import {
-	GearIcon,
-	GlobeIcon,
-	PaletteIcon,
-	SignOutIcon,
-} from "@phosphor-icons/react";
+import { CopyIcon, SignOutIcon } from "@phosphor-icons/react";
 import Image from "next/image";
-import { LanguageDropdown } from "@/components/LanguageDropdown";
+import { useState } from "react";
 import { CustomAvatar } from "@/components/shared/CustomAvatar";
-import { ModeToggle } from "@/components/theme-toggle";
 import {
 	DropdownMenu,
 	DropdownMenuContent,
 	DropdownMenuItem,
-	DropdownMenuSeparator,
 	DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { signOut } from "@/lib/auth/client";
@@ -31,6 +24,7 @@ interface UserMenuProps {
 			email?: string | null;
 			image?: string | null;
 			avatarSeed?: string | null;
+			walletAddress?: string | null;
 			[key: string]: unknown;
 		};
 	};
@@ -38,11 +32,23 @@ interface UserMenuProps {
 
 export function UserMenu({ session }: UserMenuProps) {
 	const user = session.user;
+	const [copied, setCopied] = useState(false);
+
 	const avatarSeed =
 		(user as { avatarSeed?: string | null }).avatarSeed || user.id;
 
+	const handleCopy = (e: React.MouseEvent) => {
+		e.preventDefault();
+		e.stopPropagation();
+		if (user.walletAddress) {
+			navigator.clipboard.writeText(user.walletAddress);
+			setCopied(true);
+			setTimeout(() => setCopied(false), 2000);
+		}
+	};
+
 	return (
-		<DropdownMenu>
+		<DropdownMenu modal={false}>
 			<DropdownMenuTrigger asChild>
 				<button className="flex items-center gap-3 bg-ink-secondary/10 px-3 py-1.5 border border-ink-secondary/20 hover:bg-ink-secondary/20 transition-colors focus:outline-none">
 					<div className="w-6 h-6 shrink-0 overflow-hidden relative border border-ink-primary/20">
@@ -66,33 +72,33 @@ export function UserMenu({ session }: UserMenuProps) {
 					</span>
 				</button>
 			</DropdownMenuTrigger>
-			<DropdownMenuContent align="end" className="w-48">
-				<DropdownMenuItem className="gap-2 cursor-pointer">
-					<GearIcon size={16} weight="bold" />
-					<span>Dashboard</span>
-				</DropdownMenuItem>
-				<DropdownMenuSeparator />
-
-				<div className="px-2 py-1.5 flex flex-col gap-2">
-					<div className="flex items-center justify-between gap-2">
-						<div className="flex items-center gap-2 text-xs font-medium text-ink-secondary">
-							<PaletteIcon size={14} />
-							<span>Theme</span>
+			<DropdownMenuContent
+				align="end"
+				className="w-56 p-2 rounded-none border border-border bg-bg-surface shadow-[4px_4px_0_rgba(0,0,0,0.1)]"
+			>
+				{user.walletAddress && (
+					<div className="px-3 py-2 mb-2 border-b border-border bg-ink-primary/5">
+						<div className="flex items-center justify-between mb-1">
+							<span className="text-[10px] font-bold uppercase tracking-widest text-ink-secondary">
+								WALLET_ID
+							</span>
+							<button
+								onClick={handleCopy}
+								className="text-ink-secondary hover:text-ink-primary transition-colors flex items-center gap-1"
+							>
+								<CopyIcon size={12} weight={copied ? "fill" : "bold"} />
+								<span className="text-[9px] uppercase font-bold">
+									{copied ? "COPIED" : "COPY"}
+								</span>
+							</button>
 						</div>
-						<ModeToggle />
-					</div>
-					<div className="flex items-center justify-between gap-2">
-						<div className="flex items-center gap-2 text-xs font-medium text-ink-secondary">
-							<GlobeIcon size={14} />
-							<span>Lang</span>
+						<div className="font-mono text-[10px] break-all text-ink-primary opacity-60">
+							{user.walletAddress}
 						</div>
-						<LanguageDropdown className="w-[80px]" />
 					</div>
-				</div>
-
-				<DropdownMenuSeparator />
+				)}
 				<DropdownMenuItem
-					className="gap-2 cursor-pointer text-red-500 focus:text-red-500 focus:bg-red-500/10"
+					className="gap-2 cursor-pointer text-red-500 focus:text-red-500 focus:bg-red-500/10 rounded-none h-10 px-3 uppercase text-[10px] font-bold tracking-widest"
 					onClick={() =>
 						signOut({
 							fetchOptions: { onSuccess: () => window.location.reload() },
