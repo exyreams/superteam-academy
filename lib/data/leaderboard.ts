@@ -1,261 +1,182 @@
-// Leaderboard data structures and mock data
+/**
+ * @fileoverview Data fetching and synchronization logic for the global leaderboard.
+ * Provides functions to retrieve rankings, calculate user standing, and sync on-chain XP.
+ */
 
-export type LeaderboardPeriod = 'weekly' | 'monthly' | 'all-time';
-export type LeaderboardTrack = 'all' | 'rust' | 'solana' | 'anchor';
+import { and, desc, eq, gte, sql } from "drizzle-orm";
+import {
+	LeaderboardEntry,
+	LeaderboardPeriod,
+	LeaderboardTrack,
+	UserStanding,
+} from "@/lib/constants/leaderboard";
+import { db } from "@/lib/db";
+import { user, userActivity } from "@/lib/db/schema";
+import { onchainQueryService } from "@/lib/services/onchain-queries";
 
-export interface LeaderboardEntry {
-  rank: number;
-  userId: string;
-  username: string;
-  walletAddress: string;
-  avatar: string; // Bootstrap icon name
-  xp: number;
-  level: number;
-  streak: number;
-  isCurrentUser?: boolean;
+/**
+ * Fetches the leaderboard entries based on the specified period and track.
+ * Defaults to all-time global rankings.
+ *
+ * @param period - The time frame to consider for XP aggregation.
+ * @param track - The specific learning track to filter by.
+ * @returns A list of the top 50 leaderboard entries.
+ */
+export async function getLeaderboard(
+	period: LeaderboardPeriod = "all-time",
+	track: LeaderboardTrack = "all",
+): Promise<LeaderboardEntry[]> {
+	const now = new Date();
+	let startDate: Date | undefined;
+
+	if (period === "weekly") {
+		startDate = new Date(now.setDate(now.getDate() - 7));
+	} else if (period === "monthly") {
+		startDate = new Date(now.setMonth(now.getMonth() - 1));
+	}
+
+	if (period === "all-time" && track === "all") {
+		// Use optimized user table for all-time global leaderboard
+		const results = await db
+			.select({
+				userId: user.id,
+				username: user.name,
+				walletAddress: user.walletAddress,
+				avatar: user.avatarSeed,
+				xp: user.totalXp,
+				level: user.level,
+			})
+			.from(user)
+			.orderBy(desc(user.totalXp))
+			.limit(50);
+
+		return results.map((r, i) => ({
+			rank: i + 1,
+			userId: r.userId,
+			username: r.username,
+			walletAddress: r.walletAddress || "Unknown",
+			avatar: r.avatar || "bi-person-fill",
+			xp: r.xp,
+			level: r.level,
+			streak: 0, // Streaks would need a join but we'll stub for performance or fetch separately
+		}));
+	}
+
+	// For filtered leaderboards, we aggregate user_activity by track collection
+	const conditions = [];
+	if (startDate) conditions.push(gte(userActivity.createdAt, startDate));
+	if (track !== "all") conditions.push(eq(userActivity.track, track));
+
+	const results = await db
+		.select({
+			userId: userActivity.userId,
+			xp: sql<number>`sum(${userActivity.xpEarned})::int`,
+			username: user.name,
+			walletAddress: user.walletAddress,
+			avatar: user.avatarSeed,
+		})
+		.from(userActivity)
+		.innerJoin(user, eq(userActivity.userId, user.id))
+		.where(and(...conditions))
+		.groupBy(
+			userActivity.userId,
+			user.name,
+			user.walletAddress,
+			user.avatarSeed,
+		)
+		.orderBy(desc(sql`sum(${userActivity.xpEarned})`))
+		.limit(50);
+
+	return results.map((r, i) => ({
+		rank: i + 1,
+		userId: r.userId,
+		username: r.username,
+		walletAddress: r.walletAddress || "Unknown",
+		avatar: r.avatar || "bi-person-fill",
+		xp: r.xp,
+		level: Math.max(1, Math.floor(Math.sqrt(r.xp / 100))),
+		streak: 0,
+	}));
 }
 
-export interface LeaderboardFilter {
-  period: LeaderboardPeriod;
-  track: LeaderboardTrack;
+/**
+ * Calculates the standing of a specific user within the global rankings.
+ *
+ * @param userId - The unique identifier of the user.
+ * @returns The user's standing or null if not found.
+ */
+export async function getUserStanding(
+	userId: string,
+): Promise<UserStanding | null> {
+	if (!userId) return null;
+
+	// Note: Percentile and rank calculations are more complex in SQL,
+	// for MVP we calculate based on global rank
+	const users = await db
+		.select({ id: user.id, xp: user.totalXp })
+		.from(user)
+		.orderBy(desc(user.totalXp));
+
+	const userRank = users.findIndex((u) => u.id === userId) + 1;
+	if (userRank === 0) return null;
+
+	const totalUsers = users.length;
+	const percentile = ((totalUsers - userRank) / totalUsers) * 100;
+	const topPercentile = 100 - percentile;
+
+	const topUserXp = users[0]?.xp || 0;
+	const userXp = users[userRank - 1]?.xp || 0;
+
+	return {
+		globalRank: userRank,
+		percentile: `TOP ${Math.max(1, Math.ceil(topPercentile))}%`,
+		xpToFirst: topUserXp - userXp,
+		rewardsEligible: userRank <= 100,
+		xp: userXp,
+	};
 }
 
-export interface UserStanding {
-  globalRank: number;
-  percentile: string; // "TOP 1%"
-  xpToFirst: number;
-  rewardsEligible: boolean;
+/**
+ * Retrieves the current global rank of a user without full standing data.
+ *
+ * @param userId - The unique identifier of the user.
+ * @returns The rank number (1-indexed).
+ */
+export async function getCurrentUserRank(userId: string): Promise<number> {
+	if (!userId) return 0;
+	const users = await db
+		.select({ id: user.id })
+		.from(user)
+		.orderBy(desc(user.totalXp));
+
+	return users.findIndex((u) => u.id === userId) + 1;
 }
 
-// Mock leaderboard entries
-export const mockLeaderboardData: LeaderboardEntry[] = [
-  {
-    rank: 1,
-    userId: 'user-1',
-    username: '0xFE2...99A',
-    walletAddress: '0xFE2...99A',
-    avatar: 'bi-shield-shaded',
-    xp: 12400,
-    level: 14,
-    streak: 42,
-  },
-  {
-    rank: 2,
-    userId: 'user-9402',
-    username: 'YOU (0xKD...92A)',
-    walletAddress: '0xKD...92A',
-    avatar: 'bi-person-fill',
-    xp: 8420,
-    level: 9,
-    streak: 12,
-    isCurrentUser: true,
-  },
-  {
-    rank: 3,
-    userId: 'user-3',
-    username: '0xAB1...CC2',
-    walletAddress: '0xAB1...CC2',
-    avatar: 'bi-cpu',
-    xp: 8100,
-    level: 8,
-    streak: 8,
-  },
-  {
-    rank: 4,
-    userId: 'user-4',
-    username: 'SOL_DEV_99',
-    walletAddress: '0x9D4...E1F',
-    avatar: 'bi-incognito',
-    xp: 7950,
-    level: 8,
-    streak: 21,
-  },
-  {
-    rank: 5,
-    userId: 'user-5',
-    username: 'BLOCK_MASTER',
-    walletAddress: '0x7C3...A2B',
-    avatar: 'bi-code-square',
-    xp: 7210,
-    level: 7,
-    streak: 3,
-  },
-  {
-    rank: 6,
-    userId: 'user-6',
-    username: 'LAMPORT_GOD',
-    walletAddress: '0x5B2...D9C',
-    avatar: 'bi-hash',
-    xp: 6800,
-    level: 7,
-    streak: 15,
-  },
-  {
-    rank: 7,
-    userId: 'user-7',
-    username: 'RUST_NINJA',
-    walletAddress: '0x3A1...F8E',
-    avatar: 'bi-terminal',
-    xp: 6420,
-    level: 7,
-    streak: 5,
-  },
-  {
-    rank: 8,
-    userId: 'user-8',
-    username: 'ANCHOR_ACE',
-    walletAddress: '0x2E9...B7D',
-    avatar: 'bi-box',
-    xp: 6100,
-    level: 6,
-    streak: 18,
-  },
-  {
-    rank: 9,
-    userId: 'user-9',
-    username: 'SOLANA_SAGE',
-    walletAddress: '0x1D8...C6A',
-    avatar: 'bi-lightning',
-    xp: 5890,
-    level: 6,
-    streak: 9,
-  },
-  {
-    rank: 10,
-    userId: 'user-10',
-    username: 'WEB3_WARRIOR',
-    walletAddress: '0x9C7...E5B',
-    avatar: 'bi-globe',
-    xp: 5650,
-    level: 6,
-    streak: 12,
-  },
-  {
-    rank: 11,
-    userId: 'user-11',
-    username: 'CRYPTO_KING',
-    walletAddress: '0x8B6...D4C',
-    avatar: 'bi-gem',
-    xp: 5420,
-    level: 6,
-    streak: 7,
-  },
-  {
-    rank: 12,
-    userId: 'user-12',
-    username: 'DEFI_DEGEN',
-    walletAddress: '0x7A5...C3B',
-    avatar: 'bi-currency-exchange',
-    xp: 5200,
-    level: 5,
-    streak: 14,
-  },
-  {
-    rank: 13,
-    userId: 'user-13',
-    username: 'NFT_MASTER',
-    walletAddress: '0x6D4...B2A',
-    avatar: 'bi-image',
-    xp: 4980,
-    level: 5,
-    streak: 6,
-  },
-  {
-    rank: 14,
-    userId: 'user-14',
-    username: 'VALIDATOR_PRO',
-    walletAddress: '0x5C3...A19',
-    avatar: 'bi-server',
-    xp: 4750,
-    level: 5,
-    streak: 11,
-  },
-  {
-    rank: 15,
-    userId: 'user-15',
-    username: 'SMART_CONTRACT',
-    walletAddress: '0x4B2...918',
-    avatar: 'bi-file-code',
-    xp: 4520,
-    level: 5,
-    streak: 4,
-  },
-  {
-    rank: 16,
-    userId: 'user-16',
-    username: 'BLOCKCHAIN_BRO',
-    walletAddress: '0x3A1...817',
-    avatar: 'bi-link-45deg',
-    xp: 4300,
-    level: 4,
-    streak: 8,
-  },
-  {
-    rank: 17,
-    userId: 'user-17',
-    username: 'TOKEN_TRADER',
-    walletAddress: '0x2E0...716',
-    avatar: 'bi-coin',
-    xp: 4100,
-    level: 4,
-    streak: 13,
-  },
-  {
-    rank: 18,
-    userId: 'user-18',
-    username: 'PROGRAM_PILOT',
-    walletAddress: '0x1D9...615',
-    avatar: 'bi-airplane',
-    xp: 3890,
-    level: 4,
-    streak: 2,
-  },
-  {
-    rank: 19,
-    userId: 'user-19',
-    username: 'CHAIN_CHAMPION',
-    walletAddress: '0x0C8...514',
-    avatar: 'bi-award',
-    xp: 3670,
-    level: 4,
-    streak: 10,
-  },
-  {
-    rank: 20,
-    userId: 'user-20',
-    username: 'BYTE_BOSS',
-    walletAddress: '0x9B7...413',
-    avatar: 'bi-braces',
-    xp: 3450,
-    level: 4,
-    streak: 5,
-  },
-];
+/**
+ * Synchronizes a user's database XP and level with their real on-chain XP balance.
+ *
+ * @param userId - The database ID of the user.
+ * @param walletAddress - The Solana wallet address tied to the user.
+ * @returns The synchronized XP balance or null on failure.
+ */
+export async function syncUserXp(userId: string, walletAddress: string) {
+	if (!userId || !walletAddress) return;
 
-// Mock user standing
-export const mockUserStanding: UserStanding = {
-  globalRank: 2,
-  percentile: 'TOP 1%',
-  xpToFirst: 3980,
-  rewardsEligible: true,
-};
+	try {
+		const onchainXp = await onchainQueryService.getXpBalance(walletAddress);
+		const level = Math.max(1, Math.floor(Math.sqrt(onchainXp / 100)));
 
-// Helper functions
-export function getLeaderboard(
-  period: LeaderboardPeriod = 'weekly',
-  track: LeaderboardTrack = 'all'
-): LeaderboardEntry[] {
-  // In real app, filter by period and track
-  // For now, return mock data
-  return mockLeaderboardData;
-}
+		await db
+			.update(user)
+			.set({
+				totalXp: onchainXp,
+				level: level,
+			})
+			.where(eq(user.id, userId));
 
-export function getUserStanding(userId?: string): UserStanding {
-  // In real app, fetch by userId
-  return mockUserStanding;
-}
-
-export function getCurrentUserRank(): number {
-  const currentUser = mockLeaderboardData.find(entry => entry.isCurrentUser);
-  return currentUser?.rank || 0;
+		return onchainXp;
+	} catch (error) {
+		console.error(`Failed to sync XP for user ${userId}:`, error);
+		return null;
+	}
 }
