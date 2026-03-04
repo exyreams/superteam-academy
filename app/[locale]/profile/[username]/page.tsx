@@ -7,13 +7,8 @@ import {
 } from "@/lib/actions/gamification";
 import { getPublicProfileData } from "@/lib/actions/updateProfile";
 import { getSessionServer } from "@/lib/auth/server";
-import { getUserAchievements } from "@/lib/data/achievements";
-import { getUserCredentials, getUserSkillRadar } from "@/lib/data/credentials";
-import {
-	getCourseProgress,
-	getUserProfile,
-	UserProfile,
-} from "@/lib/data/user";
+import { getCurrentUserRank } from "@/lib/data/leaderboard";
+import { getUserStreakHistory, UserProfile } from "@/lib/data/user";
 
 export default async function PublicProfilePage({
 	params,
@@ -33,13 +28,16 @@ export default async function PublicProfilePage({
 	const isOwner = session?.user?.id === dbUser.id;
 
 	// 2. Fetch associated gamification data
-	const [achievements, skillRadar, courses] = await Promise.all([
-		getUserRealAchievements(dbUser.id),
-		calculateRealSkillRadar(dbUser.id),
-		getEnrolledCoursesProgress(dbUser.id),
-	]);
+	const [achievements, skillRadar, courses, globalRank, streakHistory] =
+		await Promise.all([
+			getUserRealAchievements(dbUser.id),
+			calculateRealSkillRadar(dbUser.id),
+			getEnrolledCoursesProgress(dbUser.id),
+			getCurrentUserRank(dbUser.id),
+			getUserStreakHistory(dbUser.id, 365), // Fetch 1 year of history
+		]);
 
-	// 3. Map DB User to UserProfile interface
+	// Map DB User to UserProfile interface
 	const profile: UserProfile = {
 		id: dbUser.id,
 		username: dbUser.walletAddress || dbUser.id, // Fallback to ID if wallet is missing
@@ -61,9 +59,6 @@ export default async function PublicProfilePage({
 		level: dbUser.level,
 	};
 
-	// Note: globalRank calculation would need a separate query, using fallback for now
-	const globalRank = 0;
-
 	return (
 		<ProfileView
 			profile={profile}
@@ -71,6 +66,7 @@ export default async function PublicProfilePage({
 			skillRadar={skillRadar}
 			courses={courses}
 			globalRank={globalRank}
+			streakHistory={streakHistory}
 			isOwner={isOwner}
 		/>
 	);
