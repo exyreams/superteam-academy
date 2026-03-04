@@ -78,6 +78,8 @@
 			"all": "सभी",
 			"dev": "देव",
 			"defi": "डीफाई",
+			"difficulty": "कठिनाई",
+			"duration": "अवधि",
 			"active": "सक्रिय फिल्टर्स"
 		},
 		"curatedPaths": {
@@ -88,12 +90,12 @@
 				"intermediate": "इंटरमीडिएट ट्रैक",
 				"advanced": "एडवांस्ड विशेषज्ञता"
 			},
-			"modules": "मॉड्यूल",
+			"modules": "पाठ्यक्रम",
 			"complete": "पूर्ण",
 			"startPath": "पथ शुरू करें"
 		},
-		"individualModules": {
-			"title": "व्यक्तिगत मॉड्यूल",
+		"individualCourses": {
+			"title": "व्यक्तिगत पाठ्यक्रम",
 			"sort": "क्रमबद्ध: लोकप्रियता"
 		},
 		"difficulty": {

@@ -87,6 +87,8 @@
 			"all": "ALL",
 			"dev": "DEV",
 			"defi": "DEFI",
+			"difficulty": "DIFFICULTY",
+			"duration": "DURATION",
 			"active": "ACTIVE FILTERS"
 		},
 		"curatedPaths": {
@@ -97,12 +99,12 @@
 				"intermediate": "INTERMEDIATE TRACK",
 				"advanced": "ADVANCED SPECIALIZATION"
 			},
-			"modules": "MODULES",
+			"modules": "COURSES",
 			"complete": "COMPLETE",
 			"startPath": "START PATH"
 		},
-		"individualModules": {
-			"title": "INDIVIDUAL MODULES",
+		"individualCourses": {
+			"title": "INDIVIDUAL COURSES",
 			"sort": "SORT: POPULARITY"
 		},
 		"difficulty": {

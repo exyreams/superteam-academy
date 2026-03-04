@@ -4,6 +4,7 @@
  */
 
 import { AnchorProvider, Program } from "@coral-xyz/anchor";
+import * as Sentry from "@sentry/nextjs";
 import {
 	createAssociatedTokenAccountInstruction,
 	getAssociatedTokenAddressSync,
@@ -25,7 +26,11 @@ import { OnchainAcademy } from "@/lib/anchor/idl/onchain_academy";
 import IDL from "@/lib/anchor/idl/onchain_academy.json";
 import { TRACK_COLLECTIONS, TrackId } from "@/lib/constants/leaderboard";
 import { db } from "@/lib/db";
-import { streak as streakTable, userActivity } from "@/lib/db/schema";
+import {
+	courseProgress,
+	streak as streakTable,
+	userActivity,
+} from "@/lib/db/schema";
 import { getPostHogClient } from "@/lib/posthog-server";
 
 const connection = new Connection(CLUSTER_URL, "confirmed");
@@ -35,12 +40,16 @@ const connection = new Connection(CLUSTER_URL, "confirmed");
  * Verifies lesson completion and mints bonus XP.
  */
 export async function POST(request: Request) {
+	let courseSlug = "";
+	let learnerAddress = "";
+
 	try {
 		const body = (await request.json()) as {
 			courseSlug: string;
 			learnerAddress: string;
 		};
-		const { courseSlug, learnerAddress } = body;
+		courseSlug = body.courseSlug;
+		learnerAddress = body.learnerAddress;
 
 		if (!courseSlug || !learnerAddress) {
 			return NextResponse.json(
@@ -190,6 +199,8 @@ export async function POST(request: Request) {
 			properties: {
 				course_slug: courseSlug,
 				transaction_signature: tx,
+				track_id: courseAccount.trackId,
+				lesson_count: courseAccount.lessonCount,
 			},
 		});
 		await posthog.shutdown();
@@ -257,6 +268,38 @@ export async function POST(request: Request) {
 				metadata: { courseSlug, signature: tx },
 				createdAt: now,
 			});
+
+			// 8. Update Course Progress Table
+			// Map to correct types for querying
+			const { and: andOp, eq: eqOp } = await import("drizzle-orm");
+			const existingProgress = await db.query.courseProgress.findFirst({
+				where: andOp(
+					eqOp(courseProgress.userId, learnerAddress),
+					eqOp(courseProgress.courseId, courseSlug),
+				),
+			});
+
+			if (existingProgress) {
+				await db
+					.update(courseProgress)
+					.set({
+						progress: 100,
+						completedAt: now,
+						lastAccessedAt: now,
+						updatedAt: now,
+					})
+					.where(eqOp(courseProgress.id, existingProgress.id));
+			} else {
+				await db.insert(courseProgress).values({
+					id: uuidv4(),
+					userId: learnerAddress,
+					courseId: courseSlug,
+					progress: 100,
+					completedAt: now,
+					lastAccessedAt: now,
+					updatedAt: now,
+				});
+			}
 		} catch (dbError) {
 			console.error("Failed to update DB gamification stats:", dbError);
 		}
@@ -268,6 +311,9 @@ export async function POST(request: Request) {
 		});
 	} catch (error) {
 		console.error("Error finalizing course:", error);
+		Sentry.captureException(error, {
+			extra: { courseSlug, learnerAddress },
+		});
 
 		// Handle CourseAlreadyFinalized gracefully
 		const errorMessage = error instanceof Error ? error.message : String(error);

@@ -5,6 +5,7 @@ import {
 	pgTable,
 	text,
 	timestamp,
+	uniqueIndex,
 } from "drizzle-orm/pg-core";
 
 /**
@@ -154,3 +155,32 @@ export const userActivity = pgTable("user_activity", {
 	metadata: jsonb("metadata"),
 	createdAt: timestamp("createdAt").notNull().defaultNow(),
 });
+
+/**
+ * Tracks detailed progress for a user in a specific course.
+ * Used for the dashboard "Last Accessed" information and aggregated stats.
+ */
+export const courseProgress = pgTable(
+	"course_progress",
+	{
+		id: text("id").primaryKey(),
+		userId: text("userId")
+			.notNull()
+			.references(() => user.id, { onDelete: "cascade" }),
+		courseId: text("courseId").notNull(), // Course slug
+		progress: integer("progress").default(0).notNull(), // 0-100
+		lastAccessedAt: timestamp("lastAccessedAt").notNull().defaultNow(),
+		currentLessonIndex: integer("currentLessonIndex").default(0),
+		completedAt: timestamp("completedAt"),
+		createdAt: timestamp("createdAt").notNull().defaultNow(),
+		updatedAt: timestamp("updatedAt").notNull().defaultNow(),
+	},
+	(table) => {
+		return {
+			userCourseUnique: uniqueIndex("user_course_unique").on(
+				table.userId,
+				table.courseId,
+			),
+		};
+	},
+);

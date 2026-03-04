@@ -32,6 +32,9 @@ export const ALL_COURSES_QUERY = `
     track_level,
     xp_per_lesson,
     duration,
+    durationMinutes,
+    tag,
+    icon,
     "moduleCount": count(modules),
     "totalLessons": count(modules[].lessons[])
   }
@@ -69,6 +72,8 @@ export const COURSE_BY_SLUG_QUERY = `
     creator_reward_xp,
     min_completions_for_reward,
     duration,
+    tag,
+    icon,
     prerequisite_course-> { "slug": slug.current },
     modules[]-> {
       _id,

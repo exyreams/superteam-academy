@@ -78,6 +78,8 @@
 			"all": "全部",
 			"dev": "开发",
 			"defi": "DEFI",
+			"difficulty": "难度",
+			"duration": "时长",
 			"active": "活动过滤器"
 		},
 		"curatedPaths": {
@@ -88,12 +90,12 @@
 				"intermediate": "中级轨道",
 				"advanced": "高级专业化"
 			},
-			"modules": "模块",
+			"modules": "课程",
 			"complete": "完成",
 			"startPath": "开始路径"
 		},
-		"individualModules": {
-			"title": "单个模块",
+		"individualCourses": {
+			"title": "单个课程",
 			"sort": "排序：受欢迎程度"
 		},
 		"difficulty": {

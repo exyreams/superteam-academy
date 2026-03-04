@@ -82,6 +82,8 @@
 			"all": "TODOS",
 			"dev": "DEV",
 			"defi": "DEFI",
+			"difficulty": "DIFICULDADE",
+			"duration": "DURAÇÃO",
 			"active": "FILTROS ATIVOS"
 		},
 		"curatedPaths": {
@@ -92,12 +94,12 @@
 				"intermediate": "TRILHA INTERMEDIÁRIA",
 				"advanced": "ESPECIALIZAÇÃO AVANÇADA"
 			},
-			"modules": "MÓDULOS",
+			"modules": "CURSOS",
 			"complete": "COMPLETO",
 			"startPath": "INICIAR TRILHA"
 		},
-		"individualModules": {
-			"title": "MÓDULOS INDIVIDUAIS",
+		"individualCourses": {
+			"title": "CURSOS INDIVIDUAIS",
 			"sort": "ORDENAR: POPULARIDADE"
 		},
 		"difficulty": {

@@ -82,6 +82,8 @@
 			"all": "TODOS",
 			"dev": "DEV",
 			"defi": "DEFI",
+			"difficulty": "DIFICULTAD",
+			"duration": "DURACIÓN",
 			"active": "FILTROS ACTIVOS"
 		},
 		"curatedPaths": {
@@ -92,12 +94,12 @@
 				"intermediate": "RUTA INTERMEDIA",
 				"advanced": "ESPECIALIZACIÓN AVANZADA"
 			},
-			"modules": "MÓDULOS",
+			"modules": "CURSOS",
 			"complete": "COMPLETO",
 			"startPath": "INICIAR RUTA"
 		},
-		"individualModules": {
-			"title": "MÓDULOS INDIVIDUALES",
+		"individualCourses": {
+			"title": "CURSOS INDIVIDUALES",
 			"sort": "ORDENAR: POPULARIDAD"
 		},
 		"difficulty": {

@@ -78,6 +78,8 @@
 			"all": "すべて",
 			"dev": "開発",
 			"defi": "DEFI",
+			"difficulty": "難易度",
+			"duration": "時間",
 			"active": "アクティブなフィルタ"
 		},
 		"curatedPaths": {
@@ -88,12 +90,12 @@
 				"intermediate": "中級トラック",
 				"advanced": "上級専門分野"
 			},
-			"modules": "モジュール",
+			"modules": "コース",
 			"complete": "完了",
 			"startPath": "パスを開始"
 		},
-		"individualModules": {
-			"title": "個別モジュール",
+		"individualCourses": {
+			"title": "個別コース",
 			"sort": "並べ替え: 人気順"
 		},
 		"difficulty": {

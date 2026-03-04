@@ -78,6 +78,8 @@
 			"all": "TOUS",
 			"dev": "DEV",
 			"defi": "DEFI",
+			"difficulty": "DIFFICULTÉ",
+			"duration": "DURÉE",
 			"active": "FILTRES ACTIFS"
 		},
 		"curatedPaths": {
@@ -88,12 +90,12 @@
 				"intermediate": "PISTE INTERMÉDIAIRE",
 				"advanced": "SPÉCIALISATION AVANCÉE"
 			},
-			"modules": "MODULES",
+			"modules": "COURS",
 			"complete": "COMPLET",
 			"startPath": "COMMENCER LE PARCOURS"
 		},
-		"individualModules": {
-			"title": "MODULES INDIVIDUELS",
+		"individualCourses": {
+			"title": "COURS INDIVIDUELS",
 			"sort": "TRIER : POPULARITÉ"
 		},
 		"difficulty": {

@@ -78,6 +78,8 @@
 			"all": "ВСЕ",
 			"dev": "DEV",
 			"defi": "DEFI",
+			"difficulty": "СЛОЖНОСТЬ",
+			"duration": "ДЛИТЕЛЬНОСТЬ",
 			"active": "АКТИВНЫЕ ФИЛЬТРЫ"
 		},
 		"curatedPaths": {
@@ -88,12 +90,12 @@
 				"intermediate": "СРЕДНИЙ УРОВЕНЬ",
 				"advanced": "ПРОДВИНУТЫЙ"
 			},
-			"modules": "МОДУЛИ",
+			"modules": "КУРСЫ",
 			"complete": "ЗАВЕРШЕНО",
 			"startPath": "НАЧАТЬ ПУТЬ"
 		},
-		"individualModules": {
-			"title": "ОТДЕЛЬНЫЕ МОДУЛИ",
+		"individualCourses": {
+			"title": "ОТДЕЛЬНЫЕ КУРСЫ",
 			"sort": "СОРТИРОВКА: ПОПУЛЯРНОСТЬ"
 		},
 		"difficulty": {
