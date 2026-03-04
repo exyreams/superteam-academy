@@ -31,6 +31,7 @@ interface ProfileViewProps {
 	skillRadar: SkillRadarType;
 	courses: CourseProgress[];
 	globalRank: number;
+	isOwner?: boolean;
 }
 
 /**
@@ -43,6 +44,7 @@ export function ProfileView({
 	skillRadar,
 	courses,
 	globalRank,
+	isOwner = false,
 }: Omit<ProfileViewProps, "credentials">) {
 	const { publicKey } = useWallet();
 	const onchainStats = useOnchainStats(
@@ -54,8 +56,9 @@ export function ProfileView({
 		? profile.level || 1
 		: onchainStats.level;
 
-	const { data: onchainCredentials, isLoading: credsLoading } =
-		useCredentials();
+	const { data: onchainCredentials, isLoading: credsLoading } = useCredentials(
+		profile.walletAddress,
+	);
 
 	interface HeliusAttribute {
 		trait_type: string;
@@ -184,27 +187,29 @@ export function ProfileView({
 					<CourseLedger courses={courses} />
 
 					{/* Metadata JSON */}
-					<div className="mt-auto">
-						<div className="mb-2">
-							<span className="text-[10px] font-bold uppercase tracking-widest">
-								METADATA.JSON
-							</span>
+					{isOwner && (
+						<div className="mt-auto">
+							<div className="mb-2">
+								<span className="text-[10px] font-bold uppercase tracking-widest">
+									METADATA.JSON
+								</span>
+							</div>
+							<div className="bg-ink-primary/5 p-3 font-mono text-[11px] leading-relaxed">
+								{`{`}
+								<br />
+								&nbsp;&nbsp;&quot;operator&quot;: &quot;{profile.walletAddress}
+								&quot;,
+								<br />
+								&nbsp;&nbsp;&quot;reputation&quot;: {xpValue},
+								<br />
+								&nbsp;&nbsp;&quot;class&quot;: &quot;Architect&quot;,
+								<br />
+								&nbsp;&nbsp;&quot;verified&quot;: true
+								<br />
+								{`}`}
+							</div>
 						</div>
-						<div className="bg-ink-primary/5 p-3 font-mono text-[11px] leading-relaxed">
-							{`{`}
-							<br />
-							&nbsp;&nbsp;&quot;operator&quot;: &quot;{profile.walletAddress}
-							&quot;,
-							<br />
-							&nbsp;&nbsp;&quot;reputation&quot;: {xpValue},
-							<br />
-							&nbsp;&nbsp;&quot;class&quot;: &quot;Architect&quot;,
-							<br />
-							&nbsp;&nbsp;&quot;verified&quot;: true
-							<br />
-							{`}`}
-						</div>
-					</div>
+					)}
 				</aside>
 			</div>
 		</div>

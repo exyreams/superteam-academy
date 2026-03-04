@@ -3,8 +3,7 @@
  */
 "use client";
 
-import Link from "next/link";
-import { useLocale } from "next-intl";
+import { Link } from "@/i18n/routing";
 import { Credential } from "@/lib/data/credentials";
 
 interface CredentialCardProps {
@@ -24,8 +23,6 @@ const trackToCertificateId: Record<string, string> = {
  * Renders an evolving cNFT or certificate as a premium card with track info and Solscan link.
  */
 export function CredentialCard({ credential }: CredentialCardProps) {
-	const locale = useLocale();
-
 	// Get the certificate ID from the mapping, or use mintAddress for on-chain assets
 	const certificateId =
 		credential.verified && credential.mintAddress
@@ -35,7 +32,7 @@ export function CredentialCard({ credential }: CredentialCardProps) {
 
 	return (
 		<div className="border border-border p-3 bg-bg-surface group hover:border-ink-primary transition-colors">
-			<Link href={`/${locale}/certificates/${certificateId}`} className="block">
+			<Link href={`/certificates/${certificateId}`} className="block">
 				<div
 					className="w-full aspect-square mb-3 relative overflow-hidden cursor-pointer"
 					style={{ background: credential.gradient }}

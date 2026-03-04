@@ -85,6 +85,7 @@ export default async function ProfilePage() {
 			skillRadar={skillRadar}
 			courses={courses}
 			globalRank={globalRank}
+			isOwner={true}
 		/>
 	);
 }

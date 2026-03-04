@@ -1,5 +1,6 @@
 "use client";
 
+import { Link } from "@/i18n/routing";
 import { CustomAvatar } from "@/components/shared/CustomAvatar";
 import { LeaderboardEntry } from "@/lib/constants/leaderboard";
 
@@ -16,8 +17,9 @@ interface RankCardProps {
  */
 export function RankCard({ entry, showCrosshair = false }: RankCardProps) {
 	return (
-		<div
-			className={`grid grid-cols-[40px_40px_1fr_auto] md:grid-cols-[60px_50px_1fr_120px_80px_100px] items-center px-4 md:px-6 py-3 border relative transition-all ${
+		<Link
+			href={`/profile/${entry.userId}`}
+			className={`grid grid-cols-[40px_40px_1fr_auto] md:grid-cols-[60px_50px_1fr_120px_80px_100px] items-center px-4 md:px-6 py-3 border relative transition-all block ${
 				entry.isCurrentUser
 					? "bg-ink-primary text-bg-base border-ink-primary"
 					: "border-border bg-bg-surface hover:border-ink-primary hover:shadow-[4px_4px_0_rgba(13,20,18,0.1)] dark:hover:shadow-[4px_4px_0_rgba(255,255,255,0.1)]"
@@ -88,6 +90,6 @@ export function RankCard({ entry, showCrosshair = false }: RankCardProps) {
 					D STREAK
 				</span>
 			</div>
-		</div>
+		</Link>
 	);
 }
