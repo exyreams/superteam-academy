@@ -1,0 +1,483 @@
+{
+	"Hero": {
+		"badge": "터미널 접근 권한 부여됨",
+		"title": "솔라나에서\n당신의 미래를\n개척하십시오",
+		"description": "차세대 솔라나 아키텍트를 위한 최고의 기술 훈련소입니다. 하드웨어 가속 커리큘럼을 통해 제로에서 프로덕션 준비 단계까지 나아가세요.",
+		"explore": "코스 탐색",
+		"discord": "Discord 참여"
+	},
+	"StatsStrip": {
+		"activeStudents": "활성 학생",
+		"nodesValidated": "검증된 노드",
+		"bountiesWon": "획득한 바운티",
+		"jobPlacements": "취업 배치"
+	},
+	"Testimonials": {
+		"sectionLabel": "학생 정보 보고서"
+	},
+	"Navbar": {
+		"brand": "슈퍼팀 아카데미",
+		"links": {
+			"catalog": "카탈로그",
+			"leaderboard": "리더보드",
+			"rewards": "보상"
+		},
+		"cta": {
+			"dashboard": "대시보드",
+			"start": "학습 시작",
+			"login": "로그인 / 가입"
+		}
+	},
+	"Footer": {
+		"brand": "슈퍼팀 아카데미",
+		"description": "솔라나 생태계를 위한 탈중앙화 대학. 학생들이 소유합니다.",
+		"language": "언어:",
+		"copyright": "© 2026 슈퍼팀 아카데미 // 모든 권리 보유",
+		"headers": {
+			"platform": "플랫폼",
+			"socials": "소셜"
+		},
+		"links": {
+			"catalog": "카탈로그",
+			"leaderboard": "리더보드",
+			"dashboard": "대시보드",
+			"profile": "프로필"
+		}
+	},
+	"Features": {
+		"proofs": {
+			"title": "온체인 증명",
+			"description": "완료하는 각 모듈은 지갑에 양도 불가능한 자격 증명을 발급합니다. 학습하면서 암호학적으로 검증 가능한 이력서를 구축하세요."
+		},
+		"compiler": {
+			"title": "라이브 컴파일러",
+			"description": "환경 설정이 필요하지 않습니다. 실시간 피드백을 제공하는 브라우저 기반 IDE에서 직접 솔라나 프로그램을 작성, 테스트 및 배포하세요."
+		}
+	},
+	"LearningPaths": {
+		"subtitle": "사용 가능한 작업",
+		"title": "학습 경로",
+		"viewAll": "모든 트랙 보기",
+		"tracks": {
+			"beginner": {
+				"path": "경로 01 // 초급",
+				"title": "솔라나 기초",
+				"description": "기본 레이어를 마스터하세요. 계정, 트랜잭션, Sealevel 런타임.",
+				"meta": "12 모듈 // 40 XP"
+			},
+			"intermediate": {
+				"path": "경로 02 // 중급",
+				"title": "앵커 프레임워크",
+				"description": "업계 표준 Rust DSL을 사용한 빠른 프로그램 개발.",
+				"meta": "8 모듈 // 120 XP"
+			},
+			"advanced": {
+				"path": "경로 03 // 고급",
+				"title": "프로토콜 보안",
+				"description": "감사 기법, 일반적인 공격 벡터 및 불변성 테스트.",
+				"meta": "15 모듈 // 300 XP"
+			}
+		}
+	},
+	"Courses": {
+		"search": {
+			"placeholder": "검색 키워드: 솔라나, 러스트, 앵커..."
+		},
+		"filters": {
+			"all": "전체",
+			"dev": "개발",
+			"defi": "디파이",
+			"difficulty": "난이도",
+			"duration": "소요 시간",
+			"active": "활성 필터"
+		},
+		"curatedPaths": {
+			"title": "추천 경로",
+			"subtitle": "권장 시퀀스",
+			"tracks": {
+				"beginner": "초급 트랙",
+				"intermediate": "중급 트랙",
+				"advanced": "고급 전문화"
+			},
+			"modules": "코스",
+			"complete": "완료",
+			"startPath": "경로 시작"
+		},
+		"individualCourses": {
+			"title": "개별 코스",
+			"sort": "정렬: 인기순"
+		},
+		"difficulty": {
+			"beginner": "초급",
+			"intermediate": "중급",
+			"advanced": "고급",
+			"expert": "전문가"
+		},
+		"locked": "잠김",
+		"stats": {
+			"title": "세션 통계",
+			"totalXP": "총 XP",
+			"coursesActive": "활성 코스",
+			"completionRate": "완료율",
+			"certificates": "수료증"
+		},
+		"lastAccessed": {
+			"title": "최근 접근",
+			"resume": "모듈 이어서 하기"
+		}
+	},
+	"CourseDetail": {
+		"header": {
+			"label": "코스 상세 정보",
+			"instructor": "강사"
+		},
+		"metadata": {
+			"instructor": "강사",
+			"duration": "소요 시간",
+			"difficulty": "난이도"
+		},
+		"xpBounty": "XP 바운티",
+		"buttons": {
+			"enroll": "지금 등록하기",
+			"enrolling": "등록 중...",
+			"continue": "코스 계속하기"
+		},
+		"curriculum": {
+			"title": "커리큘럼",
+			"completion": "완료 진행률"
+		},
+		"reviews": {
+			"title": "학생 피드백",
+			"viewAll": "모든 리뷰 보기"
+		}
+	},
+	"Lesson": {
+		"reference": "참조",
+		"needHint": "힌트가 필요하신가요?",
+		"ago": "전",
+		"autosaved": "자동 저장됨",
+		"solution": "솔루션",
+		"output": "출력",
+		"runTests": "테스트 실행",
+		"module": "모듈",
+		"previous": "이전",
+		"nextLesson": "다음 레슨"
+	},
+	"Dashboard": {
+		"activeCourses": {
+			"label": "현재 진행 작업",
+			"title": "활성 코스",
+			"progress": "진행률",
+			"resume": "계속하기"
+		},
+		"recommendedTracks": {
+			"label": "다음 목표",
+			"title": "추천 트랙",
+			"enroll": "등록하기"
+		},
+		"recentActivity": {
+			"label": "로그 내역",
+			"title": "최근 활동"
+		},
+		"userHUD": {
+			"title": "오퍼레이터 프로필",
+			"xpBalance": "XP 잔액",
+			"globalRank": "글로벌 랭킹",
+			"level": "레벨",
+			"xpToLevel": "레벨업 필요 XP"
+		},
+		"streak": {
+			"title": "연속 학습",
+			"days": "일"
+		},
+		"achievements": {
+			"title": "최근 달성 업적"
+		},
+		"terminal": "터미널 열기[F1]"
+	},
+	"Profile": {
+		"operatorId": "오퍼레이터_ID",
+		"enrolledSince": "등록일",
+		"location": "위치",
+		"skillRadar": {
+			"title": "적성_레이더"
+		},
+		"achievements": {
+			"title": "업적 // 쇼케이스"
+		},
+		"credentials": {
+			"label": "온체인_증명",
+			"title": "진화하는 cNFT",
+			"verified": "검증됨",
+			"viewOnSolscan": "SOLSCAN에서_보기"
+		},
+		"quickStats": {
+			"title": "빠른_통계",
+			"rank": "랭킹",
+			"vouchers": "바우처"
+		},
+		"courseLedger": {
+			"title": "코스_원장"
+		},
+		"metadata": {
+			"title": "METADATA.JSON"
+		}
+	},
+	"Leaderboard": {
+		"header": {
+			"label": "글로벌 랭킹",
+			"title": "오퍼레이터 리더보드",
+			"updated": "업데이트됨"
+		},
+		"filters": {
+			"weekly": "주간",
+			"monthly": "월간",
+			"allTime": "전체",
+			"allTracks": "필터: 모든 트랙",
+			"rust": "러스트 기초",
+			"solana": "솔라나 기초",
+			"anchor": "앵커 프레임워크",
+			"cycle": "사이클",
+			"stage": "단계"
+		},
+		"table": {
+			"xp": "XP",
+			"level": "LVL",
+			"streak": "일 연속",
+			"you": "나"
+		},
+		"loadMore": "-- [ 다음 50명의 오퍼레이터 보기 ] --",
+		"userStanding": {
+			"title": "나의 순위",
+			"globalRank": "글로벌 랭킹",
+			"percentile": "백분위수",
+			"xpToFirst": "1위까지의 XP",
+			"rewards": "보상",
+			"eligible": "자격 있음"
+		},
+		"seasonalPrizes": {
+			"title": "시즌 보상",
+			"topFinishers": "상위 3명:"
+		},
+		"activityFeed": {
+			"title": "활동 피드"
+		}
+	},
+	"Wallet": {
+		"title": "지갑 연결",
+		"detected": "감지됨"
+	},
+	"Newsletter": {
+		"title": "뉴스레터",
+		"description": "매주 기술 업데이트와 생태계 소식을 이메일로 받아보세요.",
+		"placeholder": "OPERATOR@EMAIL.COM",
+		"button": "구독하기"
+	},
+	"Auth": {
+		"login": {
+			"title": "환영합니다",
+			"subtitle": "오퍼레이터 대시보드에 접근하여 진행 상황을 이어가세요.",
+			"emailPlaceholder": "이메일 주소",
+			"passwordPlaceholder": "비밀번호",
+			"button": "이메일로 로그인",
+			"authenticating": "인증 중...",
+			"noAccount": "계정이 없으신가요?",
+			"createLink": "오퍼레이터 초기화"
+		},
+		"signup": {
+			"title": "오퍼레이터 초기화",
+			"subtitle": "뛰어난 솔라나 아키텍트로서의 여정을 시작하세요.",
+			"emailPlaceholder": "이메일 주소",
+			"passwordPlaceholder": "비밀번호",
+			"button": "이메일로 초기화",
+			"initializing": "초기화 중...",
+			"web3Native": "Web3 네이티브",
+			"web3NativeDesc": "소셜 계정으로 초기화할 수 있지만, 진정한 성장을 위해서는 안전한 솔라나 지갑을 연결해야 합니다.",
+			"hasAccount": "이미 초기화하셨나요?",
+			"loginLink": "대시보드 접속"
+		},
+		"shared": {
+			"brandingBadgeLogin": "프로토콜 진입",
+			"brandingTitleLogin": "솔라나에서\n당신의 미래를\n개척하십시오",
+			"brandingDescLogin": "차세대 솔라나 아키텍트를 위한 최고의 기술 훈련소입니다. 하드웨어 가속 커리큘럼을 통해 제로에서 프로덕션 준비 단계까지 나아가세요.",
+			"brandingBadgeSignup": "새 오퍼레이터 초기화",
+			"brandingTitleSignup": "온체인 자격 증명\n획득하기",
+			"brandingDescSignup": "완료하는 각 모듈은 지갑에 암호학적으로 검증 가능한 기술 증명을 발급합니다.",
+			"systemOnline": "시스템 온라인 // 터미널 접근",
+			"orContinueWith": "또는 다음으로 계속",
+			"accessProtocol": "접근 프로토콜",
+			"accessProtocolDesc": "이메일을 입력하여 로그인하거나 계정을 생성하세요.",
+			"returningOperator": "// 기존 오퍼레이터 — 인증",
+			"newOperator": "// 신규 오퍼레이터 — 계정 초기화",
+			"continue": "계속하기"
+		},
+		"walletButton": {
+			"github": "GitHub으로 계속",
+			"google": "Google로 계속",
+			"walletSignIn": "지갑으로 로그인",
+			"walletConnect": "지갑 연결",
+			"authenticating": "인증 중..."
+		}
+	},
+	"Onboarding": {
+		"badge": "오퍼레이터 초기화",
+		"brandingTitle": "오퍼레이터를\n초기화하세요",
+		"brandingDesc": "프로필을 구성하여 솔라나 빌더 네트워크에 참여하세요. 각 단계를 완료하면 아카데미 프로토콜 전체에 접근할 수 있습니다.",
+		"systemOnline": "시스템_온라인 — 단계",
+		"of": "/",
+		"steps": {
+			"identity": "신원",
+			"signature": "서명",
+			"profile": "프로필",
+			"learningPath": "경로",
+			"wallet": "지갑"
+		},
+		"step1": {
+			"badge": "단계 1 / 5",
+			"title": "신원 설정",
+			"subtitle": "오퍼레이터 표시 이름을 설정하세요. 리더보드와 프로필에 이 이름이 표시됩니다.",
+			"namePlaceholder": "0xYourHandle",
+			"nameLabel": "표시 이름",
+			"emailLabel": "이메일 (읽기 전용)"
+		},
+		"step2": {
+			"badge": "단계 2 / 5",
+			"title": "신경망 서명",
+			"subtitle": "디지털 신원이 절차적으로 초기화되었습니다. 최적의 공명에 도달할 때까지 고유 서명을 다시 생성할 수 있습니다.",
+			"reroll": "서명 다시 생성",
+			"description": "이 서명은 아카데미 프로토콜 전체에서 고유한 오퍼레이터 ID로 사용됩니다."
+		},
+		"step3": {
+			"badge": "단계 3 / 5",
+			"title": "프로필",
+			"subtitle": "커뮤니티에 자신을 소개하세요. 모든 항목은 선택 사항입니다.",
+			"bioPlaceholder": "시니어 솔라나 아키텍트. 탈중앙화된 미래를 구축 중...",
+			"locationPlaceholder": "위치 (예: SEOUL_KR)",
+			"twitterPlaceholder": "X / 트위터 @handle",
+			"githubPlaceholder": "GitHub 사용자 이름",
+			"websitePlaceholder": "포트폴리오 / 웹사이트 URL",
+			"skip": "이 단계 건너뛰기"
+		},
+		"step4": {
+			"badge": "단계 4 / 5",
+			"title": "학습 경로",
+			"subtitle": "마스터하고 싶은 트랙을 선택하세요. 최소 하나 이상 선택해야 합니다.",
+			"tracks": {
+				"rust": {
+					"label": "러스트",
+					"desc": "시스템 프로그래밍 및 성능"
+				},
+				"anchor": {
+					"label": "앵커",
+					"desc": "솔라나 스마트 컨트랙트 프레임워크"
+				},
+				"defi": {
+					"label": "디파이",
+					"desc": "탈중앙화 금융 프로토콜"
+				},
+				"security": {
+					"label": "보안",
+					"desc": "감사 및 취약점 연구"
+				},
+				"frontend": {
+					"label": "프론트엔드",
+					"desc": "Web3 dApp 개발"
+				}
+			}
+		},
+		"step5": {
+			"badge": "단계 5 / 5",
+			"title": "지갑 연결",
+			"subtitle": "솔라나 지갑을 연결하여 온체인 자격 증명과 XP를 받으세요. 건너뛰고 나중에 설정에서 연결할 수 있습니다.",
+			"externalLabel": "외부 계정 연결",
+			"linkGithub": "GitHub 연결",
+			"linkGoogle": "Google 연결",
+			"requiredFor": "필수 항목",
+			"requirements": [
+				"온체인 XP 소울바운드 토큰",
+				"메타플렉스 코어 자격 증명 NFT",
+				"코스 수료 증명"
+			],
+			"launch": "대시보드 시작 →",
+			"launching": "초기화 중...",
+			"skip": "지갑 연결 건너뛰기"
+		},
+		"nav": {
+			"back": "뒤로",
+			"next": "다음",
+			"continue": "계속하기"
+		}
+	},
+	"Settings": {
+		"tabs": {
+			"profile": "프로필",
+			"account": "계정",
+			"interface": "인터페이스",
+			"privacy": "프라이버시"
+		},
+		"view": {
+			"badge": "사용자 구성",
+			"title": "시스템 설정"
+		},
+		"profile": {
+			"title": "오퍼레이터 프로필",
+			"avatarHint": "아바타는 연결된 OAuth 제공자에서 가져옵니다.",
+			"nameLabel": "표시 이름",
+			"namePlaceholder": "0xYourHandle",
+			"bioLabel": "소개 / 터미널 인사말",
+			"bioPlaceholder": "시니어 솔라나 아키텍트. 탈중앙화된 미래를 구축 중...",
+			"locationLabel": "위치",
+			"locationPlaceholder": "SEOUL_KR",
+			"socialLabel": "소셜 프로토콜 링크",
+			"twitterPlaceholder": "X / 트위터 @handle",
+			"githubPlaceholder": "GitHub 사용자 이름",
+			"websitePlaceholder": "포트폴리오 / 웹사이트 URL",
+			"save": "프로필 저장",
+			"saving": "저장 중...",
+			"saved": "프로필이 성공적으로 업데이트되었습니다."
+		},
+		"account": {
+			"title": "계정 및 인증",
+			"emailLabel": "기본 이메일",
+			"emailHint": "이메일은 인증 제공자를 통해 관리됩니다.",
+			"walletsLabel": "연결된 지갑",
+			"oauthLabel": "OAuth 제공자",
+			"active": "활성",
+			"linkWallet": "지갑 연결",
+			"linking": "연결 중...",
+			"unlinking": "연결 해제 중...",
+			"unlink": "연결 해제",
+			"link": "연결",
+			"walletLinked": "지갑이 성공적으로 연결되었습니다.",
+			"walletUnlinked": "지갑 연결이 해제되었습니다.",
+			"walletError": "지갑 연결 중 오류가 발생했습니다.",
+			"oauthError": "{provider} 연결 초기화 실패"
+		},
+		"interface": {
+			"title": "인터페이스 설정",
+			"languageLabel": "시스템 언어",
+			"themeLabel": "터미널 테마",
+			"themeDesc": "라이트 코어와 다크 코어 간 전환",
+			"themeDark": "다크 모드",
+			"themeLight": "라이트 모드",
+			"notificationsLabel": "알림",
+			"newCourses": "새로운 코스 출시",
+			"leaderboardAlerts": "리더보드 순위 알림",
+			"directMessages": "다이렉트 메시지",
+			"save": "설정 저장",
+			"saving": "저장 중...",
+			"saved": "설정이 저장되었습니다."
+		},
+		"privacy": {
+			"title": "프라이버시 및 데이터",
+			"visibilityLabel": "공개 여부",
+			"visibilityDesc": "글로벌 리더보드에 프로필 표시",
+			"dataArchiveLabel": "데이터 보관소",
+			"exportBtn": "↓ 오퍼레이터 데이터 내보내기 (.JSON)",
+			"save": "프라이버시 설정 적용",
+			"saving": "저장 중...",
+			"saved": "프라이버시 설정이 저장되었습니다.",
+			"exported": "데이터 내보내기가 성공적으로 완료되었습니다."
+		}
+	}
+}

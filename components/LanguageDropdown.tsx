@@ -17,16 +17,38 @@ import { cn } from "@/lib/utils";
 
 const languages = [
 	{ code: "en", label: "EN", full: "English (EN)" },
+	{ code: "de", label: "DE", full: "Deutsch (DE)" },
 	{ code: "es", label: "ES", full: "Español (ES)" },
-	{ code: "pt-br", label: "PT-BR", full: "Português (PT-BR)" },
-	{ code: "hi", label: "HI", full: "हिंदी (HI)" },
-	{ code: "zh", label: "ZH", full: "中文 (ZH)" },
 	{ code: "fr", label: "FR", full: "Français (FR)" },
-	{ code: "ru", label: "RU", full: "Русский (RU)" },
+	{ code: "hi", label: "HI", full: "हिंदी (HI)" },
+	{ code: "id", label: "ID", full: "Indonesia (ID)" },
+	{ code: "it", label: "IT", full: "Italiano (IT)" },
 	{ code: "ja", label: "JA", full: "日本語 (JA)" },
+	{ code: "ko", label: "KO", full: "한국어 (KO)" },
+	{ code: "ne", label: "NE", full: "नेपाली (NE)" },
+	{ code: "pt-br", label: "PT-BR", full: "Português (PT-BR)" },
+	{ code: "ru", label: "RU", full: "Русский (RU)" },
+	{ code: "tr", label: "TR", full: "Türkçe (TR)" },
+	{ code: "vi", label: "VI", full: "Tiếng Việt (VI)" },
+	{ code: "zh", label: "ZH", full: "中文 (ZH)" },
 ];
 
-type SupportedLocale = "en" | "es" | "pt-br" | "hi" | "zh" | "fr" | "ru" | "ja";
+type SupportedLocale =
+	| "en"
+	| "de"
+	| "es"
+	| "fr"
+	| "hi"
+	| "id"
+	| "it"
+	| "ja"
+	| "ko"
+	| "ne"
+	| "pt-br"
+	| "ru"
+	| "tr"
+	| "vi"
+	| "zh";
 
 interface LanguageDropdownProps {
 	variant?: "simple" | "detailed";
