@@ -10,6 +10,7 @@ import {
 	CaretLeft,
 	CaretRight,
 	ChalkboardTeacherIcon,
+	Gear,
 	ShieldCheckIcon,
 	SquaresFourIcon,
 	SwordIcon,
@@ -204,6 +205,30 @@ export function NavRail() {
 								)}
 							</Link>
 						)}
+
+						<Link
+							href="/settings"
+							className={cn(
+								"flex items-center relative transition-colors border border-transparent hover:bg-ink-primary/5",
+								expanded
+									? "h-10 px-3 w-full justify-start gap-4"
+									: "w-8 h-8 justify-center rounded-none",
+								pathname?.includes("/settings") &&
+									"border-ink-secondary/20 bg-ink-primary/5",
+							)}
+							title={expanded ? undefined : "Settings"}
+						>
+							<Gear
+								size={18}
+								className="text-ink-primary shrink-0"
+								weight={pathname?.includes("/settings") ? "duotone" : "regular"}
+							/>
+							{expanded && (
+								<span className="font-bold uppercase tracking-widest text-xs text-ink-primary whitespace-nowrap overflow-hidden">
+									Settings
+								</span>
+							)}
+						</Link>
 					</>
 				) : null}
 
