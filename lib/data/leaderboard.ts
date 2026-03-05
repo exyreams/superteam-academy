@@ -154,18 +154,34 @@ export async function getCurrentUserRank(userId: string): Promise<number> {
 
 /**
  * Synchronizes a user's database XP and level with their real on-chain XP balance.
+ * Looks up the user's wallet from the DB — the on-chain wallet is the source of truth.
  *
  * @param userId - The database ID of the user.
- * @param walletAddress - The Solana wallet address tied to the user.
+ * @param walletAddress - Optional override. If not provided, looked up from user record.
  * @returns The synchronized XP balance or null on failure.
  */
-export async function syncUserXp(userId: string, walletAddress: string) {
-	if (!userId || !walletAddress) return;
+export async function syncUserXp(userId: string, walletAddress?: string) {
+	if (!userId) return null;
 
 	try {
-		const onchainXp = await onchainQueryService.getXpBalance(walletAddress);
+		// Look up wallet from DB if not provided — DB wallet is the source of truth
+		let address = walletAddress;
+		if (!address) {
+			const userRecord = await db
+				.select({ walletAddress: user.walletAddress })
+				.from(user)
+				.where(eq(user.id, userId))
+				.limit(1);
+			address = userRecord[0]?.walletAddress ?? undefined;
+		}
+
+		if (!address) return null;
+
+		// Fetch XP from on-chain wallet — this is the source of truth
+		const onchainXp = await onchainQueryService.getXpBalance(address);
 		const level = Math.max(1, Math.floor(Math.sqrt(onchainXp / 100)));
 
+		// Push on-chain XP to DB so leaderboard reads it from there
 		await db
 			.update(user)
 			.set({

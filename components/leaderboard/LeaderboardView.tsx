@@ -26,6 +26,8 @@ import { cn } from "@/lib/utils";
 interface LeaderboardViewProps {
 	/** Initial list of ranks fetched from the server. */
 	initialEntries: LeaderboardEntry[];
+	/** ID of the currently logged-in user for matching their entry. */
+	currentUserId?: string;
 	/** Position and statistics for the currently logged-in user. */
 	userStanding: UserStandingType;
 }
@@ -36,6 +38,7 @@ interface LeaderboardViewProps {
  */
 export function LeaderboardView({
 	initialEntries,
+	currentUserId,
 	userStanding,
 }: LeaderboardViewProps) {
 	const { publicKey } = useWallet();
@@ -49,6 +52,27 @@ export function LeaderboardView({
 		...userStanding,
 		xp: onchainStats.loading ? userStanding.xp || 0 : onchainStats.xp,
 	};
+
+	// Merge on-chain XP into current user's leaderboard entry — same as sidebar
+	const displayEntries = (() => {
+		if (!publicKey || onchainStats.loading) return entries;
+
+		const updated = entries.map((entry) => {
+			if (entry.userId === currentUserId) {
+				return {
+					...entry,
+					xp: onchainStats.xp,
+					level: onchainStats.level,
+					isCurrentUser: true,
+				};
+			}
+			return entry;
+		});
+
+		// Re-sort by XP and recalculate ranks
+		updated.sort((a, b) => b.xp - a.xp);
+		return updated.map((e, i) => ({ ...e, rank: i + 1 }));
+	})();
 
 	const handleFilterChange = async (
 		period: LeaderboardPeriod,
@@ -104,8 +128,8 @@ export function LeaderboardView({
 							isLoading && "opacity-50 pointer-events-none",
 						)}
 					>
-						{entries.length > 0 ? (
-							entries.map((entry) => (
+						{displayEntries.length > 0 ? (
+							displayEntries.map((entry) => (
 								<RankCard
 									key={entry.userId}
 									entry={entry}

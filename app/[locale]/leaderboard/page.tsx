@@ -39,12 +39,12 @@ export default async function LeaderboardPage() {
 		}
 	}
 
-	const entries = await getLeaderboard();
-
-	if (session?.user?.id && session.user.walletAddress) {
-		// Proactively sync user XP when they visit the leaderboard
-		await syncUserXp(session.user.id, session.user.walletAddress);
+	if (session?.user?.id) {
+		// Fetch on-chain XP from user's wallet, push to DB, then leaderboard reads from DB
+		await syncUserXp(session.user.id);
 	}
+
+	const entries = await getLeaderboard();
 
 	const userStanding = session?.user?.id
 		? await getUserStanding(session.user.id)
@@ -53,6 +53,7 @@ export default async function LeaderboardPage() {
 	return (
 		<LeaderboardView
 			initialEntries={entries}
+			currentUserId={session?.user?.id}
 			userStanding={
 				userStanding || {
 					globalRank: 0,

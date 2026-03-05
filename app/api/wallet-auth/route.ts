@@ -96,6 +96,34 @@ export async function POST(req: NextRequest) {
 			}
 		}
 
+		// 2b. For existing users, ensure walletAddress is saved on user record
+		if (userId) {
+			const existingUser = await db.query.user.findFirst({
+				where: (users, { eq }) => eq(users.id, userId as string),
+			});
+			if (existingUser && !existingUser.walletAddress) {
+				await db
+					.update(userSchema)
+					.set({ walletAddress: publicKey })
+					.where(eq(userSchema.id, userId as string));
+			}
+			// Ensure wallet table record exists
+			const walletExists = await db.query.wallet.findFirst({
+				where: (w, { eq }) => eq(w.address, publicKey),
+			});
+			if (!walletExists) {
+				await db.insert(walletTable).values({
+					id: crypto.randomUUID() as string,
+					address: publicKey as string,
+					userId: userId as string,
+					provider: "solana",
+					isPrimary: !existingUser?.walletAddress,
+					createdAt: new Date(),
+					updatedAt: new Date(),
+				});
+			}
+		}
+
 		// 3. Create new user if not found
 		if (!userId) {
 			// Use BetterAuth's internal handler to trigger user creation properly

@@ -22,6 +22,6 @@ export async function fetchFilteredLeaderboard(
 /**
  * Server action to synchronize user XP balance.
  */
-export async function syncUserXpAction(userId: string, walletAddress: string) {
+export async function syncUserXpAction(userId: string, walletAddress?: string) {
 	return await syncUserXp(userId, walletAddress);
 }

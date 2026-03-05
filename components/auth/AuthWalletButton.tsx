@@ -48,6 +48,7 @@ export function AuthWalletButton({
 			const res = await fetch("/api/auth/sign-in/solana", {
 				method: "POST",
 				headers: { "Content-Type": "application/json" },
+				credentials: "include",
 				body: JSON.stringify({
 					publicKey: publicKey.toBase58(),
 					signature: bs58.encode(signature),

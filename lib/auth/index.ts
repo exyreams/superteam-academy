@@ -352,6 +352,30 @@ export const auth = betterAuth({
 									createdAt: new Date(),
 									updatedAt: new Date(),
 								});
+							} else {
+								// Existing user — ensure walletAddress is saved to user record
+								if (!userParams.walletAddress) {
+									await ctx.context.internalAdapter.updateUser(userParams.id, {
+										walletAddress: publicKey,
+									});
+									userParams = { ...userParams, walletAddress: publicKey };
+								}
+
+								// Ensure wallet table record exists
+								const walletRecordExists = await db.query.wallet.findFirst({
+									where: (w, { eq }) => eq(w.address, publicKey),
+								});
+								if (!walletRecordExists) {
+									await db.insert(walletTable).values({
+										id: crypto.randomUUID(),
+										address: publicKey,
+										userId: userParams.id,
+										provider: "solana",
+										isPrimary: true,
+										createdAt: new Date(),
+										updatedAt: new Date(),
+									});
+								}
 							}
 
 							// Create session
