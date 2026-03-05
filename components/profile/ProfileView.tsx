@@ -59,8 +59,9 @@ export function ProfileView({
 		? profile.level || 1
 		: onchainStats.level;
 
+	const credentialWallet = publicKey?.toBase58() || profile.walletAddress;
 	const { data: onchainCredentials, isLoading: credsLoading } = useCredentials(
-		profile.walletAddress,
+		credentialWallet,
 	);
 
 	interface HeliusAttribute {

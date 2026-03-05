@@ -177,7 +177,7 @@ export function CourseHeader({
 												courseSlug,
 												title,
 											});
-											router.push("/profile");
+											router.push(`/certificates/${credentialAsset}`);
 										} else if (nextLessonId) {
 											router.push(
 												`/courses/${courseSlug}/lessons/${nextLessonId}`,
